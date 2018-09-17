@@ -1,0 +1,293 @@
+#SFL comment Shows the initial start(by an arrow) of an Heikin Ashi bar 
+
+# Mobius©: A more complex example is where that heiken ashi bar is plotted using the current bars 
+
+ 
+
+# Heiken Ashi High Agg calculated from chart bars 
+
+# Mobius 
+
+ 
+
+input ShowLabels = yes; 
+
+input Begin = 0000; 
+
+ 
+
+# Higher Aggregation 
+
+   def barSeq = if SecondsTillTime(Begin) == 0 and 
+
+                   SecondsFromTime(Begin) == 0 
+
+                then 0 
+
+                else BarSeq[1] + 1; 
+
+AddLabel(ShowLabels, "Bar Seq " + barSeq, Color.White); 
+
+   def agg = GetAggregationPeriod(); 
+
+   def BarsPerHour = 60 / (agg / 1000 / 60); 
+
+AddLabel(ShowLabels, "Bars Per Hour: " + BarsPerHour, Color.White); 
+
+   def bar = barSeq; 
+
+   def barCount = if bar % BarsPerHour == 0  
+
+                  then bar  
+
+                  else Double.NaN; 
+
+AddLabel(ShowLabels, "Current Bar " + bar, if !isNaN(barCount) 
+
+                                           then Color.Green 
+
+                                           else Color.White); 
+
+   def barCountOpen  = if !isNaN(barCount) 
+
+                       then open 
+
+                       else barCountOpen[1]; 
+
+   def barCountHigh  = if isNaN(barCount) and 
+
+                          high > barCountHigh[1] 
+
+                       then high 
+
+                       else if !isNaN(barCount) 
+
+                       then high 
+
+                       else barCountHigh[1]; 
+
+   def barCountLow   = if isNaN(barCount) and 
+
+                          low < barCountLow[1] 
+
+                       then low 
+
+                       else if !isNaN(barCount) 
+
+                       then low 
+
+                       else barCountLow[1]; 
+
+   def barCountClose = if !isNaN(barCount) 
+
+                       then close[1] 
+
+                       else barCountClose[1]; 
+
+AddLabel(ShowLabels, "Open: " + barCountOpen + 
+
+                    " High: " + barCountHigh + 
+
+                    " Low: " + barCountLow + 
+
+                    " Close " + barCountClose, if !isNaN(barCount) 
+
+                                               then Color.Green 
+
+                                               else Color.White); 
+
+ 
+
+   def HAopen = Round(if HAopen[1] == 0 
+
+                      then barCountOpen 
+
+                      else (HAopen[1] + barCountClose[1]) / 2 /  
+
+                            TickSize(), 0) * TickSize(); 
+
+   AddLabel(ShowLabels, "HAopen " + HAopen); 
+
+   def HAclose = Round(if HAclose[1] == 0 
+
+                        then OHLC4 
+
+                        else (barCountOpen + barCountHigh + barCountLow + HAclose[1]) 
+
+                              / 4 / TickSize(), 0) * TickSize(); 
+
+   AddLabel(ShowLabels, "HAclose " + HAclose); 
+
+   def HAhigh = Round(Max(barCountHigh, barCountClose[1]) /  
+
+                      TickSize(), 0) * TickSize(); 
+
+   AddLabel(ShowLabels, "HAhigh " + HAhigh); 
+
+   def HAlow = Round(Min(barCountLow, barCountClose[1]) / 
+
+                     TickSize(), 0) * TickSize(); 
+
+   AddLabel(ShowLabels, "HAlow " + HAlow); 
+
+ 
+
+# Color Block For Higher Aggregation 
+
+   def Size = AbsValue(HAopen - HAclose); 
+
+   def Block = CompoundValue(1, if HAclose > Block[1] + Size[1] 
+
+                                then Block[1] + Size 
+
+                                else if HAclose < Block[1] - Size[1] 
+
+                                then Block[1] - Size 
+
+                                else Block[1] , barCountclose); 
+
+ 
+
+  plot cond1 = Block; 
+
+       cond1.Hide(); 
+
+   def cond2 = if Block != Block[1]  
+
+               then Block[1] 
+
+               else cond2[1]; 
+
+ 
+
+  plot Block2 = cond2; 
+
+       Block2.Hide(); 
+
+ 
+
+  AddCloud( cond1,  Block2,  Color.Light_Green,  Color.Light_Red); 
+
+ 
+
+  AssignPriceColor(if HAclose < HAopen  
+
+                   then Color.Red  
+
+                   else Color.Green); 
+
+ 
+
+# Trade Management Conditions 
+
+   def Bcond = CompoundValue(1,if HAclose crosses above HAopen 
+
+               then Bcond[1] + 1 
+
+               else if HAclose crosses below HAopen 
+
+               then 0 
+
+               else Bcond[1], 0); 
+
+ 
+
+  plot ArrowUp = if Bcond crosses above 0  
+
+                 then low - (TickSize() * 2) 
+
+                 else Double.NaN; 
+
+       ArrowUp.SetPaintingStrategy(PaintingStrategy.Arrow_up); 
+
+       ArrowUp.SetLineWeight(3); 
+
+       ArrowUp.SetDefaultColor(Color.Light_Green); 
+
+ 
+
+   def Scond = CompoundValue(1, if HAclose crosses below HAopen 
+
+               then Scond[1] + 1 
+
+               else if barCountClose crosses above HAopen 
+
+               then 0 
+
+               else Scond[1], 0); 
+
+ 
+
+  plot ArrowDn = if Scond crosses above 0 
+
+                 then high + (TickSize() * 2) 
+
+                 else Double.NaN; 
+
+       ArrowDn.SetPaintingStrategy(PaintingStrategy.Arrow_down); 
+
+       ArrowDn.SetLineWeight(3); 
+
+       ArrowDn.SetDefaultColor(Color.Light_Red); 
+
+ 
+
+   def lineCond = if ArrowUp < ArrowDn 
+
+               then 1 
+
+               else if ArrowDn > ArrowUp 
+
+               then 1 
+
+               else -1; 
+
+ 
+
+  plot line = if isNaN(ArrowUp)  
+
+              then ArrowDn - (TickSize() * 2) 
+
+              else ArrowUp + (TickSize() * 2); 
+
+       line.EnableApproximation(); 
+
+       line.SetLineWeight(2); 
+
+       line.SetStyle(Curve.Short_Dash); 
+
+       line.AssignValueColor(if lineCond == 1                    
+
+                             then Color.Green 
+
+                             else if lineCond == -1  
+
+                             then Color.Red 
+
+                             else Color.White); 
+
+ 
+
+AddLabel(ShowLabels, "Bars Per Hour: " + BarsPerHour, Color.White); 
+
+AddLabel(ShowLabels, "HA Higher Agg. " + 
+
+                     "O: $" + HAOpen + 
+
+                  ";  H: $" + HAHigh + 
+
+                  ";  L: $" + HALow + 
+
+                  ";  C: $" + HAClose, 
+
+         if HAclose > HAopen 
+
+         then Color.Green 
+
+         else Color.Red); 
+
+ 
+
+Alert(!isNaN(ArrowUp) or !isNaN(ArrowDn), "", Alert.Bar, Sound.Chimes); 
+
+ #END 

@@ -1,0 +1,85 @@
+http://tos.mx/YQ7z0L  
+
+script SimpleTrendChannelFilter { 
+
+    input trendCheck = {Min, Normal, default Max}; 
+
+ 
+
+    def avg20 = Average(close, 20); 
+
+    def avg50 = Average(close, 50); 
+
+    def avg200 = Average(close, 200); 
+
+ 
+
+    plot Downtrend = close < avg50 and 
+
+        (if trendCheck != trendCheck.Min then avg20 < avg50 else yes) and 
+
+        (if trendCheck == trendCheck.Max then avg50 < avg200 else yes); 
+
+    plot Uptrend = close > avg50 and 
+
+        (if trendCheck != trendCheck.Min then avg20 > avg50 else yes) and 
+
+        (if trendCheck == trendCheck.Max then  avg50 > avg200 else yes); 
+
+} 
+
+ 
+
+input trendCheck = {Min, default Normal, Max}; 
+
+ 
+
+def upcomingEarnings = HasEarnings()[-2]; 
+
+def uptrend = reference SimpleTrendChannelFilter("trend check" = trendCheck).Uptrend; 
+
+def downtrend = reference SimpleTrendChannelFilter("trend check" = trendCheck).Downtrend; 
+
+ 
+
+plot Average = Average(close, 50); 
+
+plot FastAverage = Average(close, 20); 
+
+plot SlowAverage = Average(close, 200); 
+
+plot UpperBand = Average(high, 8); 
+
+plot LowerBand = Average(low, 8); 
+
+ 
+
+AddOrder(OrderType.BUY_TO_OPEN, uptrend and close crosses above UpperBand and !upcomingEarnings, tickcolor = GetColor(1), arrowcolor = GetColor(1), name = "TrendChannelLE"); 
+
+AddOrder(OrderType.SELL_TO_CLOSE, close crosses below LowerBand, tickcolor = GetColor(2), arrowcolor = GetColor(2), name = "TrendChannelCrossLX"); 
+
+AddOrder(OrderType.SELL_TO_CLOSE, upcomingEarnings, tickcolor = GetColor(3), arrowcolor = GetColor(3), name = "TrendChannelEarningsLX"); 
+
+ 
+
+AddOrder(OrderType.SELL_TO_OPEN, downtrend and close crosses below LowerBand and !upcomingEarnings, tickcolor = GetColor(4), arrowcolor = GetColor(4), name = "TrendChannelSE"); 
+
+AddOrder(OrderType.BUY_TO_CLOSE, close crosses above UpperBand, tickcolor = GetColor(5), arrowcolor = GetColor(5), name = "TrendChannelCrossSX"); 
+
+AddOrder(OrderType.BUY_TO_CLOSE, upcomingEarnings, tickcolor = GetColor(6), arrowcolor = GetColor(6), name = "TrendChannelEarnignsSX"); 
+
+ 
+
+Average.SetDefaultColor(GetColor(1)); 
+
+FastAverage.SetDefaultColor(GetColor(2)); 
+
+FastAverage.Hide(); 
+
+SlowAverage.SetDefaultColor(GetColor(3)); 
+
+SlowAverage.Hide(); 
+
+UpperBand.SetDefaultColor(GetColor(4)); 
+
+LowerBand.SetDefaultColor(GetColor(4)); 

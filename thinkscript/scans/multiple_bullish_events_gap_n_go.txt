@@ -1,0 +1,22 @@
+Multiple bullish events 
+
+# Scan looking for bullish events 
+# Bullish Multi-Scan 
+# By GapnGo 
+
+ 
+# Gapped up 
+# Closed on the high of the day 
+# Closed up on 2 times average volume 
+# Todays high is a 1 year high 
+# DarvasBox Box buy signal 
+# Run at agg = 'day' 
+
+def event1 = high[1] < low; # Gap 
+def event2 = close == High; # closed on high 
+def event3 = volume > simpleMovingAvg(volume , length = 30) * 2 and close > close [1]; # 2 times volume and up 
+def event4 = DarvasBox()."Buy Signal"; # darvasBox box buy 
+def event5 = high == highest(high, Length = 252);# 1 year high today 
+
+plot result = event1 + event2 + event3 + event4 + event5; 
+

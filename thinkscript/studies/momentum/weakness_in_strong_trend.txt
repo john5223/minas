@@ -1,0 +1,69 @@
+ 
+
+AAPL 
+a APPLE INC COM 
+164.22 
+0: 16412 H: 16573 
+_ 89 
+L: 163.37 
+Share 
+c: 16422 
+3,'12 
+Style Drawings Studies Patterns 
+WeaknesslnAStrongTrend {CLOSE, 21, EXPONENTIAL} no no 
+AAPL 4 M ID [NASDAQ] 
+LinearRegrReversaI (14) 
+1,'15 
+1,122 
+2.112 
+3,'19 
+4/16 
+4/30 5,'7 5,114 5121 
+Drawingset:DefauIt, 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input length = 21; 
+
+input averageType = AverageType.EXPONENTIAL; 
+
+ 
+
+def avg = MovingAverage(averageType, price, length); 
+
+def down = price <= price[1]; 
+
+def up = price >= price[1]; 
+
+ 
+
+plot LongSignal = sum(down, 3) == 3 and avg > avg[1]; 
+
+plot ShortSignal = sum(up, 3) == 3 and avg < avg[1]; 
+
+ 
+
+LongSignal.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+LongSignal.DefineColor("Three Down", GetColor(8)); 
+
+LongSignal.DefineColor("Four Down", GetColor(6)); 
+
+LongSignal.AssignValueColor(if down[3] then LongSignal.color("Four Down") else LongSignal.color("Three Down")); 
+
+ShortSignal.DefineColor("Three Up", GetColor(2)); 
+
+ShortSignal.DefineColor("Four Up", GetColor(5)); 
+
+ShortSignal.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+ShortSignal.AssignValueColor(if up[3] then ShortSignal.color("Four Up") else ShortSignal.color("Three Up")); 

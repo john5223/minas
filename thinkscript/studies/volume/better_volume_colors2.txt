@@ -1,0 +1,80 @@
+# Better Volume Indicator 
+# Mobius 
+# 3.4.2016 
+# http://tos.mx/fIweLw
+
+
+# There's a number of versions of this indicator out there. This is a  
+# direct translation from the originator with his original code attached. 
+# (If there are any errors or omissions let me know) 
+# 
+# If you want to use Better Volume you must use time charts --------------------------------------------------------------- 
+ 
+#Inputs: Color(Cyan), LowColor(Yellow), ClimaxColor(Red), ChurnColor(Green), ClimaxChurnColor(Magenta), LowChurnColor(White), AvgColor(Red); 
+#Variables: BarColor(Cyan); 
+#BarColor = Color; 
+#Value1 = V; 
+#Value2 = V*Range; 
+#If Range <> 0 then Value3 = V/Range; 
+#Value4 = Average(Value1,100); 
+#If Value1 = Lowest(Value1,20) then BarColor = LowColor; # Yellow 
+#If Value2 = Highest(Value2,20) then BarColor = ClimaxColor; # Red 
+#If Value3 = Highest(Value3,20) then BarColor = ChurnColor; # Green 
+#If Value2 = Highest(Value2,20) and Value3 = Highest(Value3,20) then BarColor = ClimaxChurnColor; # Magenta 
+#If Value3 = Lowest(Value3,20) then BarColor = LowChurnColor; # White 
+ 
+#Plot1(Value1,"Volume",BarColor); 
+#Plot2(Value4,"Avg",AvgColor); 
+
+
+# Yellow - Low volume for the size of the bar - Amateurs at work 
+AddLabel(1, "Retail Volume", Color.YELLOW); 
+# White - Climax down 
+AddLabel(1, "Climax down", Color.Red); 
+# Blue -Climax up 
+AddLabel(1, "Climax up", Color.Red); 
+# Red - Churn - Pros buying at lows or unloading at highs 
+AddLabel(1, "Churn", Color.Green); 
+# Magenta - Climax Churn - Pros taking profits at highs or lows 
+AddLabel(1, "Climax Churn", Color.MAGENTA); 
+# Gray - Normal (default) Bar 
+AddLabel(1, "Normal", Color.White); 
+ 
+
+declare lower; 
+
+def LowVolColor = 8; 
+def ClimaxUpColor = 1; 
+def ClimaxDownColor = 9; 
+def ChurnColor = 5; 
+def ClimaxChurnColor = 0; 
+def DefaultBarColor = 7; 
+def AvgColor = 7; 
+def V = volume; 
+def Range = TrueRange(high, close, low); 
+def Value1 = volume; 
+def Value2 = volume * Range; 
+plot Value3 = if Range <> 0 then V / Range else Value2; 
+     Value3.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     Value3.SetLineWeight(4); 
+plot Value4 = Average(Value1, 100); 
+     Value4.SetStyle(Curve.Firm); 
+     Value4.AssignValueColor(if Value4 > Value4[1] then Color.Green else Color.Red); 
+ 
+# Bar Colors 
+Value3.AssignValueColor( 
+
+If  
+Value1 == Lowest(Value1,20) then Color.Yellow 
+else if 
+Value2 == Highest(Value2,20) then Color.Red 
+else if 
+Value3 == Highest(Value3,20) then Color.Green 
+else if 
+Value2 == Highest(Value2,20) and Value3 == Highest(Value3,20) then Color.Magenta 
+else if  
+Value3 == Lowest(Value3,20) then Color.White 
+else Color.Cyan 
+); 
+
+# End Code Better Volume Indicator 

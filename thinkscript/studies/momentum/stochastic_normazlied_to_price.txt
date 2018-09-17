@@ -1,0 +1,103 @@
+# Stochastic Normalized to Price 
+
+# Mobius 
+
+# Chat Room Request 
+
+# 11.21.2013 
+
+ 
+
+script ScalingPlot { 
+
+    input c = close; 
+
+    input Min = .01; 
+
+    input Max =   1; 
+
+    def hh = HighestAll(c); 
+
+    def ll = LowestAll(c); 
+
+    plot Range = (((Max - Min) * (c - ll)) /  (hh - ll)) + Min; 
+
+} 
+
+ 
+
+input nK = 10; 
+
+input nD =  3; 
+
+ 
+
+def o; 
+
+def h; 
+
+def l; 
+
+def c; 
+
+o = (open[1] + c[1]) / 2; 
+
+h = Max(high, c[1]); 
+
+l = Min(low, c[1]); 
+
+c = (o + h + l + close) / 4; 
+
+def min = lowest(l, nK); 
+
+def max = highest(h, nK); 
+
+ 
+
+# Stochastic 
+
+script Stoch{ 
+
+   input nK = 13; 
+
+   input nD =  8; 
+
+   input value = close; 
+
+   input l = low; 
+
+   input h = high; 
+
+    plot K = 100 * ((value - Lowest(l, nK)) / (Highest(h, nK) - Lowest(l, nK))); 
+
+    plot D = ExpAverage(K, nD); 
+
+ } 
+
+  plot StochK = ScalingPlot(Stoch(value = c, l = l, h = h, nK = nK).K, min, max ); 
+
+plot StochD = ExpAverage(StochK, nD); 
+
+AddCloud(StochK, StochD, color.green, color.red); 
+
+ 
+
+# End Code Stochastic normalized to price 
+
+AAPL 
+APPLE 171.61 
+L: 17123 C: 171S8 R: jhf 
+1.4685% current Yield N/A 
+_ Flag_Retain {10, 
+:Dividend 
+CLOSE} 
+WA 
+Share 
+paris_MovingAvgPIottedAsHorizontaILine_ 
+Style Drawings Studies Patterns 
+30m 
+DiffTimeAgg(CLOSE, TWO_HOURS, 20, SIMPLE) 168.17 
+AAPL 10 D 30m [NASDAQ] 
+O: 17124 H: 17201 
+0 5 Bar SMA 10BarSMA 20BarSMA 508arSMA 200BarSM 
+mobius_StochasticNormaIizedToPrice (10, 3) 171.73 171.33 

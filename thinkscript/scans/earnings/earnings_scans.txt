@@ -1,0 +1,27 @@
+Earnings Scan #1 
+
+Jesse: The below is how to scan for earnings 
+
+Input length = 10; 
+def a = hasearnings(); 
+def b = getday(); 
+def c = if a then b else 0; 
+def d = average(c, length); 
+def e = d[-(length - 1)]; 
+plot f = e > 0; 
+ 
+
+Earnings Scan #2 
+Received the following script from Thinkscript support 
+
+declare lower; 
+def EstEarning = GetEstimatedEarnings(); 
+def ActEarnings = GetActualEarnings(); 
+rec ae=if !isnan(ActEarnings) then ActEarnings else ae[1] ; 
+rec ee=if !isnan(EstEarning) then EstEarning else ee[1]; 
+plot scan=if ae>ee then 1 else 0; 
+
+
+
+
+

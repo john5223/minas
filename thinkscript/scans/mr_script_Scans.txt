@@ -1,0 +1,25 @@
+Mr. Script: 
+
+#HINT: scan filter 
+def trenup = IsAscending(close,20); 
+def trenup2 = sum(close > close[1],5) >= 5; 
+def mcd = MACD(); 
+def mcdtren = sum(mcd > mcd[1],5) == 5; 
+plot scan = trenup AND mcdtren; 
+# end scan filter code ---- 
+
+
+
+
+
+#HINT: scan filter 
+input price = close; 
+def MiddleLR = Inertia(price,20); 
+plot scan = isDescending(MiddleLR); 
+
+# end scan filter code ---- 
+
+
+
+
+

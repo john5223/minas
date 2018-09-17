@@ -1,0 +1,243 @@
+linus: it's not a bad scalping strategy, imo. 
+
+### SCALPING STRATEGY 
+
+### LR_Cross 
+
+### linus, 2014-08-15, v0.1 
+
+ 
+
+#hint: Based on serm's Linear Regression Crossing study posted to chat. 
+
+ 
+
+declare upper; 
+
+ 
+
+#hint tradeSize: Number of shares/contracts to trade. 
+
+input tradeSize = 1; 
+
+ 
+
+#hint diffMult: Scale the highest difference by this multiplier. (Higher numbers should find fewer trades.  Valid values are 0 > diffMult < 1.) 
+
+input diffMult = .3; 
+
+ 
+
+#hint fastClose: Yes) Close trades when price touches the slow cloud.  No) Close trades after price crosses the slow cloud. 
+
+input fastClose = No; 
+
+ 
+
+#hint priceL: price to test when buying to open or exit trade. 
+
+input priceL = low;  
+
+ 
+
+#hint priceH: price to test when selling to open or exit trade. 
+
+input priceH = high;  
+
+ 
+
+#hint adxLength: Moving average length for constructing ADX. 
+
+input adxLength = 3; 
+
+ 
+
+#hint adxType: Moving average type for constructing ADX. 
+
+input adxType = AverageType.SIMPLE; 
+
+ 
+
+#hint adxSignal: ADX must be above this value to enter trades with the trend. 
+
+input adxSignal = 50;   
+
+ 
+
+assert(diffMult > 0 and diffMult < 1, "diffMult must be greater than 0 and less than 1."); 
+
+ 
+
+script ADX { 
+
+ input length = 3; 
+
+ input type = AverageType.SIMPLE; 
+
+ def hDif = high - high[1]; 
+
+ def lDif = low[1] - low; 
+
+ def ATR = MovingAverage(type, TrueRange(high, close, low), length); 
+
+ def DIp = 100 * MovingAverage(type, if hDif > lDif and hDif > 0 then hDif else 0, length) / ATR; 
+
+def DIm = 100 * MovingAverage(type, if lDif > hDif and lDif > 0 then lDif else 0, length) / ATR; 
+
+ plot ADX = MovingAverage(type, if (DIp + DIm > 0) then 100 * AbsValue(DIp - DIm) / (DIp + DIm) else 0, length); 
+
+} 
+
+ 
+
+def data=close; 
+
+ 
+
+def lrs_length =80; 
+
+def sig_line_length=20; 
+
+ 
+
+def lrs_length2 =20; 
+
+def sig_line_length2=5; 
+
+ 
+
+def LRS = Inertia(data,lrs_length); 
+
+def sig_line=ExpAverage(LRS,sig_line_length); 
+
+ 
+
+def LRS2 = Inertia(data,lrs_length2); 
+
+def sig_line2=ExpAverage(LRS2,sig_line_length2); 
+
+ 
+
+def max1 = Max(LRS, sig_line); 
+
+def min1 = Min(LRS, sig_line); 
+
+ 
+
+def max2 = Max(LRS2, sig_line2); 
+
+def min2 = Min(LRS2, sig_line2); 
+
+ 
+
+def adx = ADX(adxLength, adxType); 
+
+ 
+
+def diff = if min2 > max1 then min2 - max1 else if max2 < min1 then min1 - max2 else 0; 
+
+ 
+
+# diffOk is true if the difference between the clouds is greater than then the adjusted average difference between the clouds. 
+
+def diffOk = diff > HighestAll(diff) * diffMult; 
+
+ 
+
+AddCloud(LRS, Sig_line, color.GRAY, color.red); 
+
+AddCloud(LRS2, Sig_line2, color.light_GRAY, color.red); 
+
+ 
+
+# BUY_AUTO Trend 
+
+def BA1 = (adx crosses above adxSignal and min2 > max1) or (adx > adxSignal and min2 crosses above max1); 
+
+ 
+
+# SELL_AUTO Trend 
+
+def SA1 = (adx crosses above adxSignal and max2 < min1) or (adx > adxSignal and max2 crosses below min1); 
+
+ 
+
+# BUY_AUTO CounterTrend 
+
+def BA2 = diffOk and sig_line2 < LRS and sig_line2 > LRS2 and high < LRS and priceL crosses above sig_line2; 
+
+ 
+
+# SELL_AUTO CounterTrend 
+
+def SA2 = diffOk and sig_line2 > LRS and sig_line2 < LRS2 and low > LRS and priceH crosses below sig_line2; 
+
+ 
+
+# Store the order type. (1 for BUY TREND, -1 for SELL TREND, 2 for BUY COUNTERTREND, -2 for SELL COUNTERTREND.) 
+
+def order = compoundValue(1, if BA1 then 1 else if BA2 then 2 else if SA1 then -1 else if SA2 then -2 else order[1], 0); 
+
+ 
+
+# BUY_TO_CLOSE Trend 
+
+def BTC1 = order == 1 and max2 > min1 and high > min1; 
+
+ 
+
+# BUY_TO_CLOSE Trend 
+
+def STC1 = order == -1 and min2 < max1 and low < max1; 
+
+ 
+
+# BUY_TO_CLOSE CounterTrend 
+
+def BTC2 = order == 2 and (if fastClose then priceL crosses below max1 else priceL crosses below min1); 
+
+ 
+
+# BUY_TO_CLOSE CounterTrend 
+
+def STC2 = order == -2 and (if fastClose then priceH crosses above min1 else priceH crosses above max1); 
+
+ 
+
+def orderPrice = open[-1]; 
+
+ 
+
+AddOrder(OrderType.BUY_AUTO, BA1, orderPrice, tradeSize, Color.GREEN, Color.GREEN, "BA1"); 
+
+ 
+
+AddOrder(OrderType.SELL_AUTO, SA1, orderPrice, tradeSize, Color.RED, Color.RED, "SA1"); 
+
+ 
+
+AddOrder(OrderType.BUY_AUTO, BA2, orderPrice, tradeSize, Color.GREEN, Color.GREEN, "BA2"); 
+
+ 
+
+AddOrder(OrderType.SELL_AUTO, SA2, orderPrice, tradeSize, Color.RED, Color.RED, "SA2"); 
+
+ 
+
+AddOrder(OrderType.BUY_TO_CLOSE, BTC1, orderPrice, tradeSize, Color.CYAN, Color.CYAN, "BTC1"); 
+
+ 
+
+AddOrder(OrderType.SELL_TO_CLOSE, STC1, orderPrice, tradeSize, Color.MAGENTA, Color.MAGENTA, "STC1"); 
+
+ 
+
+AddOrder(OrderType.BUY_TO_CLOSE, BTC2, orderPrice, tradeSize, Color.CYAN, Color.CYAN, "BTC2"); 
+
+ 
+
+AddOrder(OrderType.SELL_TO_CLOSE, STC2, orderPrice, tradeSize, Color.MAGENTA, Color.MAGENTA, "STC2"); 
+
+ 
+
+### END STRATEGY 

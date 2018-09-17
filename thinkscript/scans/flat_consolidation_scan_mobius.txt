@@ -1,0 +1,21 @@
+# Consolidation Scan     http://tos.mx/BTtVJh 
+
+# Mobius 
+
+ 
+
+(Log(Sum(Max(high, close[1]) - Min(low, close[1]), 10) /  
+
+(Highest(high, 10) - Lowest(low, 10))) /  
+
+Log(10)) > .7 
+
+ 
+
+ 
+
+Mobius: If you want  relatively short term consolidation leave the lengths at 10 and use a daily scan. For a bit more consolidation make lengths 13 and if you want equities that have been in consolidation for a long time use a monthly scan. 
+
+ 
+
+You don't want base-10 log if you're looking for linearity. 

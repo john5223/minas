@@ -1,0 +1,257 @@
+Machine generated alternative text:
+E-mini N... 
+-3.25 
+4805.25 
+L -0.07% 
+INQ 2 d 2m 
+Share 
+Inc. 
+2m 
+Style 
+Hi: 4816.75 
+Drawings 
+14.75 
+Å Studies 
+D: 8/21/16 4:35 PM Y: 4797.3 
+2016 @ TD Ameritrade IP Company, 
+0.25 
+19 
+-0.75 
+20 
+, -1.75 
+21 
+22 
+23 
+Fri 
+2 
+3 
+13.75 
+4 
+7 
+0.25 
+8 
+Patterns 
+4817.5 
+4815 
+4812.5 
+4810 
+4807.5 
+4802.5 
+4800 
+4797.3 
+4795 
+4792.5 
+4790 
+4787.5 
+4785 
+5 
+6 
+9 
+10 
+11 
+12 
+13 
+14 
+15 
+1 6:35 
+st 
+ 
+
+## START STUDY 
+
+## RSI_SuperTrend_Upper 
+
+## linus, 2014-07-18, v0.2 
+
+ 
+ 
+
+#hint: SuperTrend of RSI on Upper chart. 
+
+ 
+ 
+
+declare upper; 
+
+ 
+ 
+
+#hint paintBars: Yes to color the price bars.  No to disable. 
+
+input paintBars = No; 
+
+ 
+ 
+
+#hint length: Period length for RSI. 
+
+input length = 13; 
+
+ 
+ 
+
+#hint rsiType: Moving average type for RSI. 
+
+input rsiType = AverageType.WILDERS; 
+
+ 
+ 
+
+#hint smooth: Smoothing period length of oscillator.  Use 1 to disable smoothing. 
+
+input smooth = 2; 
+
+ 
+ 
+
+#hint smoothType: Moving average type of the smoothing. 
+
+input smoothType = AverageType.SIMPLE; 
+
+ 
+ 
+
+#hint price: Fundamental price type used to calculate RSI. 
+
+input price = close; 
+
+ 
+ 
+
+def ChgAvg = MovingAverage(rsiType, AbsValue(price - price[1]), length); 
+
+def RSI = 50 * ((if ChgAvg != 0 then MovingAverage(rsiType, price - price[1], length) / ChgAvg else 0) + 1); 
+
+ 
+ 
+
+def Osc = MovingAverage(smoothType, RSI, smooth); 
+
+ 
+ 
+
+######################################################## 
+
+## SuperTrend of Oscillator 
+
+ 
+ 
+
+#hint atrMult: Multiple to scale average true range (ATR). 
+
+input atrMult = 3.8; 
+
+ 
+ 
+
+#hint atrLength: Period length of ATR. 
+
+input atrLength = 50; 
+
+ 
+ 
+
+#hint atrType: Moving average type of ATR. 
+
+input atrType = AverageType.SIMPLE; 
+
+ 
+ 
+
+#hint label: Toggles display of Profit/Loss label. 
+
+input label = Yes; 
+
+ 
+ 
+
+#hint bubbles: Toggles display of Profit/Loss per order bubbles. 
+
+input bubbles = Yes; 
+
+ 
+ 
+
+def pivot = Osc; 
+
+def atr = MovingAverage(atrType, TrueRange(highest(pivot,ceil(atrMult)), pivot, lowest(pivot, ceil(atrMult))), atrLength) * atrMult; 
+
+def prUp = pivot + atr; 
+
+def prDn = pivot - atr; 
+
+ 
+ 
+
+def rTrend = compoundValue(1, 
+
+    if rTrend[1] > 0 then 
+
+        if pivot < Max(prDn[1], rTrend[1]) then -prUp 
+
+        else Max(prDn, rTrend[1]) 
+
+    else if rTrend[1] < 0 then 
+
+        if pivot > Min(prUp[1], AbsValue(rTrend[1])) then prDn 
+
+        else -Min(prUp, AbsValue(rTrend[1])) 
+
+    else rTrend[1] 
+
+, pivot); 
+
+ 
+ 
+
+def orderDir = rTrend; 
+
+ 
+ 
+
+def isOrder = orderDir crosses 0; 
+
+ 
+ 
+
+def orderCount = compoundValue(1, if isNaN(isOrder) then 0 else if isOrder then orderCount[1] + 1 else orderCount[1], 0); 
+
+ 
+ 
+
+def noBar = isNaN(open[-1]); 
+
+ 
+ 
+
+def orderPrice = if isOrder then if noBar then close else open[-1] else orderPrice[1]; 
+
+def profitLoss = if !isOrder or orderCount == 1 then 0 else if orderDir > 0 then orderPrice[1] - orderPrice else if orderDir < 0 then orderPrice - orderPrice[1] else 0; 
+
+def profitLossSum = compoundValue(1, if isNaN(isOrder) then 0 else if isOrder then profitLossSum[1] + profitLoss else profitLossSum[1], 0); 
+
+ 
+ 
+
+AddLabel(label, orderCount + " orders | P/L " + AsDollars((profitLossSum / tickSize()) * tickValue()), if profitLossSum > 0 then Color.GREEN else if profitLossSum < 0 then Color.RED else Color.GRAY); 
+
+ 
+ 
+
+AddChartBubble(bubbles and isOrder and orderDir > 0, low, profitLoss, if noBar then Color.LIGHT_GRAY else Color.GREEN, 0); 
+
+AddChartBubble(bubbles and isOrder and orderDir < 0, high, profitLoss, if noBar then Color.GRAY else Color.RED, 1); 
+
+ 
+ 
+
+AssignPriceColor(if !paintBars then Color.CURRENT 
+
+else if Osc > 50 then if Osc > Osc[1] then Color.GREEN else Color.DARK_GREEN else if Osc < Osc[1] then Color.RED else Color.PINK); 
+
+ 
+ 
+
+## END STUDY 
+
+ 

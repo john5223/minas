@@ -1,0 +1,53 @@
+ 
+
+AAPL 
+S a APPLE INC 
+164.22 
+Share 
+O: 164.12 H: 165.73 L: 163.37 C: 164.22 
+Style 
+Drawings 
+Studies 
+AAPL 4 M ID [NASDAQ] 
+$S_ag 
+Vortexlndicator (14) 0.848702 0.977479 
+LinearRegrReversaI (14) 
+1,122 
+2.112 
+3,112 
+R: 2.36 
+3,'19 
+4/16 
+4/30 
+Patterns 
+5/14 5121 
+Drawing set: Default 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2010-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 14; 
+
+ 
+
+def trSum = sum(TrueRange(high, close, low), length); 
+
+plot "VI+" = if trSum == 0 then 0 else sum(AbsValue(high - low[1]), length) / trSum; 
+
+plot "VI-" = if trSum == 0 then 0 else sum(AbsValue(low - high[1]), length) / trSum; 
+
+ 
+
+"VI+".SetDefaultColor(Color.GREEN); 
+
+"VI-".SetDefaultColor(Color.RED); 

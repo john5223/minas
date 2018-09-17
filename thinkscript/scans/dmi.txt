@@ -1,0 +1,71 @@
+DMI  vs DMI_Oscillator(4) 
+
+ 
+
+ 
+
+#====== DMI+ crossing above DMI- ============ 
+
+def DMIplus  = DMI(length = 25)."DI+";#Defines the DMI+ by reference-with-parameters 
+
+def DMIminus = DMI(length = 25)."DI-";#Defines the DMI- by reference-with-parameters 
+
+#========== The below 3 code lines produce the same result =========== 
+
+def DMItest = DMIplus > DMIminus and DMIplus[1] <= DMIminus[1]; # DMItest == 1 when true; 0 when false 
+
+def crossing = Crossing(DMIplus, DMIminus, CrossingDirection.above); # crossing == 1 when true; 0 when false 
+
+def crossing = Crossing(DMI_Oscillator("length" = 25 ).Hist, DMI_Oscillator().ZeroLine,crossingDirection.above); # crossing == 1 when true; 0 when false 
+
+ 
+
+ 
+
+#===== DMI+ is above DMI- ============ 
+
+def DMIplus  = DMI(length = 25)."DI+";#Defines the DMI+ by reference-with-parameters 
+
+def DMIminus = DMI(length = 25)."DI-";#Defines the DMI- by reference-with-parameters 
+
+#========== The below 2 code lines produce the same result =========== 
+
+def DMItest = DMIplus > DMIminus;# DMItest == 1 when true; 0 when false 
+
+def DMItest = DMI_Oscillator("length" = 25 ).Hist > 0;  # DMItest == 1 when true; 0 when false 
+
+ 
+
+#====== DMI+ crossing below DMI- ============ 
+
+def DMIplus  = DMI(length = 25)."DI+";#Defines the DMI+ by reference-with-parameters 
+
+def DMIminus = DMI(length = 25)."DI-";#Defines the DMI- by reference-with-parameters 
+
+#========== The below 3 code lines produce the same result =========== 
+
+def DMItest = DMIplus < DMIminus and DMIplus[1] >= DMIminus[1]; # DMItest == 1 when true; 0 when false 
+
+def crossing = Crossing(DMIplus, DMIminus, CrossingDirection.below); # crossing == 1 when true; 0 when false 
+
+def crossing = Crossing(DMI_Oscillator("length" = 25 ).Hist,DMI_Oscillator().ZeroLine,crossingDirection.below); # crossing == 1 when true; 0 when false 
+
+ 
+
+#======= DMI+ is below the DMI- =========== 
+
+def DMIplus  = DMI(length = 25)."DI+"; 
+
+def DMIminus = DMI(length = 25)."DI-"; 
+
+#========== The below 2 code lines produce the same result =========== 
+
+plot DMItest = DMIplus < DMIminus; # DMItest == 1 when true; 0 when false 
+
+def DMItest = DMI_Oscillator("length" = 25).Hist > 0;  # DMItest == 1 when true; 0 when false 
+
+ 
+
+def crossing = Crossing(DMIplus, DMIminus, CrossingDirection.any); # for any crossing == 1 when true; 0 when false 
+
+ 

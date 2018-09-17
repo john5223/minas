@@ -1,0 +1,201 @@
+RelVolumeStdDevAIphalnvestor (60, 2.0, no) 0 2 
+Jun 
+Jul 
+Sep 
+Oct 
+Nov 
+Dec 
+17 
+Feb 
+Mar 
+Apr 
+May
+  
+
+  
+
+http://tos.mx/3z078u  
+
+ 
+
+# Archive Name: Relative Volume Std Dev - Colored By Price_AI 
+
+# Archive Section: Volume 
+
+# Suggested Tos Name: RelVolumeStdDev_AI 
+
+# Archive Date: 
+
+# Archive Notes:  
+
+ 
+
+# 5.06.2018  added build notes from Paris' Archive LongShort == AI 
+
+ 
+
+ 
+
+# Relative Volume Std Dev - Colored By Price 
+
+# LongShort 
+
+# 5.6.2014 
+
+# 
+
+# Modified the TOS RelativeVolumeStdDev study to color histogram by price  
+
+# candle action. This has been configured for 2 standard deviaitions, so  
+
+# those bars were really big volume compared to "normal" 
+
+# 
+
+# While Mobius likes his Volume Percent R study, I like this version 
+
+# which uses standard deviation of volume. It finds unusual volume bars  
+
+# significantly different than the average.  
+
+# 
+
+# The study colors volume bars with "unusual/abnormal volume", greater  
+
+# than 2.0 StdDev away. Relative volume bars that exceed a 2.0 StdDev  
+
+# of volume are colored green or red. If it is less than 2 StdDev (i.e".  
+
+# normal" volume ) they are colored gray 
+
+# 
+
+# Volume = Validation. hence a trend change or big move on a colored bar is  
+
+# significant. A trend change or big move on a gray bar doesn't garner  
+
+# much respect. 
+
+# 
+
+# I use this study for finding volume outliers. It is a volume study used  
+
+# to highlight extreme volume or volume spikes. This study is based on standard  
+
+# deviation of volume being outside the normal distribution, and is similar  
+
+# in concept to Mobius’ Volume %R study. 
+
+# 
+
+# Mobius version is a relative Volume %R study which simply reduces the  
+
+# last 20 bars to a scale of 0 to 100. It tends to nail the volume at swings. 
+
+# 
+
+# I have been using 60 as the default aggregation. It is more sensitive to  
+
+# length because volume picked up after the recent market volatility. This  
+
+# is a change in market dynamics. On a daily chart, set the aggregation to 
+
+# a shorter length, about 25. 
+
+# 
+
+# Signals: 
+
+# Oversold   - you want RelVol above StdDevLevel and RelVol.Color Bullish 
+
+# Overbought - you want RelVol above StdDevLevel and RelVol.Color Bearish 
+
+# 
+
+# While some volume bars may not be very high, the ones that are signals  
+
+# are colored. Volume = Validation. If a move doesn't happen with big volume, 
+
+# are the big institutions really on board with the move? 
+
+# 
+
+# A 2.0 SD above normal volume is considered big volume; you could also use 
+
+# other settings 
+
+# 
+
+# Note that the longer colored bars co-incide with the following 4 scenarios 
+
+# 
+
+# A) the start of the trading session 
+
+# B) the end of the trading session 
+
+# C) big moves 
+
+# D) new lows 
+
+# 
+
+# This study provides useful trading information like for example: 
+
+# 
+
+# What color are the bars at the start of the week on the move down 
+
+# What color are the bars in the middle of the week on the new lows 
+
+# Did we get a bunch of green bars after we hit the new lows (indicating buying support) 
+
+# What color are the bars at the end of the week 
+
+ 
+
+declare lower; 
+
+declare zerobase; 
+
+ 
+
+input length = 60; 
+
+input numDev = 2.0; 
+
+input allowNegativeValues = no; 
+
+ 
+
+def rawRelVol = (volume - Average(volume, length)) / StDev(volume, length); 
+
+plot RelVol = if allowNegativeValues then rawRelVol else Max(0, rawRelVol); 
+
+plot StDevLevel = numDev; 
+
+ 
+
+RelVol.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+RelVol.SetLineWeight(3); 
+
+RelVol.DefineColor("Bullish", GetColor(6)); 
+
+RelVol.DefineColor("Bearish", GetColor(5)); 
+
+RelVol.DefineColor("Neutral", GetColor(7)); 
+
+ 
+
+RelVol.AssignValueColor(if close >= open and RelVol > numDev then RelVol.Color("Bullish") else if close < open and RelVol > numDev then RelVol.Color("Bearish") else RelVol.Color("Neutral") ); 
+
+ 
+
+StDevLevel.SetDefaultColor(GetColor(7)); 
+
+StDevLevel.SetStyle(Curve.SHORT_DASH); 
+
+ 
+
+# End Study 

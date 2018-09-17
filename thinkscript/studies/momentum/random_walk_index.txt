@@ -1,0 +1,39 @@
+C 266.57 
+SPY4MID 0:4/23/18 0:2E7QE H:2E7zg L:2E535 c:26ES7 R:2.54 
+RandomWalklndex(8) 1.07304 0.52S8E4 1 
+Style 
+Studies 
+Patterns 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2010-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 8; 
+
+ 
+
+def TR = TrueRange(high, close, low); 
+
+ 
+
+plot LowLine  = fold index1 = 1 to length + 1 with max1 do Max(max1, (getValue(high, index1, length) - low) / ((fold ATRIndex1 = 1 to index1 + 2 with ATR1 do ATR1 + getValue(TR, ATRIndex1, length + 1)) / (index1 + 1) * Sqrt(index1 + 1))); 
+
+plot HighLine = fold index2 = 1 to length + 1 with max2 do Max(max2, (high - getValue(low, index2, length)) / ((fold ATRIndex2 = 1 to index2 + 2 with ATR2 do ATR2 + getValue(TR, ATRIndex2, length + 1)) / (index2 + 1) * Sqrt(index2 + 1))); 
+
+plot MiddleLine = 1; 
+
+ 
+
+LowLine.setDefaultColor(getColor(1)); 
+
+HighLine.SetDefaultColor(GetColor(5)); 
+
+MiddleLine.SetDefaultColor(GetColor(8)); 

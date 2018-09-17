@@ -1,0 +1,1 @@
+SemiCupFormation()."SemiCup" is true  

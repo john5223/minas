@@ -1,0 +1,56 @@
+# MACD Normalized to price  
+# Mobius 
+# Mobius at MyTrade 
+# V03.05.2013 
+
+script ScalePlot{ 
+    input data = close; 
+    input newRngMin =  -1; 
+    input newRngMax = 1; 
+    def hhData = HighestAll( data ); 
+    def llData = LowestAll( data ); 
+    plot nr = ((( newRngMax - newRngMin ) * ( data - llData )) /  
+                      ( hhData - llData )) + newRngMin; 
+} 
+ 
+input fastEMA = 12; 
+input slowEMA = 26; 
+input Smooth  =  9; 
+input value = close; 
+def hh = highest(close, slowEMA); 
+def ll = lowest(close, slowEMA); 
+# MACD 
+script MACD{ 
+   input fastEMA = 13; 
+   input slowEMA = 21; 
+   input Smooth  =  8; 
+   input value = close; 
+   def FSignal = (value * .15) +  (.85  * ExpAverage(value, fastEMA)[1]); 
+   def SSignal = (value * .075) + (.925 * ExpAverage(value, slowEMA)[1]); 
+   plot MACDline   = FSignal - SSignal; 
+   plot MACDSL  = ExpAverage(MACDline, Smooth); 
+ } 
+
+plot M = ScalePlot(MACD(fastEMA = fastEMA,  
+                        slowEMA = slowEMA,  
+                        Smooth = Smooth,  
+                        Value = value).MACDline,  
+                        newRngMin = ll,  
+                        newRngMax = hh ); 
+
+M.SetPaintingStrategy(PaintingStrategy.line); 
+M.SetDefaultColor(Color.Cyan); 
+M.SetLineWeight(1); 
+
+plot S = ScalePlot(MACD(fastEMA = fastEMA,  
+                        slowEMA = slowEMA,  
+                        Smooth = Smooth,  
+                        Value = value).MACDSL,  
+                   newRngMin = ll,  
+                   newRngMax = hh ); 
+
+S.SetPaintingStrategy(PaintingStrategy.line); 
+S.SetDefaultColor(Color.Yellow); 
+S.SetLineWeight(1); 
+
+# End Code MACD Normalized to price 

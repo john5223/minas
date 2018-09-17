@@ -1,0 +1,20 @@
+DarvasBox 
+
+Description 
+
+The Darvas Box study generates Buy and Sell signals based on crossovers of the price plot with two bands. These bands are plotted at High and Low price levels of the bar that is in a certain state. Five states are considered when calculating upper and lower band levels. 
+
+From <http://tlc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/C-D/DarvasBox.html>  
+
+ 
+
+# scan Darvas Box Bearish: http://tos.mx/Pw8NIs 
+
+DarvasBox()."Sell Signal" is true within 2 bars 
+
+ 
+
+# scan Darvas Box Bullish: http://tos.mx/lIKuGK 
+
+DarvasBox()."Buy Signal" is true within 2 bars 
+

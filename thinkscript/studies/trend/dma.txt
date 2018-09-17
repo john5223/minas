@@ -1,0 +1,51 @@
+ 
+
+ 
+
+266.57 
+SPY4MID D: 0: 26726 H: L: 26535 C: 
+O Chart Aggregation is Daily I Chart Length is 81 Daily Bars 
+R: 254 
+Style Drawings 
+DMA (CLOSE, 28, -14) 265.71 
+Studies 
+Patterns 
+ 
+
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input length = 28; 
+
+input displace = -14; 
+
+ 
+
+ 
+
+def dPrice = price[displace]; 
+
+def isNaNdPrice = IsNaN(dPrice); 
+
+def varLength = sum(!isNaNdPrice, length); 
+
+def varSum = sum(if isNaNdPrice then 0 else dPrice, length); 
+
+ 
+
+plot DMA = if IsNaN(price) or varLength == 0 then Double.NaN else varSum / varLength; 
+
+DMA.DefineColor("Displaced", GetColor(0)); 
+
+DMA.DefineColor("Effective", GetColor(1)); 
+
+DMA.AssignValueColor(if isNaNdPrice then DMA.color("Effective") else DMA.color("Displaced")); 

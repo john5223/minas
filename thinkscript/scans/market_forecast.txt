@@ -1,0 +1,82 @@
+
+
+# scan Market Forecast Bearish: http://tos.mx/4FJ6Zo 
+
+MarketForecast()."Momentum" crosses below MarketForecast()."NearTerm" and MarketForecast()."NearTerm" crosses below MarketForecast()."Intermediate" 
+
+
+ 
+# scan Market Forecast Bullish: http://tos.mx/4x5sK0 
+
+MarketForecast()."Momentum" crosses above MarketForecast()."NearTerm" and MarketForecast()."NearTerm" crosses above MarketForecast()."Intermediate" 
+
+ 
+
+
+
+############################################################################
+
+
+Market Forcast scan 
+
+The market forecast as a scan 
+
+Not knowing exactly what you want and not knowing your familiarization with the platform, let’s start from the beginning. Here’s a ‘cookbook’ method for finding stocks that have all 3 Market Forecast parameters in either the upper OR lower reversal zone.  
+
+    Open any TOS chart and then click on the ‘Studies’ drop down, then ‘Edit Studies’. That will open the Edit Studies and Strategies window. 
+
+    Click on New in the lower left corner to open a new study window. 
+
+    In the window will be one statement, plot Data = close; Delete that line and paste in the following lines: 
+
+# scan_clusters() == 1 
+def c1I = close - lowest(low,31); 
+def c2I = highest(high,31) - lowest(low,31); 
+def FastK_I = c1I / c2I * 100; 
+def c1N = close - lowest(low,3); 
+def c2N = highest(high,3) - lowest(low,3); 
+def FastK_N = c1N / c2N * 100; 
+def Intermediate = Average(FastK_I, 5); 
+def NearTerm = Average(FastK_N, 2); 
+def Momentum = reference marketforecast.Momentum; 
+def ClusterHigh = Intermediate>=80 && NearTerm>=80 && Momentum>=80 ; 
+def ClusterLow =  Intermediate<=20 && NearTerm<=20 && Momentum<=20; 
+
+# Bullish Scan 
+plot cluster = if clusterhigh then 1 else 0; 
+
+#Bearish Scan 
+#plot cluster = if clusterlow then 1 else 0; 
+
+Save this study, I named mine ‘scan_clusters’. You’ll need to name yours the same to get the scan to work. 
+(Note: I use the word ‘scan’ in the name to make it easier to find my custom scans) 
+    The study will show up on your chart but you don’t want it there, so remove it from the chart. And close the ‘Edit Studies and Strategies’ window. 
+    Now go to the Scan tab, then Stock Hacker. In the ‘load scan query’ dropdown select ‘Create New Scan Query’ to get the following window: 
+<image001.jpg> 
+    Click on each of the 3 red x’s to delete those parameters. Then click on Add Study Filter. Under ‘Criteria’ you will see ADXCrossover in the selection box. Click on that box (it is a dropdown as well) and select ‘Custom’ at the bottom of that dropdown and you get this window: <image002.jpg> 
+Delete the only line of code in the window and paste this into it: scan_clusters() == 1 
+
+You’ll now see this: 
+
+<image003.jpg> 
+
+ Click OK, name the scan whatever you like and click Save. I named mine Clusters. Then click the ‘Scan’ button. A list of stocks will appear after a short delay. 
+
+    You should now have the scan you want. A note will probably pop up telling you that if you change the study, the change won’t be referenced by the scan. 
+
+    You may get a lot of low volume hits, so you can also sort by volume.  Or if you have a list of stocks in a watchlist, you can also tell the scan to look at only those stocks 
+
+    I’ve set up my TOS platform so that I can ‘link’ the returned stocks to charts that already have the studies that I want applied.  I used green and blue, but you can use whatever you like.  Here’s a list of the stocks returned, sorted by volume.  Now I just click on the color coded link and I see the chart the way I want it. 
+
+ 
+
+<image004.jpg> 
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,215 @@
+# linus & Alpha 
+
+#TOS title = MA_SD_Channel 
+
+#Hint:Plots a Standard Deviation or Linear Deviation channel of the close  MA  
+
+ plot WhiteLabel = Double.NaN; 
+
+WhiteLabel.SetDefaultColor(Color.White); 
+
+ 
+
+declare upper; 
+
+Input Type = {default "Standard Deviation", "Linear Deviation"}; 
+
+def Choice; 
+
+switch (Type){ 
+
+case "Standard Deviation": 
+
+    Choice = 1; 
+
+case "Linear Deviation": 
+
+    Choice = 2; 
+
+} 
+
+Input AveType = AverageType.SIMPLE; 
+
+ 
+
+#input ArrowSize    = 2;#SFL=This does not respond in the customizing screen. 
+
+input ShowArrows   = Yes; 
+
+input ColoredBands = yes; 
+
+input CloudsOn     = yes; 
+
+input PlotClose    = no; 
+
+input Length       = 10; 
+
+input Dev_Dn       = -0.8; 
+
+input Dev_Up       = +0.8; 
+
+ 
+
+plot Data = If PlotClose then Close else Double.Nan; 
+
+def Deviation = If Choice == 1 then stdev(close, Length) else lindev(close,  Length); 
+
+ 
+
+plot MidLineDef = MovingAverage(AveType, close, Length); 
+
+MidLineDef.SetDefaultColor(Color.Blue); 
+
+def LowerBandDef = MidLineDef + Dev_Dn * Deviation; 
+
+def UpperBandDef = MidLineDef + Dev_Up * Deviation; 
+
+ 
+
+ 
+
+def RelativePosition =  
+
+  if close > UpperBandDef then 1 else  # Plot above band =  2   
+
+    if close < LowerBandDef then -1    # Plot below band = -2 
+
+    else 0    ;                        # between  bands  =  0      
+
+ 
+
+ 
+
+rec PositionStatus = compoundValue(1,  
+
+  if PositionStatus[1] == RelativePosition or RelativePosition == 0 then PositionStatus[1] 
+
+  else  
+
+    if RelativePosition == 1 then 1  
+
+    else -1, 0);  # Keeps track of changes in plot relative to bands  
+
+                  # 2 if changed and above -2 if changed and below 
+
+                  # 0 if no change or inside the bands 
+
+plot Midline   = MidlineDef; 
+
+     Midline.SetDefaultColor(GetColor(1)); 
+
+     Midline.AssignValueColor (Color.Dark_Gray); 
+
+ 
+
+plot UpperBand = UpperBandDef; 
+
+     UpperBand.AssignValueColor ( 
+
+        if !ColoredBands then Color.White 
+
+        else  
+
+          if PositionStatus[0] == 1 then CreateColor(0, 160, 0) 
+
+          else CreateColor(160, 0, 0)); 
+
+ 
+
+plot LowerBand = LowerBandDef; 
+
+     LowerBand.AssignValueColor ( 
+
+        if !ColoredBands then Color.White 
+
+        else  
+
+          if PositionStatus[0] == -1 then CreateColor(160, 0, 0) 
+
+          else CreateColor(0, 160, 0)); 
+
+ 
+
+def space3 = (UpperBandDef - LowerBandDef) / 5; 
+
+ 
+
+# Arrows. 
+
+plot UpArrow = 
+
+  if ShowArrows then 
+
+    if PositionStatus[0] == PositionStatus[1] then double.NAN 
+
+    else if PositionStatus[0] == 1 then  
+
+    Min(Low,LowerBandDef) - space3   else double.NAN 
+
+  else double.NAN; 
+
+     UpArrow.SetPaintingStrategy(PaintingStrategy.Arrow_Up); 
+
+     UpArrow.SetDefaultColor(Color.Yellow); 
+
+     UpArrow.SetLineWeight(3); 
+
+ 
+
+plot DownArrow = 
+
+  if ShowArrows then 
+
+    if PositionStatus[0] == PositionStatus[1] then Double.NaN 
+
+    else if PositionStatus[0] == -1 then  
+
+    Max(High,UpperBandDef) + space3 else double.NAN 
+
+else double.NAN; 
+
+     DownArrow.SetPaintingStrategy(PaintingStrategy.Arrow_Down); 
+
+     DownArrow.SetDefaultColor(Color.Yellow); 
+
+     DownArrow.SetLineWeight(3); 
+
+ 
+
+ 
+
+# Clouds 
+
+plot GreenUpperCloud = if CloudsOn and PositionStatus[0] == 1 then  
+
+  UpperBandDef else double.NAN; 
+
+GreenUpperCloud.hide(); 
+
+plot GreenLowerCloud = if CloudsOn and PositionStatus[0] == 1 then  
+
+  LowerBandDef else double.NAN; 
+
+GreenLowerCloud.hide(); 
+
+AddCloud (GreenUpperCloud, GreenLowerCloud, CreateColor(0, 70, 0),CreateColor(0, 70, 0)); 
+
+AddCloud (GreenUpperCloud, GreenLowerCloud, CreateColor(0,255,0),CreateColor(0, 255, 0)); 
+
+ 
+
+plot RedUpperCloud = if CloudsOn and PositionStatus[0] == -1 then  
+
+  UpperBandDef else double.NAN; 
+
+RedUpperCloud.hide(); 
+
+plot RedLowerCloud = if CloudsOn and PositionStatus[0] == -1 then 
+
+  LowerBandDef else double.NAN; 
+
+RedLowerCloud.hide();#.SetDefaultColor(CreateColor(200, 0, 0)); 
+
+AddCloud (RedUpperCloud, RedLowerCloud, CreateColor(255, 0, 0),CreateColor(255, 0, 0));  
+
+#end 

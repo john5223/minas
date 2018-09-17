@@ -1,0 +1,91 @@
+# Wilder Moving Average by  Mobius© 
+
+ 
+
+#        WWMA[1] * (n-1) +price               
+
+# WWMA = ---------------------- 
+
+#                 n 
+
+ 
+
+input n = 14; 
+
+input price = close; 
+
+ 
+
+def WWMA = (WWMA[1] * (n-1) + price) / n; 
+
+plot WildersMA = if isNaN(WWMA) then WWMA[1] else WWMA; 
+
+     WildersMA.SetPaintingStrategy(PaintingStrategy.Line); 
+
+     WildersMA.SetLineWeight(1); 
+
+     WildersMA.AssignValueColor(if WildersMA > WildersMA[1] 
+
+                                then Color.Green 
+
+                                else Color.Red); 
+
+#end 
+
+########## About Wilders Indicators ################# 
+
+Welles Wilder's Moving Average Formula 
+
+Source = http://www.incrediblecharts.com/indicators/wilder_moving_average.php#wilder_moving_average_formula 
+
+------------------------------------------------ 
+
+A number of popular indicators, including Relative Strength Index (RSI), Average True Range (ATR) and Directional Movement were developed by J. Welles Wilder and introduced in his 1978 book: New Concepts in Technical Trading Systems. Users should beware that Wilder does not use the standard exponential moving average formula. This can have significant imapct when selecting suitable time periods for his indicators. 
+
+ 
+
+ 
+
+The standard exponential moving average formula converts the time period to a fraction 
+
+ using the formula EMA% = 2/(n + 1) where n is the number of days. For example, the EMA% 
+
+for 14 days is 2/(14 days +1) = 13.3%. Wilder, however, uses an EMA% of 1/14 which equals 7.1%.  
+
+This equates to a 27-day exponential moving average using the standard formula. 
+
+ 
+
+Welles Wilder's Indicators 
+
+========================= 
+
+Indicators affected are: 
+
+======================= 
+
+    Average True Range; 
+
+    Directional Movement System; 
+
+    Relative Strength Index; and 
+
+    Twiggs Money Flow — developed by Colin Twiggs using Wilder's moving average formula. 
+
+ 
+
+Indicator Time Frames 
+
+==================== 
+
+We recommend that users try shorter time periods when using one of the above indicators.  
+
+For example, if you are tracking a 30-day cycle you would normally select a 15-day Indicator Time Period.  
+
+With the RSI, adjust the time period as follows: 
+
+ 
+
+RSI time period = (n + 1) / 2 = (15 + 1) / 2 = 8 days 
+
+ 

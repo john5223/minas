@@ -1,0 +1,129 @@
+The MACD Histogram divergence as per Alexander Elder's definition was tricky to code (also your reference links were not working so I had to search and read his book for the definition) and it took me many days but I finally solved it! To my knowledge, no one has coded the MACD Histogram divergence per Elder's definition in thinkScript before. The following script will plot large red arrows at potential regular bearish divergence, large green arrows at potential regular bullish divergence, small pink arrows at potential hidden bearish divergence and small lime arrows at potential hidden bullish divergence. The code will also alert you if arrow is plotted.  
+
+ 
+
+The reason I am using the word "potential" is because the code compares the high or low with the previous swing high or swing low to determine divergence (instead of comparing two swing highs or two swing lows), in order to get a fast signal before divergence is complete. Once you get the arrow(s) then wait for the MACD Histogram bar to become smaller for entry signal. If after the arrows are plotted, the histogram bars keep getting bigger to the point there is no divergence, then it is a no go.  
+
+ 
+
+I could have coded for divergence between two swing highs or two swing lows once the swing points have been determined, but it takes few smaller bars after the highest or lowest bar to determine swing high or swing low point, so plotting of the arrow will be delayed by few bars and by then price might already have moved a lot and signal might not be as useful. My code does not lag and arrow is plotted immediately if there is a potential divergence. You can change the number of bars used to determine the previous swing high or swing low in "edit properties" (default is 2).  
+
+ 
+
+This code is an upper study only and will not plot the MACD Histogram. Use the standard MACD Histogram in ToS as the lower study. In the Auto versus Manual pane in top right corner, make sure to uncheck all boxes except "fit study markers". Switching extended hours on or off will make a difference in divergences.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+input bar = 2;  
+
+ 
+
+input fastLength = 12;  
+
+input slowLength = 26;  
+
+input MACDLength = 9;  
+
+input averageType = AverageType.EXPONENTIAL;  
+
+ 
+
+plot Diff = MACD(fastLength, slowLength, MACDLength, averageType).Diff;  
+
+ 
+
+def SwingHigh = Diff > 0 and Diff >= highest(Diff[1], bar) and Diff >= highest(Diff[-bar], bar);  
+
+def SHprice = if SwingHigh then Diff else SHprice[1];  
+
+def SHBar = if SwingHigh then BarNumber() else SHBar[1];  
+
+def CrossBarL = if Diff crosses below 0 then BarNumber() else CrossBarL[1];  
+
+ 
+
+def SwingLow = Diff < 0 and Diff <= lowest(Diff[1], bar) and Diff <= lowest(Diff[-bar], bar);  
+
+def SLprice = if SwingLow then Diff else SLprice[1];  
+
+def SLBar = if SwingLow then BarNumber() else SLBar[1];  
+
+def CrossBarH = if Diff crosses above 0 then BarNumber() else CrossBarH[1];  
+
+ 
+
+def SHSP = if SwingHigh then high else SHSP[1];  
+
+def SLSP = if SwingLow then low else SLSP[1];  
+
+ 
+
+def BearDiv = Diff > 0 and CrossBarL[1] > SHBar[1] and Diff < SHprice[1] and high > SHSP[1] and SHprice[1] - Diff > 0.005;  
+
+def BullDiv = Diff < 0 and CrossBarH[1] > SLBar[1] and Diff > SLprice[1] and low < SLSP[1] and Diff - SLprice[1] > 0.005;  
+
+def HiddenBearDiv = Diff > 0 and Diff > SHprice[1] and high < SHSP[1] and Diff - SHprice[1] > 0.005;  
+
+def HiddenBullDiv = Diff < 0 and Diff < SLprice[1] and low > SLSP[1] and SLprice[1] - Diff > 0.005;  
+
+ 
+
+plot BearD = if BearDiv then high else Double.NaN;  
+
+        BearD.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);  
+
+        BearD.AssignValueColor(Color.RED);  
+
+        BearD.SetLineWeight(3);  
+
+ 
+
+plot BullD = if BullDiv then low else Double.NaN;  
+
+        BullD.SetPaintingStrategy(PaintingStrategy.ARROW_UP);  
+
+        BullD.AssignValueColor(Color.UPTICK);  
+
+        BullD.SetLineWeight(3);  
+
+ 
+
+plot HiddenBearD = if HiddenBearDiv then high else Double.NaN;  
+
+        HiddenBearD.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);  
+
+        HiddenBearD.AssignValueColor(Color.PINK);  
+
+        HiddenBearD.SetLineWeight(1);  
+
+ 
+
+plot HiddenBullD = if HiddenBullDiv then low else Double.NaN;  
+
+        HiddenBullD.SetPaintingStrategy(PaintingStrategy.ARROW_UP);  
+
+        HiddenBullD.AssignValueColor(Color.LIME);  
+
+        HiddenBullD.SetLineWeight(1);  
+
+ 
+
+Alert(BearDiv[1], "Short MACD divergence", Alert.BAR, Sound.Ring);  
+
+Alert(BullDiv[1], "Long MACD divergence", Alert.BAR, Sound.Ring);  
+
+Alert(HiddenBearDiv[1], "Short hidden MACD divergence", Alert.BAR, Sound.Ring);  
+
+Alert(HiddenBullDiv[1], "Long hidden MACD divergence", Alert.BAR, Sound.Ring); 
+
+ 
+
+From <http://www.researchtrade.com/forum/read.php?7,2258,page=46>  
+
+ 

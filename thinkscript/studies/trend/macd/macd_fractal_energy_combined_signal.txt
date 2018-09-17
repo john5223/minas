@@ -1,0 +1,205 @@
+Altered States MACD with Fractal Energy dampening whiplash signals when price is changing trends 
+
+ 
+
+# MACD Fractal Energy Combined Signal  
+
+# Mobius 
+
+# V01.03.2017 
+
+ 
+
+declare lower; 
+
+ 
+
+input GLength = 8; 
+
+input beta = 5; 
+
+input fastLength = 12; 
+
+input slowLength = 26; 
+
+input MACDLength = 9; 
+
+input averageType = AverageType.EXPONENTIAL; 
+
+ 
+
+script G { 
+
+    input p = close; 
+
+    input n = 2; 
+
+    input b = 1.05; 
+
+    def w; 
+
+    def beta; 
+
+    def alpha; 
+
+    def G; 
+
+    w = (2 * Double.Pi / n); 
+
+    beta = (1 - Cos(w)) / (Power(1.414, 2.0 / b) - 1 ); 
+
+    alpha = (-beta + Sqrt(beta * beta + 2 * beta)); 
+
+    G = Power(alpha, 4) * p +  
+
+        4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] +  
+
+        4 * Power( 1 - alpha, 3 ) * G[3] -  
+
+            Power( 1 - alpha, 4 ) * G[4]; 
+
+    plot data = G; 
+
+} 
+
+# Variables: 
+
+def bar = BarNumber(); 
+
+def o; 
+
+def h; 
+
+def l; 
+
+def c; 
+
+o = g(open, GLength, beta); 
+
+h = g(high, GLength, beta); 
+
+l = g(low, GLength, beta); 
+
+c = g(close, GLength, beta); 
+
+def FE = Log(Sum(Max(h, c[1]) - Min(l, c[1]), Glength) /  
+
+            (Highest(h, Glength) - Lowest(l, Glength))) /  
+
+             Log(Glength); 
+
+plot Value = MovingAverage(averageType, c, fastLength) -  
+
+             MovingAverage(averageType, c, slowLength); 
+
+plot Avg = MovingAverage(averageType, Value, MACDLength); 
+
+plot Diff = Value - Avg; 
+
+plot ZeroLine = if isNaN(close) 
+
+                then double.nan  
+
+                else 0; 
+
+     ZeroLine.SetStyle(Curve.Points); 
+
+     ZeroLine.AssignValueColor(if FE > .6  
+
+                               then color.yellow  
+
+                               else if FE < FE[1]  
+
+                                    then color.green  
+
+                                     else if FE < .35  
+
+                                          then color.red  
+
+                                          else color.white); 
+
+Value.SetDefaultColor(GetColor(1)); 
+
+Avg.SetDefaultColor(GetColor(5)); 
+
+Diff.SetDefaultColor(GetColor(5)); 
+
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Diff.SetLineWeight(3); 
+
+Diff.DefineColor("Positive and Up", Color.GREEN); 
+
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN); 
+
+Diff.DefineColor("Negative and Down", Color.RED); 
+
+Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+
+Diff.AssignValueColor(if Diff >= 0  
+
+                      then if Diff > Diff[1]  
+
+                           then Diff.color("Positive and Up") 
+
+                           else Diff.color("Positive and Down")  
+
+                           else if Diff < Diff[1]  
+
+                                then Diff.color("Negative and Down") 
+
+                                else Diff.color("Negative and Up")); 
+
+ZeroLine.SetDefaultColor(GetColor(0)); 
+
+plot Entry = if ((FE < FE[1])  
+
+              or  
+
+                 (FE > .65 and value < 0)) and  
+
+                  Value crosses above Avg 
+
+             then 0 
+
+             else double.nan; 
+
+     Entry.SetPaintingStrategy(PaintingStrategy.Arrow_UP); 
+
+     Entry.SetLineWeight(3); 
+
+     Entry.AssignValueColor(if Value > 0  
+
+                            then color.light_Green 
+
+                            else color.green); 
+
+plot Exit = if FE > .6 and  
+
+               Value crosses below Avg  
+
+            then 0  
+
+            else double.nan; 
+
+     Exit.SetPaintingStrategy(PaintingStrategy.Arrow_DOWN); 
+
+     Exit.SetLineWeight(3); 
+
+     Exit.AssignValueColor(if FE < .35 and  
+
+                              FE < FE[1] and  
+
+                              value < 0 
+
+                           then Color.light_Red 
+
+                           else if Value > 0 and  
+
+                                   Value < Avg 
+
+                                then color.dark_Red 
+
+                                else color.red); 
+
+# End Code MACD FE Combined Signal 

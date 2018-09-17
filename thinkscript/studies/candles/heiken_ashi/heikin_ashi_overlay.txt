@@ -1,0 +1,115 @@
+#StudyName:HA Hybrid Chart 
+
+#Description: Shows HA Candles and Price Bars 
+
+#Author: DMonkey 
+
+#Requested By:  Chatroom Discussion 
+
+# Ver  1   Date : Posted to chat on 4/13/2017 : Original Date Unknown. 
+
+# Trading Notes: N/A / Just a comparison chart 
+
+# Uses a depreciated function of addChart  
+
+ 
+
+#inputs 
+
+input symbol = "/CL"; 
+
+ 
+
+#Calcs 
+
+def o = open(symbol); 
+
+def h = high(symbol); 
+
+def l = low(symbol); 
+
+def c = close(symbol); 
+
+def na = double.nan; 
+
+ 
+
+def o1 = if o < c 
+
+         then h  
+
+         else na; 
+
+def c1 = if o < c 
+
+         then l 
+
+         else na; 
+
+ 
+
+def h1 = h; 
+
+def l1 = l; 
+
+ 
+
+def o2 = if o > c 
+
+         then h  
+
+         else na; 
+
+def c2 = if o > c  
+
+         then l 
+
+         else na; 
+
+ 
+
+def h2 = h; 
+
+def l2 = l; 
+
+ 
+
+#Chart Management 
+
+AddChart(growColor =    Color.LIGHT_GRAY,  
+
+         fallColor =    Color.LIGHT_GRAY,  
+
+         neutralColor = Color.LIGHT_GRAY, 
+
+         high =  h1,  
+
+         low =   l1,  
+
+         open =  c1,  
+
+         close = o1,  
+
+         type = ChartType.baR); 
+
+ 
+
+AddChart(growColor =    Color.LIGHT_GRAY,  
+
+         fallColor =    Color.LIGHT_GRAY, 
+
+         neutralColor = Color.LIGHT_GRAY,  
+
+         high =  h2,  
+
+         low =   l2,  
+
+         open =  c2,  
+
+         close = o2,  
+
+         type = ChartType.bar); 
+
+ 
+
+###   End Code   ### 

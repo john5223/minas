@@ -1,0 +1,80 @@
+# SelfAwareMovingAverageV1_mobius 
+
+# Simple model of a "Self Aware" Moving Average 
+
+# Mobius 
+
+# Can introduce an error correction model as a feedback loop in leu of a fixed multipler for z. 
+
+ 
+
+script g  
+
+    { 
+
+     input data = close; 
+
+     def w = (2 * Double.Pi / 20); 
+
+     def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / 10) - 1 ); 
+
+     def alpha = (-beta + Sqrt(beta * beta + 2 * beta)); 
+
+     def G = Power(alpha, 4) * data +  
+
+             4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] +  
+
+             4 * Power( 1 - alpha, 3 ) * G[3] - Power( 1 - alpha, 4 ) * G[4]; 
+
+     plot Line = G; 
+
+    } 
+
+def h = g(data = high); 
+
+def l = g(data = low); 
+
+def c = g(data = close); 
+
+def z = Round((Log(Sum(TrueRange(h, c, l), 8) /  
+
+              (Highest(h, 8) - Lowest(l, 8))) /  
+
+               Log(8))*10, 0); 
+
+def d = fold i = 0 to 8 
+
+        with s  
+
+        while i < z 
+
+        do s + getValue(c, i); 
+
+def a = d / z; 
+
+def t = getValue(a, z/2); 
+
+plot data = Round(((a-t) + a) / TickSize(), 0) * TickSize(); 
+
+AddLabel(1, "Length = " + z, if z > z[1] 
+
+                             then color.green 
+
+                             else if z < z[1] 
+
+                                  then color.red 
+
+                                  else color.white); 
+
+# End Code 
+
+O TR UNIT ETE 
+263.76 
+SPY3MID D: 4/11/18 0:26347 H: L: C: 28378 
+0 1.66%Div 
+SPY's first bar openned at S277.92 
+EXTO Eligible 
+Style Drawings Studies Patterns 
+R: 225 
+yes, yes, no} WA WA WA WA WA WA WA SelfAware.„ 
+Daily Bias e pc and c Co-75.41% pc and Length 

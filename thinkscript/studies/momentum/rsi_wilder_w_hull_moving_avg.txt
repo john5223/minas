@@ -1,0 +1,81 @@
+K_RSI_Wilder_w_HullMovingAvg STUDY 
+
+ 
+
+#K_RSI_Wilder_w_HullMovingAvg 
+
+ 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 14; 
+
+input over_Bought = 70; 
+
+input over_Sold = 30; 
+
+input price = close; 
+
+input HMASmoothing = 4; ##Added an input line for smoothing value 
+
+ 
+
+def NetChgAvg = WildersAverage(price - price[1], length); 
+
+def TotChgAvg = WildersAverage(AbsValue(price - price[1]), length); 
+
+def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0; 
+
+ 
+
+def RSI_Raw = 50 * (ChgRatio + 1); ## changed the name to RSI_Raw 
+
+plot OverSold = over_Sold; 
+
+plot OverBought = over_Bought; 
+
+ 
+
+plot RSI = HullMovingAvg (RSI_Raw, HMASmoothing); ## Added our smoothing 
+
+ 
+
+#RSI.DefineColor("OverBought", GetColor(5)); 
+
+#RSI.DefineColor("Normal", GetColor(7)); 
+
+#RSI.DefineColor("OverSold", GetColor(1)); 
+
+#RSI.AssignValueColor(if RSI > over_Bought then #RSI.Color("OverBought") else if RSI < over_Sold then #RSI.Color("OverSold") else RSI.Color("Normal")); 
+
+#OverSold.SetDefaultColor(GetColor(8)); 
+
+#OverBought.SetDefaultColor(GetColor(8)); 
+
+ 
+
+#rsi 
+
+#plot rsi = rsi(); 
+
+RSI.DefineColor("OverBought", Color.RED); 
+
+RSI.DefineColor("Above 50", Color.ORANGE); 
+
+RSI.DefineColor("Below 50", Color.GREEN); 
+
+RSI.DefineColor("OverSold", Color.MAGENTA); 
+
+RSI.AssignValueColor(if RSI > overBought then RSI.color("OverBought") else if RSI > 50 and RSI < overBought then RSI.Color("Above 50") else if RSI < 50 and RSI > oversold then RSI.color("Below 50") else RSI.color("OverSold")); 
+
+ 
+
+ plot FiftyLine = 50; 
+
+FiftyLine.SetDefaultColor( Color.red ); 
+
+FiftyLine.SetLineWeight( 1); 

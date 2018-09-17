@@ -1,0 +1,40 @@
+ 
+
+ 
+
+S 266.57 
+spy 4 M ID 
+D: 0: 28728 H: 28789 L: C: 28657 
+O Chart Aggregation is Daily Chart Length is 81 Daily Bars 
+R: 284 
+style 
+DEMA (CLOSE, 10) 
+Drawings 
+267.86 
+Studies 
+Patterns 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input length = 10; 
+
+ 
+
+def emaPrice = ExpAverage(price, length); 
+
+def emaEmaPrice = ExpAverage(emaPrice, length); 
+
+ 
+
+plot DEMA = 2 * emaPrice - emaEmaPrice; 
+
+DEMA.SetDefaultColor(GetColor(1)); 

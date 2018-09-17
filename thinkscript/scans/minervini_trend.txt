@@ -1,0 +1,3 @@
+#Minervini Trend
+def trend = close>average(close,200) and close>average(close,150) and average(close,150)>average(close,200) and average(close,200)>average(close,200)[25] and close>average(close,50) and close>1.30*lowest(low,252) and close>0.74*highest(high,252);
+plot TrendMinervini = trend;

@@ -1,0 +1,46 @@
+Share D 
+261.84 
+EXTO Eligible 
+spy 4 M ID 
+D: 0: 26773 H: 26798 L: 2618 C: 26187 
+Chart Aggregation is Daily Chart Length is 82 Daily Bars LinearRegSDchanneI_Mobius 
+LinearRegressionSlope (CLOSE, 14) 0332132 
+Style Drawings 
+Studies 
+(yes. line. (H+-)i2. 0 
+Patterns 
+ 
+
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input price = close; 
+
+input length = 14; 
+
+ 
+
+Assert(length > 1, "'length' must be greater than one: " + length); 
+
+ 
+
+plot LRS = 6 * ( wma(price, length) -  Average(price, length) ) / (length - 1); 
+
+plot ZeroLine = 0; 
+
+ 
+
+LRS.setDefaultColor(getColor(8)); 
+
+ZeroLine.setDefaultColor(getColor(5)); 

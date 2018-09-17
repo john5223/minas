@@ -1,0 +1,62 @@
+Aroon Indicator
+
+
+What is the 'Aroon Indicator'
+The Aroon indicator is a technical indicator that is used to identify when trends are likely to change direction. In essence, the indicator measures the time it takes for the price to reach the highest and lowest points over a given timeframe as a percentage of total time. The indicator consists of the "Aroon up" line, which measures the strength of the uptrend, and the "Aroon down" line, which measures the strength of the downtrend.
+
+
+BREAKING DOWN 'Aroon Indicator'
+The Aroon indicator was developed by Tushar Chande in 1995 as a way to assess the strength of a trend by looking at the time it takes for the price to reach its high and low points over a given period of time.
+
+The two component lines are calculated as follows:
+
+Aroon Up - ((N - Days Since N-day High) / N) x 100
+Aroon Down - ((N - Days Since N-day Low) / N) x 100
+The N is the number of periods used for the indicator. By default, many traders use the Aroon indicator over 25 periods.
+
+The Aroon Up and the Aroon Down lines fluctuate between zero and 100, with values close to 100 indicating a strong trend and values near zero indicating a weak trend. The lower the Aroon Up, the weaker the uptrend and the stronger the downtrend, and vice versa. The main assumption underlying this indicator is that a stock's price will close at record highs in an uptrend, and record lows in a downtrend.
+
+This indicator is very similar to the directional movement index (DMI) that was developed by Welles Wilder, which is also a very popular indicator used to measure the strength of a given trend and the likelihood that it will reverse direction.
+
+The Aroon indicator is best used in conjunction with other forms of technical analysis that can be used as confirmation.
+
+
+
+AroonIndicator 
+Description 
+The Aroon Indicator is a study comprising two plots. The first one (Aroon Up) measures the number of periods since the most recent High reached within a specified time period. The other plot (Aroon Down) measures the number of periods since the most recent Low reached within the same period. 
+
+The values are normalized to the 0 to 100 scale. 
+
+From <http://tlc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/A-B/AroonIndicator.html>  
+
+ 
+############################################
+
+#
+#
+# Scans 
+#
+#
+
+
+# scan Aroon Bearish Cross: http://tos.mx/t8JtPh  
+AroonIndicator()."Up" crosses below AroonIndicator()."Down" 
+
+# scan Aroon Bullish: http://tos.mx/nkfr0F   
+AroonIndicator()."Up" crosses above AroonIndicator()."Down" 
+
+ 
+
+# scan Aroon Overbought: http://tos.mx/mK9L91  
+AroonIndicator()."Up" crosses below AroonIndicator()."OverBought" 
+
+
+# scan Aroon Oversold: http://tos.mx/NqVhAQ   
+AroonIndicator()."Down" crosses above AroonIndicator()."OverSold" 
+
+
+
+
+
+

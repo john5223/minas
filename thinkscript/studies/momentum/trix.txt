@@ -1,0 +1,56 @@
+App... 
+AAPL 4 M ID [NASDAQ] 
+Draw i ngs 
+AAPL 
+165.24 
+Share 
+0: 166.83 H: 166.92 L: 164.09 C: 165.24 
+Style 
+Studies 
+Patterns 
+R: 2.83 
+TRIX(9, 14, CLOSE,3) 430822 7.41792 0 
+LinearRegrReversaI (14) I 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 9; 
+
+input colorNormLength = 14; 
+
+input price = close; 
+
+input signalLength = 3; 
+
+ 
+
+def tr = ExpAverage(ExpAverage(ExpAverage(Log(price), length), length), length); 
+
+ 
+
+plot TRIX = (tr - tr[1]) * 10000; 
+
+plot Signal = ExpAverage(TRIX, signalLength); 
+
+plot ZeroLine = 0; 
+
+ 
+
+TRIX.DefineColor("Highest", Color.YELLOW); 
+
+TRIX.DefineColor("Lowest", Color.LIGHT_RED); 
+
+TRIX.AssignNormGradientColor(colorNormLength, TRIX.color("Lowest"), TRIX.color("Highest")); 
+
+Signal.setDefaultColor(GetColor(3)); 
+
+ZeroLine.SetDefaultColor(GetColor(5)); 

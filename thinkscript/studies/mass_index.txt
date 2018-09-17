@@ -1,0 +1,42 @@
+SPY4MID 0:2E72E H:2E78g L:2E535 c:2EE57 R:2.54 
+9, 25,285) 247251 27 26.5 
+LinearRegrReversaI (14) 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input setup = 27; 
+
+input smLength = 9; 
+
+input sumLength = 25; 
+
+input trigger = 26.5; 
+
+ 
+
+def ema = ExpAverage(high - low, smLength); 
+
+ 
+
+plot MassX = sum(ema / ExpAverage (ema, smLength), sumLength); 
+
+plot SetupLevel = setup; 
+
+plot TriggerLevel = trigger; 
+
+ 
+
+MassX.SetDefaultColor(GetColor(1)); 
+
+SetupLevel.SetDefaultColor(GetColor(8)); 
+
+TriggerLevel.SetDefaultColor(GetColor(5)); 

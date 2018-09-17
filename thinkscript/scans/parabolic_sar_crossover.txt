@@ -1,0 +1,38 @@
+ 
+ParabolicSARCrossover 
+
+Description 
+
+The Parabolic SAR Crossover study is a trend-following technical indicator based on crossovers of Parabolic SAR with the price plot. 
+
+It is considered a Buy signal when a bullish crossover occurs (Parabolic SAR falls below the Close price); Sell signal when a bearish crossover occurs (Parabolic SAR goes beyond the Close price). 
+
+
+
+
+ParabolicSARCrossover("crossing type" = "Bullish") 
+
+ 
+
+ 
+ParabolicSARCrossover("crossing type" = "Bearish") 
+
+ 
+
+
+
+ ################
+
+
+# PSAR Long method
+
+#begin scan code 
+def psar = ParabolicSAR(); 
+
+def l = low; 
+def h =high; 
+ 
+plot flip_up = psar[1] < l[1] && psar > h; 
+#end scan code 
+
+

@@ -1,0 +1,97 @@
+ 
+
+Draw i 
+spy 3 M ID 
+266.57 
+D: 0: 26726 
+Studies 
+Patterns 
+H: 26789 
+L: 26535 C: 26657 
+R: 284 
+10, 0.8, 0.2, Predictive) 0.97894 08 02 
+DynamicMomentumlndex(CLOSE, 5, 10, 14, 3, 30) 50.4908 70 30 
+WA 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2013-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input price = close; 
+
+input length = 20; 
+
+input cutoffLength = 10; 
+
+input over_bought = 0.8; 
+
+input over_sold = 0.2; 
+
+input mode = {default Predictive, Conventional}; 
+
+ 
+
+def filt = reference EhlersRoofingFilter(price, cutoffLength); 
+
+def highestP = Highest(filt, length); 
+
+def lowestP = Lowest(filt, length); 
+
+def stoch = if (highestP - lowestP) != 0 then (filt - lowestP) / (highestP - lowestP) else 0; 
+
+ 
+
+plot Stochastic = reference EhlersSuperSmootherFilter(stoch, cutoffLength); 
+
+plot OverBought = over_bought; 
+
+plot OverSold = over_sold; 
+
+plot Buy; 
+
+plot Sell; 
+
+switch (mode) { 
+
+case Predictive: 
+
+    Buy = if Stochastic crosses below OverSold then OverSold + 0.05 else Double.NaN; 
+
+    Sell = if Stochastic crosses above OverBought then OverBought - 0.05 else Double.NaN; 
+
+case Conventional: 
+
+    Buy = if Stochastic crosses above OverSold then OverSold + 0.05 else Double.NaN; 
+
+    Sell = if Stochastic crosses below OverBought then OverBought - 0.05 else Double.NaN; 
+
+} 
+
+ 
+
+Stochastic.SetDefaultColor(GetColor(5)); 
+
+OverBought.SetDefaultColor(GetColor(7)); 
+
+OverSold.SetDefaultColor(GetColor(7)); 
+
+Buy.SetDefaultColor(Color.UPTICK); 
+
+Buy.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+Buy.HideBubble(); 
+
+Sell.SetDefaultColor(Color.DOWNTICK); 
+
+Sell.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+Sell.HideBubble(); 

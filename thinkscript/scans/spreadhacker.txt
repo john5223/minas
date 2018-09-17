@@ -1,0 +1,35 @@
+Spread Hacker  - short OTM put Vertical (example) 
+Days to Exp = min 25 ... max 55 
+Probability = min 65% 
+Max profit = min 35% 
+Mark = min 1.50 
+Delta = min 0.01 
+ 
+Spread Hacker  -  short OTM call Vertical (example) 
+Days to Exp = min 25 ... max 55 
+Probability = min 65% 
+Max profit = min 35% 
+Mark = min 1.50 
+Delta = min empty ... max 0     
+
+ 
+
+Dilbert_CalendarScan  http://tos.mx/xApeRm 
+
+ 
+
+
+
+
+ Mr. Script:  http://tos.mx/AkNdrp 
+** scan for short call trading ideas 
+** HINT: select watch list of your stocks instead of "all optionable" if looking for ideas of calls to sell against your stocks 
+Scan saved as "From TOS Awesome on Mar 05 first" 
+
+
+
+
+
+
+
+

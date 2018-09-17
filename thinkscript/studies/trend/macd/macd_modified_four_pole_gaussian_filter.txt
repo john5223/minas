@@ -1,0 +1,58 @@
+MACD Modified - Four Pole Gaussian Filter 
+by Mobius (Mobius) 2 years ago  
+
+MACD Modified with a Guassian 4 Pole Filter instead of Price. Faster with less noise 
+http://tos.mx/RX6Bxm 
+
+# MACD with a more Normal Distribution 
+# Mobius 
+# V01.09.2015 
+#Hint: Plots a Gaussian distribution. If Normal Distribution is met, then at minimum, 68.2% of the close values should be inside a One Standard Deviation Envelope and 95.4% of the close values should be inside a 2 Standard Deviation Envelope. 
+
+declare lower; 
+
+input fastLength = 12; 
+input slowLength = 26; 
+input MACDLength = 9; 
+ 
+# Four Pole Filter 
+script g{ 
+	input length  = 4; 
+	input betaDev =  2; 
+	input price = OHLC4;
+
+	def c; 
+
+	def w; 
+	def beta; 
+	def alpha; 
+	def G; 
+	c = price; 
+	w = (2 * Double.Pi / length); 
+	beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betaDev) - 1 ); 
+	alpha = (-beta + Sqrt(beta * beta + 2 * beta)); 
+	G = Power(alpha, 4) * c +  
+	                 4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] +  
+	                 4 * Power( 1 - alpha, 3 ) * G[3] - Power( 1 - alpha, 4 ) * G[4]; 
+	plot Line = G; 
+} 
+# Modified MACD 
+plot Value = g(length = fastLength) - g(length = slowLength); 
+plot Avg = g(price = Value, length = MACDLength); 
+plot Diff = Value - Avg; 
+plot ZeroLine = 0; 
+
+Value.SetDefaultColor(GetColor(1)); 
+Avg.SetDefaultColor(GetColor(8)); 
+Diff.SetDefaultColor(GetColor(5)); 
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+Diff.SetLineWeight(3); 
+Diff.DefineColor("Positive and Up", Color.GREEN); 
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN); 
+Diff.DefineColor("Negative and Down", Color.RED); 
+Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then Diff.color("Positive and Up") else Diff.color("Positive and Down") else if Diff < Diff[1] then Diff.color("Negative and Down") else Diff.color("Negative and Up")); 
+ZeroLine.SetDefaultColor(GetColor(0)); 
+# End Code Modified MACD - Gaussian 
+
+ 

@@ -1,0 +1,80 @@
+Machine generated alternative text:
+App.. 
+AAPL 4 M ID [NASDAQ] 
+LinearRegrReversaI (14) 
+Draw i ngs 
+A-APL 
+165.24 
+Share D 
+Style 
+Studies 
+Patterns 
+0: 16883 H: 16892 L: C: 16524 R:283 
+10) 45.0992 496544 0.554013 90 50 10 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2014-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input index = "SPY"; 
+
+input length = 50; 
+
+input over_bought = 90; 
+
+input normal_level = 50; 
+
+input over_sold = 10; 
+
+ 
+
+Assert(GetSymbol() != index, "'index' must not be the current symbol: " + GetSymbol()); 
+
+ 
+
+def rangeStock = Highest(high, length) - Lowest(low, length); 
+
+def rangeIndex = Highest(high(index), length) - Lowest(low(index), length); 
+
+ 
+
+plot StochStock = 100 * if rangeStock != 0 then (close - Lowest(low, length)) / rangeStock else 0; 
+
+plot StochIndex = 100 * if rangeIndex != 0 then (close(index) - Lowest(low(index), length)) / rangeIndex else 0; 
+
+ 
+
+def diff = StochStock - StochIndex; 
+
+def rangeDiff = Highest(diff, length) - Lowest(diff, length); 
+
+ 
+
+plot Stress = 100 * if rangeDiff != 0 then (diff - Lowest(diff, length)) / rangeDiff else 0; 
+
+plot OverBought = over_bought; 
+
+plot NormalLevel = normal_level; 
+
+plot OverSold = over_sold; 
+
+ 
+
+StochStock.SetDefaultColor(GetColor(1)); 
+
+StochIndex.SetDefaultColor(GetColor(6)); 
+
+Stress.SetDefaultColor(GetColor(4)); 
+
+OverBought.SetDefaultColor(GetColor(7)); 
+
+NormalLevel.SetDefaultColor(GetColor(7)); 
+
+OverSold.SetDefaultColor(GetColor(7)); 

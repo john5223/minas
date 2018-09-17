@@ -1,0 +1,31 @@
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input price = close; 
+
+input length = 14; 
+
+ 
+
+Assert(length > 1, "'length' must be greater than one: " + length); 
+
+ 
+
+plot LRS = 6 * ( wma(price, length) -  Average(price, length) ) / (length - 1); 
+
+plot ZeroLine = 0; 
+
+ 
+
+LRS.setDefaultColor(getColor(8)); 
+
+ZeroLine.setDefaultColor(getColor(5)); 

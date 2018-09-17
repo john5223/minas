@@ -1,0 +1,22 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+# 
+ 
+declare lower; 
+ 
+input exchange = {default NYSE, NASDAQ, AMEX}; 
+input fastLength = 19; 
+input slowLength = 39; 
+input over_bought = 100; 
+input over_sold = -100; 
+input ratioAdjusted = No; 
+ 
+plot McClellanOsc = reference McClellanSummationIndex(exchange = exchange, "fast length" = fastLength, "slow length" = slowLength, "ratio adjusted" = ratioAdjusted).mcClellanOsc; 
+plot OverBought = over_bought; 
+plot OverSold = over_sold; 
+plot ZeroLine = 0; 
+ 
+McClellanOsc.SetDefaultColor(GetColor(1)); 
+OverBought.SetDefaultColor(GetColor(5)); 
+OverSold.SetDefaultColor(GetColor(5)); 
+ZeroLine.SetDefaultColor(GetColor(3)); 

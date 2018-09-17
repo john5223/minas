@@ -1,0 +1,16 @@
+# MACD Momentum Indicator 
+# Mobius 
+# With Color 
+
+declare lower; 
+ 
+input n = 21; 
+input FastLength = 12; 
+input SlowLength = 26; 
+input MACDlength = 9; 
+ 
+plot MACDmomo = ExpAverage(MACD("fast length" = FastLength, "slow length" = SlowLength, "macd length" = MACDlength) - MACD("fast length" = FastLength, "slow length" = SlowLength, "macd length" = MACDlength)[n], n);  
+
+MACDmomo.AssignValueColor(if MACDmomo > 0 then Color.Green else Color.Red); 
+
+plot zero = if IsNaN(close) then Double.NaN else 0; 

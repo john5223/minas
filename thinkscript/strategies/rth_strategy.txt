@@ -1,0 +1,85 @@
+Mobius_AddingRTH_Strategy_http://tos.mx/CzOgG4 
+
+#Mobius 
+#Strategy 
+#TOS 
+#RTH 
+
+ 
+
+16:01 Mobius: market... Once you add time to your code it gets more complicated. All the orders have to be changed 
+
+ 
+
+#16:01 Mobius: market... Once you add time to your code it gets more complicated. All the orders have to be changed  
+
+ 
+ 
+
+# Strategy 
+
+# Chat Room 01.31.2017 
+
+ 
+ 
+
+# All times used in codes are Eastern Time 
+
+def Active = if SecondsFromTime(0930) > 0 and  
+
+                SecondsTillTime(1500) > 0 
+
+             then 1 
+
+             else 0; 
+
+def EOD = if SecondsFromTime(1545) == 0 and 
+
+             SecondsTillTime(1545) == 0 
+
+          then 1 
+
+          else 0; 
+
+def long = if MovAvgExponential("length" = 10) crosses above MovAvgExponential("length" = 30) and  
+
+              MACDHistogram() is greater than or equal to 0 
+
+           then 1 
+
+           else double.nan; 
+
+def short = if (MovAvgExponential("length" = 10) crosses below MovAvgExponential("length" = 30)) 
+
+             or 
+
+               (MACDHistogram() is less than 0 or RSI()."RSI" is greater than or equal to 80) 
+
+            then 1 
+
+            else double.nan; 
+
+ 
+ 
+
+addOrder(OrderType.BUY_TO_OPEN, Active and long[1], name = "LE"); 
+
+addOrder(OrderType.SELL_TO_CLOSE, Active and short, name = "LX"); 
+
+addOrder(OrderType.Sell_TO_OPEN, Active and short[1], name = "SE"); 
+
+addOrder(OrderType.Buy_TO_CLOSE, Active and long, name = "BTC"); 
+
+addOrder(OrderType.Sell_TO_Close, EOD, name = "EOD"); 
+
+addOrder(OrderType.Buy_To_Close, EOD, name = "EOD"); 
+
+ 
+ 
+
+# End Strategy 
+
+ 
+ 
+
+ 

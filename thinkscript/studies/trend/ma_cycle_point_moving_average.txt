@@ -1,0 +1,89 @@
+UPDATE : This script has been rendered inoperable as of 12 Dec 09 due 
+
+to changes in the TOS ZigZag function. I will leave it posted as a 
+
+reference for coders to examine the script methodology. 
+
+ 
+
+This very basic script plots a close approximation of the cycle point 
+
+moving average. You enter in the required price reversal for a cycle turn, 
+
+a moving average period, and it does the rest courtesy of the TOS 
+
+zigZag function. I had coded this script some time ago and found nothing 
+
+particularly compelling about it but decided to use it to illustrate 
+
+the only new thinkScript feature I saw in the last build; namely the 
+
+defineColor() command. In the past, when ever I needed to control the 
+
+color of some study plot dynamically, I had to hard code in the colors 
+
+in the associated assignValueColor() statement. As such, the custom 
+
+coloring was only modifiable by altering the thinkScript itself. 
+
+Using the new defineColor() command allows the scripter to code in 
+
+value assignable colors but also allow an end user to change those colors 
+
+should they desire. I expect to retrofit my earlier studies with this 
+
+capability as time allows. 
+
+ 
+
+                
+
+# TS_CyclePointMovingAverage 
+
+# (c) 2009 http://www.thinkscripter.com 
+
+# thinkscripter@gmail.com 
+
+# Last Update 19 May 2009 
+
+ 
+
+declare fullrange; 
+
+ 
+
+input RequiredPointsForCycleReversal = 10; 
+
+input CycleMovingAveragePeriod = 7; 
+
+ 
+
+def ZZData = ZigZagSign("reversal amount" = RequiredPointsForCycleReversal); 
+
+def isHigh = if ZZData[1] < ZZData and ZZData > ZZData[-1] then 1 else 0; 
+
+def isLow = if ZZData[1] > ZZData and ZZData < ZZData[-1] then 1 else 0; 
+
+plot cyclePoint = if isHigh then high else if isLow then low else double.nan; 
+
+plot CPMA = Average(ZZData, CycleMovingAveragePeriod); 
+
+ 
+
+CPMA.DefineColor("Positive Slope", color.cyan); 
+
+CPMA.DefineColor("Negative Slope", color.magenta); 
+
+CPMA.AssignValueColor(if CPMA - CPMA[1] >= 0 then CPMA.color("Positive Slope") else CPMA.color("Negative Slope")); 
+
+CPMA.setLineWeight(3); 
+
+ 
+
+cyclePoint.SetStyle(curve.POINTS); 
+
+cyclePoint.SetDefaultColor(color.white); 
+
+cyclePoint.SetLineWeight(5); 
+
+#---------------- End Of Code -------------------- 

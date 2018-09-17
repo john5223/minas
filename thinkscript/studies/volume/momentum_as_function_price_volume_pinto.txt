@@ -1,0 +1,24 @@
+# Momentum as function(price, volume) derivatives  
+# by J Pinto on Apr/30/2014  
+# by Jaime Pinto on Apr/30/2014, revised on Aug/25/2016  
+  
+# Here are some of the features/rules:  
+# * any positive momentum is welcome for bullish trades, and so is negative momentum for bearish trades, and that is confirmed by the Bias oscillator, in green or red.  
+# * you can toggle the divergence lines, and will notice that the bias is somewhat between the TLabove and Tlbelow.  
+# * the study will repaint the price bars in 2 shades of green and 2 shades of red, matching the red/yellow/cyan/blue on the momentum. That may conflict with some other study you have applied, so you'll need to choose one of them to toggle off the 'paint bars'.  
+# * the darker shades will always hint potential exits directly on the chart, but the best times to exit occur when to bias line is very close to the zeroline, in particular when it approaches at a very shallow angle. The white arrows are still experimental, and indicate early exit hints, but you must toggle them on. In many cases they are remarkably accurate, but at times it missed the optimum bar.  
+# * The pink/blue dots hint potential bullish/bearish entry opportunities, as well as the bias line cross above or below the zeroline at an aggressive angle.  
+  
+# In Momentum-4 version you see a highlight in bright green or red for the 'conversion' regions of the divergence lines. The angle of these TL are dynamic, and change as the bars progress. When the highlights show up you are in a really developed trend.  
+# So, this script is just the general framework, and it functions reasonably well for most instruments. However there is always room for tweaks to specific symbols and timeframes, and your personal trading style.  I'm primarily a weekly options trader on 2-5 minutes charts, as well a few futures (with reported volume) in the same range, so I'd consider those very fast markets with highly leveraged instruments. The period =6 seems to work well for me beyond the first 5 minutes after the markets are open, because that better reflects the number of bars that it takes for the moment to build up, so to drive prices beyond the channels. In addition I have a different set of tools to help me identify instruments with propensity for trends, so "fast markets" may not be the best suit for it. I don't usually keep "nervous" symbols on my short list either, and don't trade I news or post-earnings.    
+# You mentioned/asked something about "stock at the or bottom of its standard deviation channel". Well, this indicator, as the name suggests, is the farthest thing you'll find from "mean reversion" based indicators. It's NOT about tops and bottoms, or "buy low and sell high". This script is about "buy high and sell even higher" or "sell low and buyback even lower".   
+  
+ #JPinto_MomentumAsFunctionPriceVolumeHistogram  
+# Momentum as function(price, volume) derivatives  
+# by Jaime Pinto on Apr/30/2014, revised on Aug/25/2016  
+# BreakUp and BreakDown scan signals (Feb/09/2015)  
+
+
+# http://tos.mx/OHye53  - Pinto
+# http://tos.mx/ZBTWyM  - Dilbert 
+

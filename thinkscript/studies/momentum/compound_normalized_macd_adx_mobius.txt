@@ -1,0 +1,206 @@
+http://tos.mx/LiyrAD  
+
+
+Mobius (Mobius)  
+
+Normalized MACD and ADX. Both studies are plotted to the same range in values 
+
+8 months ago 
+
+ 
+
+From <https://mytrade.com/profile/Mobius/statuses/8271396>  
+
+# Normalized MACD, ADX 
+
+# Mobius 
+
+# Chat Room Request 07.13.2017 
+
+ 
+
+declare lower; 
+
+ 
+
+script normalizePlot { 
+
+    input data = close; 
+
+    input newRngMin =  -1; 
+
+    input newRngMax = 1; 
+
+    def hhData = HighestAll( data ); 
+
+    def llData = LowestAll( data ); 
+
+    plot nr = ((( newRngMax - newRngMin ) * ( data - llData )) /  
+
+                      ( hhData - llData )) + newRngMin; 
+
+} 
+
+ 
+
+input fastEMA = 12; 
+
+input slowEMA = 26; 
+
+input Smooth  =  9; 
+
+input length = 14; 
+
+input averageType = AverageType.WILDERS; 
+
+input OverBought = 80; 
+
+input OverSold = -80; 
+
+ 
+
+def c   = close; 
+
+# MACD 
+
+script MACD{ 
+
+   input fastEMA = 13; 
+
+   input slowEMA = 21; 
+
+   input Smooth  =  8; 
+
+   input value = close; 
+
+     def FSignal = (value * .15) +  (.85  * ExpAverage(value, fastEMA)[1]); 
+
+     def SSignal = (value * .075) + (.925 * ExpAverage(value, slowEMA)[1]); 
+
+     def MACD    = FSignal - SSignal; 
+
+ plot MACDSL  = ExpAverage(MACD, Smooth); 
+
+ } 
+
+ 
+
+script ADX{ 
+
+input length = 14; 
+
+input averageType = AverageType.WILDERS; 
+
+ 
+
+def hiDiff = high - high[1]; 
+
+def loDiff = low[1] - low; 
+
+ 
+
+def plusDM = if hiDiff > loDiff and hiDiff > 0 then hiDiff else 0; 
+
+def minusDM =  if loDiff > hiDiff and loDiff > 0 then loDiff else 0; 
+
+ 
+
+def ATR = MovingAverage(averageType, TrueRange(high, close, low), length); 
+
+plot "DI+" = 100 * MovingAverage(averageType, plusDM, length) / ATR; 
+
+plot "DI-" = 100 * MovingAverage(averageType, minusDM, length) / ATR; 
+
+ 
+
+def DX = if ("DI+" + "DI-" > 0) then 100 * AbsValue("DI+" - "DI-") / ("DI+" + "DI-") else 0; 
+
+plot ADX = MovingAverage(averageType, DX, length); 
+
+ 
+
+"DI+".SetDefaultColor(GetColor(1)); 
+
+"DI-".SetDefaultColor(GetColor(8)); 
+
+ADX.SetDefaultColor(GetColor(5)); 
+
+ } 
+
+ 
+
+   plot newMACD = normalizePlot( MACD("fastEMA" = fastEMA, "slowEMA" = slowEMA, "Smooth" = Smooth, "Value" = c), -100, 100 ); 
+
+ 
+
+   plot newADX = normalizePlot( ADX(length = length, averageType = averageType)."ADX", -100, 100 ); 
+
+ 
+
+ 
+
+  plot os = if isNaN(c) then Double.NaN else OverSold; 
+
+          os.SetPaintingStrategy(PaintingStrategy.LINE); 
+
+          os.SetLineWeight(1); 
+
+          os.SetDefaultColor(Color.WHITE); 
+
+  plot ob = If IsNaN(c) then Double.NaN else OverBought; 
+
+          ob.SetPaintingStrategy(PaintingStrategy.LINE); 
+
+          ob.SetLineWeight(1); 
+
+          ob.SetDefaultColor(Color.WHITE); 
+
+  plot ml = If  isNaN(c) then Double.NaN else 0; 
+
+          ml.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+          ml.SetLineWeight(1); 
+
+          ml.SetDefaultColor(Color.WHITE); 
+
+ 
+
+          newMACD.SetPaintingStrategy(PaintingStrategy.Line); 
+
+          newMACD.AssignValueColor(if newMACD >= 50 and newMACD > newMACD[1] 
+
+                                                   then Color.LIGHT_GREEN 
+
+                                                   else if newMACD >= 50 and newMACD < newMACD[1] 
+
+                                                   then Color.LIGHT_RED 
+
+                                                   else if newMACD <= 50 and newMACD < newMACD[1] 
+
+                                                   then Color.LIGHT_RED 
+
+                                                   else Color.LIGHT_GREEN); 
+
+          AddCloud(newMACD, ml, color.Light_Green, color.Light_Red); 
+
+          newMACD.SetLineWeight(1); 
+
+          newADX.SetPaintingStrategy(PaintingStrategy.Line); 
+
+          newADX.AssignValueColor(if newADX >= 50 and newADX > newADX[1] 
+
+                                                  then Color.CYAN 
+
+                                                  else if newADX >= 50 and newADX < newADX[1] 
+
+                                                  then Color.BLUE 
+
+                                                  else if newADX <= 50 and newADX < newADX[1] 
+
+                                                  then Color.LIGHT_RED 
+
+                                                  else Color.YELLOW); 
+
+          newADX.SetLineWeight(1); 
+
+# End Code  

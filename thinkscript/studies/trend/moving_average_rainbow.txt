@@ -1,0 +1,128 @@
+ 
+
+ 
+
+O 500 TR UNIT ET; 
+259.72 
+Share 
+EXTO Eligible 
+Style Drawings Studies 
+Patterns 
+SPY3MID 0:26342 H:26511 L:258 c:25972 R:7.11 10, 13, 15, 100,... 
+ 
+
+ 
+
+ 
+
+ 
+
+# Rainbow Bright 
+
+# Mobius 
+
+# Chat Room Discussion 04.03.2018 
+
+ 
+
+input coeff1 = 5; 
+
+input coeff2 = 8; 
+
+input coeff3 = 10; 
+
+input coeff4 = 13; 
+
+input coeff5 = 15; 
+
+input coeff6 = 18; 
+
+input coeff7 = 20; 
+
+input coeff8 = 25; 
+
+input coeff9 = 30; 
+
+input coeff10 = 35; 
+
+input coeff11 = 40; 
+
+input coeff12 = 50; 
+
+input coeff13 = 55; 
+
+input coeff14 = 60; 
+
+input coeff15 = 65; 
+
+input coeff16 = 70; 
+
+input coeff17 = 75; 
+
+input coeff18 = 80; 
+
+input coeff19 = 90; 
+
+input coeff20 = 100; 
+
+input AvgType = AverageType.Exponential; 
+
+input data = close; 
+
+ 
+
+script Avg 
+
+    { 
+
+     input AvgType = AverageType.Exponential; 
+
+     input length = 10; 
+
+     input data = close; 
+
+     plot MA = MovingAverage(AverageType = AvgType, data = close, length = length); 
+
+    } 
+
+plot MA1 = Avg(AvgType = AvgType, data = data, length = coeff1); 
+
+plot MA2 = Avg(AvgType = AvgType, data = data, length = coeff2); 
+
+plot MA3 = Avg(AvgType = AvgType, data = data, length = coeff3); 
+
+plot MA4 = Avg(AvgType = AvgType, data = data, length = coeff4); 
+
+plot MA5 = Avg(AvgType = AvgType, data = data, length = coeff5);  
+
+plot MA6 = Avg(AvgType = AvgType, data = data, length = coeff6); 
+
+plot MA7 = Avg(AvgType = AvgType, data = data, length = coeff7); 
+
+plot MA8 = Avg(AvgType = AvgType, data = data, length = coeff8); 
+
+plot MA9 = Avg(AvgType = AvgType, data = data, length = coeff9); 
+
+plot MA10 = Avg(AvgType = AvgType, data = data, length = coeff10);  
+
+plot MA11 = Avg(AvgType = AvgType, data = data, length = coeff11); 
+
+plot MA12 = Avg(AvgType = AvgType, data = data, length = coeff12); 
+
+plot MA13 = Avg(AvgType = AvgType, data = data, length = coeff13); 
+
+plot MA14 = Avg(AvgType = AvgType, data = data, length = coeff14); 
+
+plot MA15 = Avg(AvgType = AvgType, data = data, length = coeff15);  
+
+plot MA16 = Avg(AvgType = AvgType, data = data, length = coeff16); 
+
+plot MA17 = Avg(AvgType = AvgType, data = data, length = coeff17); 
+
+plot MA18 = Avg(AvgType = AvgType, data = data, length = coeff18); 
+
+plot MA19 = Avg(AvgType = AvgType, data = data, length = coeff19); 
+
+plot MA20 = Avg(AvgType = AvgType, data = data, length = coeff20);  
+
+# End Code Rainbow Bright   

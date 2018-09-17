@@ -1,0 +1,31 @@
+# Scan for 1 Percent gap up from Previous Close  
+# Scan at 5 min aggregation  
+# Mobius  
+# Chat Room Request  
+  
+def PrevClose = if SecondsTillTime(1555) == 0 and   
+                   SecondsFromTime(1555) == 0  
+                then close  
+                else PrevClose[1];  
+plot gap = if low > PrevClose * 1.01  
+           then 1  
+           else 0;  
+  
+  
+  
+  
+# Scan for 1 Percent gap down from Previous Close  
+# Scan at 5 min aggregation  
+# Mobius  
+# Chat Room Request  
+  
+def PrevClose = if SecondsTillTime(1555) == 0 and   
+                   SecondsFromTime(1555) == 0  
+                then close  
+                else PrevClose[1];  
+plot gap = if high < PrevClose * 0.99  
+           then 1  
+           else 0;  
+
+
+

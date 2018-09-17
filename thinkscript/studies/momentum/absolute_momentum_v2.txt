@@ -1,0 +1,59 @@
+# Absolute_Momentum_v2 
+
+# AlphaInvestor - 04/19/2015 - original coding 
+
+# - idea from "Absolute Momentum: A Simple Rule-Based Strategy and Universal Trend-Following Overlay" -- Gary Antonacci 
+
+# AlphaInvestor - v2 - 09/06/2015 - added ability to use 1-/ZQ as cash investment (more stable than IRX) 
+
+ 
+
+ 
+
+declare lower; 
+
+ 
+
+input TBillSym = {default "IRX", "/ZQ"}; #hint: Antonacci used 90-day T-Bill 
+
+input Lookback = 252; #hint: Lookback in days (Antonacci found 12 month lookback performed best 
+
+ 
+
+plot TBill; 
+
+switch (TBillSym){ 
+
+case "IRX":  # Telerate Short Term Index 
+
+    TBill = close(symbol = TBillSym) / 100; # IRX is a percent 
+
+case "/ZQ":  # 30-day Fed Funds Futures 
+
+    TBill = 1 - (close(symbol = TBillSym)) / 100; # Subtract /ZQ from 1 to get an interst rate  
+
+} 
+
+ 
+
+plot AbsPerformance = (close - close[Lookback]) / close[Lookback]; 
+
+ 
+
+plot LongSignal = if (AbsPerformance crosses above TBill) then TBill else Double.NaN; 
+
+LongSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+LongSignal.SetDefaultColor(Color.GREEN); 
+
+ 
+
+plot ShortSignal = if (AbsPerformance crosses below TBill) then TBill else Double.NaN; 
+
+ShortSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+ShortSignal.SetDefaultColor(Color.RED); 
+
+ 
+
+# End Study 

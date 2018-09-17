@@ -1,0 +1,197 @@
+ Mobius©: Long.. here's the Hull MACD with the WMA broken down so that different weighting can be added and the 5th derivative of the hull added 
+
+This is the Hull MACD I actually use for several CSA's 
+
+I've not thoroughly checked the translation from c++ but it appears accurate (yeilds the same current value) 
+
+18:33 Mobius©: A bit faster signal it she SD of the Hull MACD instead of price.  
+
+An additional loop has to be written in a trading system to avoid too many false signals needs to be written if that's used. 
+
+ 
+
+# Hull (with WMA broken down) MACD by the math and 5th derivative of Hull MA 
+
+# Mobius 
+
+# V02.2014 
+
+ 
+
+declare lower; 
+
+ 
+
+input fastEMA = 13; 
+
+input slowEMA = 21; 
+
+input Smooth  =  8; 
+
+input value   = close; 
+
+ 
+
+def FSignal; 
+
+def SSignal; 
+
+def SD; 
+
+plot MACD; 
+
+plot MACDSL; 
+
+plot MACD5; 
+
+plot zero; 
+
+ 
+
+script Hull{ 
+
+input n = 20; 
+
+input price = close; 
+
+def WMA = (fold i = 0 to n  
+
+            with s  
+
+            do s + getValue(price, i, n - 1) 
+
+                 + (fold j = 0 to n 
+
+                    with t  
+
+                    do t + getValue((1/price[1]), j, n - 1))) 
+
+                      / n;    
+
+   plot HMA = WMA(2 * WMA(price, n / 2) - WMA( price, n), Sqrt(n)); 
+
+} 
+
+ 
+
+FSignal = (value * .15) +  (.85  * Hull(price = value, n = fastEMA).HMA[1]); 
+
+SSignal = (value * .075) + (.925 * Hull(price = value, n = slowEMA).HMA[1]); 
+
+SD = StDev(value, slowEMA); 
+
+MACD    = FSignal - SSignal; 
+
+MACDSL  = Hull(price = MACD, n = Smooth); 
+
+MACD5 = MACD / SD; 
+
+zero    = if isNaN(close) then Double.NaN else 0; 
+
+ 
+
+     MACD.SetpaintingStrategy(PaintingStrategy.Histogram); 
+
+     MACD.SetLineWeight(3); 
+
+     MACD.AssignValueColor(if MACD > MACD[1] and MACD[1] > MACD[2]  
+
+                           then Color.Green else Color.Red); 
+
+     MACDSL.AssignValueColor(if MACDSL > MACDSL[1] and MACDSL[1] > MACDSL[2] 
+
+                             then Color.Blue else Color.Yellow); 
+
+     MACD5.AssignValueColor(if MACD5 > MACD 
+
+                            then Color.Green 
+
+                            else Color.Red); 
+
+     MACD5.SetLineWeight(2); 
+
+     zero.SetDefaultColor(Color.Gray); 
+
+# End Code Hull MACD 
+
+############## 
+
+################# 
+
+Mobius©: For those curious about the math used to plot the Hull Moving Average the script in this study shows how it's calculated.  
+
+ 
+
+# Hull MACD by the math 
+
+# Mobius 
+
+# V01.2014 
+
+ 
+
+declare lower; 
+
+ 
+
+input fastEMA = 13; 
+
+input slowEMA = 21; 
+
+input Smooth  =  8; 
+
+input value   = close; 
+
+ 
+
+def FSignal; 
+
+def SSignal; 
+
+plot MACD; 
+
+plot MACDSL; 
+
+plot zero; 
+
+Script Hull{ 
+
+   input price = 0; 
+
+   input n = 0; 
+
+   plot HMA = WMA(2 * WMA(price, n / 2) - WMA( price, n), Sqrt(n)); 
+
+} 
+
+FSignal = (value * .15) +  (.85  * Hull(price = value, n = fastEMA)[1]); 
+
+SSignal = (value * .075) + (.925 * Hull(price = value, n = slowEMA)[1]); 
+
+MACD    = FSignal - SSignal; 
+
+MACDSL  = Hull(MACD, Smooth); 
+
+zero    = if isNaN(close) then Double.NaN else 0; 
+
+ 
+
+     MACD.SetpaintingStrategy(PaintingStrategy.Histogram); 
+
+     MACD.SetLineWeight(3); 
+
+     MACD.AssignValueColor(if MACD > MACD[1] and MACD[1] > MACD[2]  
+
+                           then Color.Green else Color.Red); 
+
+     MACDSL.AssignValueColor(if MACDSL > MACDSL[1] and MACDSL[1] > MACDSL[2] 
+
+                             then Color.Blue else Color.Yellow); 
+
+     zero.SetDefaultColor(Color.Gray); 
+
+ 
+
+# End Code 
+
+####################### 

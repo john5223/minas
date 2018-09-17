@@ -1,0 +1,63 @@
+Heikin-Ashi Signals 
+
+Posted on March 7, 2009 by ThinkScripter 
+
+ 
+
+Like the Heikini-Ashi trend mechanism but don’t like the candlesticks? 
+
+This one’s for you. It plots a signal on the price bar when the Heikin-Ashi 
+
+trend changes while using traditional candlesticks or bar charts. 
+
+ 
+
+ 
+
+# HEIKINASHISIGNALS 
+
+# http://www.thinkscripter.com 
+
+# thinkscripter@gmail.com 
+
+# Last Update 28 FEB 2009        
+
+ 
+
+def haclose = (open + high + low + close) / 4; 
+
+rec haopen = CompoundValue(1, (haopen[1] + haclose[1]) / 2, (open[1] + close[1]) / 2); 
+
+def diff = haclose - haopen; 
+
+ 
+
+plot HASignal = if diff > 0 and diff[1] <= 0 then low*0.999 else if diff 
+
+< 0 and diff[1] >= 0 then high*1.001 else double.nan; 
+
+HASignal.setStyle(curve.POINTS); 
+
+HASignal.setPaintingStrategy(paintingStrategy.LINE_VS_TRIANGLES); 
+
+HASignal.setLineWeight(1); 
+
+HASignal.assignValueColor(if diff >0 then color.green else color.red); 
+
+#---------------- End Of Code -------------------- 
+
+ 
+
+ Mobius©: Stan HA candle 
+
+ 
+
+open = (open[1] + close[1]) / 2 
+
+high = Max(high, close[1]) 
+
+low = Min(low, close[1]) 
+
+close = (open + high + low + close) / 4 
+
+Candle is red when close < open   or close - open < 0 

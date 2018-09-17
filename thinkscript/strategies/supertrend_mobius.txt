@@ -1,0 +1,83 @@
+# Mobius 
+
+# SuperTrend - "Strategy"     A Very simple SuperTrend Strategy 
+
+# Chat Room Request 
+
+# V03.10.2015 
+
+#Hint:Supertrend Indicator: shows trend direction and gives buy or sell signals according to that.  
+
+ 
+
+input AtrMult = .70; 
+
+input nATR = 4; 
+
+input AvgType = AverageType.HULL; 
+
+input PaintBars = yes; 
+
+input BubbleOn = yes; 
+
+input ShowLabel = yes; 
+
+ 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def v = volume; 
+
+def bar = barNumber(); 
+
+def EOD = if SecondsTillTime(1545) == 0 and 
+
+             SecondsFromTime(1545) == 0 
+
+          then 1 
+
+          else 0; 
+
+def NotActive = if SecondsFromTime(1545) > 0 
+
+                then 1 
+
+                else 0; 
+
+def ATR = MovingAverage(AvgType, TrueRange(h, c, l), nATR); 
+
+def UP = HL2 + (AtrMult * ATR); 
+
+def DN = HL2 + (-AtrMult * ATR); 
+
+def ST = if c < ST[1]  
+
+         then UP  
+
+         else DN; 
+
+plot SuperTrend = ST; 
+
+SuperTrend.AssignValueColor(if c < ST then Color.RED else Color.GREEN); 
+
+SuperTrend.SetPaintingStrategy(PaintingStrategy.Line); 
+
+AssignPriceColor(if PaintBars and c < ST  
+
+                 then Color.RED  
+
+                 else if PaintBars and c > ST  
+
+                      then Color.GREEN  
+
+                      else Color.CURRENT); 
+
+ 
+
+AddOrder(OrderType.BUY_AUTO, HL2 crosses above ST, price = open[-1], tickcolor = Color.BLACK, arrowcolor = Color.BLACK, name = ""); 
+
+AddOrder(OrderType.SELL_AUTO, HL2 crosses below ST, price = open[-1], tickcolor = Color.BLACK, arrowcolor = Color.BLACK, name = ""); 

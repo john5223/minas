@@ -1,0 +1,172 @@
+n 266.02 
+Draw i ngs 
+style 
+Wk 
+Volume 
+470,288, 190 
+Studies 
+Patterns 
+spy 3 Y W 
+026726 H:26789 L:25Y05 
+16, 3) WA -0.976804 
+ 
+
+JQ  Thanks for your great work on the OneNotes library of daily chats. Chats been overflowing lately 
+
+and one can't be checking in hourly. 
+
+For me I tried Big Hand for some time but let it go for whatever reason. Probably the market went 
+
+range bound for while & BH didn't seem any edge?   
+
+Note this early script doesn't exactly stress use on a Weekly (tho I mainly did since lesser times didn't 
+
+seem any advantage, or maybe too misleading, vaguely rem). It just says he compared BH to Weekly PMO. 
+
+Hence implies reco of BH on Weekly, not demanding it.  Experiment at will is my mantra. 
+
+  
+
+early Big Hand.  Likely you have the AI one (s).  This one was from a discussion room elsewhere 
+
+June 18, 2016 my saved date.  It was first time I saw any mention of BH. 
+
+  
+
+++++++++++++++++++++++++++++++++   Big Hand with Arrows 
+
+  
+
+# Archive Name: The Big Hand_Binary 
+
+# Archive Section: Trend 
+
+# Suggested Tos Name:TheBigHand_Binary 
+
+# Archive Date: 5.05.2018 
+
+# Archive Notes: Likely an early if not an original version 
+
+ 
+
+ 
+
+# The Big Hand -  Binary 
+
+# Provided to me by Wayne 
+
+#  It is the MACD   19, 39   on the Weekly Chart.  For many years my friend would use the expression "the big hand is pushing up" ,  or  "the big hand is pushing down" ,  so I just went ahead and named it "The Big Hand".   
+
+# Compare it with the Price Momentum Oscillator  20 , 35  on the Weekly Chart,  as well as the 21 EMA and 34 EMA cross on the Weekly Chart.  The signal dates may vary by as much as 4 weeks,  but the end result between the worst and best is less than 1.5% after 20 years,  when using with the SPX. 
+
+  
+
+# Original parameters: 
+
+# Fast is 6 
+
+# Slow is 16 
+
+# Length is 5 
+
+  
+
+  
+
+declare lower; 
+
+  
+
+# Hide Study Name and Inputs 
+
+# Add this to hide the text on the title bar 
+
+plot Scriptlabel = double.nan; 
+
+#Scriptlabel.setdefaultColor(CreateColor ( 6, 0, 48 )); 
+
+  
+
+input fastLength = 6; 
+
+input slowLength = 16; 
+
+input MACDLength = 3; 
+
+  
+
+plot Value = ExpAverage(close, fastLength) - ExpAverage(close, slowLength); 
+
+  
+
+def Value_color = if Value > 0 then yes else no; 
+
+  
+
+Value.DefineColor( "ValueUp", Color.cyan ); #5.05.2018 changed for archive gif was blue 
+
+Value.DefineColor( "ValueDn", Color.magenta ); 
+
+Value.AssignValueColor( if Value_color then Value.color( "ValueUp" ) else Value.color( "ValueDn" ) ); 
+
+  
+
+plot ZeroLine = 0; 
+
+  
+
+Value.SetDefaultColor(Color.CYAN); 
+
+ZeroLine.SetDefaultColor(Color.white); #5.05.2018 was black.   Changed for archive 
+
+ZeroLine.HideTitle(); 
+
+ZeroLine.HideBubble(); 
+
+  
+
+def xUndr = Value[1] < 0 and Value > 0; 
+
+  
+
+def xOver = Value[1] > 0 and Value < 0; 
+
+  
+
+plot ArrowUp = if xUndr then xOver else double.nan; 
+
+ArrowUp.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+ArrowUp.SetDefaultColor(Color.uptick); #5.05.2018 changed for archive gif was dark green 
+
+ArrowUp.SetLineWeight(5); 
+
+ArrowUp.HideTitle(); 
+
+ArrowUp.HideBubble(); 
+
+  
+
+  
+
+  
+
+plot ArrowDn = if xOver then xUndr else double.nan; 
+
+ArrowDn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+ArrowDn.SetDefaultColor(Color.RED); 
+
+ArrowDn.SetLineWeight(5); 
+
+ArrowDn.HideTitle(); 
+
+ArrowDn.HideBubble(); 
+
+  
+
+# Make Label on Study panel to show the value of the Big Hand 
+
+def data = Value; 
+
+addlabel(no,"Big Hand   " + Round(data,2),color.DARK_GREEN); 

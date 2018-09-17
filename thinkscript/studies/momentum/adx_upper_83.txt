@@ -1,0 +1,77 @@
+# http://tos.mx/Dyfuam  
+
+#---  
+
+## HAMMOND B3'S "B3_ADXupper" THE UPPER SUBGRAPH VERSION OF "B3_ADX"  
+
+## www.mytrade.com/hammondb3  
+
+##  
+
+## This study is based on several ADX theories by several traders combined.  
+
+## HAMMOND B3 didn't come up with the methodology for the formula,   
+
+## merely combined the logic of several others into one easy to use study.  
+
+##  
+
+## ALL PLOTTING OF LINES AND ADX/DMI VALUES HAVE BEEN REMOVED THOUGH ALL ARROWS STILL BASED ON THE DATA.  
+
+#---  
+
+## DIRECTIONS FOR USE ::  
+
+## 1) LABEL BOXES POPUP AND TELL YOU WHAT TO DO (or think about), THOUGH TWO BOXES PERMANENTLY EXIST  
+
+##        a. A MODE BOX THAT TELLS YOU THE STUDY'S CURRENT DIRECTIONAL BIAS, IF ANY  
+
+##        b. TREND DECAY IS TELLING YOU HOW MUCH THE TREND HAS WEAKEND  
+
+##            (0% = STRONGLY TRENDING & -100% = TREND IS OVER & NO TREND IS POSSIBLE)  
+
+##            (Brighter the Box = Stronger the Trend)  
+
+## 2) BIG ARROWS MEAN THE SAFEST "WITH THE TREND" ENTRIES (DURING LONG/SHORT MODES) (no guarantees)  
+
+## 3) SMALL GRAY ARROWS DURING SCALP MODE FOR WEAK TRENDS OR NO CONFIRMED TREND (riskier but sometimes trend starters)  
+
+## 4) SQUARES MEAN SCALE OR EXIT IF YOU WISH NOT TO BE GREEDY OR DO NOTHING (profit early and often method)  
+
+## 5) MAGENTA TRIANGLES ARE A POINT OF DECISION, CHOOSE:  
+
+##        a. EXIT (AGAIN FOR THE NOT SO GREEDY AND IS THE RISK ADVERSE CHOICE)  
+
+##        b. ADD (TRENDS TEND TO CONTINUE RATHER THAN REVERSE, FOR THE AGGRESSIVE POSSITION BUILDERS)  
+
+##        c. BET AGAINST THE TREND (FOR EARLIEST REVERSAL ENTRY, !ADVANCED TRADERS ONLY!)  
+
+##        d. DO NOTHING (WAIT FOR NEXT EXIT DECISION)  
+
+## 6) BOXES POPUP SOMETIMES GIVING INFORMATION:  
+
+##        a. WHEN DIRECTIONAL DOMINANCE IS CHANGING   
+
+##            (if staying on trend is important, this is an exit if the signal goes against you)  
+
+##        b. WHEN REVERSAL RISK IS HIGH (be cautious as no definite directional dominance exists)  
+
+##        c. DURING DIRECTIONAL BREAKOUT OF THE INDICATOR   
+
+##            (breakout of trend; trade entry if price is also breaking the corresponding new Hi or Lo)  
+
+##        d. WHEN A TREND COMES TO AN END  (yellow dot)  
+
+##          (the risk adverse trader would want to exit here, others begin considering scalp mode)  
+
+## 7) THE 20 BAR EXPONENTIAL MOVING AVERAGE IS USED TO GIVE A POSSIBLE BETTER VALUED ENTRY  
+
+##        BOX APPEARS WHEN THE DOMINANCE OF ONE DIRECTION IS PRESENT BUT PRICE IS ON OPPOSITE SIDE OF EMA (or touching)  
+
+##        (ADVANCED TRADERS WILL WAIT FOR THE TOUCH OF 20ema BEFORE ENTRY, YOU CAN MISS OPPORTUNIES WAITING)  
+
+##        (By this method, enter trade upon popup of 20ema box AFTER & IF the MATCHING red/green arrow LAST signaled)   
+
+#---  
+
+## /ENJOY!  

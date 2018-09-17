@@ -1,0 +1,109 @@
+linus: for those of you who missed it when mobius posted it, this is a pretty neat RSI study. (I made a few tweaks) 
+
+11:15 linus: # RSI with Laguerre Filter applied at 6 period length 
+
+# Mobius 
+
+# V02.2012  
+
+# Modulation self adjusting with RSI volatility range 
+
+ 
+
+# Modified by linus to use moving avg. type.  12/28/2013 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 12; 
+
+input over_Bought = 65; 
+
+input over_Sold = 35; 
+
+input price = close; 
+
+input type = AverageType.WILDERS; 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def NetChgAvg = MovingAverage(type, price - price[1], length); 
+
+def TotChgAvg = MovingAverage(type, AbsValue(price - price[1]), length); 
+
+def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0; 
+
+ 
+
+plot RSI = 50 * (ChgRatio + 1); 
+
+     RSI.SetDefaultColor(Color.Yellow); 
+
+ 
+
+plot OverSold = over_Sold; 
+
+plot OverBought = over_Bought; 
+
+ 
+
+OverSold.SetDefaultColor(GetColor(8)); 
+
+OverBought.SetDefaultColor(GetColor(8)); 
+
+   def RSIh = highest(RSI, length); 
+
+   def RSIl = lowest(RSI, length); 
+
+   def RSIr = .01 * Average(RSIh - RSIl, length); 
+
+   def gamma = if RSIr > .9  
+
+               then .9 
+
+               else if RSIr < .2 
+
+                    then .2  
+
+               else gamma[1]; 
+
+   def bar = barNumber(); 
+
+   def L0 = ((1 - gamma) * RSI) + (gamma * L0[1]); 
+
+   def L1 = (-gamma * L0) + L0[1] + (gamma * L1[1]); 
+
+   def L2 = (-gamma * L1) + L1[1] + (gamma * L2[1]); 
+
+   def L3 = (-gamma * L2) + L2[1] + (gamma * L3[1]); 
+
+   def L4 = (-gamma * L3) + L3[1] + (gamma * L4[1]); 
+
+   def L5 = (-gamma * L4) + L4[1] + (gamma * L5[1]); 
+
+   def Laguerre = (L0 + (2 * L1) + (2 * L2) + L3 + L4 + L5) / 8; 
+
+ 
+
+  plot FilterL = if bar <= 64  
+
+                 then Double.NaN  
+
+                 else Laguerre; 
+
+       FilterL.SetDefaultColor(Color.Cyan); 
+
+ 
+
+# End Code RSI with Laguerre Filter 

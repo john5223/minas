@@ -1,0 +1,19 @@
+ Mobius©: # A More Advanced Adaptive Moving Average 
+# McGinley Dynamic Indicator 
+# Mobius 
+# V04.05.2014 
+#  D = D[1] + (I - D[1]) / ( N * (I/D[1])^4) 
+# where D[1] = yesterday's Dynamic, I = today's price, N = smoothing factor. 
+
+input I = close; 
+input N = 13; 
+ 
+def D; 
+D = CompoundValue(1, D[1] + (I - D[1]) /  N * (Power((I / D[1]), 4)), I); 
+ 
+plot MDI = D; 
+MDI.SetPaintingStrategy(PaintingStrategy.LINE); 
+MDI.SetLineWeight(2); 
+MDI.SetDefaultColor(GetColor(8)); 
+ 
+# End Code ------------ 

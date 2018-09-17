@@ -1,0 +1,35 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+# 
+
+declare lower; 
+
+input alpha = 0.07; 
+
+input price = close; 
+
+ 
+
+assert(alpha > 0 and alpha < 2, "'alpha' must be between 0 and 2: " + alpha); 
+
+ 
+
+def smooth = (price + 2 * price[1] + 2 * price[2] + price[3]) / 6; 
+
+def cycle = compoundValue(6, Sqr(1 - 0.5 * alpha) * (smooth - 2 * smooth[1] + smooth[2]) + 2 * (1 - alpha) * cycle[1] - Sqr(1 - alpha) * cycle[2], (price - 2 * price[1] + price[2]) / 4); 
+
+ 
+
+plot CCO = cycle; 
+
+plot ZeroLine = 0; 
+
+plot Signal = cycle[1]; 
+
+ 
+
+CCO.SetDefaultColor(GetColor(8)); 
+
+ZeroLine.SetDefaultColor(GetColor(5)); 
+
+Signal.SetDefaultColor(GetColor(6)); 

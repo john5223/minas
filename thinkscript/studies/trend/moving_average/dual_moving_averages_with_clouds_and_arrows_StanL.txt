@@ -1,0 +1,71 @@
+# Dual Moving Averages with clouds and cross arrows 
+
+#Labels added by SFL 
+
+#TOS Title = CloudBetween2MovingAverages 
+
+#hint:Cloud usage between two moving averages 
+
+declare upper; 
+
+ input price = close;#hint close:Select the price of choice 
+
+input fastLength = 8;#hint fastLength:The fast average length 
+
+input fastAvgType = AverageType.SIMPLE;#hint fastAvgType:Select the average type 
+
+input slowLength = 20;#hint slowLength:The slow average length 
+
+input slowAvgType = AverageType.SIMPLE; #hint slowAvgType:Select the average type 
+
+input Show_Crosses = YES;#hint Show_Crosses:Toggles crossing arrows ON/OFF 
+
+plot FastMva = MovingAverage( fastAvgType, price, fastLength ); 
+
+plot SlowMva = MovingAverage( slowAvgType, price, slowLength ); 
+
+def MA_cross =  if Crosses(FastMva, SlowMva, CrossingDirection.any) then 1 else 0; 
+
+Plot D_MA_Cross = If MA_Cross && Show_Crosses then low else double.nan; 
+
+D_MA_Cross.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+D_MA_Cross.SetLineWeight(3); 
+
+D_MA_Cross.SetDefaultColor(Color.PINK); 
+
+AddLabel(Show_Crosses,"Cross = UP ARROW",color.PINK); 
+
+ 
+
+AddCloud( FastMva, SlowMva, Color.YELLOW, Color.RED ); 
+
+ 
+
+addlabel(1,"Slow MA(" +  slowLength  + ") is " +  (If fastAvgType == AverageType.EXPONENTIAL then "Exponential average"  
+
+else if  fastAvgType == AverageType.Hull then "Hull average"  
+
+else if fastAvgType == AverageType.simple then "Simple average" 
+
+else if fastAvgType == AverageType.wilders then "Wilders average" 
+
+else if fastAvgType == AverageType.weighted then "Weighted average" 
+
+else "")   ,color.cyan); 
+
+ 
+
+addlabel(1,"Fast MA(" +  fastLength  + ") is " +  (If slowAvgType == AverageType.EXPONENTIAL then "Exponential average"  
+
+else if  slowAvgType == AverageType.Hull then "Hull average"  
+
+else if slowAvgType == AverageType.simple then "Simple average" 
+
+else if slowAvgType == AverageType.wilders then "Wilders average" 
+
+else if slowAvgType == AverageType.weighted then "Weighted average" 
+
+else "")   ,color.pink); 
+
+# end 

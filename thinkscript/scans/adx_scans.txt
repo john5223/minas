@@ -1,0 +1,94 @@
+#
+# Scan for ADX rising and > 25 if sum(ADX() > ADX()[1], 5) == 5 and ADX() > 25 then 1 else Double.NaN  The sum is for whatever the aggregatio 
+#Combined SFL-Fav Scans 
+
+Three_X_Oscillator()."stochD" crosses above 35 within 3 bars 
+AND 
+PolarizedFractalEfficiency()."PFE" crosses above 50 within 3 bars 
+AND 
+ADX("length" = 10) is greater than or equal to 15 within 2 bars 
+AND 
+DMI_Oscillator()."Osc" is greater than or equal to 0 
+
+######## Variable ADX Scan ########## 
+input ADX_Lenght = 10;#hint ADX_Lenght: The ADX is based on this number of bars. 
+input ADX_Value = 25;#hint ADX_Value: The value of ADX to search for 
+input Scan_Type = {default Bull, Bear}; 
+
+plot Scan = ADX("length" = ADX_Lenght )  >= ADX_Value within 2 bars and if Scan_Type == Scan_Type.Bull then (DMI_Oscillator()."Osc" >  0) else (DMI_Oscillator()."Osc"  < 0); 
+# end 
+
+#####
+# For a bullish scan use 
+#DMI_Oscillator()."Osc" >=  0 
+# For a bearish scan use 
+#DMI_Oscillator()."Osc" is  <  0 
+
+
+
+
+
+###########################################################
+
+
+
+
+
+# Another scan
+
+#ADX scan 
+## Scan for  ADX level and  
+input length = 10;#Number of agg-bars being evaluated 
+input ADXLevel = 25;# The level of the ADXto scan for 
+input trendingpercentage = .80; 
+def ADXTrend = ADX(length) >= ADXLevel; 
+rec trending = if ADX(length) >= ADXLevel then 1 else 0; 
+rec nontrending = if ADX(length) <= ADXLevel then 1 else 0; 
+
+plot result = (trending / nontrending) >= trendingpercentage; 
+# or more reasonable  
+Plot Scan = trending; 
+  
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+#######################################
+
+
+
+
+
+#
+#
+# DMI/ADX  
+#
+a list of stocks within an ADX range of 11 to 15. Also, the ADX indicator, must be under both DMI+ and DMI-.  
+The idea is to pull a list of stocks that are"basing." DMI+ and DMI- both, can be either on top of each other.  
+(If DMI+ is on top of DMI-, it is okay. ) 
+
+def _adx   = DMI().ADX; 
+def _diP = DMI()."DI+"; 
+def _diM = DMI()."DI-"; 
+plot ADXscan = _adx >= 11 and _adx <= 15 and _adx < _diP and _adx < _diM; 
+**************************************************************** 
+Here is a off the cuff attempt; (Not sure this works) 
+input length = 14; 
+DMI(length)."DI+" >= DMI(length)."DI-" && ADX range(11-15) 
+************************************************** 
+ADX()."ADX" is greater than 40 and DIPlus()."DI+" is greater than DIMinus()."DI-" 
+########################################## 
+
+
+
+
+
+
+

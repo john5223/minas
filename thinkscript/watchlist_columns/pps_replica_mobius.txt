@@ -1,0 +1,35 @@
+ Mobius©: # PPS replica 
+
+ 
+
+input n  = 2; 
+
+input n2 = 7; 
+
+input n3 = 5; 
+
+input n4 = 4; 
+
+ 
+
+def c = close; 
+
+ 
+
+plot data  = Average(Inertia(c, n), n2); 
+
+plot data2 = ExpAverage(Inertia(ohlc4, n3), n4); 
+
+ 
+
+#Stan this is a better statement for the arrows in the PPS:  
+
+plot ArrowUP = data crosses above data2 and close crosses above data2; 
+
+ArrowUP.SetPaintingStrategy(PaintingStrategy.Boolean_Arrow_UP); 
+
+ 
+
+Plot ArrowDN = close crosses below data2 and data crosses below data2; 
+
+     ArrowDN.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 

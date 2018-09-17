@@ -1,0 +1,27 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+# 
+ 
+declare lower; 
+input length = 21; 
+ 
+def tmp_var =  
+if high == low then  
+  volume  
+else  
+  (close - low - (high - close)) / (high - low) * volume 
+; 
+
+def sum_close = sum(tmp_var, length); 
+def total = sum(volume, length); 
+ 
+plot CMF =  
+if total == 0 then  
+  0  
+else  
+  sum_close / total 
+; 
+CMF.SetDefaultColor(GetColor(1)); 
+ 
+plot ZeroLine = 0; 
+ZeroLine.SetDefaultColor(GetColor(5)); 

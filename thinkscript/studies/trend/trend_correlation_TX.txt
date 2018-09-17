@@ -1,0 +1,114 @@
+185.90 
+Share D 
+Style 
+Draw i ngs 
+May 
+Studies 
+Patterns 
+AAPL 6 M ID [NASDAQ] 
+0: 18499 H: 18622 L: 18387 C: 1859 R:256 
+STANDARD, SMA, 10) 1 
+Apr 
+ 
+
+## Archive Name: Trend Correlation TX     
+
+## Archive Section: Trend 
+
+## Suggested Tos Name: TrendCorrelaion_TX 
+
+## Archive Date: 5.08.2018 
+
+## Archive Notes:  
+
+ 
+
+## "##" indicates an addition by the Archivist 
+
+ 
+
+ 
+
+ 
+
+ 
+
+# TrendCorrelation 
+
+# www.trendxplorer.info 
+
+# Build: Jan 10, 2012 
+
+ 
+
+# --- script begin --- 
+
+ 
+
+declare lower; 
+
+ 
+
+input symbol = "spy"; ## was /dx 
+
+input format = {default STANDARD, INVERTED}; ## default was inverted 
+
+input averageType = {default SMA, EMA}; 
+
+input period = 10;  ## was 50 
+
+ 
+
+def mirror; 
+
+switch (format) { 
+
+case STANDARD: 
+
+mirror = close(symbol); 
+
+case INVERTED: 
+
+mirror = 1/close(symbol); 
+
+} 
+
+ 
+
+def AvgIndex; 
+
+def AvgMirror; 
+
+switch (averageType) { 
+
+case SMA: 
+
+AvgIndex = Average(close, period); 
+
+AvgMirror = Average(mirror, period); 
+
+case EMA: 
+
+AvgIndex = Average(close, period); 
+
+AvgMirror = Average(mirror, period); 
+
+} 
+
+ 
+
+def IndexTrend = if AvgIndex > AvgIndex[1] then 1 else 0; 
+
+def IndexMirror = if AvgMirror > AvgMirror[1] then 1 else 0; 
+
+ 
+
+plot flag = if IndexTrend == IndexMirror then 1 else -1; 
+
+flag.setPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+flag.AssignValueColor(if flag > 0 then color.GREEN else color.RED); 
+
+ 
+
+# --- script end --- 

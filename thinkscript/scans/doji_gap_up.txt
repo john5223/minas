@@ -1,0 +1,26 @@
+ 
+IsDoji Gap up/down Scan 
+
+# IsDoji Gap Scan 
+
+input length = 20; # to get average body height 
+input bodyFactor = 0.05;  # body height multiplier 
+
+# Only one plot can be active in the scan, so comment in whichever isDojiGap plot required to scan for gap up or gap down. 
+
+
+## GAP UP 
+plot isDojiGap =  low > high[1] and IsDoji(length, bodyFactor); 
+ 
+## GAP DOWN 
+#plot isDojiGap =  high < low[1] and IsDoji(length, bodyFactor); 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 

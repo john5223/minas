@@ -1,0 +1,45 @@
+# ElderImpulse_Mobius 
+
+# Elders Impulse 
+
+# Taken from an article by Alexander Elder  
+
+# Mobius 
+
+# V01.05.21.2015 
+
+# 
+
+# Elders Impulse - Price bars are colored according to these conditions:  
+
+# Green = MACD is greater than previous MACD and EMA is greater than previous EMA.   
+
+# Red = MACD is less than previous MACD and EMA is less than previous EMA.  
+
+# Blue = Neither condition is met. 
+
+# 
+
+# Since MACD is a 4th derivative of price and utilizes EMA's and the second  
+
+# indicator is an EMA this system is Multicolinear and not one that makes a  
+
+# lot of sense to me. 
+
+ 
+
+input fastLength = 12; #hint fastLength: MACD fast length 
+
+input slowLength = 26; #hint slowLength: MACD slow length 
+
+input MACDLength = 9;  #hint MACDLength: MACD smoothing length 
+
+input averageType = AverageType.EXPONENTIAL; 
+
+input EMAn = 13;       #hint EMAn: Exponential Moving Average length 
+
+ 
+
+def Diff = MACD(fastLength, slowLength, MACDLength, averageType).Diff; 
+
+def EMA = ExpAverage(close, EMAn); 

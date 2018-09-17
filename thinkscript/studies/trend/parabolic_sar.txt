@@ -1,0 +1,138 @@
+262.88 
+Share 
+EXTO Eligible 
+style 
+Draw i ngs 
+SPY4MID D: 0: 26773 H: 26798 L: 26128 c:2E286 271B 
+Chart Aggregation is Daily Chart Length is 82 Daily Bars 
+Studies 
+Patterns 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+
+# 
+
+ 
+
+input accelerationFactor = 0.02; 
+
+input accelerationLimit = 0.2; 
+
+ 
+
+assert(accelerationFactor > 0, "'acceleration factor' must be positive: " + accelerationFactor); 
+
+assert(accelerationLimit >= accelerationFactor, "'acceleration limit' (" + accelerationLimit + ") must be greater than or equal to 'acceleration factor' (" + accelerationFactor + ")"); 
+
+ 
+
+def state = {default init, long, short}; 
+
+def extreme; 
+
+def SAR; 
+
+def acc; 
+
+ 
+
+switch (state[1]) { 
+
+case init: 
+
+    state = state.long; 
+
+    acc = accelerationFactor; 
+
+    extreme = high; 
+
+    SAR = low; 
+
+case short: 
+
+    if (SAR[1] < high) 
+
+    then { 
+
+        state = state.long; 
+
+        acc = accelerationFactor; 
+
+        extreme = high; 
+
+        SAR = extreme[1]; 
+
+    } else { 
+
+        state = state.short; 
+
+        if (low < extreme[1]) 
+
+        then { 
+
+            acc = min(acc[1] + accelerationFactor, accelerationLimit); 
+
+            extreme = low; 
+
+        } else { 
+
+            acc = acc[1]; 
+
+            extreme = extreme[1]; 
+
+        } 
+
+        SAR = max(max(high, high[1]), SAR[1] + acc * (extreme - SAR[1])); 
+
+    } 
+
+case long: 
+
+    if (SAR[1] > low) 
+
+    then { 
+
+        state = state.short; 
+
+        acc = accelerationFactor; 
+
+        extreme = low; 
+
+        SAR = extreme[1]; 
+
+    } else { 
+
+        state = state.long; 
+
+        if (high > extreme[1]) 
+
+        then { 
+
+            acc = min(acc[1] + accelerationFactor, accelerationLimit); 
+
+            extreme = high; 
+
+        } else { 
+
+            acc = acc[1]; 
+
+            extreme = extreme[1]; 
+
+        } 
+
+        SAR = min(min(low, low[1]), SAR[1] + acc * (extreme - SAR[1])); 
+
+    } 
+
+} 
+
+ 
+
+plot parSAR = SAR; 
+
+parSAR.SetPaintingStrategy(PaintingStrategy.POINTS); 
+
+parSAR.SetDefaultColor(GetColor(5)); 

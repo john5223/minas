@@ -1,0 +1,241 @@
+ # Linear Regression Line / curve Math 
+
+# Mobius 
+
+# Mobius At MyTrade 
+
+ 
+
+#     n Sxy -(Sx)(Sy) 
+
+# b= ---------------- 
+
+#      n Sx² -(Sx)² 
+
+   
+
+#     (Sy)-b(Sx) 
+
+# a= --------------- 
+
+#         n 
+
+# Regression Equation(y) = a + bx  
+
+# Where: S = Sum 
+
+ 
+
+input n            =    9; 
+
+input LRC_On       =  yes; 
+
+input LRL_On       =  yes; 
+
+input LRCh_On      =  yes; 
+
+input StdDev_On    =   no; 
+
+input BandUP       =    2; 
+
+input BandDn       =   -2; 
+
+input channelWidth = 68.2; 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def x = c; 
+
+def y = c[1]; 
+
+ 
+
+# Find xy, x², Sx, Sy, Sxy, Sx² 
+
+def xy  = x * y; 
+
+def xx  = x * x; 
+
+def Sx  = Sum(x, n); 
+
+def Sy  = Sum(y, n); 
+
+def Sxy = Sum(xy, n); 
+
+def Sxx = Sum(xx, n); 
+
+ 
+
+# Substitute 
+
+# Slope(b) = (n Sxy -(Sx)(Sy)) / (n Sx² - (Sx)²) 
+
+def b = (n * Sxy - (Sx * Sy)) / (n * Sxx - Sqr(Sx)); 
+
+# Intercept(a) = (Sy - b(Sx)) / n 
+
+def a = (Sy - b * Sx) / n; 
+
+# Regression Equation(y) = a + bx 
+
+def LR = if LRC_On == yes  
+
+           then a + b * x  
+
+           else Double.NaN; 
+
+ 
+
+plot LR1   = Inertia(LR, n); 
+
+ 
+
+plot LRI   = if LRL_On == yes  
+
+              then InertiaAll(a + b * x, n)  
+
+              else Double.NaN; 
+
+ 
+
+ 
+
+ 
+
+ 
+
+# Standard Deviation Formula (volatility will skew the channel) 
+
+def SD    = Sqrt(Sum(Sqr(LR - Average(LR, n)), n) / n); 
+
+plot LRIup = if StdDev_On == yes  
+
+              then InertiaAll(LRI + BandUP * SD, n)  
+
+              else Double.NaN; 
+
+plot LRIdn = if StdDev_On == yes  
+
+              then InertiaAll(LRI + BandDn * SD, n)  
+
+              else Double.NaN; 
+
+ 
+
+ 
+
+# Parallel Lines to Linear Regression Line 
+
+# 1 Standard deviation is approximately 68.2% of the data 
+
+# 2 Standard deviations is approximately 95.4% of the data 
+
+def dist = HighestAll(AbsValue(LRI - c)) * (channelWidth / 100.0); 
+
+plot UpperLR = if LRCh_On == yes  
+
+                then LRI + dist  
+
+                else Double.NaN; 
+
+plot LowerLR = if LRCh_On == yes  
+
+                then LRI - dist  
+
+                else Double.NaN; 
+
+ 
+
+LR1.SetPaintingStrategy(PaintingStrategy.LINE); 
+
+LR1.SetLineWeight(2); 
+
+LR1.AssignValueColor(if (h + l + c) / 3 > LR1  
+
+                           then Color.GREEN  
+
+                           else Color.RED); 
+
+ 
+
+# I disconnected this It still shows gray middle line 
+
+LRI.SetLineWeight(2); 
+
+LRI.SetDefaultColor(Color.white); 
+
+ 
+
+UpperLR.SetPaintingStrategy(PaintingStrategy.LINE); 
+
+UpperLR.SetLineWeight(2); 
+
+UpperLR.SetDefaultColor(Color.RED); 
+
+ 
+
+LowerLR.SetPaintingStrategy(PaintingStrategy.LINE); 
+
+LowerLR.SetLineWeight(2); 
+
+LowerLR.SetDefaultColor(Color.RED); 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+# Temporary Dashboard 
+
+#AddLabel(yes, Concat("dist: ", dist), Color.white); 
+
+#AddLabel(yes, Concat("LRI: ", LRI), Color.white); 
+
+#AddLabel(yes, Concat("SD: ", SD), Color.WHITE); 
+
+ 
+
+plot Data = close; 
+
+ 
+
+ 
+
+Mobius©:  
+
+Add this to the code to catch turning points 
+
+ 
+
+def cond1 = LRIup > LRIup[1]; 
+
+def cond2 = LRIup < LRIup[1]; 
+
+def UpSignal = if cond1 and cond2[1] 
+
+               then 1 
+
+               else double.nan; 
+
+def DnSignal = if cond2 and Cond1[1] 
+
+               then 1 
+
+               else double.nan; 
+
+AddLabel(UpSignal, "LRIup", Color.Green) 
+
+AddLabel(DnSignal, "LRIdn", Color.Red); 

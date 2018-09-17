@@ -1,0 +1,25 @@
+def squeeze = if(reference BollingerBands().”upperband” – KeltnerChannels().”Upper_Band”)<0 then 1 else 0; 
+
+def insqueeze = if squeeze then insqueeze[1] + 1 else 0; 
+
+def fired = if !squeeze then fired[1]+1 else 0; 
+
+def direction = if (fired == 1 , if( TTM_Squeeze() > TTM_Squeeze()[1] , 1 , 0 ), direction[1]); 
+
+plot result = if insqueeze > 0 then insqueeze else if fired >0 and fired <8 then fired else 0; 
+
+AddLabel(yes, Concat(if insqueeze>0 then “Squeeze: ” else if fired >0 and fired <8 then Concat(“FIRED: “, if direction then ” ” else ” “) else “”, result), if insqueeze>0 then color.white else color.black); 
+
+AssignBackgroundColor( if insqueeze>0 then color.red else if fired>0 and fired <8 then color.green else color.black); 
+
+ 
+
+From <http://kb.simplertrading.com/squeezewatchlist/>  
+
+ 
+
+ 
+
+ 
+
+ 

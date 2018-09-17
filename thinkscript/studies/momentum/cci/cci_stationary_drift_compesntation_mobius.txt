@@ -1,0 +1,105 @@
+O 268.89 
+EXTO Eligible 
+Share 
+SPY4MID D: 0: 2s•ss H: 28988 L: 28772 C: 26889 R: 21S 
+SPY's first bar openned atS267.17 Chart Aggregation = DAY FBP 
+= 262.55 Flag study at. 
+163.153 
+Style Drawings Studies Patterns 
+267.17 28053 ECl_PricecompressionorFlay.. 
+1,440minAgg Chart Agg: DAY 
+ 
+
+ 
+
+ 
+
+ 
+
+# CCI_Stationary_Mobius (Drift compensating)  
+
+# Mobius 
+
+# V01.08.2017 
+
+# This version uses the Stochastic Range to adjust for drift. Then further removes noise by using the risk return values. Adjusting for a Stochastic Drift allows for a less noisy signal line at a faster length. 
+
+# 
+
+#    04.19.2018  Added second cloud for visability on dark background JohnnyQuotron 
+
+ 
+
+ 
+
+declare lower; 
+
+ 
+
+input n = 10; 
+
+ 
+
+def StochPrice = (highest(high, n) + Lowest(low, n) + close) / 3; 
+
+def ReturnPrice = (Log(StochPrice) - Log(StochPrice[1])); 
+
+def Stationary = Inertia(StochPrice - ReturnPrice, n); 
+
+def linDev = lindev(Stationary, n); 
+
+plot CCI = if linDev == 0  
+
+           then 0  
+
+           else (Stationary - Average(Stationary, n)) / linDev / 0.015; 
+
+     CCI.SetDefaultColor(Color.Gray); 
+
+plot LR_CCI = Inertia(CCI, n); 
+
+     LR_CCI.SetDefaultColor(Color.Gray); 
+
+     LR_CCI.HideBubble(); 
+
+     LR_CCI.HideTitle(); 
+
+plot TwoHundred = 200; 
+
+     TwoHundred.SetDefaultColor(Color.Dark_Orange); 
+
+     TwoHundred.HideTitle(); 
+
+plot OneHundred = 100; 
+
+     OneHundred.SetDefaultColor(Color.Dark_Orange); 
+
+     OneHundred.HideTitle(); 
+
+plot ZeroLine = 0; 
+
+     ZeroLine.SetStyle(Curve.Long_Dash); 
+
+     ZeroLine.SetDefaultColor(Color.Light_Gray); 
+
+     ZeroLine.HideTitle(); 
+
+plot NegOneHundred = -100; 
+
+     NegOneHundred.SetDefaultColor(Color.Light_Green); 
+
+     NegOneHundred.HideTitle(); 
+
+plot NegTwoHundred = -200; 
+
+     NegTwoHundred.SetDefaultColor(Color.Light_Green); 
+
+     NegTwoHundred.HideTitle(); 
+
+addCloud(CCI, LR_CCI, color.green, color.red, yes); #"yes" added by JohnnyQuotron 
+
+addCloud(CCI, LR_CCI, color.green, color.red, yes); #added by JohnnyQuotron 
+
+ 
+
+# End Code CCI_Stationary 

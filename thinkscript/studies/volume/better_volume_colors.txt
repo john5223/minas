@@ -1,0 +1,99 @@
+# BetterVolumeCustomColors 
+# Adapted from the BetterVolume Indicator: 
+# http://emini-watch.com/free-stuff/volume-indicator/ 
+# By 
+# http://www.thinkscripter.com 
+# thinkscripter@gmail.com 
+# Last Update 18 SEP 2010 
+
+#hint priceBarColor: Select coloring of price bars. 
+#hint showVolumeBars: Select coloring volume bars. 
+#hint tolerance: Factor determines threshold for identification as a Better Volume colored bar. (e.g. 0.10 means a bar can be considered low volume if it is within 10% of the lowest volume bar) 
+
+
+declare on_volume; 
+#declare real_size; 
+#declare upper; 
+
+input movingAveragePeriod = 100; 
+input lookBackPeriod = 20; 
+
+input showLegend = YES; 
+input priceBarColor = {default NONE, BV_SPECIAL, BV_ALL}; 
+input showVolumeBars = YES; 
+input tolerance = 0.10;  
+
+def range = (high - low); 
+def value1 = volume;
+def value2 = volume * range;
+def value3 = If(range <> 0 , volume / range, 0);
+def value4 = Average(value1, movingAveragePeriod); 
+
+def Condition1 = (value1 <= Lowest(value1, lookBackPeriod) * (1.0 + tolerance));
+def Condition2 = (value2 >= Highest(value2, lookBackPeriod) * (1.0 - tolerance));
+def Condition3 = (value3 <= Lowest(value3, lookBackPeriod) * (1.0 + tolerance));
+def Condition4 = (value3 >= Highest(value3, lookBackPeriod) * (1.0 - tolerance));
+ 
+
+plot betterVolume = if showVolumeBars then value1 else Double.NaN;
+plot averageVolume = if showVolumeBars then value4 else Double.NaN;
+ 
+
+averageVolume.SetDefaultColor(Color.RED); 
+betterVolume.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+betterVolume.SetLineWeight(5); 
+betterVolume.DefineColor("lowVolumeColor", Color.YELLOW); 
+betterVolume.DefineColor("climaxUpColor", Color.CYAN); 
+betterVolume.DefineColor("climaxDownColor", Color.WHITE); 
+betterVolume.DefineColor("churnColor", Color.VIOLET); 
+betterVolume.DefineColor("climaxChurnColor", Color.MAGENTA); 
+betterVolume.DefineColor("defaultColor", Color.DARK_GRAY); 
+
+
+betterVolume.AssignValueColor( 
+if Condition4 and ((Condition2 and close > open ) or ((Condition2 or Condition3) and close < open))  
+    then betterVolume.Color("climaxChurnColor")  
+else if Condition4  
+    then betterVolume.Color("churnColor")  
+else 
+if ((Condition3 or Condition2) and close < open)  
+    then betterVolume.Color("climaxDownColor")  
+else 
+if Condition2 and close > open  
+    then betterVolume.Color("climaxUpColor")  
+else if Condition1  
+    then betterVolume.Color("lowVolumeColor")  
+else betterVolume.Color("defaultColor")); 
+ 
+AssignPriceColor(if priceBarColor == priceBarColor.BV_ALL then if Condition4 and ((Condition2 and close > open ) or ((Condition2 or Condition3) and close < open))  
+    then betterVolume.Color("climaxChurnColor")  
+else if Condition4  
+    then betterVolume.Color("churnColor")  
+else 
+if ((Condition3 or Condition2) and close < open)  
+    then betterVolume.Color("climaxDownColor")  
+else 
+if Condition2 and close > open  
+    then betterVolume.Color("climaxUpColor")  
+else if Condition1  
+    then betterVolume.Color("lowVolumeColor")  
+else betterVolume.Color("defaultColor") else if priceBarColor == priceBarColor.BV_SPECIAL then if Condition4 and ((Condition2 and close > open ) or ((Condition2 or Condition3) and close < open))  
+    then betterVolume.Color("climaxChurnColor")  
+else if Condition4  
+    then betterVolume.Color("churnColor")  
+else 
+if ((Condition3 or Condition2) and close < open)  
+    then betterVolume.Color("climaxDownColor")  
+else 
+if Condition2 and close > open  
+    then betterVolume.Color("climaxUpColor")  
+else if Condition1  
+    then betterVolume.Color("lowVolumeColor")  
+else Color.CURRENT else Color.CURRENT); 
+
+ 
+AddLabel(showLegend, "Low Volume", betterVolume.Color("lowVolumeColor")); 
+AddLabel(showLegend, "Climax Up", betterVolume.Color("climaxUpColor")); 
+AddLabel(showLegend, "Climax Down", betterVolume.Color("climaxDownColor")); 
+AddLabel(showLegend, "Churn", betterVolume.Color("churnColor")); 
+AddLabel(showLegend, "Climax Churn", betterVolume.Color("climaxChurnColor")); 

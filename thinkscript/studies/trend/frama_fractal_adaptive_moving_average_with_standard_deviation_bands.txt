@@ -1,0 +1,129 @@
+ Mobius©: # FRAMA Fractal Adaptive Moving Average with Standard Deviation Bands  
+
+# Mobius 
+
+# Mobius on MyTrade 
+
+# V01.07.2013 
+
+ 
+
+input n = 16; 
+
+input price = HL2; 
+
+input SDmult = 3; 
+
+input DisplayBands = yes; 
+
+ 
+
+def n1; 
+
+def n2; 
+
+def n3; 
+
+def hh; 
+
+def ll; 
+
+def dimen; 
+
+def alpha; 
+
+def filt; 
+
+ 
+
+N3 = (Highest(high, N) - Lowest(low, N)) / N; 
+
+HH = high; 
+
+LL = low; 
+
+ 
+
+def count = fold i = 0 to (n/2) 
+
+            with p 
+
+            do if GetValue(HH, GetMaxValueOffset(hh, n/2), n) > HH  
+
+               then GetValue(HH, GetMaxValueOffset(hh, n/2), n) 
+
+            else if GetValue(LL, GetMinValueOffset(ll, n/2), n) < LL  
+
+                 then GetValue(LL, GetMinValueOffset(ll, n/2), n) 
+
+            else count[1]; 
+
+ 
+
+N1 = (HH - LL) / (N/2); 
+
+def HH1 = high[n/2]; 
+
+def LL1 = low[n/2]; 
+
+def count2 = fold j = n/2 to n 
+
+             with q 
+
+             do if GetValue(HH1, GetMaxValueOffset(HH1, n/2), n) > HH1 
+
+                then GetValue(HH1, GetMaxValueOffset(HH1, n/2), n) 
+
+             else if GetValue(LL1, GetMinValueOffset(LL1, n/2), n) < LL1 
+
+                  then GetValue(LL1, GetMinValueOffset(LL1, n/2), n) 
+
+             else count[1]; 
+
+ 
+
+N2 = (count - count2) / (N / 2); 
+
+dimen = if N1 > 0 and N2 > 0 and N3 > 0 then (Log(N1 + N2) - Log(N3)) / Log(2) else 0; 
+
+alpha = if Dimen == .7  
+
+        then .02  
+
+        else if Dimen == .05  
+
+        then .33  
+
+        else if Exp(-4.6*(Dimen - 1)) < .01  
+
+        then .01 
+
+        else if Exp(-4.6* (Dimen - 1)) > 1 then 1 
+
+        else 0; 
+
+Filt = alpha * Price + (1 - alpha) * Filt[1]; 
+
+ 
+
+plot FRAMA = Inertia(filt, n); 
+
+     FRAMA.SetDefaultColor(Color.Yellow); 
+
+ 
+
+def SD = StDev(close, n); 
+
+ 
+
+plot upper = FRAMA + (SDmult * SD); 
+
+     upper.SetHiding(!DisplayBands); 
+
+     upper.SetDefaultColor(CreateColor(50,50,50)); 
+
+plot lower = FRAMA - (SDmult * SD); 
+
+     lower.SetHiding(!DisplayBands); 
+
+     lower.SetDefaultColor(CreateColor(50,50,50)); 

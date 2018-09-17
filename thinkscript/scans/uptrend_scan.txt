@@ -1,0 +1,32 @@
+ 
+def trenup = IsAscending(close,20); 
+def trenup2 = sum(close > close[1],5) >= 5; 
+
+plot scan = trenup AND trenup2; 
+
+# end scan filter code ---- 
+
+
+
+
+
+ Mr. Script:  
+
+Scan for trending 
+
+input length = 20;#hint length:Number of bars to test for ascending conditions  
+
+input bars = 5;#hint bars:Number of bars being evaluated in <b>sum</b> 
+
+def trendup = IsAscending(close,length); 
+
+def trendup2 = sum(close > close[1],bars) >= bars; 
+
+def mcd = MACD(); 
+
+def mcdtrend = sum(mcd > mcd[1],bars) == bars; 
+
+plot scan = trendup && trendup2 && mcdtrend; 
+
+
+

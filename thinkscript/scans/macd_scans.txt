@@ -1,0 +1,245 @@
+# Mr. Script:  
+#scan for MACD histo crossover in last 5 bars 
+input length = 5;#hint length:The agg-bars to evaluate 
+sum(macdHistogramCrossover(),5) > 0 
+
+declare upper; 
+def macd_signal = sum(macdhistogramCrossover().signal,5) > 0; 
+plot macdArrow =  If macd_signal == 1 then High else double.nan ; 
+macdArrow.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+macdArrow.SetDefaultColor(GetColor(9));#index (9) color is white 
+macdArrow.SetLineWeight(5); 
+macdArrow.HideBubble(); 
+
+##### EOC ###### 
+
+
+
+
+
+#######################################################333
+
+ 
+
+ 
+
+MACD or Momentum divergence 
+Re: Scanning for MACD or Momentum divergence 
+
+Here's some code to identify MACD divergences from price 
+
+input fastLength = 8; 
+input slowLength = 17; 
+input MACDLength = 9; 
+
+def fastAvg = ExpAverage(close, fastLength); 
+def slowAvg = ExpAverage(close, slowLength); 
+plot ZeroLine = 0; 
+ZeroLine.AssignValueColor(color.Black); 
+
+def plotValue = no; 
+def Value = fastAvg - slowAvg; 
+plot ValueP = if plotValue then Value else double.NaN; 
+ValueP.HideBubble(); 
+ValueP.SetLineWeight(1); 
+ValueP.AssignValueColor(CreateColor(0, 176, 80)); 
+ValueP.AssignValueColor(color.Gray); 
+
+def plotAvg = no; 
+def Avg = ExpAverage(Value, MACDLength); 
+plot AvgP = if plotAvg then Avg else double.NaN; 
+AvgP.HideBubble(); 
+AvgP.SetLineWeight(1); 
+AvgP.AssignValueColor(color.Black); 
+AvgP.AssignValueColor(CreateColor(0, 176, 80)); 
+AvgP.AssignValueColor(color.Pink); 
+ 
+plot Diff = Value - Avg; 
+Diff.SetDefaultColor(GetColor(5)); 
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+Diff.DefineColor("Positive and Up", CreateColor(148, 183, 178)); 
+Diff.DefineColor("Positive and Down", CreateColor(148, 183, 178)); 
+Diff.DefineColor("Negative and Down", CreateColor(161, 160, 142)); 
+Diff.DefineColor("Negative and Up", CreateColor(161, 160, 142)); 
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then 
+Diff.color("Positive and Up") else Diff.color("Positive and Down") else if Diff 
+< Diff[1] then Diff.color("Negative and Down") else Diff.color("Negative and 
+Up")); 
+Diff.SetLineWeight(5); 
+Diff.HideBubble(); 
+
+# Calculate MACD peaks 
+
+def showPeaks = no; 
+#def MACDpeakFinder = if Diff >= 0 then (Diff[1] > Diff[0] and Diff[2] < 
+Diff[1]) else 0; 
+def MACDpeakFinder = If (Diff[1] > Diff[0] and Diff[2] < Diff[1]) then 1 else 0; 
+
+#def MACDpeak = if MACDpeakFinder[-1] and Diff[0] >= 0 then 1 else 0; 
+def MACDpeak = if MACDpeakFinder[-1] then 1 else 0; 
+
+rec MACDpeakValue = if barNumber() == 0 then 0 else if MACDpeak[0] then Diff[0] 
+else MACDpeakValue[1]; 
+
+plot Peaks = If showPeaks and MACDpeak then Diff * 1.1 else double.NaN; 
+Peaks.SetStyle(curve.Points); 
+Peaks.SetLineWeight(1); 
+Peaks.SetDefaultColor(color.Black); 
+Peaks.HideBubble(); 
+Peaks.HideTitle(); 
+
+input chartBubbles = no; 
+AddChartBubble(chartBubbles and MACDpeak, Diff * 1.1, Diff, Color.Uptick, yes); 
+#AddChartBubble(boolean time condition, double price location, Any text, 
+CustomColor color, boolean up); 
+
+# Calculate MACD troughs 
+
+def showTroffs = yes; 
+#def MACDtroffFinder = if Diff <= 0 then Diff[1] < Diff[0] and Diff[2] > Diff[1] 
+else 0; 
+def MACDtroffFinder = if (Diff[1] < Diff[0] and Diff[2] > Diff[1]) then 1 else 
+0; 
+
+#def MACDtroff = if MACDtroffFinder[-1] and Diff[0] <= 0 then 1 else 0; 
+def MACDtroff = if MACDtroffFinder[-1] then 1 else 0; 
+
+rec MACDtroffValue = if barNumber() == 1 then 0 else if MACDtroff[0] then 
+Diff[0] else MACDtroffValue[1]; 
+
+plot Troff = If showTroffs and MACDtroff then Diff * 1.1 else double.NaN; 
+Troff.SetStyle(curve.Points); 
+Troff.SetLineWeight(1); 
+Troff.SetDefaultColor(color.Blue); 
+Troff.HideBubble(); 
+Troff.HideTitle(); 
+ 
+AddChartBubble(chartBubbles and MACDtroff, Diff * 1.1, Diff, Color.Uptick, yes); 
+
+# Identify the closing prices at each peak and trough 
+
+rec peakPrice = if barNumber() == 1 then 0 else if MACDpeak then low else 
+peakPrice[1]; 
+rec troffPrice = if barNumber() == 1 then 0 else if MACDtroff then low else 
+troffPrice[1]; 
+
+# Identify divergences 
+
+def showBearishDivergence = no; 
+def bearishDivergence = if MACDpeak then (peakPrice[0] > peakPrice[1] and 
+MACDpeakValue[0] < MACDpeakValue[1]) else 0; 
+plot BearDV = If showBearishDivergence and bearishDivergence then Diff * 1.1 
+else double.NaN; 
+BearDV.SetStyle(curve.Points); 
+BearDV.SetLineWeight(5); 
+BearDV.SetDefaultColor(color.DownTick); 
+BearDV.HideBubble(); 
+BearDV.HideTitle(); 
+
+def showBullishDivergence = yes; 
+def bullishDivergence = if MACDtroff then (troffPrice[0] < troffPrice[1] and 
+MACDtroffValue[0] > MACDtroffValue[1]) else 0; 
+plot BullDV = If showBullishDivergence and bullishDivergence then Diff * 1.1 
+else double.NaN; 
+BullDV.SetStyle(curve.Points); 
+BullDV.SetLineWeight(5); 
+BullDV.SetDefaultColor(color.UpTick); 
+BullDV.HideBubble(); 
+BullDV.HideTitle(); 
+
+####### EOC ############## 
+
+ 
+
+ 
+
+ 
+
+ 
+#############################################################################
+
+
+
+
+
+
+
+ 
+
+Scan for combined MACD & Full Stoch 
+#Scan for combined MACD & Full Stoch 
+
+declare lower; 
+
+#----------------MACD--------------- 
+input fastLength = 12; 
+input slowLength = 26; 
+input MACDLength = 9; 
+input AverageType = {SMA, default EMA}; 
+ 
+def Value; 
+def Avg; 
+switch (AverageType) { 
+case SMA: 
+    Value = Average(close, fastLength) - Average(close, slowLength); 
+    Avg = Average(Value, MACDLength); 
+case EMA: 
+    Value = ExpAverage(close, fastLength) - ExpAverage(close, slowLength); 
+    Avg = ExpAverage(Value, MACDLength); 
+} 
+ 
+#---------------Full Stochastic-------------- 
+input KPeriod = 10; 
+input DPeriod = 10; 
+input priceH = high; 
+input priceL = low; 
+input priceC = close; 
+input slowing_period = 3; 
+input smoothingType = {default SMA, EMA}; 
+ 
+def lowest_k = Lowest(priceL, KPeriod); 
+def c1 = priceC - lowest_k; 
+def c2 = Highest(priceH, KPeriod) - lowest_k; 
+def FastK = if c2 != 0 then c1 / c2 * 100 else 0; 
+ 
+def FullK; 
+def FullD; 
+
+switch (smoothingType) { 
+case SMA: 
+    FullK = Average(FastK, slowing_period); 
+    FullD = Average(FullK, DPeriod); 
+case EMA: 
+    FullK = ExpAverage(FastK, slowing_period); 
+    FullD = ExpAverage(FullK, DPeriod); 
+} 
+
+#-------------------Binary Decision----------- 
+
+plot x = Avg > 0 and FullD > 75 within 5 bars; 
+
+x.DefineColor("zero", Color.CYAN); 
+x.DefineColor("one", Color.PINK); 
+x.AssignValueColor(if x == 0 then x.Color("zero") else x.Color("one")); 
+
+
+
+
+
+
+
+
+
+
+
+
+####################################################################################
+
+
+
+
+
+
+
+
+

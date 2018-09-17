@@ -1,0 +1,239 @@
+## START STUDY 
+
+## LRCM_Upper 
+
+## linus, 2014-01-11, v0.1 
+
+ 
+
+#hint: Linear Regression Curve and Momentum signals, with breakout signals and lines. 
+
+ 
+
+# Based on lower study posted to thinkscript chat on 2014-01-10: 
+
+# Linear Regression Curve and Momentum with Divergence 
+
+ 
+
+declare once_per_bar; 
+
+#hint paintBars: Color price bars if not Off.  See comments in code to understand what signals Dir, Sig, and Brk recs store. 
+
+input paintBars = {default Off, Dir, Sig, Brk}; 
+
+ 
+
+#hint n: Momentum and length of oscillators. 
+
+input n = 20; 
+
+ 
+
+#hint nBrk: Lookback length for HH and LL break lines. 
+
+input nBrk = 10; 
+
+ 
+
+#hint nSum: Number of bars break lines must be flat to be saved. 
+
+input nSum = 10; 
+
+ 
+
+#hint ticks: Number of ticks to add to offset of signals/lines. 
+
+input ticks = 2.0; 
+
+ 
+
+#hint price: Fundamental price type for oscillators. 
+
+input price = hl2; 
+
+ 
+
+# Linear regression curve momentum oscillator. 
+
+def LRCM = (Inertia(price - price[n], n)) / (n - 1); 
+
+ 
+
+# Linear regression curve scaled oscillator. 
+
+def Osc = n * (Inertia(price - price[1], n)) / (n - 1); 
+
+ 
+
+def tks = ticksize() * ticks; 
+
+def hh = Highest(high, nBrk) + tks; 
+
+def ll = Lowest(low, nBrk) - tks; 
+
+def prUp = close > open; 
+
+def prDn = close < open; 
+
+ 
+
+# store the new break high line if flat for nSum bars. 
+
+rec rHH = compoundValue(nBrk, if sum(hh == hh[1], nSum) == nSum then hh else rHH[1], high + tks); 
+
+ 
+
+# store the new break low line if flat for nSum bars. 
+
+rec rLL = compoundValue(nBrk, if sum(ll == ll[1], nSum) == nSum then ll else rLL[1], low - tks); 
+
+ 
+
+# dir is 1 if Osc is above zero and moving up and LRCM is moving up; 
+
+# dir is -1 if Osc is below zero and moving down and LRCM is moving down. 
+
+rec dir = compoundValue(1, if Osc > 0 and Osc > Osc[1] and LRCM > LRCM[1] then 1 else if Osc < 0 and Osc < Osc[1] and LRCM < LRCM[1] then -1 else dir[1], 0); 
+
+ 
+
+# sig is up (1) if Osc crosses above LRCM and dir is above zero and price is moving up; 
+
+# sig is down (-1) if Osc crosses below LRCM and dir is below zero and price is moving down. 
+
+rec sig = compoundValue(1, if Osc crosses above LRCM and dir > 0 and prUp then 1 else if Osc crosses below LRCM and dir < 0 and prDn then -1 else sig[1], 0); 
+
+ 
+
+# brk is up (1) if high crosses above break high line and price is moving up; 
+
+# brk is down (-1) if low crosses below break low line and price is moving down. 
+
+rec brk = compoundValue(1, if high crosses above rHH and prUp then 1 else if low crosses below rLL and prDn then -1 else brk[1], 0); 
+
+ 
+
+# Up signal if last break was up and sig changes to up or dir changes to up. 
+
+plot Up = if brk > 0 and (sig crosses above 0 or dir crosses above 0) then ll else Double.NaN; 
+
+Up.SetPaintingStrategy(PaintingStrategy.TRIANGLES); 
+
+Up.SetDefaultColor(Color.WHITE); 
+
+Up.SetLineWeight(3); 
+
+ 
+
+# Down signal if last break was down and sig changes to down or dir changes to down. 
+
+plot Dn = if brk < 0 and (sig crosses below 0 or dir crosses below 0) then hh else Double.NaN; 
+
+Dn.SetPaintingStrategy(PaintingStrategy.SQUARES); 
+
+Dn.SetDefaultColor(Color.ORANGE); 
+
+Dn.SetLineWeight(3); 
+
+ 
+
+# Break up signal: 
+
+plot BrkUp = if brk crosses above 0 then ll else Double.NaN; 
+
+BrkUp.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+BrkUp.SetDefaultColor(Color.CYAN); 
+
+BrkUp.SetLineWeight(3); 
+
+ 
+
+# Break down signal: 
+
+plot BrkDn = if brk crosses below 0 then hh else Double.NaN; 
+
+BrkDn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+BrkDn.SetDefaultColor(Color.MAGENTA); 
+
+BrkDn.SetLineWeight(3); 
+
+ 
+
+# Break high line: 
+
+plot BrkHH = rHH; 
+
+BrkHH.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+
+BrkHH.SetDefaultColor(Color.PINK); 
+
+ 
+
+# Break low line: 
+
+plot BrkLL = rLL; 
+
+BrkLL.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+
+BrkLL.SetDefaultColor(Color.CYAN); 
+
+ 
+
+AssignPriceColor(if !paintBars then Color.CURRENT 
+
+else if paintBars == paintBars.Sig then 
+
+    if sig > 0 then  
+
+        if prUp then Color.GREEN else Color.DARK_GREEN 
+
+    else if sig < 0 then  
+
+        if prDn then Color.RED else Color.PINK 
+
+    else if prUp then Color.WHITE 
+
+    else Color.GRAY 
+
+else if paintBars == paintBars.Brk then 
+
+    if brk > 0 then  
+
+        if prUp then Color.GREEN else Color.DARK_GREEN 
+
+    else if brk < 0 then  
+
+        if prDn then Color.RED else Color.PINK 
+
+    else if prUp then Color.WHITE 
+
+    else Color.GRAY 
+
+else if dir > 0 then  
+
+    if prUp then Color.GREEN else Color.DARK_GREEN 
+
+else if dir < 0 then  
+
+    if prDn then Color.RED else Color.PINK 
+
+else if prUp then Color.WHITE 
+
+else Color.GRAY); 
+
+ 
+
+## END STUDY 
+
+ 
+
+========= Comments ========= 
+
+ linus: the squares (orange) and triangles (white) were designed as trailing stop points. 
+
+ (they only show if with the presumed shorterm trend given by the arrow signals, which are breakouts) 
+
+ linus: squares and triangles looking for reentries on slower chart, with possible reversal of trend. (cyan arrow) 

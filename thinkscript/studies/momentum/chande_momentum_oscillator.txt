@@ -1,0 +1,50 @@
+#ChandeMomentumOsciIIator (20) 157022 
+# 
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 20; 
+
+ 
+
+def curClose = close; 
+
+def prevClose = close[1]; 
+
+def inc = if curClose > prevClose then curClose - prevClose else 0; 
+
+def dec = if prevClose > curClose then prevClose - curClose else 0; 
+
+ 
+
+def sumInc = sum(inc, length); 
+
+def sumDec = sum(dec, length); 
+
+plot CMO = if sumInc + sumDec == 0 then 0 else (sumInc - sumDec) / (sumInc + sumDec) * 100; 
+
+CMO.SetDefaultColor(GetColor(8)); 
+
+ 
+
+plot ZeroLine = 0; 
+
+ZeroLine.SetDefaultColor(GetColor(5)); 
+
+ 
+
+plot UpperLevel = 50; 
+
+UpperLevel.SetDefaultColor(GetColor(5)); 
+
+ 
+
+plot LowerLevel = -50; 
+
+LowerLevel.SetDefaultColor(GetColor(5)); 

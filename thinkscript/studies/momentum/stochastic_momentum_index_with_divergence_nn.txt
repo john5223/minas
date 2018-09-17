@@ -1,0 +1,187 @@
+# Nick  I repurposed a MACD divergence script from Mobius. 
+
+ 
+
+#SMI with Divergence Signals. StochasticMomentumIndex = SMI 
+
+#NN tslounge - chat request 
+
+#v4.9.14.1 
+
+#based on: 
+
+# MACD With Divergence Signals 
+
+# Mobius 
+
+# Mobius at MyTrade 
+
+ 
+
+declare lower; 
+
+ 
+
+input over_bought = 40.0; 
+
+input over_sold = -40.0; 
+
+input percentDLength = 3; 
+
+input percentKLength = 5; 
+
+ 
+
+def min_low = lowest(low, percentKLength); 
+
+def max_high = highest(high, percentKLength); 
+
+def rel_diff = close - (max_high + min_low)/2; 
+
+def diff = max_high - min_low; 
+
+ 
+
+def avgrel = expaverage(expaverage(rel_diff, percentDLength), percentDLength); 
+
+def avgdiff = expaverage(expaverage(diff, percentDLength), percentDLength); 
+
+ 
+
+plot SMI = if avgdiff != 0 then avgrel / (avgdiff / 2) * 100 else 0; 
+
+ 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+ 
+
+rec SMIh = CompoundValue(1, if SMI < 0 
+
+            then Double.NaN 
+
+            else if SMI crosses above 0 
+
+            then SMI 
+
+            else if SMI > 0 and  
+
+                    SMI > SMIh[1] 
+
+            then SMI 
+
+            else SMIh[1], 0); 
+
+ 
+
+rec Valueh = CompoundValue(1, if SMI < 0 
+
+             then Double.NaN 
+
+             else if SMI crosses above 0 
+
+             then h 
+
+             else if SMI > 0 and  
+
+                     h >Valueh[1] 
+
+             then h 
+
+             else Valueh[1], 0); 
+
+ 
+
+plot divSignal = if SMI > 0 and 
+
+                    h > Valueh[1] and  
+
+                    SMI < SMIh[1] 
+
+                 then 0 
+
+                 else Double.NaN; 
+
+divSignal.SetPaintingStrategy(PaintingStrategy.Points); 
+
+divSignal.SetLineWeight(4); 
+
+divSignal.SetDefaultColor(Color.Green); 
+
+ 
+
+rec SMIl = CompoundValue(1, if SMI > 0 
+
+                             then Double.NaN 
+
+                             else if SMI crosses below 0 
+
+                             then SMI 
+
+                             else if SMI < 0 and  
+
+                                     SMI < SMIl[1] 
+
+                             then SMI 
+
+                             else SMIl[1], 0); 
+
+ 
+
+rec Valuel = CompoundValue(1, if SMI > 0 
+
+                              then Double.NaN 
+
+                              else if SMI crosses below 0 
+
+                              then l 
+
+                              else if SMI < 0 and 
+
+                                      l < Valuel[1] 
+
+                              then l 
+
+                              else Valuel[1], 0); 
+
+ 
+
+plot divSignall = if SMI < 0 and 
+
+                    l < Valuel[1] and 
+
+                    SMI > SMIl[1] 
+
+                 then 0 
+
+                 else Double.NaN; 
+
+divSignall.SetPaintingStrategy(PaintingStrategy.Points); 
+
+divSignall.SetLineWeight(4); 
+
+divSignall.SetDefaultColor(Color.Red); 
+
+plot zeroLine = if isNaN(divSignal) and  
+
+                   isNaN(divSignall) and  
+
+                   !isNaN(c) 
+
+                then 0  
+
+                else Double.NaN; 
+
+zeroLine.SetPaintingStrategy(PaintingStrategy.Points); 
+
+zeroLine.SetLineWeight(2); 
+
+zeroLine.SetDefaultColor(Color.Blue); 
+
+ 
+
+# End Code

@@ -1,0 +1,171 @@
+Linear Regression SD Channel 
+
+by Mobius (Mobius) 2 years ago  
+
+Share Save  
+
+
+null 
+
+http://tos.mx/uFEagF 
+
+ 
+
+From <https://mytrade.com/profile/Mobius/statuses/5681425>  
+
+ 
+
+Librarian: Note the use of ExtendToRight and ExtendToLeft Code 
+
+ 
+
+ 
+
+Machine generated alternative text:
+4809.oo 
+INQ 2 d 2m 
+0:480825 H:4809 L:4807.75 C:4809 
+201E IP Company. 
+R: 125 
+4795 
+4791 68 
+4790
+ 
+
+ 
+
+ 
+
+ 
+
+# Linear Regression SD Channels 
+
+# Mobius 
+
+# Mobius at MyTrade 
+
+# V02.04.2014 : Uses Extend to right function 
+
+#Hint: Linear Regression Channel with 3 Standard Deviation Bands 
+
+ 
+
+input Type = {default line, curve}; 
+
+input price = hl2; 
+
+input n = 252; #hint n: Default is 20 days at 15min agg 
+
+input StartDate = 0; 
+
+input StartTime = 00; 
+
+input ExtendToRight = yes; 
+
+input ExtendToLeft = no; 
+
+input widthOfChannel1 = 1.0; 
+
+input widthOfChannel2 = 2.00; 
+
+input widthOfChannel3 = 3.00; 
+
+input widthOfChannel4 = 4.00; 
+
+ 
+
+plot Midline; 
+
+switch (Type) { 
+
+case line: 
+
+           Midline = InertiaAll(price,  
+
+                                n,  
+
+                                StartDate,  
+
+                                StartTime,  
+
+                                ExtendToLeft,  
+
+                                ExtendToRight); 
+
+case curve: 
+
+           Midline = Inertia(price, n); 
+
+} 
+
+def SD = HighestAll(StDev(price) * widthOfChannel1); 
+
+ 
+
+plot UpperBand1 = MidLine + ( widthOfChannel1 * SD); 
+
+plot UpperBand2 = MidLine + ( widthOfChannel2 * SD); 
+
+plot UpperBand3 = MidLine + ( widthOfChannel3 * SD); 
+
+plot UpperBand4 = MidLine + ( widthOfChannel4 * SD); 
+
+plot LowerBand1 = MidLine + (-widthOfChannel1 * SD); 
+
+plot LowerBand2 = MidLine + (-widthOfChannel2 * SD); 
+
+plot LowerBand3 = MidLine + (-widthOfChannel3 * SD); 
+
+plot LowerBand4 = MidLine + (-widthOfChannel4 * SD); 
+
+ 
+
+LowerBand1.SetLineWeight(1); 
+
+LowerBand1.SetStyle(Curve.SHORT_DASH); 
+
+LowerBand2.SetLineWeight(2); 
+
+LowerBand3.SetLineWeight(2); 
+
+LowerBand3.SetStyle(Curve.LONG_DASH); 
+
+LowerBand4.SetLineWeight(1); 
+
+LowerBand4.SetStyle(Curve.LONG_DASH); 
+
+MidLine.SetLineWeight(3); 
+
+UpperBand1.SetLineWeight(1); 
+
+UpperBand2.SetLineWeight(2); 
+
+UpperBand3.SetLineWeight(2); 
+
+UpperBand4.SetLineWeight(1); 
+
+LowerBand1.SetDefaultColor(Color.GRAY); 
+
+LowerBand2.SetDefaultColor(Color.BLUE); 
+
+LowerBand3.SetDefaultColor(Color.RED); 
+
+LowerBand4.SetDefaultColor(Color.Yellow); 
+
+MidLine.AssignValueColor(if MidLine > MidLine[1] then Color.GREEN else Color.RED); 
+
+UpperBand1.SetDefaultColor(Color.GRAY); 
+
+UpperBand1.SetStyle(Curve.SHORT_DASH); 
+
+UpperBand2.SetDefaultColor(Color.BLUE); 
+
+UpperBand3.SetStyle(Curve.LONG_DASH); 
+
+UpperBand4.SetStyle(Curve.Long_Dash); 
+
+UpperBand3.SetDefaultColor(Color.RED); 
+
+UpperBand4.SetDefaultColor(color.yellow); 
+
+# End Code Linear Regression Channel Multiple SD 

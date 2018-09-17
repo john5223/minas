@@ -1,0 +1,295 @@
+# TOS Title = Three_Agg_MACD 
+
+#Version: 07.07.2013 19:00 
+
+#hint:Plots three MACDs with different aggregations. The base MACD is the charts aggregation. Labels identify the aggs of the 2nd and 3rd MACD. <b>The 2nd and 3rd MACD aggs must be larger than the chart's agg.</b>\n A two aggs view may be obtained by making the 2nd or 3rd MACD have the same agg as the chart.\n<b>USAGE:</b> All three aggs peaking or ebbing at the same time is a strong confirmation of a high or low point.\n<b>'Show Extended Sessions' (CTRL+S, Equities tab) must be activated to have the MACD plots show correctly. </b> 
+
+ 
+
+ 
+
+declare lower; 
+
+input agg2 = AggregationPeriod.FIFTEEN_MIN;#hint agg2:Must be larger than or the same as the chart agg. 
+
+input agg3 = AggregationPeriod.HOUR;;#hint agg3:Must be larger than or the same as the chart agg. 
+
+input fast = 12; 
+
+input slow = 26; 
+
+input Length = 9; 
+
+ 
+
+plot BaseMACD = ((ExpAverage(close, fast) - ExpAverage(close, slow)) - (ExpAverage((ExpAverage(close, fast) - ExpAverage(close, slow)), Length))); 
+
+ 
+
+plot MACD2 = ((ExpAverage(close(period = agg2), fast) - ExpAverage(close(period = agg2), slow)) -  (ExpAverage((ExpAverage(close(period = agg2), fast) - ExpAverage(close(period = agg2),  slow)), Length))); 
+
+ 
+
+plot MACD3 = ((ExpAverage(close(period = agg3), fast) -  ExpAverage(close(period = agg3), slow)) - (ExpAverage((ExpAverage(close(period = agg3), fast) - ExpAverage(close(period = agg3), slow)), Length))); 
+
+ 
+
+plot zero = 0; 
+
+ 
+
+BaseMACD.SetPaintingStrategy(PaintingStrategy.lINE); 
+
+MACD2.SetPaintingStrategy(PaintingStrategy.lINE); 
+
+MACD3.SetPaintingStrategy(PaintingStrategy.LINE); 
+
+ 
+
+BaseMACD.SetDefaultColor(Color.cyan); 
+
+MACD2.SetDefaultColor(Color.PINK); 
+
+MACD3.SetDefaultColor(Color.red); 
+
+ 
+
+ 
+
+AddCloud(BaseMACD, zero, color.green, color.red); 
+
+AddCloud(MACD2, zero, color.Pink, color.LIGHT_RED); 
+
+AddCloud(MACD3, zero, color.YELLOW, color.MAGENTA); 
+
+ 
+
+#### Base chart Label #### 
+
+addLabel(yes,"Base chart agg",color.cyan); 
+
+ 
+
+#### Label agg2 definitions ##### 
+
+def ag1M_2 = If (Agg2 == AggregationPeriod.MIN, 1, 0); 
+
+AddLabel(ag1M_2, "The agg period is one minute", Color.PINK); 
+
+ 
+
+def ag2M_2 = If (Agg2== AggregationPeriod.TWO_MIN, 1, 0); 
+
+AddLabel(ag2M_2, "The agg period is two minutes", Color.PINK); 
+
+ 
+
+def ag3M_2 = If (Agg2== AggregationPeriod.THREE_MIN, 1, 0); 
+
+AddLabel(ag3M_2, "The agg period is three minutes", Color.PINK); 
+
+ 
+
+def ag4M_2 = If (Agg2== AggregationPeriod.FOUR_MIN, 1, 0); 
+
+AddLabel(ag4M_2, "The agg period is four minutes", Color.PINK); 
+
+ 
+
+def ag5M_2 = If (Agg2== AggregationPeriod.FIVE_MIN, 1, 0); 
+
+AddLabel(ag5M_2, "The agg period is five minutes", Color.PINK); 
+
+ 
+
+def ag10M_2 = If (Agg2== AggregationPeriod.TEN_MIN, 1, 0); 
+
+AddLabel(ag10M_2, "The agg period is ten minutes", Color.PINK); 
+
+ 
+
+def ag15M_2 = If (Agg2== AggregationPeriod.FIFTEEN_MIN, 1, 0); 
+
+AddLabel(ag15M_2, "The agg period is fifteen minutes", Color.PINK); 
+
+ 
+
+def ag20M_2 = If (Agg2== AggregationPeriod.TWENTY_MIN, 1, 0); 
+
+AddLabel(ag20M_2, "The agg period is twenty minutes", Color.PINK); 
+
+ 
+
+def ag30M_2 = If (Agg2== AggregationPeriod.THIRTY_MIN, 1, 0); 
+
+AddLabel(ag30M_2, "The agg period is thirty minutes", Color.PINK); 
+
+ 
+
+def ag1hr_2 = If (Agg2== AggregationPeriod.HOUR, 1, 0); 
+
+AddLabel(ag1hr_2, "The agg period is one hour", Color.PINK); 
+
+ 
+
+def ag2hr_2 = If (Agg2== AggregationPeriod.TWO_HOURS, 1, 0); 
+
+AddLabel(ag2hr_2, "The agg period is two hours", Color.PINK); 
+
+ 
+
+def ag4hr_2 = If (Agg2== AggregationPeriod.FOUR_HOURS, 1, 0); 
+
+AddLabel(ag4hr_2, "The agg period is four hours", Color.PINK); 
+
+ 
+
+def ag1D_2 = If (Agg2== AggregationPeriod.DAY, 1, 0); 
+
+AddLabel(ag1D_2, "The agg period is one day", Color.PINK); 
+
+ 
+
+def ag2D_2 = If (Agg2== AggregationPeriod.TWO_DAYS, 1, 0); 
+
+AddLabel(ag2D_2, "The agg period is two days", Color.PINK); 
+
+ 
+
+def ag3D_2 = If (Agg2== AggregationPeriod.THREE_DAYS, 1, 0); 
+
+AddLabel(ag3D_2, "The agg period is three days", Color.PINK); 
+
+ 
+
+def ag4D_2 = If (Agg2== AggregationPeriod.FOUR_DAYS, 1, 0); 
+
+AddLabel(ag4D_2, "The agg period is four days", Color.PINK); 
+
+ 
+
+def agwk_2 = If (Agg2== AggregationPeriod.week, 1, 0); 
+
+AddLabel(agwk_2, "The agg period is week", Color.PINK); 
+
+ 
+
+def agmo_2 = If (Agg2== AggregationPeriod.month, 1, 0); 
+
+AddLabel(agmo_2, "The agg period is month", Color.PINK); 
+
+#### end of label definition for agg2 ########## 
+
+ 
+
+#### Label agg3 definitions ##### 
+
+def ag1M_3 = If (Agg3 == AggregationPeriod.MIN, 1, 0); 
+
+AddLabel(ag1M_3, "The agg period is one minute", Color.RED); 
+
+ 
+
+def ag2M_3 = If (Agg3 == AggregationPeriod.TWO_MIN, 1, 0); 
+
+AddLabel(ag2M_3, "The agg period is two minutes", Color.RED); 
+
+ 
+
+def ag3M_3 = If (Agg3 == AggregationPeriod.THREE_MIN, 1, 0); 
+
+AddLabel(ag3M_3, "The agg period is three minutes", Color.RED); 
+
+ 
+
+def ag4M_3 = If (Agg3 == AggregationPeriod.FOUR_MIN, 1, 0); 
+
+AddLabel(ag4M_3, "The agg period is four minutes", Color.RED); 
+
+ 
+
+def ag5M_3 = If (Agg3 == AggregationPeriod.FIVE_MIN, 1, 0); 
+
+AddLabel(ag5M_3, "The agg period is five minutes", Color.RED); 
+
+ 
+
+def ag10M_3 = If (Agg3 == AggregationPeriod.TEN_MIN, 1, 0); 
+
+AddLabel(ag10M_3, "The agg period is ten minutes", Color.RED); 
+
+ 
+
+def ag15M_3 = If (Agg3 == AggregationPeriod.FIFTEEN_MIN, 1, 0); 
+
+AddLabel(ag15M_3, "The agg period is fifteen minutes", Color.RED); 
+
+ 
+
+def ag20M_3 = If (Agg3 == AggregationPeriod.TWENTY_MIN, 1, 0); 
+
+AddLabel(ag20M_3, "The agg period is twenty minutes", Color.RED); 
+
+ 
+
+def ag30M_3 = If (Agg3 == AggregationPeriod.THIRTY_MIN, 1, 0); 
+
+AddLabel(ag30M_3, "The agg period is thirty minutes", Color.RED); 
+
+ 
+
+def ag1hr_3 = If (Agg3 == AggregationPeriod.HOUR, 1, 0); 
+
+AddLabel(ag1hr_3, "The agg period is one hour", Color.RED); 
+
+ 
+
+def ag2hr_3 = If (Agg3 == AggregationPeriod.TWO_HOURS, 1, 0); 
+
+AddLabel(ag2hr_3, "The agg period is two hours", Color.RED); 
+
+ 
+
+def ag4hr_3 = If (Agg3 == AggregationPeriod.FOUR_HOURS, 1, 0); 
+
+AddLabel(ag4hr_3, "The agg period is four hours", Color.RED); 
+
+ 
+
+def ag1D_3 = If (Agg3 == AggregationPeriod.DAY, 1, 0); 
+
+AddLabel(ag1D_3, "The agg period is one day", Color.RED); 
+
+ 
+
+def ag2D_3 = If (Agg3 == AggregationPeriod.TWO_DAYS, 1, 0); 
+
+AddLabel(ag2D_3, "The agg period is two days", Color.RED); 
+
+ 
+
+def ag3D_3 = If (Agg3 == AggregationPeriod.THREE_DAYS, 1, 0); 
+
+AddLabel(ag3D_3, "The agg period is three days", Color.RED); 
+
+ 
+
+def ag4D_3 = If (Agg3 == AggregationPeriod.FOUR_DAYS, 1, 0); 
+
+AddLabel(ag4D_3, "The agg period is four days", Color.RED); 
+
+ 
+
+def agwk_3 = If (Agg3 == AggregationPeriod.week, 1, 0); 
+
+AddLabel(agwk_3, "The agg period is week", Color.RED); 
+
+ 
+
+def agmo_3 = If (Agg3 == AggregationPeriod.month, 1, 0); 
+
+AddLabel(agmo_3, "The agg period is month", Color.RED); 
+
+#### end of label definition for Agg3  ########## 
+
+#### EOC #### 

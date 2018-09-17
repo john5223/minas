@@ -1,0 +1,52 @@
+Mobius (Mobius)  
+Ehlers Forward Reverse EMA 
+ 
+
+From <https://mytrade.com/profile/Mobius/statuses/8434025>  
+# Forward / Reverse EMA 
+# (c) 2017 John F. Ehlers 
+# Ported to TOS 07.16.2017 
+# Mobius 
+
+declare lower; 
+
+# Inputs: 
+input AA = .1; 
+
+
+# Vars: 
+def CC; 
+def RE1; 
+def RE2; 
+def RE3; 
+def RE4; 
+def RE5; 
+def RE6; 
+def RE7; 
+def RE8; 
+def EMA; 
+
+plot Signal; 
+plot plot0; 
+
+CC = if CC[1] == 0 then .9 else 1 – AA; 
+EMA = AA * Close + CC * EMA[1]; 
+RE1 = CC * EMA + EMA[1]; 
+RE2 = Power(CC, 2)   * RE1 + RE1[1]; 
+RE3 = Power(CC, 4)   * RE2 + RE2[1]; 
+RE4 = Power(CC, 8)   * RE3 + RE3[1]; 
+RE5 = Power(CC, 16)  * RE4 + RE4[1]; 
+RE6 = Power(CC, 32)  * RE5 + RE5[1]; 
+RE7 = Power(CC, 64)  * RE6 + RE6[1]; 
+RE8 = Power(CC, 128) * RE7 + RE7[1]; 
+
+Signal = EMA – AA * RE8; 
+signal.AssignValueColor(if Signal > Signal[1] 
+                        then color.green 
+                        else color.red); 
+
+Plot0 = if isNaN(close) then double.nan else 0; 
+Plot0.SetDefaultColor(Color.gray); 
+addCloud(0, Signal, color.red, color.green); 
+
+# End Code Ehlers Forward / Reverse EMA 

@@ -1,0 +1,33 @@
+
+BollingerBandwidth 
+
+Description 
+
+The Bollinger Bandwidth® study is a technical indicator based upon Bollinger Bands® study, expressing the distance between upper and lower bands as percentage of the middle band value (moving average around which the bands are plotted). The main plot is accompanied with two additional ones: Bulge and Squeeze. Bulge plot displays the highest bandwidth value reached on the specified period, and, similarly, Squeeze plot shows the lowest bandwidth value. 
+
+
+From <http://tlc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/A-B/BollingerBandwidth.html>  
+
+ 
+
+# Bollinger Bulge Scan 
+# http://tos.mx/RC7e2s 
+
+BollingerBandwidth()."Bandwidth" is greater than or equal to BollingerBandwidth()."Bulge" 
+
+
+
+# Bollinger Squeeze Scan
+# http://tos.mx/sjeXSi 
+ 
+BollingerBandwidth()."Bandwidth" is less than or equal to BollingerBandwidth()."Squeeze" 
+
+
+
+
+# Bollinger Percent B Zero Line
+# http://tos.mx/2u6i2D 
+
+BollingerPercentB()."PercentB" crosses below BollingerPercentB()."ZeroLine" 
+
+ 

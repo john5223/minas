@@ -1,0 +1,44 @@
+# Archive Name: Buy Sell Pressure v1 Mobius 
+# Archive Section: Volume 
+# Suggested Tos Name: BuySellPressure_v1_Mobius 
+# Archive Date: 5.06.2018 
+# Archive Notes: Includes label added by AI  
+
+# Mobius©: This is the more traditional way to do it. Indicating weak, normal or strong volume 
+ 
+# Buy / Sell Pressure 
+# Mobius 
+# Chat Room Request 
+
+declare lower; 
+ 
+def c = close(priceType = "Last"); 
+def A = close(priceType = "Ask"); 
+def B = close(priceType = "Bid"); 
+def v = if isNAN(volume) then v[1] else volume; 
+def BSPUp; 
+def BSPDn; 
+BSPUp = if c >= A 
+          then v 
+          else BSPUp[1]; 
+
+BSPDn = if c <= B 
+        then -v 
+        else BSPDn[1]; 
+ 
+plot data = ((v-BSPDn) / (BSPUp-BSPDn)) * 100; 
+     data.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     data.AssignValueColor(if data > 100  
+                           then Color.Green  
+                           else if data < 100  
+                           then Color.Red  
+                           else Color.Cyan); 
+     data.SetLineWeight(4); 
+ 
+AddLabel(1, "Last " + c, if c >= A then color.Green else Color.Red); 
+AddLabel(1, "Ask " + A, color.white); 
+AddLabel(1, "Bid " + B, color.white); 
+AddLabel(1, "v " + v , color.white); 
+addlabel(1, "BSP " + (BSPUp+BSPDn), if BSPUp+BSPDn > 0 then color.green else color.red); 
+ 
+# End Code Buy Sell Bressure 

@@ -1,0 +1,50 @@
+ 
+
+266.57 
+spy 4 M ID 
+D: 0: 26726 H: 26789 L: C: 26857 R: 
+Style Drawings Studies Patterns 
+(yes. lire. 252. O. 
+O LinearRegSOchanneI_Mobius Chart Aggregation is Daily Chart Length is 81 Daily Bars 
+CSI (1.0, 14, 25.0, 1000.0, WILDERS) 1.68796 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input bigPointValue = 1.0; 
+
+input length = 14; 
+
+input myCommission = 25.0; 
+
+input myMargin = 1000.0; 
+
+input averageType = AverageType.WILDERS; 
+
+ 
+
+Assert(bigPointValue > 0, "'big point value' must be positive: " + bigPointValue); 
+
+Assert(myCommission >= 0, "'my commission' must not be negative: " + myMargin); 
+
+Assert(myMargin > 0, "'my margin' must be positive: " + myMargin); 
+
+ 
+
+def koeff = 100 * (bigPointValue / Sqrt(myMargin) / (150 + myCommission)); 
+
+ 
+
+plot CSI = koeff * MovingAverage(averageType, TrueRange(high, close, low), length) * ADXR(length, averageType).ADXR; 
+
+ 
+
+CSI.SetDefaultColor(GetColor(5)); 

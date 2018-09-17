@@ -1,0 +1,87 @@
+#TSI_HeikinAshi_Bars 
+
+# (c) 2009 
+
+#Copyright Authorship: ThinkSwimIndicators.com 
+
+ 
+
+ 
+
+#========================================================================== 
+
+# >>>                H E I K I N - A S H I   B A R S                  <<< [ 
+
+#.........................................................................[ 
+
+#                                                                         [ 
+
+#                         -----=== O ===-----                             [ 
+
+#                                                                         [ 
+
+#****COPYRIGHT NOTICE:  "Heikin-Ashi Bars" is free to use by the general  [ 
+
+# public. Distribution or modification is prohibited. All content, form,  [ 
+
+# and style, likewise, is protected by copyright.                         [ 
+
+#                                                                         [ 
+
+#                         -----=== x ===-----                             [ 
+
+#                                                                         [ 
+
+# ThinkSwimIndicators.com  will  CONTINUE  to release FREE indicators--of [ 
+
+# the  highest quality and caliber--for the Thinkorswim Trading platform, [ 
+
+# for use by all.  Many of our free indicators surpass the Quality & Use- [ 
+
+# fulness of indicators offered for "purchase" by other sites. We suggest [ 
+
+# that  you  visit the free "Learning Center"  at our website for further [ 
+
+# information on the use of this indicator. "GO: Master the Markets!" (TM)[ 
+
+#========================================================================== 
+
+ 
+
+ 
+
+declare lower; 
+
+ 
+
+def haclose = (open + high + low + close) / 4; 
+
+rec haopen = compoundValue(1, (haopen[1] + haclose[1]) / 2, (open[1] +  
+
+close[1]) / 2); 
+
+def diff = haclose - haopen; 
+
+ 
+
+plot HA_Down = if  diff > 0 and diff[1] >= 0 then 0 else 1; 
+
+plot HA_Up = if diff < 0 and diff[1] <= 0 then 0 else 1; 
+
+ 
+
+HA_Up.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+HA_Up.AssignValueColor(color.GREEN); 
+
+HA_Up.SetLineWeight(5); 
+
+ 
+
+HA_Down.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+HA_Down.AssignValueColor(color.RED); 
+
+HA_Down.SetLineWeight(5); 
+
+********************************************************** 

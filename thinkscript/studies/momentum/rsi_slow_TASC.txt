@@ -1,0 +1,89 @@
+THINKORSWIM: JULY 2015 TRADERS’ TIPS CODE 
+
+In “The Slow Relative Strength Index,” which appeared in the 
+
+April 2015 issue of StockS & commoditieS, author Vitali 
+
+Apirine provided a new look to a topical, old technical analysis 
+
+tool, the relative strength index (RSI). He uses the analogy 
+
+“slow and steady wins the race” to explain how to build a new 
+
+RSI, which has a slowing or smoothing mechanism. 
+
+We have recreated his slow relative strength index (SRSI) 
+
+in a SlowRSI study using our proprietary scripting language, 
+
+thinkscript. We have made the loading process extremely easy. 
+
+Simply click on the link http://tos.mx/Wu94qa and choose 
+
+save script to thinkorswim, then choose to rename your study 
+
+to “SlowRSI.” You can adjust the parameters of these within 
+
+the edit studies window to fne-tune your variables. 
+
+In the example shown in Figure 3, you see the slow RSI 
+
+plotted on a chart of the S&P 500 index over the past year. It is 
+
+easy to see that the SRSI is much smoother than the traditional 
+
+RSI. For more details about the SRSI, see Apirine’s article in 
+
+the April 2015 issue, available at Traders.com. 
+
+—thinkorswim 
+
+A division of TD Ameritrade, Inc. 
+
+www.thinkorswim.com  
+
+declare lower; 
+
+ 
+
+input emaLength = 6; 
+
+input rsiLength = 14; 
+
+input over_bought = 80; 
+
+input over_sold = 20; 
+
+ 
+
+def ema = ExpAverage(close, emaLength); 
+
+def netChgAvg = WildersAverage(close - ema, rsiLength); 
+
+def totChgAvg = WildersAverage(AbsValue(close - ema), rsiLength); 
+
+def chgRatio = if totChgAvg != 0 then netChgAvg / totChgAvg else 0; 
+
+ 
+
+plot SlowRSI = 50 * (chgRatio + 1); 
+
+plot OverBought = over_bought; 
+
+plot MiddleLine = 50; 
+
+plot OverSold = over_sold; 
+
+ 
+
+SlowRSI.SetDefaultColor(GetColor(8)); 
+
+OverBought.SetDefaultColor(GetColor(5)); 
+
+MiddleLine.SetDefaultColor(GetColor(5)); 
+
+MiddleLine.SetStyle(Curve.LONG_DASH); 
+
+OverSold.SetDefaultColor(GetColor(5)); 
+
+<<Slow RSI Article.pdf>>

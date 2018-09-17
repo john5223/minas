@@ -1,0 +1,31 @@
+Negative Volume Index   
+http://tos.mx/u3E0QS  
+
+Positive  
+http://tos.mx/7fczTK  
+
+
+#  
+# TD Ameritrade IP Company, Inc. (c) 2009-2016  
+#Indicator : NVI = Negative Volume Index PVI = Positive Volume Index   
+#Indicator Indicator Relative to One-Year Moving Average                
+http://www.metastock.com/Customer/Resources/TAAZ/default.aspx?p=92#92  
+  
+#NVI Above : 96% = Probability that Bull market is in Progress  
+#4%  = Probability that Bear market is in Progress  
+  
+#PVI Above :  79% =Probability that Bull market is in Progress  
+# 21% = Probability that Bear market is in Progress  
+  
+#NVI Below : 47% =  Probability that Bull market is in Progress  
+#53% = Probability that Bear market is in Progress  
+  
+#PVI Below : 33% = Probability that Bull market is in Progress  
+ #67% = Probability that Bear market is in Progress  
+  
+#Theorist Norman Fosback has acknowledged, however, that the NVI has historically been far more effective at predicting bull markets than downward trends.  
+# Fosback notes that these odds are not symmetrical. There is a 96% chance of a bull market when NVI is above its 255-day EMA, but only a 53% chance of a bear market when NVI is below its 255-day EMA.  
+  
+#Jeff Bierman Positive & Negative Volume Index 12 23 2009 --   https://www.youtube.com/watch?v=ghhrr_62j90   
+# Jeff Bierman Volume Positive Volume Indx & Neg Vlm Indx 4 10 2012   ---  https://www.youtube.com/watch?v=TMAC-5Gt6OY  
+# Jeff Bierman - NVI better for Index's   

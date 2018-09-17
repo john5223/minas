@@ -1,0 +1,58 @@
+MORGAN 
+55.20 
+Share D 
+Style Drawings Studies 
+Patterns 
+MSIYID D: 0: 551 H: 5584 L: 5488 C: R: 30, O: no no 
+P/E Ratio: 13.5 Div Yield: 1.81% PayoutRatio: 24.45% rsAgc-3 
+s4&38 
+$0.33 
+ 
+
+## Archive Name: SMA_withBreakoutSignals_InvTools 
+
+## Archive Section: Trend 
+
+## Suggested Tos Name: SMA_withBreakoutSignals_InvTools 
+
+## Archive Date: 5.13.2018 
+
+## Archive Notes:  
+
+ 
+
+## "##" indicates an addition by the Archivist 
+
+ 
+
+ 
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+#Number One SMA with breakout signals ken.rose@investools.com 
+
+input price = close; 
+
+input length = 30; 
+
+input displace = 0; 
+
+ 
+
+plot SMA = Average(price[-displace], length); 
+
+SMA.SetDefaultColor(GetColor(1)); 
+
+Plot crossabove = Crosses(close, sma, CrossingDirection.ABOVE); 
+
+crossabove.assignValueColor(getcolor(1)); 
+
+crossabove.setpaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+plot crossbelow = Crosses(close, sma, CrossingDirection.below); 
+
+crossbelow.assignValueColor(getcolor(5)); 
+
+crossbelow.setpaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_down); 
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 

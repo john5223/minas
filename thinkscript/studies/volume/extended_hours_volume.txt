@@ -1,0 +1,11 @@
+# Extended hours volume
+
+declare lower; 
+def Active = if SecondsFromTime(1600) > 0 
+              then 1 
+              else 0; 
+plot arrow = if Active and !Active[1] then 0 else double.nan; 
+plot v = if Active then volume else Double.NaN; 
+v.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+v.AssignValueColor(if close > close[1] then Color.GREEN else Color.RED); 
+v.SetLineWeight(3); 

@@ -1,0 +1,127 @@
+ 
+
+Scan for combined MACD & Full Stoch 
+
+ 
+
+#Scan for combined MACD & Full Stoch 
+
+ 
+
+declare lower; 
+
+ 
+
+#----------------MACD--------------- 
+
+ 
+
+input fastLength = 12; 
+
+input slowLength = 26; 
+
+input MACDLength = 9; 
+
+input AverageType = {SMA, default EMA}; 
+
+ 
+
+def Value; 
+
+def Avg; 
+
+switch (AverageType) { 
+
+case SMA: 
+
+    Value = Average(close, fastLength) - Average(close, slowLength); 
+
+    Avg = Average(Value, MACDLength); 
+
+case EMA: 
+
+    Value = ExpAverage(close, fastLength) - ExpAverage(close, slowLength); 
+
+    Avg = ExpAverage(Value, MACDLength); 
+
+} 
+
+ 
+
+#---------------Full Stochastic-------------- 
+
+ 
+
+input KPeriod = 10; 
+
+input DPeriod = 10; 
+
+input priceH = high; 
+
+input priceL = low; 
+
+input priceC = close; 
+
+input slowing_period = 3; 
+
+input smoothingType = {default SMA, EMA}; 
+
+ 
+
+def lowest_k = Lowest(priceL, KPeriod); 
+
+def c1 = priceC - lowest_k; 
+
+def c2 = Highest(priceH, KPeriod) - lowest_k; 
+
+def FastK = if c2 != 0 then c1 / c2 * 100 else 0; 
+
+ 
+
+def FullK; 
+
+def FullD; 
+
+ 
+
+switch (smoothingType) { 
+
+case SMA: 
+
+    FullK = Average(FastK, slowing_period); 
+
+    FullD = Average(FullK, DPeriod); 
+
+case EMA: 
+
+    FullK = ExpAverage(FastK, slowing_period); 
+
+    FullD = ExpAverage(FullK, DPeriod); 
+
+} 
+
+ 
+
+ 
+
+#-------------------Binary Decision----------- 
+
+ 
+
+plot x = Avg > 0 and FullD > 75 within 5 bars; 
+
+ 
+
+x.DefineColor("zero", Color.CYAN); 
+
+x.DefineColor("one", Color.PINK); 
+
+x.AssignValueColor(if x == 0 then x.Color("zero") else x.Color("one")); 
+
+ 
+
+ 
+
+ 
+
+ 

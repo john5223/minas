@@ -1,0 +1,19 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+# 
+declare lower; 
+
+input smoothingLength = 3; 
+def haclose = (open + high + low + close) / 4; 
+def haopen = CompoundValue(1, (haopen[1] + haclose[1]) / 2, (open[1] + close[1]) / 2); 
+def diff = haclose - haopen; 
+
+plot HADiff = diff; 
+plot Avg = Average(diff, smoothingLength); 
+plot ZeroLine = 0; 
+ 
+
+HADiff.SetDefaultColor(GetColor(1)); 
+Avg.SetDefaultColor(GetColor(8)); 
+ZeroLine.SetDefaultColor(GetColor(5)); 
+

@@ -1,0 +1,177 @@
+ 
+
+## START STUDY 
+
+## SuperTrend 
+
+## linus, 2014-08-01, v0.6 
+
+ 
+
+#hint: thinkScript adaptation of SuperTrend. /n The speed of the trend changes are controlled by adjusting the ATR input parameters. 
+
+ 
+
+#hint atrMult: Multiple to scale the Average True Range (ATR) value. (Smaller numbers will produce faster trend changes.) 
+
+input atrMult = 2.5; 
+
+ 
+
+#hint atrLength: ATR moving average period length. 
+
+input atrLength = 14; 
+
+ 
+
+#hint atrType: ATR moving average type. 
+
+input atrType = AverageType.WILDERS; 
+
+ 
+
+#hint pivot: Bar pivot used for trend points. (Default is hl2) 
+
+input pivot = hl2; 
+
+ 
+
+#hint label: Show Profit/Loss label. 
+
+input label = Yes; 
+
+ 
+
+#hint prompt: Text to show in front of label. 
+
+input prompt = "ST: "; 
+
+ 
+
+#hint bubbles: Show Profit/Loss bubbles by points or dollars, or OFF to hide. 
+
+input bubbles = {default OFF, POINTS, DOLLARS}; 
+
+ 
+
+def atr = MovingAverage(atrType, TrueRange(high, close, low), atrLength) * atrMult; 
+
+ 
+
+def prUp = pivot + atr; 
+
+def prDn = pivot - atr; 
+
+ 
+
+# rTrend stores the current trend value and direction. (The direction is currently up if rTrend[1] is positive and down if rTrend[1] is negative, therefore AbsValue is used to compare rTrend values when the trend is down.) 
+
+ 
+
+def rTrend = compoundValue(1,  
+
+    if rTrend[1] > 0 then  
+
+        if close < Max(prDn[1], rTrend[1]) then -prUp  
+
+        else Max(prDn, rTrend[1])  
+
+    else if rTrend[1] < 0 then  
+
+        if close > Min(prUp[1], AbsValue(rTrend[1])) then prDn  
+
+        else -Min(prUp, AbsValue(rTrend[1]))  
+
+    else rTrend[1] 
+
+, pivot); 
+
+ 
+
+# The Trend plot skips a bar whenever the trend direction changes. 
+
+plot Trend = if Sign(rTrend) == Sign(rTrend[1]) then absValue(rTrend) else Double.NaN; 
+
+Trend.DefineColor("Up", Color.CYAN); 
+
+Trend.DefineColor("Dn", Color.MAGENTA); 
+
+Trend.AssignValueColor(if rTrend > 0 then Trend.Color("Up") else Trend.Color("Dn")); 
+
+Trend.HideBubble(); 
+
+ 
+
+# Show arrows when the trend changes: 
+
+ 
+
+plot Up = if rTrend crosses above 0 then rTrend else Double.NaN; 
+
+Up.SetDefaultColor(Trend.Color("Up")); 
+
+Up.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+Up.SetLineWeight(2); 
+
+Up.HideBubble(); 
+
+ 
+
+plot Dn = if rTrend crosses below 0 then AbsValue(rTrend) else Double.NaN; 
+
+Dn.SetDefaultColor(Trend.Color("Dn")); 
+
+Dn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+Dn.SetLineWeight(2); 
+
+Dn.HideBubble(); 
+
+ 
+
+def orderDir = compoundValue(1, if !isNaN(Up) then 1 else if !isNaN(Dn) then -1 else orderDir[1], 0); 
+
+ 
+
+def isOrder = orderDir crosses 0; 
+
+ 
+
+def orderCount = compoundValue(1, if isNaN(isOrder) then 0 else if isOrder then orderCount[1] + 1 else orderCount[1], 0); 
+
+ 
+
+def noBar = isNaN(open[-1]); 
+
+ 
+
+def orderPrice = if isOrder then if noBar then close else open[-1] else orderPrice[1]; 
+
+ 
+
+def profitLoss = if !isOrder or orderCount == 1 then 0 else if orderDir > 0 then orderPrice[1] - orderPrice else if orderDir < 0 then orderPrice - orderPrice[1] else 0; 
+
+ 
+
+def profitLossSum = compoundValue(1, if isNaN(isOrder) then 0 else if isOrder then profitLossSum[1] + profitLoss else profitLossSum[1], 0); 
+
+ 
+
+def orderWinners = compoundValue(1, if IsNaN(isOrder) then orderWinners[1] else if orderCount > 1 and profitLoss > 0 then orderWinners[1] + 1 else orderWinners[1], 0); 
+
+ 
+
+AddLabel(label, prompt + orderCount + " orders (" + AsPercent(orderWinners/orderCount) + ") | P/L " + AsDollars((profitLossSum / TickSize()) * TickValue()), if profitLossSum > 0 then Color.GREEN else if profitLossSum < 0 then Color.RED else Color.GRAY); 
+
+ 
+
+AddChartBubble(bubbles and isOrder and orderDir > 0, low, if bubbles == bubbles.POINTS then "" + profitLoss else AsDollars((profitLoss / tickSize()) * tickValue()), if noBar then Color.LIGHT_GRAY else Color.GREEN, 0); 
+
+ 
+
+AddChartBubble(bubbles and isOrder and orderDir < 0, high, if bubbles == bubbles.POINTS then "" + profitLoss else AsDollars((profitLoss / tickSize()) * tickValue()), if noBar then Color.GRAY else Color.RED, 1); 
+
+ 
+
+## END STUDY 

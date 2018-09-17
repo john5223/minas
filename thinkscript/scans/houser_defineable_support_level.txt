@@ -1,0 +1,84 @@
+
+definable support level  
+
+The first and most important of the criteria is to find the lowest low of the past 30 days and subtract this from the lowest low of the preceeding 30 days. Find the absolute difference. 
+
+Take the lowest low of that preceeding period and find the absolute difference from the 30 days preceeding that. Add the differences and pass those stocks which have a sum of less than 5% of the current price. 
+
+Go further to screen for those stocks which have a current price within a certain range above the lowest low.  
+
+Am looking for stocks which have a definite definable support level and are rising' but still near the support level.  
+
+# By R. Houser 
+# Also use: 
+# 1) close >= 10.00 
+# 2) VolAvg(30).VolAvg >= 500000 
+# 3) the scan below 
+
+declare lower; 
+input lookBackLength = 30; 
+input perCent        = 5; 
+input price          = close; 
+ 
+def lowestLow        = if IsNaN( close ) then Double.NaN else lowest( low, lookBackLength ); 
+def barNum           = if IsNaN( close ) then Double.NaN else barNumber(); 
+def highestBarNum    = HighestAll( barNum ); 
+def a                = HighestAll( if barNum == ( highestBarNum - ( lookBackLength * 2 ) ) then lowestLow else 0 ); 
+def b                = HighestAll( if barNum == ( highestBarNum - ( lookBackLength ) ) then lowestLow else 0 ); 
+def c                = HighestAll( if barNum == highestBarNum then lowestLow else 0 ); 
+ 
+def sum              = AbsValue( b - c ) + AbsValue( b - a ); 
+plot S               = sum >= ( 1 - ( perCent / 100 ) ) * price; 
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+Multiple Criteria 
+
+Hope someone out there can help. 
+I have written a screening program in Strategy desk and would like to duplicate it in Thinkscript. 
+
+The first and most important of the criteria is to find the lowest low of the past 30 days and subtract this from the lowest low of the preceding 30 days. Find the absolute difference. 
+
+
+Take the lowest low of that preceding period and find the absolute difference from the 30 days preceding that. Add the differences and pass those stocks which have a sum of less than 5% of the current price. 
+
+I go further to screen for those stocks which have a current price within a certain range above the lowest low. And I want a small bid ask spread and so on. I use about 12 screening criteria. 
+
+I'm looking for stocks which have a definite definable support level and and are rising' but still near the support level. I either buy the stock, buy a call or write a covered call. 
+
+If any one could get me started with think script I'd appreciate the help. 
+
+If anyone wants the full script I use in Strategy desk let me know. It has worked well for me. 
+
+##################################### 
+
+by R. Houser 
+
+I'm surprised that this scans returns any hits, but it does. I think this does what you want, as a bonus you can run the script either as a scan or a lower chart study without changing anything. 
+
+declare lower; 
+
+input lookBackLength = 30; 
+input perCent        = 5; 
+input price          = close; 
+
+def lowestLow        = if IsNaN( close ) then Double.NaN else lowest( low, lookBackLength ); 
+def barNum           = if IsNaN( close ) then Double.NaN else barNumber(); 
+def highestBarNum    = HighestAll( barNum ); 
+def a                = HighestAll( if barNum == ( highestBarNum - ( lookBackLength * 2 ) ) then lowestLow else 0 ); 
+def b                = HighestAll( if barNum == ( highestBarNum - ( lookBackLength ) ) then lowestLow else 0 ); 
+def c                = HighestAll( if barNum == highestBarNum then lowestLow else 0 ); 
+ 
+def sum              = AbsValue( b - c ) + AbsValue( b - a ); 
+plot S               = sum >= ( 1 - ( perCent / 100 ) ) * price; 
+ 
+

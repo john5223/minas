@@ -1,0 +1,66 @@
+http://tos.mx/2njvXi  
+  
+# Tanman    
+# February 12, 2016  
+#the Net Volume Indicator which calculates the net volume whether there were net sellers or net buyers in a particular candle. For example an otherwise high volume green shooting star candle with a small green body towards the lower end actually means there were large number of buyers and then a large number of sellers and overall small net buyers showing indecision, and my indicator will display a small green volume bar instead of a large misleading green volume bar as in the regular indicator. Similarly for doji patterns which show indecision, it will display a small green or red volume bar depending on if the small body was green or red, instead of a misleading large green or red volume bar of the regular indicator.   
+  
+#You can combine this with the regular volume indicator and both combined will give you an idea of how much volume was traded and what the net buyer or seller volume was.   
+  
+#This Buy versus Sell Volume Indicator is very misleading so be very careful. For example if you have a candle with a large upside wick and a small downside wick and a small red body (red shooting star), it will show large selling volume and very small buying volume which is completely incorrect. When the candle opened, buyers stepped in and took it all the way to the high and then sellers pushed it all the way to the low and then buyers stepped in again to push it up a little. So there were a lot of buyers in the upside wick which this indicator completely ignores and instead shows all those buyers as sellers which can be very misleading and dangerous for trading.   
+  
+#The regular volume indicator is also misleading because it will show all the volume of a high volume green shooting star candle as a big green volume bar and you will have a huge green volume spike on your chart. This large green volume spike completely ignores all the sellers who pushed the price down from the high of the candle all the way down to low and then some buyers stepped in to push it up a little to end up as a shooting star. So you will see a large green volume bar and the next thing you know, price is crashing down on the next candle.   
+  
+#To minimize these misleading volume signals, I have invented the Net Volume Indicator which calculates the net volume whether there were net sellers or net buyers in a particular candle. For example an otherwise high volume green shooting star candle with a small green body towards the lower end actually means there were large number of buyers and then a large number of sellers and overall small net buyers showing indecision, and my indicator will display a small green volume bar instead of a large misleading green volume bar as in the regular indicator. Similarly for doji patterns which show indecision, it will display a small green or red volume bar depending on if the small body was green or red, instead of a misleading large green or red volume bar of the regular indicator.   
+  
+#You can combine this with the regular volume indicator and both combined will give you an idea of how much volume was traded and what the net buyer or seller volume was.   
+
+
+
+#####################################
+  
+Volume NetVo1ume
+  
+the Net Volume Indicator which calculates the net volume whether there were net sellers or net buyers in a particular candle. For example an otherwise high volume green shooting star candle with a small green body towards the lower end actually means there were large number of buyers and then a large number of sellers and overall small net buyers showing indecision, and my indicator will display a small green volume bar instead of a large misleading green volume bar as in the regular indicator. Similarly for doji patterns which show indecision, it will display a small green or red volume bar depending on if the small body was green or red, instead of a misleading large green or red volume bar of the regular indicator.   
+  
+You can combine this with the regular volume indicator and both combined will give you an idea of how much volume was traded and what the net buyer or seller volume was.   
+  
+#This Buy versus Sell Volume Indicator is very misleading so be very careful. For example if you have a candle with a large upside wick and a small downside wick and a small red body (red shooting star), it will show large selling volume and very small buying volume which is completely incorrect. When the candle opened, buyers stepped in and took it all the way to the high and then sellers pushed it all the way to the low and then buyers stepped in again to push it up a little. So there were a lot of buyers in the upside wick which this indicator completely ignores and instead shows all those buyers as sellers which can be very misleading and dangerous for trading.   
+  
+#The regular volume indicator is also misleading because it will show all the volume of a high volume green shooting star candle as a big green volume bar and you will have a huge green volume spike on your chart. This large green volume spike completely ignores all the sellers who pushed the price down from the high of the candle all the way down to low and then some buyers stepped in to push it up a little to end up as a shooting star. So you will see a large green volume bar and the next thing you know, price is crashing down on the next candle.   
+  
+#To minimize these misleading volume signals, I have invented the Net Volume Indicator which calculates the net volume whether there were net sellers or net buyers in a particular candle. For example an otherwise high volume green shooting star candle with a small green body towards the lower end actually means there were large number of buyers and then a large number of sellers and overall small net buyers showing indecision, and my indicator will display a small green volume bar instead of a large misleading green volume bar as in the regular indicator. Similarly for doji patterns which show indecision, it will display a small green or red volume bar depending on if the small body was green or red, instead of a misleading large green or red volume bar of the regular indicator.   
+  
+#You can combine this with the regular volume indicator and both combined will give you an idea of how much volume was traded and what the net buyer or seller volume was.   
+  
+  
+Following is the script for the Net Volume Indicator for anyone who is interested:   
+  
+  
+# Tanman    
+# February 12, 2016  
+  
+declare lower;   
+  
+plot Net = AbsValue(volume*(close - open)/(high - low));   
+        Net.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);   
+        Net.AssignValueColor(if close > close[1] then Color.UPTICK else if close < close[1] then Color.DOWNTICK else Color.GRAY);   
+        Net.SetLineWeight(3);   
+  
+plot VolAvg = Average(Net, 6);   
+        VolAvg.SetStyle(Curve.FIRM);   
+        VolAvg.AssignValueColor(Color.GRAY);   
+  
+  
+  
+The misleading volume bars in the regular volume indicators also affect the On Balance Volume Indicator. I have also written a script for True Balance Volume Indicator based on the net buyer or seller volume instead of the regular volume which gives a more accurate picture of what's going on:   
+  
+  
+declare lower;   
+  
+def Net = if close > open then volume*(close - open)/(high - low) else if open > close then -volume*(open - close)/(high - low) else 0;   
+plot myOBV = TotalSum(Net);   
+        myOBV.SetStyle(Curve.FIRM);   
+        myOBV.AssignValueColor(Color.UPTICK);  
+  
+  
+From <http://www.researchtrade.com/forum/read.php?7,2258,page=42>   

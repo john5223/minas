@@ -1,0 +1,159 @@
+#SFL made 
+
+#MACD based on Hull Moving Average W/peak/ebb arrows 
+
+#TOS title = MACD_via_Hull_MA_fav 
+
+declare lower; 
+
+ 
+
+input fastLength = 12; 
+
+input slowLength = 26; 
+
+input MACDLength = 9; 
+
+input AverageType = {SMA, EMA, default HULL}; 
+
+ 
+
+plot Value; 
+
+plot Avg; 
+
+switch (AverageType) { 
+
+case SMA: 
+
+    Value = Average(close, fastLength) - Average(close, slowLength); 
+
+    Avg = Average(Value, MACDLength); 
+
+case EMA: 
+
+    Value = ExpAverage(close, fastLength) - ExpAverage(close, slowLength); 
+
+    Avg = ExpAverage(Value, MACDLength); 
+
+case HULL: 
+
+   Value =  MovingAverage(AverageType.HULL, close, fastLength) -  MovingAverage(AverageType.HULL, close, slowLength); 
+
+   Avg = Average(Value, MACDLength); 
+
+} 
+
+ 
+
+plot Diff = Value - Avg; 
+
+plot ZeroLine = 0; 
+
+ 
+
+Value.SetDefaultColor(GetColor(1)); 
+
+Avg.SetDefaultColor(GetColor(8)); 
+
+Diff.SetDefaultColor(GetColor(5)); 
+
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Diff.SetLineWeight(3); 
+
+Diff.DefineColor("Positive and Up", Color.GREEN); 
+
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN); 
+
+Diff.DefineColor("Negative and Down", Color.RED); 
+
+Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then Diff.color("Positive and Up") else Diff.color("Positive and Down") else if Diff < Diff[1] then Diff.color("Negative and Down") else Diff.color("Negative and Up")); 
+
+ZeroLine.SetDefaultColor(GetColor(0)); 
+
+ 
+
+#*********plot Min arrows********** 
+
+def MinArrow = if (Value < Value[1] and value[1] < Value[2] and value[2] < Value[3] and value[-1] > Value and value < 0)  
+
+then 0 
+
+else if (Value > Value[1]) 
+
+then double.nan 
+
+else double.nan; 
+
+ 
+
+plot UpArrow = if(MinArrow == 0, value, double.nan); 
+
+UpArrow.AssignValueColor(Color.Green); 
+
+UpArrow.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+UpArrow.SetLineWeight(1); 
+
+UpArrow.HideBubble(); 
+
+ 
+
+#*********plot Max arrows********** 
+
+def MaxArrow = if (Value > Value[1] and value[1] > Value[2] and value[2] > Value[3] and value[-1] < Value and value > 0)  
+
+then 0 
+
+else if (Value > Value[1]) 
+
+then double.nan 
+
+else double.nan; 
+
+ 
+
+plot DwnArrow = if(MaxArrow == 0, value, double.nan); 
+
+DwnArrow.AssignValueColor(Color.cyan); 
+
+DwnArrow.SetPaintingStrategy(PaintingStrategy.ARROW_Down); 
+
+DwnArrow.SetLineWeight(1); 
+
+DwnArrow.HideBubble(); 
+
+ 
+
+#*********plot Max signal(Avg) arrows********** 
+
+def SignalArrow = if (Avg > Avg[1] and Avg[1] > Avg[2] and Avg[2] > Avg[3] and Avg[-1] < Avg and Avg > 0)  
+
+then 0 
+
+else if (Avg > Avg[1]) 
+
+then double.nan 
+
+else double.nan; 
+
+ 
+
+plot downSignalArrow = if(SignalArrow == 0, avg, double.nan); 
+
+downSignalArrow.AssignValueColor(Color.yellow); 
+
+downSignalArrow.SetPaintingStrategy(PaintingStrategy.ARROW_Down); 
+
+downSignalArrow.SetLineWeight(1); 
+
+downSignalArrow.HideBubble(); 
+
+ 
+
+AddCloud(ZeroLine, Value, color.RED, color.GREEN); 
+
+# end 

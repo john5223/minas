@@ -1,0 +1,27 @@
+# Price To Earnings Ratio Indicator
+# Mobius
+# V01.2010
+
+declare hide_on_intraday;
+
+script Scale {
+    input c = close;
+    input Min = .01;
+    input Max =   1;
+    def hh = HighestAll(c);
+    def ll   = LowestAll(c);
+    plot Range = (((Max - Min) * (c - ll)) /  (hh - ll)) + Min;
+}
+def Earnings = if IsNaN(GetActualEarnings()) then 0 else GetActualEarnings();
+def YearsEarnings = Sum(Earnings, 252);
+def PE = close / YearsEarnings;
+
+AddLabel(yes, "P/E Ratio: " + PE, color.white);
+plot Ratio = Average(Scale(c = PE, Min = Lowest(close, 252), Max = Highest(close, 252)), 252);
+     Ratio.SetDefaultColor(Color.White);
+def SD = StDev(Ratio, 252);
+plot Upper = Ratio + (3 * SD);
+Upper.SetDefaultColor(color.cyan);
+plot Lower = Ratio + (-3 * SD);
+Lower.SetDefaultColor(color.cyan);
+# End Code PE Study

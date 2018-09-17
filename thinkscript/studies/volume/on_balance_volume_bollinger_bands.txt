@@ -1,0 +1,120 @@
+#Archive Name: #Archive Name: On Balance Volume in Bolinger Band Format_MrScript 
+# Archive Tab: Scripts 
+#Tos Name: OBVinBBformat_MrScript 
+ 
+#Mr. Script:  
+#OBV in BB format 
+declare lower; 
+input colorNormLength = 3; 
+input ColoredBB     = yes; 
+input ColoredFill     = yes; 
+input BreakArrows     = yes; 
+input BB_midline    = no; 
+input BB_displace   =  0; 
+input BB_length     = 20; 
+input Num_Dev_Dn      = -2.0; 
+input Num_Dev_Up      = +2.0; 
+def price = close; 
+def vol = volume; 
+ 
+# plot Zeroline = 0; 
+# ZeroLine.SetDefaultColor(GetColor(5)); 
+ 
+plot OBV = TotalSum(if price > price[1] then vol else if price < price[1] then -vol else 0); 
+ 
+# OBV.SetDefaultColor(GetColor(8)); 
+ 
+OBV.DefineColor("Highest", Color.Yellow); 
+OBV.DefineColor("Lowest", Color.Light_Red); 
+OBV.AssignNormGradientColor(colorNormLength, OBV.color("Lowest"), OBV.color("Highest")); 
+ 
+def Midline   = ExpAverage (data = OBV, BB_length); 
+def sDev      = stdev(data = OBV, length = BB_length); 
+def LowerBand = Midline + num_Dev_Dn * sDev; 
+def UpperBand = Midline + num_Dev_Up * sDev; 
+ 
+# plot S = sDev; 
+# S.SetDefaultColor(GetColor(1)); 
+# plot M = MidLine; 
+# M.SetDefaultColor(GetColor(6)); 
+# plot L = LowerBand; 
+# L.SetDefaultColor(GetColor(3)); 
+# plot U = UpperBand; 
+# U.SetDefaultColor(GetColor(3)); 
+ 
+def BBStatus =  
+  if OBV > UpperBand then 2      
+  else  
+    if OBV < LowerBand then -2   
+    else 0;                       
+ 
+rec BreakStatus = compoundValue(1,  
+  if BreakStatus[1] == BBStatus or BBStatus == 0 then BreakStatus[1] 
+  else  
+    if BBStatus == 2 then 2  
+    else -2, 0); 
+ 
+plot MidlineP =  
+  if BB_midline then Midline 
+  else double.NaN; 
+MidLineP.SetDefaultColor(GetColor(1)); 
+MidLineP.HideBubble(); 
+ 
+plot UpperBandP = UpperBand; 
+UpperBandP.AssignValueColor ( 
+    if !ColoredBB then Color.White 
+    else  
+      if BreakStatus[0] == 2 then Color.Green 
+      else Color.Red); 
+UpperBandP.SetLineWeight(1); 
+UpperBandP.HideBubble(); 
+ 
+plot LowerBandP = LowerBand; 
+LowerBandP.AssignValueColor ( 
+    if !ColoredBB then Color.White 
+    else  
+      if BreakStatus[0] == 2 then Color.Green 
+      else Color.Red); 
+LowerBandP.SetLineWeight(1); 
+LowerBandP.HideBubble(); 
+ 
+# Breakout/down arrows. 
+plot BreakOutArrow = 
+  if BreakArrows then 
+    if BreakStatus[0] == BreakStatus[1] then double.NAN 
+    else if BreakStatus[0] == 2 then  
+      OBV else double.NAN 
+  else double.NAN; 
+BreakOutArrow.SetPaintingStrategy(PaintingStrategy.Arrow_Up); 
+BreakOutArrow.SetDefaultColor(Color.Green); 
+BreakOutArrow.SetLineWeight(3); 
+BreakOutArrow.HideBubble(); 
+ 
+plot BreakDownArrow = 
+  if BreakArrows then 
+    if BreakStatus[0] == BreakStatus[1] then double.NAN 
+    else if BreakStatus[0] == -2 then  
+      OBV else double.NAN 
+else double.NAN; 
+BreakDownArrow.SetPaintingStrategy(PaintingStrategy.Arrow_Down); 
+BreakDownArrow.SetDefaultColor(Color.Red); 
+BreakDownArrow.SetLineWeight(3); 
+BreakDownArrow.HideBubble(); 
+ 
+ 
+plot GreenUpper = if ColoredFill and BreakStatus[0] == 2 then  
+  UpperBandP else double.NAN; 
+GreenUpper.SetDefaultColor(CreateColor(0, 100, 0)); 
+plot GreenLower = if ColoredFill and BreakStatus[0] == 2 then  
+  LowerBandP else double.NAN; 
+GreenLower.SetDefaultColor(CreateColor(0, 100, 0)); 
+AddCloud (GreenUpper, GreenLower,    CreateColor(0, 100, 0), color.red); 
+ 
+plot RedUpper = if ColoredFill and BreakSTatus[0] == -2 then  
+  UpperBandP else double.NAN; 
+RedUpper.SetDefaultColor(CreateColor(200, 0, 0)); 
+plot RedLower = if ColoredFill and BreakStatus[0] == -2 then 
+  LowerBandP else double.NAN; 
+RedLower.SetDefaultColor(CreateColor(200, 0, 0)); 
+AddCloud (RedUpper, RedLower,        CreateColor(200, 0, 0), color.green); 
+ 

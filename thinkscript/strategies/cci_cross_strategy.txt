@@ -1,0 +1,85 @@
+TOS Title  = CCI Cross Strategy 
+
+A couple word of clarification. Strategies and studies are different and are composed differently in TOS. In what I posted you will see both a strategy and a related study. That will help you to understand as you review it. 
+
+ 
+
+################# Strategy for a cross ######################## 
+
+Def Cross_above = if (CCI()."CCI" crosses above CCIAverage()."CCIAvg", 1, 0); 
+
+Def Cross_below = if (CCI()."CCI" crosses below CCIAverage()."CCIAvg", 1, 0); 
+
+ 
+
+addOrder(OrderType.BUY_TO_OPEN, Cross_above, Open[0], 10, Color.MAGENTA, Color.MAGENTA,"buy"); 
+
+ 
+
+addOrder(OrderType.SELL_TO_CLOSE, Cross_below, Open[0], 10, Color.MAGENTA, Color.MAGENTA,"sell"); 
+
+ 
+
+####### Plot with buy/sell arrows  ############# 
+
+declare lower; 
+
+input cciLength = 14; 
+
+input cciAvgLength = 9; 
+
+input over_sold = -100; 
+
+input over_bought = 100; 
+
+ 
+
+plot CCI = CCI(length = cciLength); 
+
+plot CCIAvg = Average(CCI, cciAvgLength); 
+
+plot OverBought = over_bought; 
+
+plot OverSold = over_sold; 
+
+ 
+
+CCI.setDefaultColor(GetColor(9)); 
+
+CCIAvg.setDefaultColor(GetColor(8)); 
+
+OverBought.setDefaultColor(GetColor(5)); 
+
+OverSold.setDefaultColor(GetColor(5)); 
+
+############ Arrow Plots ############### 
+
+Def Cross_above = if (CCI()."CCI" crosses above CCIAverage()."CCIAvg", 1, 0); 
+
+Def Cross_below = if (CCI()."CCI" crosses below CCIAverage()."CCIAvg", 1, 0); 
+
+ 
+
+#Plot data1 = If Cross_above then CCIAverage()."CCIAvg"[1] - 50 else double.nan; 
+
+Plot data1 = if CCI()."CCI" crosses above CCIAverage()."CCIAvg" then -100 else double.nan; 
+
+data1.setPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);  
+
+data1.SetDefaultColor(Color.Green); 
+
+data1.SetLineWeight(5); 
+
+ 
+
+#Plot data2 = If Cross_below then CCIAverage()."CCI"[1] + 50 else double.nan; 
+
+Plot data2 =if CCI()."CCI" crosses below CCIAverage()."CCIAvg" then +200 else double.nan; 
+
+data2.setPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_down);  
+
+data2.SetDefaultColor(Color.red); 
+
+data2.SetLineWeight(5); 
+
+####### EOC ########## 

@@ -1,0 +1,47 @@
+# ORB Watch List Column 
+# Mobius 
+#  
+input StartTime = 0930; 
+input EndTime = 1000; 
+def h = high; 
+def l = low; 
+def c = close; 
+def ORActive = if SecondsFromTime(StartTime) > 0 and 
+                   SecondsTillTime(EndTime) >= 0 
+                then 1 
+                else 0; 
+def ORH = if ORActive and !ORActive[1] 
+           then h 
+           else if ORActive and 
+                   h > ORH[1] 
+                then h 
+                else ORH[1]; 
+def ORL = if ORActive and !ORActive[1] 
+           then l 
+           else if ORActive and 
+                   l < ORL[1] 
+                then l 
+                else ORL[1]; 
+def ORhigh = if !ORActive  
+              then ORH 
+               else Double.NaN; 
+def ORlow = if !ORActive 
+              then ORL 
+              else Double.NaN; 
+AddLabel(1, if close > ORhigh 
+             then "Above" 
+             else if close < ORlow 
+                  then "Below" 
+                  else "Inside", 
+             if close > ORhigh 
+             then color.green 
+             else if close < ORlow 
+                  then color.red 
+                  else color.yellow); 
+  
+ 
+
+Image download failed.
+            
+  
+ 

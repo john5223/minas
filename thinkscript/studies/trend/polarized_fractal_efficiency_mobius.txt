@@ -1,0 +1,52 @@
+ 
+
+spy 4M ID 
+C: C: 28773 H: L: C: R: 57 
+Chart Aggregation is Daily I Chart Length is 82 Daily Bars 
+-el_VDbius (yes. line. 252. O, O, yes, no.. _ 
+LinearRegSDchanneI_Mobius 
+PolarizedFractaIEfficiency (10, 5) 
+19.1149 
+so o 
+-so 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 10; 
+
+input smoothingLength = 5; 
+
+ 
+
+def diff = close - close[length - 1]; 
+
+def val = 100 * Sqrt(Sqr(diff) + Sqr(length)) / sum(Sqrt(1 + Sqr(close - close[1])), length - 1); 
+
+ 
+
+plot PFE = ExpAverage(if diff > 0 then val else -val, smoothingLength); 
+
+plot UpperLevel = 50; 
+
+plot ZeroLine = 0; 
+
+plot LowerLevel = -50; 
+
+ 
+
+PFE.SetDefaultColor(GetColor(8)); 
+
+UpperLevel.SetDefaultColor(GetColor(5)); 
+
+ZeroLine.SetDefaultColor(GetColor(5)); 
+
+LowerLevel.SetDefaultColor(GetColor(5)); 

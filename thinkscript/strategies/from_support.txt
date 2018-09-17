@@ -1,0 +1,7 @@
+http://tlc.thinkorswim.com/center/charting/studies/strategies-library.html 
+
+
+#chart strategy Ichimoku cloud: http://tos.mx/0ZnlcN 
+
+#chart strategy Donchian_Channel DOWNtrend: http://tos.mx/chn8QV 
+#chart strategy Donchian_Channel UPtrend: http://tos.mx/ZR7BfU 

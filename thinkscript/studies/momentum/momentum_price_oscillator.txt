@@ -1,0 +1,80 @@
+
+# Momentum Price Oscillator _Mobius_v02
+
+# Momentum Price Oscillator - If both volume and price are in agreement then the probability is that the tend will extend. If volume doesn't increase at the beginning of a new trend the probability is that price will contract again.  The study colors the bars to match the histogram. It also indicates divergence where price is coninuing to rise while also compressing in volatility making the histogram smaller even though price is rising. If volume starts to rise while the histogram is shrinking then price will expand and continue the trend otherwise price will reverse the trend or at the least find Balance and go flat. 
+
+# Momentum Price Oscillator
+# Mobius
+# V.02
+# Detrended avg for momentum and weighted it with a derivative of volume.
+# If momentum (clouded green and red oscillator is increasing price will increase in momentum with the oscillators
+direction. If momentum is decresing price movement is not sustainable and any trend will shortly end.
+declare lower;
+input Fn = 9;
+input Sn = 29;
+input Sq = 6;
+input Sq_V = .618;
+input avgType = AverageType.Simple;
+input colorBars = yes;
+def h = high;
+def l = low;
+def cl = close;
+
+def v = volume;
+def TR = Max(h, cl[1]) - Min(l, cl[1]);
+def R = Highest(h, Sq) - Lowest(l, Sq);
+def F = Log(Sum(TR, Sq) / R) / Log(Sq);
+def a = MovingAverage(avgType, cl, Fn);
+def b = MovingAverage(avgType, cl, Sn);
+def c = MovingAverage(avgType, TrueRange(h,cl, l), Fn);
+def d = MovingAverage(avgType, TrueRange(h, cl, l), Sn);
+plot m = 100*MovingAverage(avgType, c-d, Floor(Fn/2))*(1+(v / Average(v, Sn)));
+m.AssignValueColor(if m > 0 then color.green else color.red);
+m.HideBubble();
+addcloud(0, m, color.red, color.green);
+plot data = 100*MovingAverage(avgType, a - b, Floor(Fn/2));
+data.SetPaintingStrategy(paintingStrategy.Histogram);
+data.AssignValueColor(if data > 0 and data > data[1]
+then color.green
+else if data > 0 and data < data[1]
+then color.blue
+else if data < 0 and data < data[1]
+then color.red
+else color.yellow);
+plot zero_Squeeze = if isNaN(cl) then double.nan else 0;
+zero_Squeeze.SetStyle(Curve.Points);
+Zero_Squeeze.SetLineWeight(3);
+zero_Squeeze.AssignValueColor(if F >= Sq_V
+then color.yellow
+else color.cyan);
+zero_Squeeze.HideBubble();
+zero_Squeeze.HideTitle();
+addlabel(1, "Volume Momentum: " + m, m.TakeValueColor());
+addLabel(1, "Price Momentum: " + data, data.TakeValueColor());
+addLabel(F >= Sq_V, "Squeeze", color.yellow);
+def sell = if data < 0
+then double.nan
+else if data crosses above 0
+then 1
+else if data > 0 and data < data[1]
+then sell[1] + 1
+else sell[1];
+def buy = if data > 0 then double.nan
+else if data crosses below 0
+then 1
+else if data < 0 and data > data[1]
+then buy[1] + 1
+else buy[1];
+AddChartBubble(sell == 2, data, close, color.pink, yes);
+AddChartBubble(buy == 2, data, close, color.cyan, no);
+AddChartBubble(sell == 2, data, "v", if m > m[1] then color.green else color.red, yes);
+addChartBubble(buy == 2, data, "v", if m > m[1] then color.green else color.red, no);
+assignPriceColor(if colorBars
+then data.TakeValueColor()
+else color.current);
+plot lowerBoundary = lowestAll(data) - 3;
+lowerBoundary.SetDefaultColor(Color.Black);
+plot upperBoundary = highestAll(data) + 3;
+upperBoundary.SetDefaultColor(Color.Black);
+
+# End Code Momentum Price Oscillator

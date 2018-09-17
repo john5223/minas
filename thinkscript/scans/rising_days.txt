@@ -1,0 +1,16 @@
+O/C rises 
+ 
+Based on observing the pattern of stocks already on the move, their rises happen in a series of 4 to 7 daily consecutive rises. This is used as a basis for this scan code: 
+
+Def Series_of_rises = Sum(close > open,4) == 4;# 4 rises in a row 
+def SeriesX2 = sum(Series_of_rises,2) >= 2;# 2 or more 'Series_of_rises' in a row 
+Plot dataX2 = SeriesX2; 
+
+
+An interesting aspect of this scan code is that you can make it more restrictive by changing 'def SeriesX2 = sum(Series_of_rises,2) >= 2;' to 'def SeriesX2 = sum(Series_of_rises,3) >= 3;' for example. Also a 'within ? bars' statement may be added. 
+
+Eventually you wil get zero results. 
+
+
+
+

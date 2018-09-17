@@ -1,0 +1,80 @@
+THINKORSWIM: AUGUST 2015 TRADERS’ TIPS CODE 
+
+In his June 2015 article “The Slow Volume Strength Index,” 
+
+author Vitali Apirine expands on the slow relative strength 
+
+index (SRSI) concept presented in his April 2015 article, but 
+
+this time, changes the focus to volume. 
+
+Keeping in the same theme as his earlier article that “slow 
+
+and steady wins the race,” he uses ideas from the SRSI concept but this time measures the relative strength of volume. 
+
+We have recreated his slow volume strength index (SVSI) 
+
+as a thinkorswim study using our proprietary scripting language, thinkscript. We have made the loading process extremely easy—simply click on the link http://tos.mx/MEqL2n 
+
+and choose save script to thinkorswim, then choose to rename 
+
+your study to “SlowVSI.” You can adjust the parameters of 
+
+these within the edit studies window to fne-tune your variables. 
+
+In the example shown in Figure 3, you see the SlowVSI 
+
+plotted on a chart of GE over the past year. For a more detailed description of the indicator, please see Apirine’s article 
+
+in June 2015 issue. 
+
+—thinkorswim 
+
+A division of TD Ameritrade, Inc. 
+
+www.thinkorswim.com 
+
+declare lower; 
+
+ 
+
+input emaLength = 6; 
+
+input vsiLength = 14; 
+
+input over_bought = 80; 
+
+input over_sold = 20; 
+
+ 
+
+def ema = ExpAverage(close, emaLength); 
+
+def avgVolUp = WildersAverage(if close > ema then volume else 0, vsiLength); 
+
+def avgVolDown = WildersAverage(if close < ema then volume else 0, vsiLength); 
+
+ 
+
+plot SlowVSI = if avgVolUp + avgVolDown == 0 then 50 else 100 * avgVolUp / (avgVolUp + avgVolDown); 
+
+plot OverBought = over_bought; 
+
+plot MiddleLine = 50; 
+
+plot OverSold = over_sold; 
+
+ 
+
+SlowVSI.SetDefaultColor(GetColor(1)); 
+
+OverBought.SetDefaultColor(GetColor(5)); 
+
+MiddleLine.SetDefaultColor(GetColor(5)); 
+
+MiddleLine.SetStyle(Curve.LONG_DASH); 
+
+OverSold.SetDefaultColor(GetColor(5)); 
+
+<<SlowVSI Article.pdf>>
+ 

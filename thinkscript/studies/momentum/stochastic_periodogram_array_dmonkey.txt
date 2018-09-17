@@ -1,0 +1,286 @@
+Draw i ngs 
+AMJIYID 0:4/9'18 02405 H:2428 L: 238 c: 2388 R:C48 
+WAIT until 8B, AOX and SMA are all tru 
+Periodogram Length 
+23.98 
+j h f_Zero 
+= 76 
+-012% 
+Style 
+Studies 
+HL2, 4.0, 80, 20) 966699 SO 
+Periodogram Length = 52 
+May 
+Aug 
+_ Line (CLOSE) CLOSE) 26.13 
+20 WA 
+Sep 
+Patterns 
+Drawing set: Default 
+ 
+
+ 
+
+# StochasticPeriodogramArray_DMonkey 
+
+#StudyName: Stochastic Periodogram Array  
+
+#Description: Uses Ehlers Periodogram to determine length for stochastic // Example of using Periodogram to determine length for a built in study. 
+
+#Author: DMonkey 
+
+#Requested By:  Chatroom discussion 
+
+# Ver  1   Date  4/07/2018    
+
+#Notes : Period limits are between 8 & 48 // Uses the poor mans TOS array. Added a gaussian filter to smooth noise. 
+
+ 
+
+#inputs 
+
+input lag = 48; 
+
+input price = hl2; 
+
+input betadev = 4.0; 
+
+input ob = 80; 
+
+input os = 20; 
+
+ 
+
+#Calcs 
+
+def half_lag = .5 * lag; 
+
+def x = EhlersRoofingFilter("cutoff length" = 8, "roof cutoff length" = 48, price = price); 
+
+ 
+
+def cosinePart = fold i = 3 to 48 
+
+                 with cosPart 
+
+                 do cosPart + (3 * (x * GetValue(x, i) + GetValue(x, 1) * GetValue(x, i + 1) + GetValue(x, 2) * GetValue(x, i + 2)) - (x + GetValue(x, 1) + GetValue(x, 2)) * (GetValue(x, i) + GetValue(x, i + 1) + GetValue(x, i + 2))) / Sqrt((3 * (x * x + GetValue(x, 1) * GetValue(x, 1) + GetValue(x, 2) * GetValue(x, 2)) - Sqr(x + GetValue(x, 1) + GetValue(x, 2))) * (3 * (GetValue(x, i) * GetValue(x, i) +  GetValue(x, i + 1) * GetValue(x, i + 1) + GetValue(x, i + 2) * GetValue(x, i + 2)) - Sqr(GetValue(x, i) + GetValue(x, i + 1) + GetValue(x, i + 2)))) * Cos(2 * Double.Pi * i / lag); 
+
+ 
+
+def sinePart = fold j = 3 to 48  
+
+               with sinPart 
+
+               do sinPart + (3 * (x * GetValue(x, j) + GetValue(x, 1) * GetValue(x, j + 1) + GetValue(x, 2) * GetValue(x, j + 2)) - (x + GetValue(x, 1) + GetValue(x, 2)) * (GetValue(x, j) + GetValue(x, j + 1) + GetValue(x, j + 2))) / Sqrt((3 * (x * x + GetValue(x, 1) * GetValue(x, 1) + GetValue(x, 2) * GetValue(x, 2)) - Sqr(x + GetValue(x, 1) + GetValue(x, 2))) * (3 * (GetValue(x, j) * GetValue(x, j) +  GetValue(x, j + 1) * GetValue(x, j + 1) + GetValue(x, j + 2) * GetValue(x, j + 2)) - Sqr(GetValue(x, j) + GetValue(x, j + 1) + GetValue(x, j + 2)))) * Sin(2 * Double.Pi * j / lag); 
+
+ 
+
+def sqSum = Sqr(cosinePart) + Sqr(sinePart); 
+
+ 
+
+def Periodogram = round(ExpAverage(sqSum, 9), numberOfDigits = 0); 
+
+ 
+
+def   array = if Periodogram < 8 then StochasticFull("k period" = 8, "d period" = 8) 
+
+      else if Periodogram == 9  then StochasticFull("k period" = 9, "d period" = 9)  
+
+      else if Periodogram == 10 then StochasticFull("k period" = 10, "d period" = 10) 
+
+      else if Periodogram == 11 then StochasticFull("k period" = 11, "d period" = 11) 
+
+      else if Periodogram == 12 then StochasticFull("k period" = 12, "d period" = 12) 
+
+      else if Periodogram == 13 then StochasticFull("k period" = 13, "d period" = 13) 
+
+      else if Periodogram == 14 then StochasticFull("k period" = 14, "d period" = 14) 
+
+      else if Periodogram == 15 then StochasticFull("k period" = 15, "d period" = 15) 
+
+      else if Periodogram == 16 then StochasticFull("k period" = 16, "d period" = 16)  
+
+      else if Periodogram == 17 then StochasticFull("k period" = 17, "d period" = 17) 
+
+      else if Periodogram == 18 then StochasticFull("k period" = 18, "d period" = 18) 
+
+      else if Periodogram == 19 then StochasticFull("k period" = 19, "d period" = 19) 
+
+      else if Periodogram == 20 then StochasticFull("k period" = 20, "d period" = 20) 
+
+      else if Periodogram == 21 then StochasticFull("k period" = 21, "d period" = 21) 
+
+      else if Periodogram == 22 then StochasticFull("k period" = 22, "d period" = 22) 
+
+      else if Periodogram == 23 then StochasticFull("k period" = 23, "d period" = 23) 
+
+      else if Periodogram == 24 then StochasticFull("k period" = 24, "d period" = 24) 
+
+      else if Periodogram == 25 then StochasticFull("k period" = 25, "d period" = 25) 
+
+      else if Periodogram == 26 then StochasticFull("k period" = 26, "d period" = 26) 
+
+      else if Periodogram == 27 then StochasticFull("k period" = 27, "d period" = 27) 
+
+      else if Periodogram == 28 then StochasticFull("k period" = 28, "d period" = 28) 
+
+      else if Periodogram == 29 then StochasticFull("k period" = 29, "d period" = 29) 
+
+      else if Periodogram == 30 then StochasticFull("k period" = 30, "d period" = 30) 
+
+      else if Periodogram == 31 then StochasticFull("k period" = 31, "d period" = 31) 
+
+      else if Periodogram == 32 then StochasticFull("k period" = 32, "d period" = 32) 
+
+      else if Periodogram == 33 then StochasticFull("k period" = 33, "d period" = 33) 
+
+      else if Periodogram == 34 then StochasticFull("k period" = 34, "d period" = 34) 
+
+      else if Periodogram == 35 then StochasticFull("k period" = 35, "d period" = 35) 
+
+      else if Periodogram == 36 then StochasticFull("k period" = 36, "d period" = 36) 
+
+      else if Periodogram == 37 then StochasticFull("k period" = 37, "d period" = 37) 
+
+      else if Periodogram == 38 then StochasticFull("k period" = 38, "d period" = 38) 
+
+      else if Periodogram == 39 then StochasticFull("k period" = 39, "d period" = 39) 
+
+      else if Periodogram == 40 then StochasticFull("k period" = 40, "d period" = 40) 
+
+      else if Periodogram == 41 then StochasticFull("k period" = 41, "d period" = 41) 
+
+      else if Periodogram == 42 then StochasticFull("k period" = 42, "d period" = 42) 
+
+      else if Periodogram == 43 then StochasticFull("k period" = 43, "d period" = 43) 
+
+      else if Periodogram == 44 then StochasticFull("k period" = 44, "d period" = 44) 
+
+      else if Periodogram == 45 then StochasticFull("k period" = 45, "d period" = 45) 
+
+      else if Periodogram == 46 then StochasticFull("k period" = 46, "d period" = 46)  
+
+      else if Periodogram == 47 then StochasticFull("k period" = 47, "d period" = 47) 
+
+      else if Periodogram >= 48 then StochasticFull("k period" = 48, "d period" = 48) 
+
+      else array[1]; 
+
+ 
+
+def w = (2 * Double.Pi / (half_lag)); 
+
+def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betadev) - 1 ); 
+
+def alpha = (-beta + Sqrt(beta * beta + 2 * beta)); 
+
+def G = Power(alpha, 4) * array +  
+
+                 4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] +  
+
+                 4 * Power( 1 - alpha, 3 ) * G[3] - Power( 1 - alpha, 4 ) * G[4]; 
+
+ 
+
+def cond1 = if g > ob then Double.NaN 
+
+            else if g crosses below ob  
+
+            then 1 
+
+            else if g crosses below os  
+
+            then Double.NaN 
+
+            else cond1[1]; 
+
+def cond2 = if cond1 == 1 && g crosses above 50  
+
+            then 1 
+
+            else cond2[1]; 
+
+ 
+
+def cond3 = if g < os 
+
+            then Double.NaN  
+
+            else if g crosses above os  
+
+            then 1  
+
+            else if g crosses above ob 
+
+            then Double.NaN  
+
+            else cond3[1]; 
+
+def cond4 = if cond3 == 1 && g crosses below 50 
+
+            then 1 
+
+            else cond4[1]; 
+
+ 
+
+#Plot Managment 
+
+plot stochastic = g; 
+
+plot obb = ob; 
+
+plot oss = os; 
+
+plot xx =  if cond4  
+
+           then 50 
+
+           else double.nan; 
+
+plot xxx = if cond2 
+
+           then 50 
+
+           else double.nan; 
+
+obb.setdefaultColor(color.red); 
+
+oss.setdefaultColor(color.green); 
+
+stochastic.assignValueColor( if between(stochastic,os,ob) 
+
+                             then color.cyan 
+
+                             else if stochastic > ob  
+
+                             then color.red  
+
+                             else color.green); 
+
+ 
+
+xx.SetDefaultColor(Color.GREEN); 
+
+xxx.setdefaultColor(color.red); 
+
+ 
+
+#Labels 
+
+addlabel(1,"Periodogram Length = " + Periodogram,color.white); 
+
+AddLabel(!IsNaN(cond2), getsymbol() + " : Drift ",  Color.GREEN); 
+
+AddLabel(!IsNaN(cond4), getsymbol() + " : Drift "); 
+
+ 
+
+declare lower; 
+
+ 
+
+###   End Code   ### 
+
+ 

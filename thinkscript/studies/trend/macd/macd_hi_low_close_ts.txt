@@ -1,0 +1,111 @@
+Here’s a MACD with a few subtle changes: 
+
+ 
+
+1) The price data used is (H+L+C)/3 rather than the close. I find this makes 
+
+a subtle improvement in the display of divergences. 
+
+ 
+
+2) You can plot a second long time frame MACD line on the same chart 
+
+(hidden by default). 
+
+ 
+
+3) The histogram bars are colored based on the relationship to the previous 
+
+bar vice the standard above/below zero line coloring. 
+
+ 
+
+4) The color of the main MACD line is white when the slope is 
+
+positive and purple when negative. 
+
+ 
+
+ 
+
+# MACDHLC 
+
+# http://thinkscripter.wordpress.com 
+
+# thinkscripter@gmail.com 
+
+# Last Update 17 Jan 2009 
+
+                              
+
+declare lower; 
+
+ 
+
+input ShortTimeFrameFastLength = 7; 
+
+input ShortTimeFrameSlowLength = 28; 
+
+input STFMACDLength = 7; 
+
+input LongTimeFrameFastLength = 28; 
+
+input LongTimeFrameSlowLength = 112; 
+
+input LTFMACDLength = 5; 
+
+ 
+
+def fastAvg = ExpAverage(data = hlc3, length = ShortTimeFrameFastLength); 
+
+def slowAvg = ExpAverage(data = hlc3, length = ShortTimeFrameSlowLength); 
+
+ 
+
+plot STFValue = fastAvg - slowAvg; 
+
+STFValue.setLineWeight(2); 
+
+DEF STFslope = (STFValue-STFValue[1]); 
+
+DEF STFslopeColor = if(STFslope > 0.0,9,0); 
+
+STFValue.AssignValueColor(getColor(STFSlopeColor)); 
+
+ 
+
+plot STFAvg = ExpAverage(data = STFValue, length = STFMACDLength); 
+
+STFAvg.SetDefaultColor(GetColor(8)); 
+
+ 
+
+def LfastAvg = ExpAverage(data = hlc3, length = LongTimeFrameFastLength); 
+
+def LslowAvg = ExpAverage(data = hlc3, length = LongTimeFrameSlowLength); 
+
+ 
+
+plot LTFValue = LfastAvg - LslowAvg; 
+
+LTFValue.setDefaultColor(color.green); 
+
+LTFValue.hide(); 
+
+ 
+
+plot Diff = STFvalue - STFavg; 
+
+diff.AssignValueColor(if diff >= diff[1] then Color.UPTICK else Color.DOWNTICK); 
+
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Diff.SetDefaultColor(GetColor(5)); 
+
+ 
+
+plot ZeroLine = 0; 
+
+ZeroLine.SetDefaultColor(GetColor(0)); 
+
+#---------------- End Of Code -------------------- 

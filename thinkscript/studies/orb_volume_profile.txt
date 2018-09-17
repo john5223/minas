@@ -1,0 +1,151 @@
+
+
+# Volume Profile for ORB
+# V01.05.02.2018
+# TOS Volume Profile with cond altered for a user input Time Range. Labels added for ORH, ORL, OR POC, Opening Range Value Percents upper and lower.
+# For Intraday use only
+
+input valueAreaPercent = 70.0;
+input opacity = 15;
+input RthBegin = 0930;
+input OREnd = 1000;
+input TimeLength = 30; #hint TimeLenght: In Minutes
+
+def o = open;
+def h = high;
+def l = low;
+def c = close;
+def x = BarNumber();
+def t = GetTime();
+def RTS = RegularTradingStart(GetYYYYMMDD());
+def RTE = RegularTradingEnd(GetYYYYMMDD());
+def Active = SecondsFromTime(RthBegin) >= 0 and
+SecondsTillTime(OREnd) > 0;
+def firstBar = if Active and !Active[1]
+then x
+else Double.NaN;
+def agg = GetAggregationPeriod();
+def ORperiod_1 = if t crosses above RTS - agg + 300000
+then Round(((Highest(h, 3) + Lowest(l, 3)) / 2) / TickSize(), 0) * TickSize()
+else ORperiod_1[1];
+plot OR_M = if x >= HighestAll(firstBar)
+then HighestAll(if IsNaN(c[-1])
+then ORperiod_1
+else Double.NaN)
+else Double.NaN;
+OR_M.SetStyle(Curve.LONG_DASH);
+OR_M.SetLineWeight(2);
+OR_M.SetDefaultColor(Color.YELLOW);
+AddChartBubble(x == firstBar, OR_M, "ORM", OR_M.TakeValueColor());
+def timeSegment = (SecondsFromTime(0000) / 60) % TimeLength == 0;
+def profiles = 1440 / TimeLength; # Profiles for 24 hours
+def cond = if Active and !Active[1]
+then 1
+else timeSegment;
+profile vol = VolumeProfile("startNewProfile" = cond,
+"onExpansion" = 0,
+"numberOfProfiles" = 20,
+"pricePerRow" = TickSize(),
+"value area percent" = valueAreaPercent);
+def pc = if IsNaN(vol.GetPointOfControl())
+then pc[1]
+else vol.GetPointOfControl();
+def hVA = if IsNaN(vol.GetHighestValueArea())
+then hVA[1]
+else vol.GetHighestValueArea();
+def lVA = if IsNaN(vol.GetLowestValueArea())
+then lVA[1]
+else vol.GetLowestValueArea();
+def hProfile = if IsNaN(vol.GetHighest())
+then hProfile[1]
+else vol.GetHighest();
+def lProfile = if IsNaN(vol.GetLowest())
+then lProfile[1]
+else vol.GetLowest();
+def POC_ = if Active
+then Round(pc / TickSize(), 0) * TickSize()
+else POC_[1];
+plot POC = if x >= HighestAll(firstBar)
+then HighestAll(if IsNaN(c[-1])
+then POC_
+else Double.NaN)
+else Double.NaN;
+def ProfileHigh_ = if Active
+then hProfile
+else ProfileHigh_[1];
+plot ProfileHigh = if x >= HighestAll(firstBar)
+then ProfileHigh_
+else Double.NaN;
+def ProfileLow_ = if Active
+then lProfile
+else ProfileLow_[1];
+plot ProfileLow = if x >= HighestAll(firstBar)
+then ProfileLow_
+else Double.NaN;
+def VAHigh_ = if Active
+then Round(hVA / TickSize(), 0) * TickSize()
+else VAHigh_[1];
+plot VAHigh = if x >= HighestAll(firstBar)
+then HighestAll(if IsNaN(c[-1])
+then VAHigh_
+else Double.NaN)
+else Double.NaN;
+def VALow_ = if Active
+then Round(lVA / TickSize(), 0) * TickSize()
+else VALow_[1];
+plot VALow = if x >= HighestAll(firstBar)
+then HighestAll(if IsNaN(c[-1])
+then VALow_
+else Double.NaN)
+else Double.NaN;
+vol.Show(color.current, Color.YELLOW, Color.current, opacity);
+POC.SetStyle(Curve.LONG_DASH);
+POC.SetLineWeight(3);
+POC.SetDefaultColor(Color.YELLOW);
+VAHigh.SetStyle(Curve.LONG_DASH);
+VAHigh.SetLineWeight(1);
+VALow.SetStyle(Curve.LONG_DASH);
+VALow.SetLineWeight(1);
+VAHigh.SetDefaultColor(Color.GRAY);
+VALow.SetDefaultColor(Color.GRAY);
+ProfileHigh.SetStyle(Curve.LONG_DASH);
+ProfileHigh.SetLineWeight(3);
+ProfileLow.SetStyle(Curve.LONG_DASH);
+ProfileLow.SetLineWeight(3);
+ProfileHigh.SetDefaultColor(Color.GREEN);
+ProfileLow.SetDefaultColor(Color.RED);
+def bubble = IsNaN(c[2]) and !IsNaN(c[3]);
+AddChartBubble(bubble, VAHigh, "OR %" + valueAreaPercent, VAHigh.TakeValueColor(), yes);
+AddChartBubble(bubble, VALow, "OR %" + valueAreaPercent, VALow.TakeValueColor(), no);
+AddChartBubble(bubble, POC, "OR POC", POC.TakeValueColor(), no);
+AddChartBubble(bubble, ProfileHigh, "ORH", ProfileHigh.TakeValueColor(), yes);
+AddChartBubble(bubble, ProfileLow, "ORL", ProfileLow.TakeValueColor(), no);
+AddVerticalLine(Active and !Active[1], "RTH", Color.CYAN, Curve.SHORT_DASH);
+AddVerticalLine(!Active and Active[1], "ORend", Color.CYAN, Curve.SHORT_DASH);
+AddVerticalLine(t crosses above RTE, "RTHend", Color.CYAN, Curve.SHORT_DASH);
+def prevClose = if t crosses above RTE
+then vwap
+else prevClose[1];
+def prevCloseBar = if t crosses above RTE
+then BarNumber()
+else Double.NaN;
+plot prevCloseLine = if x >= HighestAll(prevCloseBar)
+then HighestAll(if IsNaN(c[-1])
+then prevClose
+else Double.NaN)
+else Double.NaN;
+prevCloseLine.SetStyle(Curve.SHORT_DASH);
+prevCloseLine.SetDefaultColor(Color.GRAY);
+AddChartBubble(x == HighestAll(x), prevCloseLine, "RTH C", prevCloseLine.TakeValueColor(), no);
+def RTHopen = if Active and !Active[1]
+then o
+else RTHopen[1];
+plot RTHopen_ = if x >= HighestAll(firstBar)
+then HighestAll(if IsNaN(c[-1])
+then RTHopen
+else Double.NaN)
+else Double.NaN;
+RTHopen_.SetStyle(Curve.SHORT_DASH);
+RTHopen_.SetDefaultColor(Color.GRAY);
+AddChartBubble(x == HighestAll(x), RTHopen, "RTH O", RTHopen_.TakeValueColor(), no);
+# End Code ORB using Volume Profile

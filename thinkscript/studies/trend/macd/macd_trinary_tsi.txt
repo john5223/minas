@@ -1,0 +1,97 @@
+#TSI_Trinary_MACD 
+
+# (c) 2009 
+
+#Copyright Authorship: ThinkSwimIndicators.com 
+
+ 
+
+ 
+
+#========================================================================== 
+
+# >>>                  T R I N A R Y    M A C D                       <<< [ 
+
+#.........................................................................[ 
+
+#                                                                         [ 
+
+#                         -----=== O ===-----                             [ 
+
+#                                                                         [ 
+
+#****COPYRIGHT NOTICE:  "Trinary MACD" is free to use by the general pub- [ 
+
+# lic. Distribution or modification is prohibited. All content, form, and [ 
+
+# style, likewise, is protected by copyright.                             [ 
+
+#                                                                         [ 
+
+#                         -----=== x ===-----                             [ 
+
+#                                                                         [ 
+
+# ThinkSwimIndicators.com  will  CONTINUE  to release FREE indicators--of [ 
+
+# the  highest quality and caliber--for the Thinkorswim Trading platform, [ 
+
+# for use by all.  Many of our free indicators surpass the Quality & Use- [ 
+
+# fulness of indicators offered for "purchase" by other sites. We suggest [ 
+
+# that  you  visit the free "Learning Center"  at our website for further [ 
+
+# information on the use of this indicator. "GO: Master the Markets!" (TM)[ 
+
+#========================================================================== 
+
+ 
+
+ 
+
+declare lower; 
+
+ 
+
+input FastLength = 14; 
+
+input SlowLength = 20; 
+
+input MACDLength = 9; 
+
+ 
+
+def FastAvg = Ema2(data = close, "smoothing factor" = 2 / (1 + FastLength)); 
+
+def SlowAvg = Ema2(data = close, "smoothing factor" = 2 / (1 + SlowLength)); 
+
+def Histo = FastAvg - SlowAvg; 
+
+def zeroline = 0; 
+
+def NextAvg = ExpAverage(data = Histo, MACDLength); 
+
+def Avg = NextAvg[1]; 
+
+def Cond1 = ((Histo > zeroline) and (Avg > zeroline)) and (Histo > Avg); 
+
+def Cond2 = ((Histo > zeroline) and (Avg > zeroline)) and (Histo < Avg); 
+
+ 
+
+plot MACD_Slow = if Avg > Histo then -1 else -1; 
+
+plot MACD_Fast = if Cond1 then 1 else if Cond2 then 0 else -1; 
+
+ 
+
+MACD_Slow .SetDefaultColor(CreateColor(0, 0, 255)); 
+
+MACD_Fast.DefineColor("Condition_UpwardCross", Color.MAGENTA); 
+
+MACD_Fast.AssignValueColor (if Histo > Avg then MACD_Fast.color("Condition_UpwardCross") else  (CreateColor(51,153,255))); 
+
+MACD_Slow.SetLineWeight(5); 
+
+MACD_Fast.SetLineWeight(5); 

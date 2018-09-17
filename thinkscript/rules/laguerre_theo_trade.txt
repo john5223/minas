@@ -1,0 +1,35 @@
+http://tos.mx/3zrX6G 
+
+
+#If RSI Laguerre is descending and FE over .6, that tells me something is changing and I'm already looking at an equity I've determined is about to make a polarity change. So the worse case that happens is that the security grinds sideways for a few days. 
+
+#A reading of the FE over .6 is an indication that energy has been built up. If the FE is high (over .6) and RSI LaGuerre is breaking lower FE will follow suit. If RSI reverses and goes above .8 I'm outa there, with the assumption I have a short position. 
+
+ 
+
+#FE is a gauge of both mean reverting and linearity. Descending readings indicate a trend is on. A reading below .3 indicates exhaustion in trend or near exhaustion. A reading above .6 indicates moving sideways with rapid reversion and energy building for a move again. 
+
+
+#Above .6 - Think price compression or squeeze 
+
+#Below .3 - Think running out of gas 
+
+
+#Here's an example: 
+
+
+#FE at 60 periods is oscillating around .5 tightly while FE at 8 periods is over .6. Zscore is over 2 and is starting to roll over. That is a good short to the mean. 
+
+
+#Short trade setup I look for with RSI Laguerre adjusted with FE.  
+
+#1) Polarity Change - Equity has gone from making higher highs and higher lows to making a lower high and lower low and is now putting in another lower high 
+
+ 
+#2) RSI Laguerrer is above .8 and descending from 1 
+ 
+
+#3) Fractal Energy is below .38 and nose down or above .6 and rolling over. In the first case, below .38, FE is indicating trend exahustion and RSI is likely showing as a peak and not running across pegged at 1. In the second case price has risen to a lower resistance and has been rolling slowly over building energy. 
+
+ 
+ 

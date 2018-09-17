@@ -1,0 +1,75 @@
+# Scan For Double Bottom 
+# Mobius 
+
+
+input Percent_A_to_C = .1; 
+input nP = 13; 
+input ShowValues = yes; 
+
+def AC = Percent_A_to_C / 100; 
+def h = high; 
+def l = low; 
+
+def bar = BarNumber(); 
+
+def Ps = 1 + AC; 
+
+def Ns = 1 - AC;  
+
+def ll = fold japp = 1 to nP + 1  
+
+         with q = 1 
+
+         while q 
+
+         do l < GetValue(low, -j); 
+
+def PivotL = if (bar > nP and  
+
+                 l == Lowest(l, nP) and  
+
+                 ll)  
+
+            then l  
+
+            else Double.NaN; 
+
+def PL1 = if !isNaN(PivotL)  
+
+          then l  
+
+          else PL1[1]; 
+
+def PL1Bar = if !IsNaN(PivotL)  
+
+             then bar  
+
+             else PL1Bar[1]; 
+
+ 
+
+def PL2 = if PL1 != PL1[1] 
+
+          then PL1[1] 
+
+          else PL2[1]; 
+
+def PL2Bar = if PL1Bar != PL1Bar[1] 
+
+             then Pl1Bar[1]  
+
+             else PL2Bar[1]; 
+
+def Check1 = if between(PL2, PL1 * Ns, PL1 * Ps) 
+
+             then 1 
+
+             else 0; 
+
+plot Cond1 = HighestAll(if Check1 
+
+                        then PL2 
+
+                        else double.nan); 
+
+# End Code Scan Double Bottom 

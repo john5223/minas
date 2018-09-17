@@ -1,0 +1,177 @@
+## START STUDY 
+
+## LRC_KC_Lite 
+
+## linus, 2014-02-10, v0.1 
+
+ 
+ 
+
+#hint: Combination of Linear Regression Channels and Keltner Channels. 
+
+ 
+ 
+
+declare once_per_bar; 
+
+ 
+ 
+
+#hint price: Fundamental price type for channels. (Default is hl2) 
+
+input price = hl2; 
+
+ 
+ 
+
+#hint lrcLength: Period length of linear regression channels. (Default is 200) 
+
+input lrcLength = 200; 
+
+ 
+ 
+
+#hint lrcWidth: Scaling width between linear regression channels. (Default is .5) 
+
+input lrcWidth = .5; 
+
+ 
+ 
+
+#hint kcFactor: Scaling factor for Keltner Channels. (Default is 1.5) 
+
+input kcFactor = 1.5; 
+
+ 
+ 
+
+#hint atrLength: Period length for AverageTrueRange. (Default is 5) 
+
+input atrLength = 5; 
+
+ 
+ 
+
+#hint kcLength: Period length for Keltner Channels. (Default is 10) 
+
+input kcLength = 10; 
+
+ 
+ 
+
+#hint kcSmooth: Smoothing length for Keltner Channels. (Default is 20) 
+
+input kcSmooth = 20; 
+
+ 
+ 
+
+#hint kcType: Moving average type for Keltner Channels. (Default is SIMPLE) 
+
+input kcType = AverageType.SIMPLE; 
+
+ 
+ 
+
+def MCh = InertiaAll(price, lrcLength); 
+
+def dist = HighestAll(AbsValue(MCh - price)) * lrcWidth; 
+
+def HCh = MCh + dist; 
+
+def LCh = MCh - dist; 
+
+ 
+ 
+
+def kcOfst = kcFactor * Average(TrueRange(high,  close,  low),  atrLength); 
+
+def kcAvg = MovingAverage(kcType, price, kcLength); 
+
+ 
+ 
+
+def UB = Inertia((Inertia(kcAvg + kcOfst, kcSmooth) + HCh) / 2, kcSmooth); 
+
+ 
+ 
+
+def LB = Inertia((Inertia(kcAvg - kcOfst, kcSmooth) + LCh) / 2, kcSmooth); 
+
+ 
+ 
+
+def MB = Inertia(if close > kcAvg then (kcAvg + high) / 2 else (kcAvg + low) / 2, kcSmooth); 
+
+ 
+ 
+
+plot UBLR = InertiaAll(Highest(UB, lrcLength / 2), lrcLength / 3); 
+
+plot LBLR = InertiaAll(Lowest(LB, lrcLength / 2), lrcLength / 3); 
+
+plot MBLR = (UBLR + LBLR) / 2; 
+
+ 
+ 
+
+plot HChan = if IsNaN(UBLR[1]) then (InertiaAll(Highest(high[1], lrcLength)) + InertiaAll(Highest(high[1], kcSmooth))) / 2 else (HCh + UBLR[1]) / 2; 
+
+ 
+ 
+
+plot LChan = if IsNaN(LBLR) then (InertiaAll(Lowest(low, lrcLength)) + InertiaAll(Lowest(low, kcSmooth))) / 2 else (LCh + LBLR) / 2; 
+
+ 
+ 
+
+plot MChan = (HChan + LChan) / 2; 
+
+ 
+ 
+
+UBLR.SetDefaultColor(Color.BLUE); 
+
+LBLR.SetDefaultColor(Color.BLUE); 
+
+MBLR.SetDefaultColor(Color.BLUE); 
+
+UBLR.SetStyle(Curve.SHORT_DASH); 
+
+MBLR.SetStyle(Curve.SHORT_DASH); 
+
+LBLR.SetStyle(Curve.SHORT_DASH); 
+
+UBLR.SetLineWeight(2); 
+
+MBLR.SetLineWeight(2); 
+
+LBLR.SetLineWeight(2); 
+
+ 
+ 
+
+HChan.SetDefaultColor(Color.GRAY); 
+
+MChan.SetDefaultColor(Color.GRAY); 
+
+LChan.SetDefaultColor(Color.GRAY); 
+
+HChan.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+MChan.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+LChan.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+HChan.SetLineWeight(2); 
+
+MChan.SetLineWeight(2); 
+
+LChan.SetLineWeight(2); 
+
+ 
+ 
+
+## END STUDY 
+
+ 

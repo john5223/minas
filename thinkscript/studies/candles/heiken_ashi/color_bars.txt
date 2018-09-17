@@ -1,0 +1,51 @@
+# Heiken-Ashi Color Bars 
+
+# Chat room 10.09.13 
+
+# Mobius 
+
+# haClose = (open+high+low+close)/4 Average price of the current bar 
+
+# haOpen = [haOpen(Previous Bar) + haClose(Previous Bar)]/2  Midpoint of the previous Heiken Ashi bar. 
+
+# haHigh = Max(high, haOpen, haClose) Highest value in the Heiken Ashi set. 
+
+# haLow = Min(low, haOpen, haClose)Lowest value in the Heiken Ashi set. 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def HAopen; 
+
+def HAhigh; 
+
+def HAlow; 
+
+def HAclose; 
+
+HAopen = CompoundValue(1, (haopen[1] + haclose[1]) / 2, (o[1] + c[1]) / 2); 
+
+HAhigh = Max(Max(h, haopen), haclose[1]); 
+
+HAlow = Min(Min(l, haopen), haclose[1]); 
+
+HAclose = (HAopen + HAhigh + HAlow + HAclose[1]) / 4; 
+
+AssignPricecolor(if haclose > haopen 
+
+                 then Color.Green 
+
+                 else Color.Red); 
+
+ 
+
+# End Code HA Color Bars 
+
+ 

@@ -1,0 +1,92 @@
+ 
+
+264.98 
+SPY2MID [3:5/1/18 0:2087 H:2E51 L:2E211 
+HeikenAshiTrendBars_MrScript 
+Style T Studies 
+c:2E4ge R:2gg no 
+3/12 
+3/19 
+411E 
+5/14 
+ 
+
+# Archive Name: Heiken AShi Trend Bars_MrScript 
+
+# Archive Section: Trend 
+
+# Tos name: HeikenAshiTrendBars_MrScript 
+
+ 
+
+#Mr. Script:  
+
+#Heiken Ashi 
+
+ 
+
+Declare lower; 
+
+ 
+
+def haClose = Ohlc4; 
+
+rec haopen = compoundValue(1, (haopen[1] + haClose[1]) / 2, (open[1] + close[1]) / 2); 
+
+def H = Max(High, haopen); 
+
+def HaHigh = Max(H, haClose); 
+
+def l = Min(Low, haopen); 
+
+def haLow = Min(l, haClose); 
+
+ 
+
+def up = haClose >= haopen; 
+
+def down = haopen >= haClose; 
+
+ 
+
+plot haoscup = up; 
+
+plot haoscdown = down; 
+
+Plot one = 1; 
+
+Plot zero = 0; 
+
+ 
+
+haoscup.HideTitle(); 
+
+haoscdown.HideTitle(); 
+
+haoscup.HideBubble(); 
+
+haoscdown.HideBubble(); 
+
+one.HideTitle(); 
+
+one.HideBubble(); 
+
+zero.HideTitle(); 
+
+zero.HideBubble(); 
+
+ 
+
+ 
+
+haoscup.setPaintingStrategy(paintingStrategy.SQUARED_HISTOGRAM); 
+
+haoscdown.setPaintingStrategy(paintingStrategy.SQUARED_HISTOGRAM); 
+
+haoscup.setDefaultColor(color.GREEN); 
+
+haoscdown.setDefaultColor(color.RED); 
+
+one.assignValueColor(color.black); 
+
+zero.assignValueColor(color.black); 

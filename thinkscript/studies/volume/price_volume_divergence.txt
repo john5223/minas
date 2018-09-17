@@ -1,0 +1,101 @@
+  
+
+VMW 
+Share D 
+Style Drawings Studies Patterns 
+O VMWARE INC CO... 138.99 
+D: 0: 13759 H: 14229 L: 13702 C: 13899 R: 527 SIMPLE, Sixty... 
+VMW3M ID 
+Chart Aggregation is Daily Chart Length is 63 Daily Bars. Expansion Compression Indicatorv03 FBP = 139.93 Div 
+137.5 
+127.5 
+112.5 
+PriceVoIumeOivergence_Mobius &819513 
+Positive Price Convergence Negative Volume Convergence 
+  
+
+  
+
+  
+
+http://tos.mx/OaCvo 
+
+ 
+
+# Price Volume Divergence 
+
+# Mobius 
+
+# Chat Room Request 09.10.2014 
+
+ 
+
+declare lower; 
+
+ 
+
+def price = close; 
+
+def vol = volume; 
+
+ 
+
+script Scale { 
+
+    input c = close; 
+
+    input Min = .01; 
+
+    input Max =   1; 
+
+    def hh = HighestAll(c); 
+
+    def ll   = LowestAll(c); 
+
+    plot Range = (((Max - Min) * (c - ll)) /  (hh - ll)) + Min; 
+
+} 
+
+ 
+
+plot NormPrice = Scale(c = price).Range; 
+
+NormPrice.SetDefaultColor(Color.Green); 
+
+plot NormVolume = Scale(c = vol).Range; 
+
+NormVolume.SetDefaultColor(Color.Red); 
+
+plot mean = if isNaN(close) then Double.NaN else .5; 
+
+mean.SetDefaultColor(Color.White); 
+
+ 
+
+def cond1 = normprice < mean; 
+
+def cond2 = normprice > mean; 
+
+ 
+
+def cond3 = normvolume < mean; 
+
+def cond4 = normvolume > mean; 
+
+ 
+
+addlabel(cond1, "Negative Price Convergence", color.red); 
+
+addlabel(cond2, "Positive Price Convergence", color.green); 
+
+ 
+
+addlabel(cond3, "Negative Volume Convergence", color.red); 
+
+addlabel(cond4, "Positive Volume Convergence", color.green); 
+
+ 
+
+addlabel(normprice > 0.9, "Price overbought", color.red); 
+
+addlabel(normprice < 0.1, "Price oversold", color.green); 

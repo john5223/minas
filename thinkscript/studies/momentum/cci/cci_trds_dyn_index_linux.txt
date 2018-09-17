@@ -1,0 +1,158 @@
+## START STUDY 
+
+## CCI_TDI_Upper 
+
+## linus, 2014-02-12, v0.1 
+
+ 
+ 
+
+#hint: Trader's Dynamic Index using CCI. 
+
+ 
+ 
+
+input paintBars = {default Off, Both, Sig, Dir}; 
+
+input cciLength = 14; 
+
+input fastLength = 2; 
+
+input slowLength = 7; 
+
+input trendLength = 34; 
+
+input type = AverageType.SIMPLE; 
+
+input OBS = 90; 
+
+input line = 4; 
+
+ 
+ 
+
+def price = close + low + high; 
+
+def linDev = lindev(price, cciLength); 
+
+def CCI = if linDev == 0 then 0 else (price - Average(price, cciLength)) / linDev / 0.015; 
+
+ 
+ 
+
+plot Up; 
+
+plot Dn; 
+
+def Fast = MovingAverage(type, CCI, fastLength); 
+
+def Slow = MovingAverage(type, CCI, slowLength); 
+
+def Trend = MovingAverage(type, CCI, trendLength); 
+
+ 
+ 
+
+rec dir = CompoundValue(1, 
+
+    if Slow > OBS then 1 
+
+    else if Slow < -OBS then -1 
+
+    else dir[1] 
+
+, 0); 
+
+ 
+ 
+
+rec sig = CompoundValue(1, 
+
+    if Slow crosses above Trend and Trend > Trend[1] then 1 
+
+    else if Slow crosses below Trend and Trend < Trend[1] then -1 
+
+    else if sig[1] < 0 and Trend crosses above 0 then 0 
+
+    else if sig[1] > 0 and Trend crosses below 0 then 0 
+
+    else sig[1] 
+
+, 0); 
+
+ 
+ 
+
+Up = if sig crosses above 0 then Lowest(low, slowLength) - tickSize() else Double.NaN; 
+
+Up.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+Up.SetDefaultColor(Color.CYAN); 
+
+ 
+ 
+
+Dn = if sig crosses below 0 then Highest(high, slowLength) + tickSize() else Double.NaN; 
+
+Dn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+Dn.SetDefaultColor(Color.MAGENTA); 
+
+ 
+ 
+
+AddVerticalLine(line and dir crosses 0, "", if dir > 0 then Color.GREEN else Color.RED, line); 
+
+ 
+ 
+
+def pb = if paintBars == paintBars.Dir then Dir else Sig; 
+
+AssignPriceColor(if !paintBars then Color.CURRENT 
+
+else if paintBars == paintBars.Both then 
+
+    if dir > 0 then 
+
+        if sig > 0 then Color.GREEN 
+
+        else Color.DARK_GREEN 
+
+    else if dir < 0 then 
+
+        if sig < 0 then Color.RED 
+
+        else Color.PINK 
+
+    else Color.GRAY 
+
+else if pb > 0 then 
+
+    if close > open then Color.GREEN 
+
+    else Color.DARK_GREEN 
+
+else if pb < 0 then 
+
+    if close < open then Color.RED 
+
+    else Color.PINK 
+
+else Color.GRAY); 
+
+ 
+ 
+
+## END STUDY 
+
+ 
+ 
+
+  
+
+ 
+ 
+
+#Note: /ES 5m chart with paintBars = Sig. 
+
+ 

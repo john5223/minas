@@ -1,0 +1,122 @@
+
+
+
+
+RSI & SMA 
+
+S-SCAN RSI UNDER 20 & CLOSE > 200-DAY SMA 
+TOC Return 
+Alternate 1 
+Stocks that have a RSI under 20 for 3 days and a closing price above the 200 SMA 
+
+
+Plot scan = (RSIWilder(length = 2) < 20 && RSIWilder(length = 2)[1] < 20 && RSIWilder(length = 2)[2] < 20 && Close > SimpleMovingAvg(length = 200)) 
+
+Alternate 2 
+stocks that have a 3-day RSI under 20 a closing price above the 200 SMA 
+
+
+Plot Scan =(RSIWilder(length = 3) < 20 && Close > SimpleMovingAvg(length = 200)) 
+
+Comment: Set agg to day. 
+
+
+
+
+###########################################33
+
+# RSI Scan 
+# Nick Name NAG® 
+# 3.15.2016 
+ 
+# If you'd like to scan for stocks that have crossed the an input level (e.g. 30 level) 
+# on the RSI for the first time in 3 years. 
+# 
+# The scanner limitation is 750 daily bars. It doesn't go any further 
+# back than that. TOS limits historical scan data to 730 days for daily 
+# and up aggregation, so I'm not sure there's enough to do that accurately. 
+# This should get what's available within TOS limits. 
+ 
+rec rsi_cross = CompoundValue(1, if RSI() crosses above 30 then rsi_cross[1] + 1 else rsi_cross[1], 0); 
+
+plot scan = rsi_cross[1] == 0 and rsi_cross == 1; 
+ 
+# End Study 
+
+
+
+
+
+
+###########################################################3
+
+
+ 
+
+RSI dot above price 
+
+ 
+
+# Plot a green dot on the price chart when RSILength is above 70 
+
+# Plot a red dot on the price chart when RSILength is below 30 
+
+# write the correct script to add a dot above the bars when : 
+
+RSI above 70 = green dot 
+
+RSI below 30 = red dot 
+
+********************************** 
+
+ 
+
+Input RSILength = 14; 
+
+ 
+
+def RSI = reference RSIWilder(length = RSILength); 
+
+ 
+
+def OB = RSI > 70; 
+
+def OS = RSI < 30; 
+
+ 
+
+plot Above70 = if OB then High * 1.002 else double.nan; 
+
+# Change the number 1.002 above to locate the dot where you want it in 
+
+relation to price high 
+
+Above70.SetPaintingStrategy(PaintingStrategy.POINTS); 
+
+Above70.SetDefaultColor(Color.GREEN); 
+
+Above70.SetLineWeight(3); 
+
+# Change the LineWeight above to whatever pleases you. 1 is smaller and 
+
+5 is larger 
+
+ 
+
+plot Below30 = if OS then Low * 0.998 else double.nan; 
+
+# Change the number 0.998 above to locate the dot where you want it in 
+
+relation to price low 
+
+Below30.SetPaintingStrategy(PaintingStrategy.POINTS); 
+
+Below30.SetDefaultColor(Color.RED); 
+
+Below30.SetLineWeight(3); 
+
+# Change the LineWeight above to whatever pleases you. 1 is smaller and 
+
+5 is larger 
+
+ 

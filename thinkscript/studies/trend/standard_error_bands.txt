@@ -1,0 +1,41 @@
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input linRegLength = 21; 
+
+input smLength = 3; 
+
+input displace = 0; 
+
+input Num_Dev_Dn = -2.0; 
+
+input Num_Dev_Up = 2.0; 
+
+ 
+
+def value = Average(Inertia(price[-displace], linRegLength), smLength); 
+
+def error = Average(sterr(price[-displace], linRegLength), smLength); 
+
+ 
+
+plot MidLine = value; 
+
+plot LowerBand = value + Num_Dev_Dn * error; 
+
+plot UpperBand = value + Num_Dev_Up * error; 
+
+ 
+
+MidLine.SetDefaultColor(GetColor(5)); 
+
+UpperBand.SetDefaultColor(GetColor(8)); 
+
+LowerBand.SetDefaultColor(GetColor(1)); 

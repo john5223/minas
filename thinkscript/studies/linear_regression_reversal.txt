@@ -1,0 +1,15 @@
+#
+# 
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+# 
+
+declare lower; 
+
+input length = 14; 
+def inert = Inertia(close, length); 
+
+plot LRR = if inert >= inert[1] then 1 else -1; 
+LRR.SetDefaultColor(GetColor(8)); 
+
+plot ZeroLine = 0; 
+ZeroLine.SetDefaultColor(GetColor(5)); 

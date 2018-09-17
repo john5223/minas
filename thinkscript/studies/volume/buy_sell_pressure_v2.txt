@@ -1,0 +1,60 @@
+# Archive Name: Buy Sell Pressure v2 Mobius 
+# Archive Section: Volume 
+# Suggested Tos Name: BuySellPressure_v2_Mobius 
+# Archive Date: 5.06.2018 
+ 
+ 
+# Buy Sell Pressure 
+# Mobius 
+# Mobius at MyTrade 
+# V01.01.2011 
+ 
+declare lower; 
+ 
+input detrend = 9; 
+input inertiaS = 26; 
+input smoothing = 5; 
+ 
+rec BuyV  = if close > close[detrend] then volume else 1; 
+rec SellV = if close < close[detrend] then -volume else 1; 
+def BP = (BuyV / (BuyV + SellV)); 
+def SP = (SellV / (SellV + BuyV)); 
+ 
+ 
+plot Data = Average(Inertia(BP - SP, inertiaS), smoothing); 
+Data.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+Data.SetLineWeight(3); 
+Data.DefineColor("Positive and Up", Color.DARK_GREEN); 
+Data.DefineColor("Positive and Down", Color.LIGHT_RED); 
+Data.DefineColor("Negative and Down", Color.DARK_RED); 
+Data.DefineColor("Negative and Up", Color.LIGHT_GREEN); 
+Data.AssignValueColor(if Data >= 0 then if Data > Data[1] then Data.Color("Positive and Up") else Data.Color("Positive and Down") else if ata < Data[1] then Data.Color("Negative and Down") else Data.Color("Negative and Up")); 
+ 
+ 
+pot zeroLine = 0; 
+ 
+# End Code 
+ 
+ 
+# AI - got code for label from other Mobius study 
+ 
+def c = close(priceType = "Last"); 
+def A = close(priceType = "Ask"); 
+def B = close(priceType = "Bid"); 
+def v = if IsNaN(volume) then v[1] else volume; 
+def BSPUp; 
+def BSPDn; 
+ 
+BSPUp = if close >= A 
+    then v 
+    else BSPUp[1]; 
+ 
+BSPDn = if close <= B 
+    then -v 
+    else BSPDn[1]; 
+ 
+def BSP = ((v - BSPDn) / (BSPUp - BSPDn)) * 100; 
+AddLabel(1, "1-Bar Buy/Sell Pressure = " + BSP,  
+    if BSP > 100 then Color.LIGHT_GREEN  
+    else if BSP < 100then Color.RED 
+    else Color.CYAN); 

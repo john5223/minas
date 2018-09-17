@@ -1,0 +1,19 @@
+ CCI Scans 
+
+ 
+
+Scan #1) 
+
+CCI( 25 ).CCI >= -100 and CCI( 25 ).CCI [1]< -100 
+
+ 
+
+Scan #2) 
+
+ CCI( 80 ).CCI >= -100 and CCI( 80 ).CCI[1] < -100 
+
+ 
+
+Combined into a single line: 
+
+CCI( 25 ).CCI >= -100 and CCI( 25 ).CCI [1]< -100 and CCI( 80 ).CCI >= -100 and CCI( 80 ).CCI[1] < -100 

@@ -1,0 +1,20 @@
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+# 
+declare lower; 
+ 
+input fastLength = 7; 
+input slowLength = 15; 
+input trendLength = 4; 
+input noiseType = {default linear, squared}; 
+input noiseLength = 250; 
+input correctionFactor = 2; 
+
+
+assert(trendLength > 0, "'trend length' must be positive: " + trendLength); 
+assert(correctionFactor > 0, "'correction factor' must be positive: " + correctionFactor); 
+def smf = 2 / (1 + trendLength); 
+def reversal = TrendPeriods(fastLength, slowLength); 
+def cpc = if isNaN(reversal[1]) then 0 else if reversal[1] != reversal then 0 else cpc[1] + close - close[1]; 
+def trend = if isNaN(reversal[1]) then 0 else if reversal[1] != reversal then 0 else trend[1] * (1 - smf) + cpc * smf; 
+def noise; 
+def diff = AbsValue(cpc - trend); 

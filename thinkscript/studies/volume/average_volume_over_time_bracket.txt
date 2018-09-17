@@ -1,0 +1,35 @@
+# Archive Name: Average Volume over a time Bracket_Dmonkey
+# Archive Section: Volume
+# Suggested Tos Name: VolumeAvgTimeOverBracket_DMonkey
+#Description: Average Volume over a time Bracket 
+#Author: DMonkey 
+
+#inputs 
+input OpenTime = 0930; 
+input CloseTime = 1600; 
+
+#Calcs 
+def v = volume;
+def active = if SecondsFromTime(OpenTime) >= 0 and 
+				SecondsTillTime(CloseTime) > 0 
+			then active[1] + 1 
+			else 0;
+
+def Data =  fold i = 0 to active + 1 
+			with p 
+			while active 
+			do 
+				p + 1; 
+				def AvgVol = (fold q = 0 to data 
+					with r  
+					do
+						r + GetValue(v, q) / (data)
+				);
+
+plot Avg_Vol = if active 
+			   then (AvgVol ) 
+			   else double.nan; 
+
+declare lower;
+
+# End Code

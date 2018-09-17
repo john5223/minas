@@ -1,0 +1,64 @@
+# Intraday Intensity Index 
+# Mobius 
+# V03.03.26.2018 
+
+declare Lower; 
+input n = 10; 
+def RTH = secondsFromTime(0930) >= 0 and 
+          secondsTillTime(1600) > 0; 
+def D = if RTH 
+        then compoundValue(1, d[1] + ((Sqr((Close-Low)) - Sqr((High-Close))) / 
+                                      (High-Low)) * Volume, 0) 
+        else 0; 
+def ll = if RTH and !RTH[1] and D < 0  
+         then D 
+         else if RTH and !RTH[1] and D > 0 
+              then 0 
+              else if D < ll[1] 
+                   then D 
+                   else ll[1]; 
+def llBar = if D == ll 
+            then barNumber() 
+            else double.nan; 
+plot ll_Point = if barNumber() == HighestAll(llBar) 
+                then D 
+                else double.nan; 
+     ll_Point.SetStyle(Curve.Points); 
+     ll_Point.SetLineWeight(3); 
+     ll_Point.SetdefaultColor(Color.Cyan); 
+def hh = if RTH and !RTH[1] and D > 0  
+         then D 
+         else if RTH and !RTH[1] and D < 0 
+              then 0 
+              else if D > hh[1] 
+                   then D 
+                   else hh[1]; 
+def hhBar = if D == hh 
+            then barNumber() 
+            else double.nan; 
+plot hh_Point = if barNumber() == HighestAll(hhBar) 
+                then D 
+                else double.nan; 
+     hh_Point.SetStyle(Curve.POINTS); 
+     hh_Point.SetLineWeight(3); 
+     hh_Point.SetdefaultColor(Color.Pink); 
+plot Data = D; 
+     Data.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     Data.SetLineWeight(3); 
+     Data.AssignValueColor(if Data > 0 and Data == Highest(Data, n) 
+                           then Color.Green 
+                           else if Data > 0 and Data < Highest(Data, n) 
+                                then color.cyan 
+                                else if Data < 0 and Data == Lowest(Data, n) 
+                                     then color.red 
+                                     else if Data < 0 and Data > Lowest(Data, n) 
+                                          then color.yellow 
+                                          else color.blue); 
+plot zero = if !RTH  
+            then double.nan  
+            else 0; 
+     zero.SetStyle(Curve.Firm); 
+     zero.SetDefaultColor(Color.gray); 
+
+
+# End Code Intraday Intensity Index  

@@ -1,0 +1,271 @@
+These two filters are the criteria that John Carter of Trade The Markets uses to indicate when to take a Bullish trade. :  
+
+  
+
+(1.333333 * stdev(close, 20) / averageTrueRange(ATRLength = 20) >= 1) && (1.333333 * stdev(close, 20)[1] / averageTrueRange(ATRLength = 20)[1] < 1)  
+
+and  
+
+Inertia(close - ((Highest(high, 20) + Lowest(low, 20)) / 2 + ExpAverage(close, 20)) / 2, 20) > 0  
+
+  
+
+  
+
+From <http://www.smalldoginvestor.com/2011/12/thinkscript-included-my-ttmsqueeze.html>   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+These two filters are the criteria that John Carter of Trade The Markets uses to indicate when to take a Bullish trade. : 
+
+ 
+
+(1.333333 * stdev(close, 20) / averageTrueRange(ATRLength = 20) >= 1) && (1.333333 * stdev(close, 20)[1] / averageTrueRange(ATRLength = 20)[1] < 1) 
+
+ 
+
+And 
+
+ 
+
+Inertia(close - ((Highest(high, 20) + Lowest(low, 20)) / 2 + ExpAverage(close, 20)) / 2, 20) > 0 
+
+ 
+
+ 
+
+From <http://www.smalldoginvestor.com/2011/12/thinkscript-included-my-ttmsqueeze.html>  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+TTM trend & Elder impulse 
+
+ 
+
+Houser TTM trend as a lower study 
+
+ 
+
+declare lower; 
+
+DefineGlobalColor( "UP", Color.BLUE ); 
+
+DefineGlobalColor( "DOWN", Color.DOWNTICK ); 
+
+DefineGlobalColor( "NEUTRAL", Color.GRAY ); 
+
+input length = 6; 
+
+def trendUp = TTM_Trend( length ).TrendUp; 
+
+def trendDown = TTM_Trend( length ).TrendDown; 
+
+plot ttmTrend = if IsNaN( close ) then Double.NaN else 0; 
+
+ 
+
+ttmTrend.AssignValueColor( if trendUp > 0 then globalColor( "UP" ) else if trendDown > 0 then globalColor( "DOWN" ) else globalColor( "NEUTRAL" ) ); 
+
+ 
+
+ttmTrend.SetPaintingStrategy( PaintingStrategy.POINTS ); 
+
+*********************************************** 
+
+Above code can form tha basis for a scan as follows: 
+
+input length = 6; 
+
+def trendUp = TTM_Trend( length ).TrendUp; 
+
+Plot data = trendUp; 
+
+#or 
+
+Plot data = trendUp is true; 
+
+**************************** 
+
+########## Elder Impulse ############### 
+
+ 
+
+ 
+
+ 
+
+######################################################### 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+TTM Wave cross 
+
+ 
+
+by Houser TTM Wave cross 
+
+ 
+
+def wave1 = TTM_Wave().Wave1; 
+
+plot Scan = wave1 < 0 and wave1 > wave1[1] and wave1[1] < wave1[2]; 
+
+### label #### 
+
+declare lower; 
+
+def Data = TTM_Wave().Wave1 > 0 and TTM_Wave().Wave2low > 0; 
+
+AddChartLabel( Data, "TTM Wave1 & Wave2 > 0", Color.BLUE ); 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

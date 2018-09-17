@@ -1,0 +1,13 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+# 
+ 
+input price = close; 
+input length = 10; 
+ 
+def ema1 = ExpAverage(price, length); 
+def ema2 = ExpAverage(ema1, length); 
+def ema3 = ExpAverage(ema2, length); 
+ 
+plot TEMA = 3 * ema1 - 3 * ema2 + ema3; 
+TEMA.SetDefaultColor(GetColor(0)); 

@@ -1,0 +1,27 @@
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+ 
+
+plot MiddleLR = InertiaAll(price); 
+
+def dist = HighestAll(AbsValue(MiddleLR - price)); 
+
+plot UpperLR = MiddleLR + dist; 
+
+plot LowerLR = MiddleLR - dist; 
+
+ 
+
+MiddleLR.setDefaultColor(GetColor(5)); 
+
+UpperLR.setDefaultColor(GetColor(5)); 
+
+LowerLR.setDefaultColor(GetColor(5)); 

@@ -1,0 +1,1843 @@
+#Hint:<b>BearishCandlesticks(20)</b>\nPlots and identifies all 20 candlesticks or 3 individually selected candlesticks. Can be used with any aggregation period. Alerts, bubbles and labels may be toggled on/off. Within 'edit studies', any candle pattern can be isolated. A number-ID system is incorporated to enhance chart readability or the candle names may be used. 
+
+#Title = BearishCandlePlots 
+
+#Revision date 9/28/2013 
+
+#Report any problems or suggestions to 'StanL' on TOS' ThinkScript Lounge 
+
+#Additional reference: BullishCandlesticks 
+
+ 
+
+declare upper; 
+
+declare once_per_bar; 
+
+ 
+
+input TurnAlertOff = yes;#hint TurnAlertOff:Turns on and off the alerts for any selected label that shows 
+
+ 
+
+input showLabel = yes;#hint showLabel:Turns on and off the showing of candle names in labels atop the plot 
+
+ 
+
+input showBubble = {default none, Verbose, ID_Number};#Hint showBubble:Choice of what format the candle bubble ID should have 
+
+ 
+
+input ShowAll = yes;#Hint ShowAll:A YES shows all candle where they exist. NO yturns off this plot so that individual candles may be selected in ShowFirst, ShowSecond or ShowThird. 
+
+ 
+
+Def BubNone = if (showBubble == showBubble.none, 1, 0); 
+
+Def BubVerb = if (showBubble == showBubble.Verbose, 1, 0); 
+
+Def BubNumb =  if (showBubble == showBubble.ID_Number, 1, 0); 
+
+ 
+
+##################################################### 
+
+############ Define the three selection Enums ################# 
+
+##################################################### 
+
+input ShowFirst = {default none, AdvanceBlock_1, DarkCloudCover_2, Deliberation_3, DownsideGapThreeMethods_4, DownsideTasukiGap_5, EveningDojiStar_6, EveningStar_7, FallingThreeMethods_8, HangingMan_9, IdenticalThreeCrows_10, InNeck_11, LowPriceGappingPlay_12, OnNeck_13, ShootingStar_14, ThreeBlackCrows_15, ThreeInsideDown_16, ThreeOutsideDown_17, Thrusting_18, TwoCrows_19, UpsideGapTwoCrows_20};#hint ShowFirst:Select the candle you want to see 
+
+ 
+
+Input ShowSecond = {default none, AdvanceBlock_1, DarkCloudCover_2, Deliberation_3, DownsideGapThreeMethods_4, DownsideTasukiGap_5, EveningDojiStar_6, EveningStar_7, FallingThreeMethods_8, HangingMan_9, IdenticalThreeCrows_10, InNeck_11, LowPriceGappingPlay_12, OnNeck_13, ShootingStar_14, ThreeBlackCrows_15, ThreeInsideDown_16, ThreeOutsideDown_17, Thrusting_18, TwoCrows_19, UpsideGapTwoCrows_20};#hint ShowSecond:Select the candle you want to see 
+
+ 
+
+Input ShowThird =  {default none, AdvanceBlock_1, DarkCloudCover_2, Deliberation_3, DownsideGapThreeMethods_4, DownsideTasukiGap_5, EveningDojiStar_6, EveningStar_7, FallingThreeMethods_8, HangingMan_9, IdenticalThreeCrows_10, InNeck_11, LowPriceGappingPlay_12, OnNeck_13, ShootingStar_14, ThreeBlackCrows_15, ThreeInsideDown_16, ThreeOutsideDown_17, Thrusting_18, TwoCrows_19, UpsideGapTwoCrows_20};#hint ShowThird:Select the candle you want to see 
+
+################################################### 
+
+############ Process Input 'ShowFirst' Enum ################## 
+
+################################################### 
+
+Def candle; 
+
+switch (ShowFirst) { 
+
+ 
+
+case AdvanceBlock_1 : 
+
+    candle = if(ShowFirst.AdvanceBlock_1, AdvanceBlock(), double.NaN); 
+
+case DarkCloudCover_2 : 
+
+    candle =  if(ShowFirst.DarkCloudCover_2 , DarkCloudCover(), double.NaN); 
+
+case Deliberation_3: 
+
+    candle = if(ShowFirst.Deliberation_3 , Deliberation(), double.NaN); 
+
+Case DownsideGapThreeMethods_4 : 
+
+    candle = if(ShowFirst.DownsideGapThreeMethods_4 , DownsideGapThreeMethods(), double.NaN); 
+
+Case DownsideTasukiGap_5 : 
+
+    candle = if(ShowFirst.DownsideTasukiGap_5  , DownsideTasukiGap(), double.NaN); 
+
+Case EveningDojiStar_6 : 
+
+    candle = if(ShowFirst.EveningDojiStar_6 , EveningDojiStar(), double.NaN); 
+
+Case EveningStar_7: 
+
+    candle = if(ShowFirst.EveningStar_7  , EveningStar(), double.NaN); 
+
+Case FallingThreeMethods_8: 
+
+    candle = if(ShowFirst.FallingThreeMethods_8 , FallingThreeMethods(), double.NaN); 
+
+Case HangingMan_9: 
+
+    candle = if(ShowFirst.HangingMan_9  , HangingMan(), double.NaN); 
+
+Case IdenticalThreeCrows_10: 
+
+    candle = if(ShowFirst.IdenticalThreeCrows_10  , IdenticalThreeCrows(), double.NaN); 
+
+Case InNeck_11: 
+
+    candle = if(ShowFirst.InNeck_11  , InNeck(), double.NaN); 
+
+Case LowPriceGappingPlay_12: 
+
+    candle = if(ShowFirst.LowPriceGappingPlay_12 , LowPriceGappingPlay(), double.NaN); 
+
+Case OnNeck_13: 
+
+    candle = if(ShowFirst.OnNeck_13 , OnNeck(), double.NaN); 
+
+Case ShootingStar_14: 
+
+    candle = if(ShowFirst.ShootingStar_14  , ShootingStar(), double.NaN); 
+
+Case ThreeBlackCrows_15: 
+
+    candle = if(ShowFirst.ThreeBlackCrows_15, ThreeBlackCrows(), double.nan); 
+
+Case ThreeInsideDown_16: 
+
+    candle = if(ShowFirst.ThreeInsideDown_16 , ThreeInsideDown(), double.NaN); 
+
+Case ThreeOutsideDown_17: 
+
+    candle = if(ShowFirst.ThreeOutsideDown_17 , ThreeOutsideDown(), double.NaN); 
+
+case Thrusting_18: 
+
+    candle = if(ShowFirst.Thrusting_18 , Thrusting(), double.NaN); 
+
+Case TwoCrows_19: 
+
+    candle = if(ShowFirst.TwoCrows_19 , TwoCrows(), double.NaN); 
+
+Case UpsideGapTwoCrows_20: 
+
+    candle = if(ShowFirst.UpsideGapTwoCrows_20 , UpsideGapTwoCrows(), double.NaN); 
+
+Case none: 
+
+    candle = double.NaN; 
+
+}  # Closing of switch (ShowFirst) { 
+
+ 
+
+Plot Show1st = candle; 
+
+Show1st.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+Show1st.SetDefaultColor(Color.pink); 
+
+Show1st.SetLineWeight(5); 
+
+ 
+
+##################################################### 
+
+############ Process Input 'ShowSecond' Enum ################# 
+
+##################################################### 
+
+ 
+
+Def candle2; 
+
+switch (ShowSecond) { 
+
+ 
+
+case AdvanceBlock_1 : 
+
+    candle2 = if(ShowSecond.AdvanceBlock_1, AdvanceBlock(), double.NaN); 
+
+case DarkCloudCover_2 : 
+
+    candle2 =  if(ShowSecond.DarkCloudCover_2 , DarkCloudCover(), double.NaN); 
+
+case Deliberation_3: 
+
+    candle2 = if(ShowSecond.Deliberation_3 , Deliberation(), double.NaN); 
+
+Case DownsideGapThreeMethods_4 : 
+
+    candle2 = if(ShowSecond.DownsideGapThreeMethods_4 , DownsideGapThreeMethods(), double.NaN); 
+
+Case DownsideTasukiGap_5 : 
+
+    candle2 = if(ShowSecond.DownsideTasukiGap_5  , DownsideTasukiGap(), double.NaN); 
+
+Case EveningDojiStar_6 : 
+
+    candle2 = if(ShowSecond.EveningDojiStar_6 , EveningDojiStar(), double.NaN); 
+
+Case EveningStar_7: 
+
+    candle2 = if(ShowSecond.EveningStar_7 , EveningStar(), double.NaN); 
+
+Case FallingThreeMethods_8: 
+
+    candle2 = if(ShowSecond.FallingThreeMethods_8 , FallingThreeMethods(), double.NaN); 
+
+Case HangingMan_9: 
+
+    candle2 = if(ShowSecond.HangingMan_9  , HangingMan(), double.NaN); 
+
+Case IdenticalThreeCrows_10: 
+
+    candle2 = if(ShowSecond.IdenticalThreeCrows_10  , IdenticalThreeCrows(), double.NaN); 
+
+Case InNeck_11: 
+
+    candle2 = if(ShowSecond.InNeck_11  , InNeck(), double.NaN); 
+
+Case LowPriceGappingPlay_12: 
+
+    candle2 = if(ShowSecond.LowPriceGappingPlay_12 , LowPriceGappingPlay(), double.NaN); 
+
+Case OnNeck_13: 
+
+    candle2 = if(ShowSecond.OnNeck_13 , OnNeck(), double.NaN); 
+
+Case ShootingStar_14: 
+
+    candle2 = if(ShowSecond.ShootingStar_14  , ShootingStar(), double.NaN); 
+
+Case ThreeBlackCrows_15: 
+
+    candle2 = if(ShowSecond.ThreeBlackCrows_15, ThreeBlackCrows(), double.nan); 
+
+Case ThreeInsideDown_16: 
+
+    candle2 = if(ShowSecond.ThreeInsideDown_16 , ThreeInsideDown(), double.NaN); 
+
+Case ThreeOutsideDown_17: 
+
+    candle2 = if(ShowSecond.ThreeOutsideDown_17 , ThreeOutsideDown(), double.NaN); 
+
+case Thrusting_18: 
+
+    candle2 = if(ShowSecond.Thrusting_18 , Thrusting(), double.NaN); 
+
+Case TwoCrows_19: 
+
+    candle2 = if(ShowSecond.TwoCrows_19 , TwoCrows(), double.NaN); 
+
+Case UpsideGapTwoCrows_20: 
+
+    candle2 = if(ShowSecond.UpsideGapTwoCrows_20, UpsideGapTwoCrows(), double.NaN); 
+
+Case none: 
+
+    candle2 = double.NaN; 
+
+}   # Closing of switch (ShowSecond) { 
+
+ 
+
+Plot Show2nd = candle2; 
+
+Show2nd.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+Show2nd.SetDefaultColor(Color.pink); 
+
+Show2nd.SetLineWeight(5); 
+
+ 
+
+########################################################### 
+
+############ Process Input 'Showthird' Enum ############### 
+
+########################################################### 
+
+ 
+
+Def candle3; 
+
+switch (ShowThird) { 
+
+ 
+
+case AdvanceBlock_1 : 
+
+    candle3 = if(ShowThird.AdvanceBlock_1, AdvanceBlock(), double.NaN); 
+
+case DarkCloudCover_2 : 
+
+    candle3 =  if(ShowThird.DarkCloudCover_2 , DarkCloudCover(), double.NaN); 
+
+case Deliberation_3: 
+
+    candle3 = if(ShowThird.Deliberation_3 , Deliberation(), double.NaN); 
+
+Case DownsideGapThreeMethods_4 : 
+
+    candle3 = if(ShowThird.DownsideGapThreeMethods_4 , DownsideGapThreeMethods(), double.NaN); 
+
+Case DownsideTasukiGap_5 : 
+
+    candle3 = if(ShowThird.DownsideTasukiGap_5  , DownsideTasukiGap(), double.NaN); 
+
+Case EveningDojiStar_6 : 
+
+    candle3 = if(ShowThird.EveningDojiStar_6 , EveningDojiStar(), double.NaN); 
+
+Case EveningStar_7: 
+
+    candle3 = if(ShowThird.EveningStar_7 , EveningStar(), double.NaN); 
+
+Case FallingThreeMethods_8: 
+
+    candle3 = if(ShowThird.FallingThreeMethods_8 , FallingThreeMethods(), double.NaN); 
+
+Case HangingMan_9: 
+
+    candle3 = if(ShowThird.HangingMan_9  , HangingMan(), double.NaN); 
+
+Case IdenticalThreeCrows_10: 
+
+    candle3 = if(ShowThird.IdenticalThreeCrows_10  , IdenticalThreeCrows(), double.NaN); 
+
+Case InNeck_11: 
+
+    candle3 = if(ShowThird.InNeck_11  , InNeck(), double.NaN); 
+
+Case LowPriceGappingPlay_12: 
+
+    candle3 = if(ShowThird.LowPriceGappingPlay_12 , LowPriceGappingPlay(), double.NaN); 
+
+Case OnNeck_13: 
+
+    candle3 = if(ShowThird.OnNeck_13 , OnNeck(), double.NaN); 
+
+Case ShootingStar_14: 
+
+    candle3 = if(ShowThird.ShootingStar_14  , ShootingStar(), double.NaN); 
+
+Case ThreeBlackCrows_15: 
+
+    candle3 = if(ShowThird.ThreeBlackCrows_15, ThreeBlackCrows(), double.nan); 
+
+Case ThreeInsideDown_16: 
+
+    candle3 = if(ShowThird.ThreeInsideDown_16 , ThreeInsideDown(), double.NaN); 
+
+Case ThreeOutsideDown_17: 
+
+    candle3 = if(ShowThird.ThreeOutsideDown_17 , ThreeOutsideDown(), double.NaN); 
+
+case Thrusting_18: 
+
+    candle3 = if(ShowThird.Thrusting_18 , Thrusting(), double.NaN); 
+
+Case TwoCrows_19: 
+
+    candle3 = if(ShowThird.TwoCrows_19 , TwoCrows(), double.NaN); 
+
+Case UpsideGapTwoCrows_20: 
+
+    candle3 = if(ShowThird.UpsideGapTwoCrows_20, UpsideGapTwoCrows(), double.NaN); 
+
+Case none: 
+
+    candle3 = double.NaN; 
+
+}    # Closing of switch (ShowThird) { 
+
+ 
+
+Plot Show3rd = candle3; 
+
+Show3rd.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+Show3rd.SetDefaultColor(Color.pink); 
+
+Show3rd.SetLineWeight(5); 
+
+ 
+
+######################################################## 
+
+######## Then following applies to Show1st, Show2nd & Show3rd plots ########## 
+
+######## The conditions for all 3 plots are implemented ################ 
+
+######################################################## 
+
+ 
+
+##### 1 ################ AdvanceBlock() ############################# 
+
+def ThreeShows_1 = if (ShowFirst == ShowFirst.AdvanceBlock_1 or ShowSecond == ShowSecond.AdvanceBlock_1 or ShowThird == ShowThird.AdvanceBlock_1, 1, 0); 
+
+Rec AdvanceBlock_Trig = AdvanceBlock_Trig[1] + if (AdvanceBlock().Bearish == yes , + barNumber(), 0); 
+
+#Def AdvanceBlock_label = if(Trig_bar > 0, 1, 0); 
+
+ 
+
+AddLabel(AdvanceBlock_Trig > 0  && showLabel  && ThreeShows_1, If BubVerb == 1 or BubNumb == 1 
+
+then "1=AdvanceBlock" 
+
+ else "", Color.Pink); 
+
+ 
+
+alert(AdvanceBlock() && !TurnAlertOff, "AdvanceBlock Alert", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(AdvanceBlock() && (BubVerb or BubNumb) && ThreeShows_1 , Low ,  If BubNumb  
+
+then "1" 
+
+Else if BubVerb 
+
+Then "AdvanceBlock" 
+
+ else "" , 
+
+  Color.White , no); 
+
+###################### Debugging Labels ############### 
+
+#AddLabel(yes, concat("Ham_Trig > 0 is = ", Ham_Trig > 0), color.white); 
+
+#AddLabel(yes, concat("Total Bars = ", barNumber()), color.white);    
+
+#AddLabel(yes, concat("Ham_Trig value = ", Ham_Trig), color.white);     
+
+#AddLabel(yes, concat("ShowBubble = ", showBubble), color.white);   #AddLabel(yes,concat("ShowFirst_T = ", ShowFirst_T ), color.white);  # 
+
+#AddLabel(yes,concat("ShowSecond_T = ", ShowSecond_T ), color.white);# 
+
+#AddLabel(yes,concat("ShowThird_T = ", ShowThird_T ), color.white);  # 
+
+#AddLabel(yes,concat("ShowLabel = ", showLabel ), color.white);       # 
+
+#AddLabel(yes,concat("TurnAlertOff = ", TurnAlertOff ), color.white); # 
+
+#AddLabel(yes, concat("ThreeShows = ", ThreeShows_1), color.white);   
+
+########################################################## 
+
+ 
+
+##### 2 ################ DarkCloudCover() ###################### 
+
+def ThreeShows_2 = if (ShowFirst == ShowFirst.DarkCloudCover_2 or ShowSecond == ShowSecond.DarkCloudCover_2 or ShowThird == ShowThird.DarkCloudCover_2, 1, 0); 
+
+Rec DarkCloudCover_Trig = DarkCloudCover_Trig[1] + if (DarkCloudCover().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(DarkCloudCover_Trig > 0 && showLabel  && ThreeShows_2, If BubVerb == 1 or BubNumb == 1 
+
+then "2=DarkCloudCover" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(DarkCloudCover()  && !TurnAlertOff, " DarkCloudCover", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(DarkCloudCover() && (BubVerb or BubNumb) && ThreeShows_2 , Low ,  If BubNumb  
+
+then "2" 
+
+Else if BubVerb 
+
+Then "DarkCloudCover" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 3 ################ Deliberation() ############################### 
+
+def ThreeShows_3 = if (ShowFirst == ShowFirst.Deliberation_3 or ShowSecond == ShowSecond.Deliberation_3 or ShowThird == ShowThird.Deliberation_3, 1, 0); 
+
+Rec Deliberation_Trig = Deliberation_Trig[1] + if (Deliberation().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(Deliberation_Trig > 0 && showLabel  && ThreeShows_3, If BubVerb == 1 or BubNumb == 1 
+
+then "3=Deliberation" 
+
+ else "" , Color.Pink); 
+
+ 
+
+alert(Deliberation() && !TurnAlertOff, " Bearish Deliberation", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(Deliberation() && (BubVerb or BubNumb) && ThreeShows_3, Low ,  If BubNumb  
+
+then "3" 
+
+Else if BubVerb 
+
+Then "Deliberation" 
+
+ else "" , Color.White , no); 
+
+####### 4 ############## DownsideGapThreeMethods() ################# 
+
+def ThreeShows_4 = if (ShowFirst == ShowFirst.DownsideGapThreeMethods_4 or ShowSecond == ShowSecond.DownsideGapThreeMethods_4 or ShowThird == ShowThird.DownsideGapThreeMethods_4, 1, 0); 
+
+Rec DownsideGapThreeMethods_Trig = DownsideGapThreeMethods_Trig[1] + if (DownsideGapThreeMethods().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(DownsideGapThreeMethods() == 1 && showLabel  && ThreeShows_4, If BubVerb == 1 or BubNumb == 1 
+
+then "4=DownsideGapThreeMethods" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(DownsideGapThreeMethods() && !TurnAlertOff, "Bearish ThreeInsideUp", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(DownsideGapThreeMethods() && (BubVerb or BubNumb) && ThreeShows_4, Low ,  If BubNumb  
+
+then "4" 
+
+Else if BubVerb 
+
+Then "DownsideGapThreeMethods" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+###### 5 ############### DownsideTasukiGap() ########################### 
+
+def ThreeShows_5 = if (ShowFirst == ShowFirst.DownsideTasukiGap_5 or ShowSecond == ShowSecond.DownsideTasukiGap_5 or ShowThird == ShowThird.DownsideTasukiGap_5, 1, 0); 
+
+Rec DownsideTasukiGap_Trig = DownsideTasukiGap_Trig[1] + if (DownsideTasukiGap().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(DownsideTasukiGap_Trig > 0 && showLabel  && ThreeShows_5, If BubVerb == 1 or BubNumb == 1 
+
+then "5=DownsideTasukiGap" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(DownsideTasukiGap() && !TurnAlertOff , " Bearish DownsideTasukiGap", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(DownsideTasukiGap() && (BubVerb or BubNumb) && ThreeShows_5, Low ,  If BubNumb  
+
+then "5" 
+
+Else if BubVerb 
+
+Then "DownsideTasukiGap" 
+
+ else "", Color.White, no); 
+
+ 
+
+###### 6 ############### EveningDojiStar()  ####################### 
+
+def ThreeShows_6 = if (ShowFirst == ShowFirst.EveningDojiStar_6 or ShowSecond == ShowSecond.EveningDojiStar_6 or ShowThird == ShowThird.EveningDojiStar_6 , 1, 0); 
+
+Rec EveningDojiStar_Trig = EveningDojiStar_Trig[1] + if (EveningDojiStar().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(EveningDojiStar_Trig > 0 && showLabel  && ThreeShows_6, If BubVerb == 1 or BubNumb == 1 
+
+then "6=EveningDojiStar" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(EveningDojiStar() && !TurnAlertOff, " Bearish EveningDojiStar", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(EveningDojiStar() && (BubVerb or BubNumb) && ThreeShows_6 , Low ,  If BubNumb  
+
+then "6" 
+
+Else if BubVerb 
+
+Then "EveningDojiStar" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+ 
+
+####### 7 ############## EveningStar() ########################### 
+
+def ThreeShows_7 = if (ShowFirst == ShowFirst.EveningStar_7 or ShowSecond == ShowSecond.EveningStar_7 or ShowThird == ShowThird.EveningStar_7, 1, 0); 
+
+Rec EveningStar_Trig = EveningStar_Trig[1] + if (EveningStar().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(EveningStar_Trig > 0 && showLabel   && ThreeShows_7, If BubVerb == 1 or BubNumb == 1 
+
+then "7=EveningStar" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(EveningStar()  && !TurnAlertOff, " Bearish EveningStar", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(EveningStar() && (BubVerb or BubNumb) && ThreeShows_7 , Low ,  If BubNumb  
+
+then "7" 
+
+Else if BubVerb 
+
+Then "EveningStar" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+####### 8 ############## FallingThreeMethods() ####################### 
+
+def ThreeShows_8 = if (ShowFirst == ShowFirst.FallingThreeMethods_8 or ShowSecond == ShowSecond.FallingThreeMethods_8 or ShowThird == ShowThird.FallingThreeMethods_8, 1, 0); 
+
+Rec FallingThreeMethods_Trig = FallingThreeMethods_Trig[1] + if (FallingThreeMethods().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(FallingThreeMethods_Trig > 0 && showLabel  && ThreeShows_8, If BubVerb == 1 or BubNumb == 1 
+
+then "8=FallingThreeMethods" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(FallingThreeMethods() && !TurnAlertOff , " Bearish FallingThreeMethods", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(FallingThreeMethods() && (BubVerb or BubNumb) && ThreeShows_8, Low ,  If BubNumb  
+
+then "8" 
+
+Else if BubVerb 
+
+Then "FallingThreeMethods" 
+
+ else "", Color.White , no); 
+
+ 
+
+ 
+
+######## 9 ############# HangingMan() ##################### 
+
+def ThreeShows_9 = if (ShowFirst == ShowFirst.HangingMan_9 or ShowSecond == ShowSecond.HangingMan_9 or ShowThird == ShowThird.HangingMan_9, 1, 0); 
+
+Rec HangingMan_Trig = HangingMan_Trig[1] + if (HangingMan().Bearish == yes, + barNumber(), 0); 
+
+ 
+
+AddLabel(HangingMan_Trig > 0 && showLabel && ThreeShows_9, If BubVerb == 1 or BubNumb == 1 
+
+then "9=HangingMan" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(HangingMan()  && !TurnAlertOff, "Bearish HangingMan", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(HangingMan() && (BubVerb or BubNumb) && ThreeShows_9 , Low ,  If BubNumb  
+
+then "9" 
+
+Else if BubVerb 
+
+Then "HangingMan" 
+
+ else "",  Color.White , no); 
+
+ 
+
+ 
+
+######## 10 ############# IdenticalThreeCrows() ########################### 
+
+def ThreeShows_10 = if (ShowFirst == ShowFirst.IdenticalThreeCrows_10 or ShowSecond == ShowSecond.IdenticalThreeCrows_10 or ShowThird == ShowThird.IdenticalThreeCrows_10, 1, 0); 
+
+Rec IdenticalThreeCrows_Trig = IdenticalThreeCrows_Trig[1] + if (IdenticalThreeCrows().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel( IdenticalThreeCrows_Trig > 0 && showLabel   && ThreeShows_10, If BubVerb == 1 or BubNumb == 1 
+
+then "10=IdenticalThreeCrows" 
+
+ else "" , Color.Pink); 
+
+ 
+
+alert(IdenticalThreeCrows() && !TurnAlertOff, " Bearish IdenticalThreeCrows", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(IdenticalThreeCrows() && (BubVerb or BubNumb) && ThreeShows_10 , Low ,  If BubNumb  
+
+then "10" 
+
+Else if BubVerb 
+
+Then "IdentialThreeCrows" 
+
+ else "" ,  Color.White, no); 
+
+####### 11 ############## InNeck() ########################### 
+
+def ThreeShows_11 = if (ShowFirst == ShowFirst.InNeck_11 or ShowSecond == ShowSecond.InNeck_11 or ShowThird == ShowThird.InNeck_11, 1, 0); 
+
+Rec InNeck_Trig = InNeck_Trig[1] + if (InNeck().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(InNeck_Trig > 0 && showLabel  && ThreeShows_11, If BubVerb == 1 or BubNumb == 1 
+
+then "11=InNeck" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(InNeck()  && !TurnAlertOff, " Bearish InNeck", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(InNeck() && (BubVerb or BubNumb) && ThreeShows_11, Low ,  If BubNumb  
+
+then "11" 
+
+Else if BubVerb 
+
+Then "InNeck" 
+
+ else "" ,  Color.White , no); 
+
+####### 12 ############## LowPriceGappingPlay() ########################### 
+
+def ThreeShows_12 = if (ShowFirst == ShowFirst.LowPriceGappingPlay_12 or ShowSecond == ShowSecond.LowPriceGappingPlay_12 or ShowThird == ShowThird.LowPriceGappingPlay_12, 1, 0); 
+
+Rec LowPriceGappingPlay_Trig = LowPriceGappingPlay_Trig[1] + if (LowPriceGappingPlay().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel( LowPriceGappingPlay_Trig > 0 && showLabel  && ThreeShows_12, If BubVerb == 1 or BubNumb == 1 
+
+then "12=LowPriceGappingPlay" 
+
+ else "" , Color.Pink); 
+
+ 
+
+alert(LowPriceGappingPlay() && !TurnAlertOff, "Bearish LowPriceGappingPlay", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(LowPriceGappingPlay()  && (BubVerb or BubNumb) && ThreeShows_12 , Low ,  If BubNumb  
+
+then "12" 
+
+Else if BubVerb 
+
+Then "LowPriceGappingPlay" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+ 
+
+####### 13 ############## OnNeck()########################### 
+
+def ThreeShows_13 = if (ShowFirst == ShowFirst.OnNeck_13 or ShowSecond == ShowSecond.OnNeck_13 or ShowThird == ShowThird.OnNeck_13, 1, 0); 
+
+Rec OnNeck_Trig = OnNeck_Trig[1] + if (OnNeck().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel( OnNeck_Trig > 0 && showLabel && ThreeShows_13, If BubVerb == 1 or BubNumb == 1 
+
+then "13=OnNeck" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(OnNeck() && !TurnAlertOff, "Bearish OnNeck", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(OnNeck() && (BubVerb or BubNumb) && ThreeShows_13 , Low ,  If BubNumb  
+
+then "13" 
+
+Else if BubVerb 
+
+Then "OnNeck" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+ 
+
+####### 14 ############### ShootingStar()######################### 
+
+def ThreeShows_14 = if (ShowFirst == ShowFirst.ShootingStar_14 or ShowSecond == ShowSecond.ShootingStar_14 or ShowThird == ShowThird.ShootingStar_14, 1, 0); 
+
+Rec ShootingStar_Trig = ShootingStar_Trig[1] + if (ShootingStar().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(ShootingStar_Trig > 0 && showLabel && ThreeShows_14, If BubVerb == 1 or BubNumb == 1 
+
+then "14=ShootingStar" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(ShootingStar() && !TurnAlertOff, "Bearish ShootingStar", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(ShootingStar() && (BubVerb or BubNumb) && ThreeShows_14 , Low ,  If BubNumb  
+
+then "14" 
+
+Else if BubVerb 
+
+Then "ShootingStar" 
+
+ else "" ,  Color.White, no); 
+
+ 
+
+ 
+
+ 
+
+###### 15 ################ ThreeBlackCrows() ########################## 
+
+def ThreeShows_15 = if (ShowFirst == ShowFirst.ThreeBlackCrows_15 or ShowSecond == ShowSecond.ThreeBlackCrows_15 or ShowThird == ShowThird.ThreeBlackCrows_15, 1, 0); 
+
+Rec ThreeBlackCrows_Trig = ThreeBlackCrows_Trig[1] + if (ThreeBlackCrows().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel( ThreeBlackCrows_Trig > 0 && showLabel  && ThreeShows_15, If BubVerb == 1 or BubNumb == 1 
+
+then "15=ThreeBlackCrows" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(ThreeBlackCrows()  && !TurnAlertOff, "Bearish ThreeBlackCrows", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(ThreeBlackCrows() && (BubVerb or BubNumb) && ThreeShows_15 , Low ,  If BubNumb  
+
+then "15" 
+
+Else if BubVerb 
+
+Then "ThreeBlackCrows" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+###### 16 ########## ThreeInsideDown() ############################ 
+
+def ThreeShows_16 = if (ShowFirst == ShowFirst.ThreeInsideDown_16 or ShowSecond == ShowSecond.ThreeInsideDown_16 or ShowThird == ShowThird.ThreeInsideDown_16, 1, 0); 
+
+Rec ThreeInsideDown_Trig = ThreeInsideDown_Trig[1] + if (ThreeInsideDown ().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(ThreeInsideDown_Trig > 0 && showLabel  && ThreeShows_16, If BubVerb == 1 or BubNumb == 1 
+
+then "16=ThreeInsideDown" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(ThreeInsideDown()  && !TurnAlertOff , " Bearish ThreeInsideDown", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(ThreeInsideDown() && (BubVerb or BubNumb) && ThreeShows_16, Low ,  If BubNumb  
+
+then "16" 
+
+Else if BubVerb 
+
+Then "ThreeInsideDown" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+###### 17 ########## ThreeOutsideDown() ############################ 
+
+def ThreeShows_17 = if (ShowFirst == ShowFirst.ThreeOutsideDown_17 or ShowSecond == ShowSecond.ThreeOutsideDown_17 or ShowThird == ShowThird.ThreeOutsideDown_17, 1, 0); 
+
+Rec ThreeOutsideDown_Trig = ThreeOutsideDown_Trig[1] + if (ThreeOutsideDown().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(ThreeOutsideDown_Trig  > 0 && showLabel  && ThreeShows_17 , If BubVerb == 1 or BubNumb == 1 
+
+then "17=ThreeOutsideDown" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(ThreeOutsideDown()  && !TurnAlertOff , "Bearish ThreeOutsideDown", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(ThreeOutsideDown() && (BubVerb or BubNumb) && ThreeShows_17 , Low ,  If BubNumb  
+
+then "17" 
+
+Else if BubVerb 
+
+Then "ThreeOutsideDown" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+###### 18 ########## Thrusting() ############################ 
+
+ 
+
+def ThreeShows_18 = if (ShowFirst == ShowFirst.Thrusting_18 or ShowSecond == ShowSecond.Thrusting_18 or ShowThird == ShowThird.Thrusting_18, 1, 0); 
+
+Rec Thrusting_Trig = Thrusting_Trig[1] + if (Thrusting().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(Thrusting_Trig > 0 && (BubVerb or BubNumb) && ThreeShows_18 , If BubVerb == 1 or BubNumb == 1 
+
+then "18=Thrusting" 
+
+ else "", Color.Pink); 
+
+ 
+
+alert(Thrusting()  && !TurnAlertOff , "Bearish Thrusting", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(Thrusting() && (BubVerb or BubNumb) && ThreeShows_18 , Low ,  If BubNumb  
+
+then "18" 
+
+Else if BubVerb 
+
+Then "Thrusting" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+###### 19 ########## TwoCrows() ############################ 
+
+ 
+
+def ThreeShows_19 = if (ShowFirst == ShowFirst.TwoCrows_19 or ShowSecond == ShowSecond.TwoCrows_19 or ShowThird == ShowThird.TwoCrows_19, 1, 0); 
+
+Rec TwoCrows_Trig = TwoCrows_Trig[1] + if (TwoCrows ().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(TwoCrows_Trig > 0 && showLabel  && ThreeShows_19 , If BubVerb == 1 or BubNumb == 1 
+
+then "18=TwoCrows" 
+
+ else "" ,  Color.Pink); 
+
+ 
+
+alert(TwoCrows() && !TurnAlertOff, "Bearish TwoCrows", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(TwoCrows() && (BubVerb or BubNumb) && ThreeShows_19 , Low ,  If BubNumb  
+
+then "19" 
+
+Else if BubVerb 
+
+Then "TwoCrows" 
+
+ else "" , Color.White , no); 
+
+ 
+
+###### 20 ########## UpsideGapTwoCrows() ############################ 
+
+ 
+
+def ThreeShows_20 = if (ShowFirst == ShowFirst.UpsideGapTwoCrows_20 or ShowSecond == ShowSecond.UpsideGapTwoCrows_20 or ShowThird == ShowThird.UpsideGapTwoCrows_20, 1, 0); 
+
+Rec UpsideGapTwoCrows_Trig = UpsideGapTwoCrows_Trig[1] + if (UpsideGapTwoCrows().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(UpsideGapTwoCrows_Trig > 0 && showLabel  && ThreeShows_19 , If BubVerb == 1 or BubNumb == 1 
+
+then "20=UpsideGapTwoCrows" 
+
+ else "", Color.Pink); 
+
+ 
+
+alert(UpsideGapTwoCrows() && !TurnAlertOff, "Bearish UpsideGapTwoCrows", Alert.BAR, Sound.Chimes); 
+
+ 
+
+AddChartBubble(UpsideGapTwoCrows() && (BubVerb or BubNumb) && ThreeShows_19 , Low ,  If BubNumb  
+
+then "20" 
+
+Else if BubVerb 
+
+Then "UpsideGapTwoCrows" 
+
+ else "" , Color.White , no); 
+
+ 
+
+##################################################### 
+
+############## Processing 'Show All' = yes ####################### 
+
+##################################################### 
+
+ 
+
+#AdvanceBlock 1,DarkCloudCover 2,Deliberation 3,DownsideGapThreeMethods 4,DownsideTasukiGap #5,EveningDojiStar 6,   EveningStar 7,FallingThreeMethods 8,HangingMan 9,IdenticalThreeCrows 10,InNeck #11,LowPriceGappingPlay 12, 
+
+#OnNeck 13,   ShootingStar 14,ThreeBlackCrows 15,ThreeInsideDown 16,ThreeOutsideDown 17,Thrusting #18,TwoCrows 19 
+
+#,UpsideGapTwoCrows 20  
+
+ 
+
+ 
+
+##### 1 ################ AdvanceBlock() & showAll ################## 
+
+def  candleAll_41 = if(ShowAll == yes , AdvanceBlock(), double.NaN); 
+
+Plot AB = candleAll_41; 
+
+AB.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+AB.SetDefaultColor(Color.pink); 
+
+AB.SetLineWeight(5); 
+
+Rec AdvanceBlock_Trig_41 = AdvanceBlock_Trig_41[1] + if (AdvanceBlock().Bearish == yes , + barNumber(), 0); 
+
+ 
+
+AddLabel(AdvanceBlock_Trig_41 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "1=AdvanceBlock" 
+
+ else "" , Color.Pink); 
+
+alert(AdvanceBlock()  && !TurnAlertOff && ShowAll, "Bearish AdvanceBlock", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(AdvanceBlock() && (BubVerb or BubNumb) && (ShowAll) , Low ,  If BubNumb  
+
+then "1" 
+
+Else if BubVerb 
+
+Then "AdvanceBlock" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 2 ################ DarkCloudCover() & showAll ################ 
+
+def candleAll_42 =  if(ShowAll == yes , DarkCloudCover(), double.NaN); 
+
+Plot DCC = candleAll_42; 
+
+DCC.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+DCC.SetDefaultColor(Color.pink); 
+
+DCC.SetLineWeight(5); 
+
+ 
+
+Rec DarkCloudCover_Trig_42 = DarkCloudCover_Trig_42[1] + if (DarkCloudCover().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(DarkCloudCover_Trig_42 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "2=DarkCloudCover." 
+
+ else "" ,  Color.Pink); 
+
+alert(DarkCloudCover()  && !TurnAlertOff && ShowAll, "Bearish DarkCloudCover", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(DarkCloudCover() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "2" 
+
+Else if BubVerb 
+
+Then "DarkCloudCover" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 3 ################ Deliberation() & showAll ################ 
+
+def candleAll_43 = if(ShowAll == yes , Deliberation(), double.NaN); 
+
+Plot DELIB = candleAll_43; 
+
+DELIB.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+DELIB.SetDefaultColor(Color.pink); 
+
+DELIB.SetLineWeight(5); 
+
+ 
+
+ 
+
+ 
+
+Rec Deliberation_Trig_43 = Deliberation_Trig_43[1] + if (Deliberation().Bearish, + barNumber(), +0); 
+
+AddLabel(Deliberation_Trig_43 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "3=Deliberation" 
+
+ else "" , Color.Pink); 
+
+alert(Deliberation() && !TurnAlertOff && ShowAll, "Bearish Deliberation", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(Deliberation() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "3" 
+
+Else if BubVerb 
+
+Then "Deliberation" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+#AddLabel(yes, concat("Trig value =  ", Deliberation_Trig_43), color.white);  
+
+#AddLabel(yes, concat("Total Bars =  ", barnumber()), color.white);  
+
+##### 4 ################ DownsideGapThreeMethods() & showAll ################# 
+
+def    candleAll_44 = if(ShowAll == yes , DownsideGapThreeMethods(), double.NaN); 
+
+Plot DGTM = candleAll_44; 
+
+DGTM.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+DGTM.SetDefaultColor(Color.pink); 
+
+DGTM.SetLineWeight(5); 
+
+ 
+
+Rec DownsideGapThreeMethods_Trig_44 = DownsideGapThreeMethods_Trig_44[1] + if (DownsideGapThreeMethods().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(DownsideGapThreeMethods_Trig_44 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "4=DownsideGapThreeMethods" 
+
+ else "" ,  Color.Pink); 
+
+alert(DownsideGapThreeMethods() && !TurnAlertOff && ShowAll, "Bearish DownsideGapThreeMethods", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(DownsideGapThreeMethods() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "4" 
+
+Else if BubVerb 
+
+Then "DownsideGapThreeMethods" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 5 ################ DownsideTasukiGap() & showAll ###################### 
+
+def    candleAll_45 = if(ShowAll == yes  , DownsideTasukiGap(), double.NaN); 
+
+Plot DTG = candleAll_45; 
+
+DTG.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+DTG.SetDefaultColor(Color.pink); 
+
+DTG.SetLineWeight(5); 
+
+ 
+
+Rec DownsideTasukiGap_Trig_45 = DownsideTasukiGap_Trig_45[1] + if (DownsideTasukiGap().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(DownsideTasukiGap_Trig_45 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "5=DownsideTasukiGap" 
+
+ else "" ,  Color.Pink); 
+
+alert(DownsideTasukiGap() && !TurnAlertOff && ShowAll, "Bearish DownsideTasukiGap", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(DownsideTasukiGap() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "5" 
+
+Else if BubVerb 
+
+Then "DownsideTasukiGap" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 6 ################ EveningDojiStar() & showAll ################## 
+
+def    candleAll_46 = if(ShowAll == yes, EveningDojiStar(), double.NaN); 
+
+Plot EDS = candleAll_46; 
+
+EDS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+EDS.SetDefaultColor(Color.pink); 
+
+EDS.SetLineWeight(5); 
+
+ 
+
+Rec EveningDojiStar_Trig_46 = EveningDojiStar_Trig_46[1] + if (EveningDojiStar().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(EveningDojiStar_Trig_46 > 0  && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "6=EveningDojiStar" 
+
+ else "" ,  Color.Pink); 
+
+alert(EveningDojiStar() && !TurnAlertOff && ShowAll, "Bearish EveningDojiStar", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(EveningDojiStar() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "6" 
+
+Else if BubVerb 
+
+Then "EveningDojiStar" 
+
+ else "" , Color.White , no); 
+
+ 
+
+##### 7 ################ EveningStar() & showAll ###################### 
+
+def    candleAll_47 = if(ShowAll == yes  , EveningStar(), double.NaN); 
+
+Plot ES = candleAll_47; 
+
+ES.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+
+ES.SetDefaultColor(Color.pink); 
+
+ES.SetLineWeight(5); 
+
+ 
+
+ 
+
+Rec EveningStar_Trig_47 = EveningStar_Trig_47[1] + if (EveningStar().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(EveningStar_Trig_47 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "7=EveningStar" 
+
+ else "" ,  Color.Pink); 
+
+alert(EveningStar() && !TurnAlertOff && ShowAll, "Bearish EveningStar", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(EveningStar() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "7" 
+
+Else if BubVerb 
+
+Then "EveningStar" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 8  ########### FallingThreeMethods() & showAll ################### 
+
+def candleAll_48 = if(ShowAll == yes , FallingThreeMethods(), double.NaN); 
+
+Plot FTM = candleAll_48; 
+
+FTM.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+FTM.SetDefaultColor(Color.pink); 
+
+FTM.SetLineWeight(5); 
+
+ 
+
+Rec FallingThreeMethods_Trig_48 = FallingThreeMethods_Trig_48[1] + if (FallingThreeMethods().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(FallingThreeMethods_Trig_48 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "9=FallingThreeMethods" 
+
+ else "" ,  Color.Pink); 
+
+alert(FallingThreeMethods() && !TurnAlertOff && ShowAll, "Bearish FallingThreeMethods", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(FallingThreeMethods() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "8" 
+
+Else if BubVerb 
+
+Then "FallingThreeMethods" 
+
+ else "",  Color.White , no); 
+
+ 
+
+#####  9 ########### HangingMan() & showAll ##################### 
+
+def candleAll_49 = if(ShowAll == yes , HangingMan(), double.NaN); 
+
+Plot HM = candleAll_49; 
+
+HM.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+HM.SetDefaultColor(Color.pink); 
+
+HM.SetLineWeight(5); 
+
+ 
+
+Rec HangingMan_Trig_49 = HangingMan_Trig_49[1] + if (HangingMan().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(HangingMan_Trig_49 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "9=HangingMan" 
+
+ else "" ,  Color.Pink); 
+
+alert(HangingMan() == 1 && !TurnAlertOff && ShowAll, "Bearish HangingMan", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(HangingMan() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "9" 
+
+Else if BubVerb 
+
+Then "HangingMan" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 10  ################ IdenticalThreeCrows() & showAll ################# 
+
+def candleAll_50 = if(ShowAll == yes  , IdenticalThreeCrows(), double.NaN); 
+
+Plot ITC = candleAll_50; 
+
+ITC.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+ITC.SetDefaultColor(Color.pink); 
+
+ITC.SetLineWeight(5); 
+
+ 
+
+Rec IdenticalThreeCrows_Trig_50 = IdenticalThreeCrows_Trig_50[1] + if (IdenticalThreeCrows().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(IdenticalThreeCrows_Trig_50 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "10=IdenticalThreeCrows" 
+
+ else "", Color.Pink); 
+
+alert(IdenticalThreeCrows() && !TurnAlertOff && ShowAll, "Bearish IdenticalThreeCrows", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(IdenticalThreeCrows() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "10" 
+
+Else if BubVerb 
+
+Then "IdenticalThreeCrows" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+#AddLabel(yes, concat("Trig value =  ", HomingPigeon_Trig_50), color.white);  
+
+#AddLabel(yes, concat("Total Bars =  ", barnumber()), color.white);  
+
+##### 11 ################ InNeck() & showAll ################# 
+
+def candleAll_51 = if(ShowAll == yes , InNeck(), double.NaN); 
+
+Plot IN = candleAll_51; 
+
+IN.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+IN.SetDefaultColor(Color.pink); 
+
+IN.SetLineWeight(5); 
+
+ 
+
+Rec InNeck_Trig_51 = InNeck_Trig_51[1] + if (InNeck().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(InNeck_Trig_51 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "11=InNeck" 
+
+ else "",  Color.Pink); 
+
+alert(InNeck() == 1 && !TurnAlertOff && ShowAll, "Bearish InNeck", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(InNeck() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "11" 
+
+Else if BubVerb 
+
+Then "InNeck" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 12 ################ LowPriceGappingPlay() & showAll ################## 
+
+def candleAll_52 = if(ShowAll == yes  , LowPriceGappingPlay(), double.NaN); 
+
+Plot LPGP = candleAll_52; 
+
+LPGP.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+LPGP.SetDefaultColor(Color.pink); 
+
+LPGP.SetLineWeight(5); 
+
+ 
+
+Rec LowPriceGappingPlay_Trig_52 = LowPriceGappingPlay_Trig_52[1] + if (LowPriceGappingPlay().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(LowPriceGappingPlay_Trig_52 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "12=LowPriceGappingPlay" 
+
+ else "",  Color.Pink); 
+
+alert(LowPriceGappingPlay() == 1 && !TurnAlertOff && ShowAll, "Bearish LowPriceGappingPlay ", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(LowPriceGappingPlay() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "12" 
+
+Else if BubVerb 
+
+Then "LowPriceGappingPlay" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 13  ################ OnNeck() & showAll ################ 
+
+def candleAll_53 = if(ShowAll == yes , OnNeck(), double.NaN); 
+
+Plot ON = candleAll_53; 
+
+ON.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+ON.SetDefaultColor(Color.pink); 
+
+ON.SetLineWeight(5); 
+
+ 
+
+Rec OnNeck_Trig_53 = OnNeck_Trig_53[1] + if (OnNeck().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(OnNeck_Trig_53 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "13=OnNeck" 
+
+ else "" ,  Color.Pink); 
+
+alert(OnNeck() == 1 && !TurnAlertOff && ShowAll, "Bearish OnNeck", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(OnNeck() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "13" 
+
+Else if BubVerb 
+
+Then "OnNeck" 
+
+ else "",  Color.White , no); 
+
+ 
+
+##### 14 ########## ShootingStar() & showAll #################### 
+
+def candleAll_54 = if(ShowAll == yes  , ShootingStar(), double.NaN); 
+
+Plot SS = candleAll_54; 
+
+SS.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+SS.SetDefaultColor(Color.pink); 
+
+SS.SetLineWeight(5); 
+
+ 
+
+Rec ShootingStar_Trig_54 = ShootingStar_Trig_54[1] + if (ShootingStar().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(ShootingStar_Trig_54 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "14=ShootingStar" 
+
+ else "" , Color.Pink); 
+
+alert(ShootingStar() && !TurnAlertOff && ShowAll, "Bearish ShootingStar", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ShootingStar() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "14" 
+
+Else if BubVerb 
+
+Then "ShootingStar" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 15  ################ ThreeBlackCrows() & showAll ################ 
+
+def candleAll_55 = if(ShowAll == yes , ThreeBlackCrows(), double.nan); 
+
+Plot TBC = candleAll_55; 
+
+TBC.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+TBC.SetDefaultColor(Color.pink); 
+
+TBC.SetLineWeight(5); 
+
+ 
+
+Rec ThreeBlackCrows_Trig_55 = ThreeBlackCrows_Trig_55[1] + if (ThreeBlackCrows().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(ThreeBlackCrows_Trig_55 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "15=ThreeBlackCrows" 
+
+ else "" ,  Color.Pink); 
+
+alert(ThreeBlackCrows() && !TurnAlertOff && ShowAll, "Bearish ThreeBlackCrows", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeBlackCrows() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "15" 
+
+Else if BubVerb 
+
+Then "ThreeBlackCrows" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 16 ########### ThreeInsideDown() & showAll ############## 
+
+def candleAll_56 = if(ShowAll == yes , ThreeInsideDown(), double.NaN); 
+
+Plot TID = candleAll_56; 
+
+TID.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+TID.SetDefaultColor(Color.pink); 
+
+TID.SetLineWeight(5); 
+
+ 
+
+Rec ThreeInsideDown_Trig_56 = ThreeInsideDown_Trig_56[1] + if (ThreeInsideDown().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(ThreeInsideDown_Trig_56 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "16=ThreeInsideDown" 
+
+ else "",  Color.Pink); 
+
+alert(ThreeStarsInTheSouth() && !TurnAlertOff && ShowAll, "Bearish ThreeStarsInTheSouth", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeInsideDown() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "16" 
+
+Else if BubVerb 
+
+Then "ThreeInsideDown" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 17  ######### ThreeOutsideDown() & showAll ############# 
+
+def candleAll_57 = if(ShowAll == yes, ThreeOutsideDown(), double.NaN); 
+
+Plot TOD = candleAll_57; 
+
+TOD.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+TOD.SetDefaultColor(Color.pink); 
+
+TOD.SetLineWeight(5); 
+
+ 
+
+Rec ThreeOutsideDown_Trig_57 = ThreeOutsideDown_Trig_57[1] + if (ThreeOutsideDown().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(ThreeOutsideDown_Trig_57 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "17=ThreeOutsideDown" 
+
+ else "",  Color.Pink); 
+
+alert(ThreeOutsideDown() && !TurnAlertOff && ShowAll, "Bearish ThreeOutsideDown", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeOutsideDown() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "17" 
+
+Else if BubVerb 
+
+Then "ThreeOutsideDown" 
+
+ else "" , Color.White , no); 
+
+ 
+
+##### 18 ########## Thrusting() & showAll ############ 
+
+def candleAll_58 = if(ShowAll == yes , Thrusting(), double.NaN); 
+
+Plot T = candleAll_58; 
+
+T.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+T.SetDefaultColor(Color.pink); 
+
+T.SetLineWeight(5); 
+
+ 
+
+Rec Thrusting_Trig_58 = Thrusting_Trig_58[1] + if (Thrusting().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(Thrusting_Trig_58 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "18=Thrusting" 
+
+ else "" ,  Color.Pink); 
+
+alert(Thrusting() && !TurnAlertOff && ShowAll, "Bearish Thrusting", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(Thrusting() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "18" 
+
+Else if BubVerb 
+
+Then "Thrusting" 
+
+ else "" , Color.White , no); 
+
+ 
+
+##### 19  ################ TwoCrows() & showAll ################# 
+
+def    candleAll_59 = if(ShowAll == yes  , TwoCrows(), double.NaN); 
+
+Plot TC = candleAll_59; 
+
+TC.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+TC.SetDefaultColor(Color.pink); 
+
+TC.SetLineWeight(5); 
+
+ 
+
+Rec TwoCrows_Trig_59 = TwoCrows_Trig_59[1] + if (TwoCrows().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(TwoCrows_Trig_59 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "19=TwoCrows" 
+
+ else "" ,  Color.Pink); 
+
+alert(TwoCrows() && !TurnAlertOff && ShowAll, "Bearish TwoCrows", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(TwoCrows() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "19" 
+
+Else if BubVerb 
+
+Then "TwoCrows" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+##### 20 ################ UpsideGapTwoCrows() & showAll ################# 
+
+def    candleAll_60 = if(ShowAll == yes , UpsideGapTwoCrows(), double.NaN); 
+
+Plot UGTC = candleAll_60; 
+
+UGTC.SetPaintingStrategy(PaintingStrategy. BOOLEAN_ARROW_DOWN); 
+
+UGTC.SetDefaultColor(Color.pink); 
+
+UGTC.SetLineWeight(5); 
+
+ 
+
+Rec UpsideGapTwoCrows_Trig_60 = UpsideGapTwoCrows_Trig_60[1] + if (UpsideGapTwoCrows().Bearish == yes , + barNumber(), 0); 
+
+AddLabel(UpsideGapTwoCrows_Trig_60 > 0 && showLabel && ShowAll, If BubVerb == 1 or BubNumb == 1 
+
+then "20=UpsideGapTwoCrows" 
+
+ else "" , Color.Pink); 
+
+alert(UpsideGapTwoCrows() && !TurnAlertOff && ShowAll, "Bearish UpsideGapTwoCrows", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UpsideGapTwoCrows() && (BubVerb or BubNumb) && ShowAll , Low ,  If BubNumb  
+
+then "20" 
+
+Else if BubVerb 
+
+Then "UpsideGapTwoCrows" 
+
+ else "" ,  Color.White , no); 
+
+ 
+
+ 
+
+ 
+
+########################################################## 
+
+#################### End of showAll processing  ###################### 
+
+########################################################## 

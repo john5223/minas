@@ -1,0 +1,39 @@
+AwesomeOscillator 
+
+Description 
+
+The Awesome Oscillator is a study indicating the difference between the 34 period and 5 period simple moving averages of the median price (the average of the highs and the lows for a given period). 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+declare zerobase; 
+
+ 
+
+plot AO = Average(hl2, 5) - Average(hl2, 34); 
+
+plot Zero = 0; 
+
+ 
+
+AO.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+AO.SetLineWeight(3); 
+
+AO.DefineColor("Up", Color.UPTICK); 
+
+AO.DefineColor("Down", Color.DOWNTICK); 
+
+AO.AssignValueColor(if AO > AO[1] then AO.color("Up") else if AO < AO[1] then AO.color("Down") else GetColor(1)); 
+
+Zero.SetDefaultColor(GetColor(5)); 
+

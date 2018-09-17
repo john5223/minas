@@ -1,0 +1,235 @@
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+HA Bullish/Bearish scan 
+
+ 
+
+RE: [TOS_thinkscript] Re: Heikin Ashi Candle Charts - Scan for Bullish and Bearish Shift By R. Houser 
+
+ 
+
+Actually, I used the calculations for haClose contained on page 55 of Sylvain Vervoort's book, "Capturing Profit with Technical Analysis," 2009, Marketplace Books, Inc. 
+
+ 
+
+A careful analysis of TOS Heikin-Ashi bars shows that on their charts they use this formula for calculating haClose, "def xClose = round( ( open + high + low + close ) / 4, 2 );" 
+
+ 
+
+If you feel more comfortable using the alternate calculation for the scan, here's the script. 
+
+######### scan ################### 
+
+rec HAopen = compoundValue(1, (HAopen[1] + ohlc4) / 2, ohlc4); 
+
+def HAclose = (HAopen + Max(high, HAopen) + Min(low, HAopen) + ohlc4) / 4; 
+
+def Bullish = if ( HAclose - HAopen ) >= 0 then yes else no; 
+
+plot Scan   = Bullish; 
+
+########### EOC ############ 
+
+Though the alternate calculation produces a somewhat smoother plot than the accepted formula, used in the scan it returns the same result set as the my original script, the difference is, apparently, not material in practice. 
+
+ 
+
+My own philosophy is that given the choice, in scans and such, I'll use 1st) TOS actual values and 2nd) when that's not available I'll use calculations that produce results that match TOS's. In charts, particularly in other's studies, I'll use the calculation of the author as they usually have a reason for deviating from accepted formulae. 
+
+ 
+
+#### from Deb Fine quoting R Houser ############# 
+
+In order to construct a scan you have to answer the question, what causes the bars to change color? Actually the color thing is a distraction because the HA bars are a candlestick variant you need to answer the question what causes the bars to change from filled body to hollow body? 
+
+ 
+
+Answer: 
+
+The body is filled if haOpen is greater than haClose. The body is hollow if haOpen is less than haClose. 
+
+ 
+
+So the challenge boils down to how does one get haOpen and haClose in a scan script? You have to calculate them. Here's a script that will scan for a shift from bearish to bullish; finds 247 stocks as of this moment. 
+
+def xClose  = ( open + high + low + close ) / 4; 
+
+rec xOpen   = compoundValue( 1, ( xOpen[1] + xClose[1] ) / 2, xClose ); 
+
+def Bullish = if ( xClose - xOpen ) >= 0 then yes else no; 
+
+plot Scan   = Bullish; 
+
+ 
+
+to scan for a shift from bullish to bearish change the last line: 
+
+def xClose  = ( open + high + low + close ) / 4; 
+
+rec xOpen   = compoundValue( 1, ( xOpen[1] + xClose[1] ) / 2, xClose ); 
+
+def Bullish = if ( xClose - xOpen ) >= 0 then yes else no; 
+
+plot Scan   = !Bullish; 
+
+################################### 
+
+************************************************************ 
+
+Thanks to Richard and his analytical and innate  understanding of HA Candles!!! 
+
+ 
+
+Here is the response - 
+
+ 
+
+In order to construct a scan you have to answer the question, what causes the bars to change color? Actually the color thing is a distraction because the HA bars are a candlestick variant you need to answer the question what causes the bars to change from filled body to hollow body? 
+
+ 
+
+Answer: 
+
+The body is filled if haOpen is greater than haClose. The body is hollow if haOpen is less than haClose. 
+
+ 
+
+So the challenge boils down to how does one get haOpen and haClose in a scan script? You have to calculate them. Here's a script that will scan for a shift from bearish to bullish; finds 247 stocks as of this moment. 
+
+def xClose  = ( open + high + low + close ) / 4; 
+
+rec xOpen   = compoundValue( 1, ( xOpen[1] + xClose[1] ) / 2, xClose ); 
+
+def Bullish = if ( xClose - xOpen ) >= 0 then yes else no; 
+
+plot Scan   = Bullish; 
+
+ 
+
+to scan for a shift from bullish to bearish change the last line: 
+
+def xClose  = ( open + high + low + close ) / 4; 
+
+rec xOpen   = compoundValue( 1, ( xOpen[1] + xClose[1] ) / 2, xClose ); 
+
+def Bullish = if ( xClose - xOpen ) >= 0 then yes else no; 
+
+plot Scan   = !Bullish; 
+
+************************************************************************ 
+
+ 
+
+ 
+
+HA Osc Long Term 
+
+ 
+
+In his article in this issue, “Long-Term Trading Using Exchange Traded Funds,” author Sylvain Vervoort introduces his heikin-ashi candles oscillator long term (HACOLT). 
+
+ 
+
+This system is intended to be implemented on exchange traded funds. Because this security type is generally broad-based in its price drivers, Vervoort recommends a weekly charting approach for the most consistency in this type of application. 
+
+ 
+
+We have recreated this study in our proprietary scripting language, thinkScript, for your use. The display output is very straightforward, with a 100 max signal for a positive period, a 50 signal for a neutral period, and a zero for a negative period 
+
+ 
+
+HEIKIN-ASHI CANDLES OSCILLATOR LONG TERM (HACOLT). A 100 max signal indicates a positive period, a 50 signals a neutral period, and a zero shows a negative period. 
+
+ 
+
+The code for the custom study is shown here along with instructions for applying it to a thinkorswim chart. 
+
+ 
+
+From TOS charts, select “Studies” ? “Edit Studies” 
+
+Select the “Studies” tab in the upper left-hand corner 
+
+Select “New” in the lower left-hand corner 
+
+Name the strategy (such as “HACOLT”) 
+
+Click in the script editor window, remove “plot Data = close;” and paste in the following: 
+
+###### start ############# 
+
+declare lower; 
+
+input length = 55; 
+
+input emaLength = 60; 
+
+input candleSizeFactor = 1.1; 
+
+ 
+
+rec HAopen = compoundValue(1, (HAopen[1] + ohlc4) / 2, ohlc4); 
+
+def HAclose = (HAopen + Max(high, HAopen) + Min(low, HAopen) + ohlc4) / 4; 
+
+ 
+
+def TEMAHAclose = TEMA(HAclose, length); 
+
+def TEMAhl2 = TEMA(hl2, length); 
+
+def HAcloseSmooth = 2 * TEMAHAclose - TEMA(TEMAHAclose, length); 
+
+def hl2Smooth = 2 * TEMAhl2 - TEMA(TEMAhl2, length); 
+
+def shortCandle = AbsValue(close - open) < (high - low) * candleSizeFactor; 
+
+ 
+
+def keepn1 = (HAclose >= HAopen and HAclose[1] >= HAopen[1]) or close >= HAclose or high > high[1] or low > low[1] or hl2Smooth >= HAcloseSmooth; 
+
+def keepall1 = keepn1 or (keepn1[1] and close >= open or close >= close[1]); 
+
+def keep13 = shortCandle and high >= low[1]; 
+
+def utr = keepall1 or (keepall1[1] and keep13); 
+
+def keepn2 = HAclose < HAopen and HAclose[1] < HAopen[1] or hl2Smooth < HAcloseSmooth; 
+
+def keep23 = shortCandle and low <= high[1]; 
+
+def keepall2 = keepn2 or (keepn2[1] and close < open or close < close[1]); 
+
+ 
+
+def dtr = keepall2 or (keepall2[1] and keep23); 
+
+def upw = dtr == 0 and dtr[1] and utr; 
+
+def dnw = utr == 0 and utr[1] and dtr; 
+
+rec upwWithOffset = if upw != dnw then upw else upwWithOffset[1]; 
+
+ 
+
+def Buy = upw or (!dnw and (if IsNaN(upwWithOffset) then 0 else upwWithOffset)); 
+
+def LongTermSell = close < ExpAverage(close, emaLength); 
+
+rec Neutral = Buy or (if LongTermSell then 0 else Neutral[1]); 
+
+plot HACOLT = if Buy then 100 else if Neutral then 50 else 0; 
+
+########## EOC ############ 
+
+Select OK and you are good to go! Your study will appear in the list of available studies on the “Edit studies and strategies” menu. To add it to your chart, simply doubleclick on its entry on the list. 

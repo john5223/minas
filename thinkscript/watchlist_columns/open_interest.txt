@@ -1,0 +1,57 @@
+Cindy Faber TOS: Select one of the custom watchlist columns and replace code in it with this.  Then open option chain and select your new custom column's name as an option chain column. 
+
+IMPORTANT REMINDER: per industry regulation OI is updated only once/day, a few hours after market close. 
+
+ 
+
+#HINT: this is a custom watchlist column that can be selected as a column on a watchlist of option symbols and/or as a column on the option chain 
+
+ 
+
+plot OI_NetChg = open_interest() - open_interest()[1]; 
+
+OI_NetChg.SetDefaultColor(color.BLACK); 
+
+AssignBackgroundColor(if OI_NetChg > 0 then color.GREEN  
+
+          else if OI_NetChg < 0  
+
+                  then color.RED  
+
+                  else color.GRAY); 
+
+ 
+
+Or a more space efficient version: 
+
+ 
+
+def OI_NetChg = open_interest() - open_interest()[1]; 
+
+AddLabel(yes, Round(OI_NetChg, 0), color.BLACK); 
+
+AssignBackgroundColor(if OI_NetChg > 0 then color.GREEN  
+
+  else if OI_NetChg < 0                              
+
+          then color.RED  
+
+          else color.GRAY); 
+
+ 
+
+here is another way to use one of your custom columns to create an option chain column: 
+
+ 
+
+#HINT: this is a custom watchlist column that can be selected as a column on a watchlist of option symbols and/or as a column on the option chain.  It is blank if volume is lower than open_interest allowing it to act as an alert by only appearing when volume is higher than open_interest 
+
+ 
+
+def alert = volume > open_interest; 
+
+AddLabel(yes, if alert then "volume vs OI" else ".", color.BLACK); 
+
+AssignBackgroundColor(if alert == 1 then color.RED else color.LIGHT_GRAY); 
+
+ 

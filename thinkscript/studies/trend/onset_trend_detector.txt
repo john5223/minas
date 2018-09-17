@@ -1,0 +1,54 @@
+ 
+
+n 262.76 
+Share D 
+EXTO Eligible 
+spy 4 M ID 
+D: 0: 26773 H: 26798 L: 26128 C: 26276 
+Chart Aggregation is Daily I Chart Length is 82 Daily Bars LinearRegSOchanneI_Mobius 
+onsetTrendDetector (CLOSE, 10, 100, 0.8) 0.0212477 0.807521 
+Style Drawings 
+Studies 
+(yes. line. 252. O 
+Patterns 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2014-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input price = close; 
+
+input cutoffLength = 10; 
+
+input roofCutoffLength = 100; 
+
+input k = 0.8; 
+
+ 
+
+def filter = reference EhlersRoofingFilter(price, cutoffLength, roofCutoffLength).RoofingFilter; 
+
+def peak = Max(AbsValue(filter), peak[1] * 0.991); 
+
+plot NormRoofingFilter = filter / peak; 
+
+plot Quotient = (NormRoofingFilter + k) / (k * NormRoofingFilter + 1); 
+
+plot ZeroLine = 0; 
+
+ 
+
+NormRoofingFilter.SetDefaultColor(GetColor(1)); 
+
+Quotient.SetDefaultColor(GetColor(2)); 
+
+ZeroLine.SetDefaultColor(GetColor(7)); 

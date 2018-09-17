@@ -1,0 +1,278 @@
+greenhorn:  
+#declare upper; 
+declare once_per_bar; 
+input showOnlyToday=No; 
+input timeFrame={default "DAY","WEEK","MONTH"}; 
+
+plot pivot=pivotpoints(showonlyToday,timeFrame).pp; 
+pivot.setpaintingstrategy(paintingstrategy.dashes); 
+
+plot up=close crosses above pivot; 
+up.setpaintingstrategy(paintingstrategy.boolean_arrow_up); 
+
+plot down=close crosses below pivot; 
+down.setpaintingstrategy(paintingstrategy.boolean_arrow_down); 
+
+=====================================================================
+ 
+input Timeframe = AggregationPeriod.DAY; 
+input ShowOnlyToday = no; 
+input Alert = No; 
+input Sound = sound.NoSound; 
+input price = fundamentaltype.CLOSE; 
+ 
+plot R3; 
+plot R2; 
+plot R1; 
+plot PP; 
+plot S1; 
+plot S2; 
+plot S3; 
+ 
+if showOnlyToday and !IsNaN(close(period = timeframe)[-1]) 
+then { 
+R1 = Double.NaN; 
+R2 = Double.NaN; 
+R3 = Double.NaN; 
+PP = Double.NaN; 
+S1 = Double.NaN; 
+S2 = Double.NaN; 
+S3 = Double.NaN; 
+} else { 
+   PP = (high(period = timeframe)[1] + low(period = timeframe)[1] + close(period = timeframe)[1])/ 3; 
+   R1 = 2 * PP - low(period = timeframe)[1]; 
+   R2 = PP + high(period = timeframe)[1] - low(period = timeframe)[1]; 
+   R3 = R2 + high(period = timeframe)[1] - low(period = timeframe)[1]; 
+   S1 = 2 * PP - high(period = timeframe)[1]; 
+   S2 = PP - high(period = timeframe)[1] + low(period = timeframe)[1]; 
+   S3 = S2 - high(period = timeframe)[1] + low(period = timeframe)[1]; 
+}
+
+PP.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+R1.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+R2.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+R3.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+
+S1.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+S2.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+R3.setPaintingStrategy(paintingStrategy.HORIZONTAL); 
+ 
+PP.SetDefaultColor(GetColor(0)); 
+R1.SetDefaultColor(GetColor(5)); 
+R2.SetDefaultColor(GetColor(5)); 
+R3.SetDefaultColor(GetColor(5)); 
+S1.SetDefaultColor(GetColor(6)); 
+S2.SetDefaultColor(GetColor(6)); 
+S3.SetDefaultColor(GetColor(6)); 
+R3.hide(); 
+S3.hide(); 
+ 
+def R2crossing = Alert == Yes and Crosses(close,R2, CrossingDirection.Above); 
+alert(R2crossing, "R2 Crossing - Above", Alert.BAR, sound); 
+def R1crossing = Alert == Yes and Crosses(close,R1, CrossingDirection.Above); 
+alert(R1crossing, "R1 Crossing - Above", Alert.BAR, sound); 
+def S2crossing = Alert == Yes and Crosses(close,S2, CrossingDirection.Below); 
+alert(S2crossing, "S2 Crossing - Below", Alert.BAR, sound); 
+def S1crossing = Alert == Yes and Crosses(close,S1, CrossingDirection.Below); 
+alert(S1crossing, "S1 Crossing - Below", Alert.BAR, sound); 
+def R2crossingReversal = Alert == Yes and Crosses(close,R2, CrossingDirection.Below); 
+alert(R2crossingReversal, "R2 Crossing - Below", Alert.BAR, sound); 
+def R1crossingReversal = Alert == Yes and Crosses(close,R1, CrossingDirection.Below); 
+alert(R1crossingReversal, "R1 Crossing - Below", Alert.BAR, sound); 
+def S2crossingReversal = Alert == Yes and Crosses(close,S2, CrossingDirection.Above); 
+alert(S2crossingReversal, "S2 Crossing - Above", Alert.BAR, sound); 
+def S1crossingReversal = Alert == Yes and Crosses(close,S1, CrossingDirection.Above); 
+alert(S1crossingReversal, "S1 Crossing - Above", Alert.BAR, sound); 
+
+
+#============================================================================ 
+
+#bulld:  here is a pivot point alert study: 
+
+input TriggerLine = close; 
+def price1 = triggerline; 
+input TriggerLineSmoothingPeriods = 1; 
+
+def lenght1 = triggerlinesmoothingperiods; 
+PLOT SMA = Average(price1,lenght1); 
+   SMA.SetDefaultColor(GetColor(3)); 
+   SMA.SetLineWeight(1); 
+   Sma.setSTYLE(CURVE.FIRM); 
+   SMA.hidebubble(); 
+
+input PpTimeFrame = {default DAY, "2 DAYS", "3 DAYS", "4 DAYS", WEEK, MONTH, "OPT EXP"}; 
+
+def PivP = (((high(period = PptimeFrame)[1]+ low(period = PptimeFrame)[1]+ close(period = PptimeFrame)[1])/3)); 
+
+def PivPR1 = 2*((high(period = PptimeFrame)[1]+ low(period = PptimeFrame)[1]+ close(period = PptimeFrame)[1])/3) - low(period = PptimeFrame)[1]; 
+
+def PivPR2 = PivP + high(period = PptimeFrame)[1] - low(period = PptimeFrame)[1]; 
+
+def PivPR3 = PivPR1 + (high(period = PptimeFrame)[1] - low(period = PptimeFrame)[1]); 
+
+def PivPOtherR3 = PivPR2 + high(period = PptimeFrame)[1] - low(period = PptimeFrame)[1]; 
+
+def PivPS1 = 2*((high(period = PptimeFrame)[1]+ low(period = PptimeFrame)[1]+ close(period = PptimeFrame)[1])/3) - high(period = PptimeFrame)[1]; 
+
+def PivPS2 = PivP - high(period = PptimeFrame)[1] + low(period = PptimeFrame)[1]; 
+
+def PivPS3 = PivPS1 - (high(period = PptimeFrame)[1] - low(period = PptimeFrame)[1]); 
+
+def PivPOtherS3 = PivPS2 - high(period = PptimeFrame)[1] + low(period = PptimeFrame)[1]; 
+
+plot OtherR3 = PivPOtherR3; 
+plot R3 = PivPR3; 
+plot R2 = PivPR2; 
+plot R1 = PivPR1; 
+plot PP = PivP; 
+plot S1 = PivPS1; 
+plot S2 = PivPS2; 
+plot S3 = PivPS3; 
+plot OtherS3 = PivPOtherS3; 
+ 
+OtherR3.SetDefaultColor(GetColor(0)); 
+R3.SetDefaultColor(GetColor(0)); 
+R2.SetDefaultColor(GetColor(0)); 
+R1.SetDefaultColor(GetColor(0)); 
+PP.SetDefaultColor(GetColor(1)); 
+S1.SetDefaultColor(GetColor(6)); 
+S2.SetDefaultColor(GetColor(6)); 
+S3.SetDefaultColor(GetColor(6)); 
+OtherS3.SetDefaultColor(GetColor(6)); 
+ 
+def condition1 = (SMA > PP && SMA[1] <= PP) OR (SMA > S1 && SMA[1] <= S1) OR (SMA > R1 && SMA[1] <= R1) OR (SMA > R2 && SMA[1] <= R2) OR (SMA > R3 && SMA[1] <= R3) OR (SMA > S2 && SMA[1] <= S2) OR (SMA > S3 && SMA[1] <= S3) OR (SMA > otherR3 && SMA[1] <= otherR3) OR (SMA > otherS3 && SMA[1] <= otherS3); 
+
+ 
+def condition2 = (SMA < PP && SMA[1] >= PP) OR (SMA < S1 && SMA[1] >= S1) OR (SMA < R1 && SMA[1] >= R1) OR (SMA < R2 && SMA[1] >= R2) OR (SMA < R3 && SMA[1] >= R3) OR (SMA < S2 && SMA[1] >= S2) OR (SMA < S3 && SMA[1] >= S3) OR (SMA < otherR3 && SMA[1] >= otherR3) OR (SMA < otherS3 && SMA[1] >= otherS3); 
+
+plot BUY1 = condition1; 
+   BUY1.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+   BUY1.SetDefaultColor(GetColor(1)); 
+   BUY1.setLineWeight(3); 
+
+plot SELL1 = condition2; 
+   SELL1.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+   SELL1.SetDefaultColor(GetColor(0)); 
+   SELL1.setLineWeight(3); 
+
+
+################################################################ 
+
+alert(condition1, "BUY", Alert.TICK, Sound.Ring); 
+alert(condition2, "SELL", Alert.TICK, Sound.Ding); 
+input PivotPointCloudThicknessPercentage = 5; 
+ 
+# THESE ARE THE HORIZONTAL CLOUDS DISPLAYED AT EACH PIVOT POINT LEVEL 
+
+def CloudThickness = ((R1 - S1) / 100) * PivotPointCloudThicknessPercentage; 
+def aboveR301 = otherR3 + CloudThickness; 
+def belowR301 = otherR3 - CloudThickness; 
+AddCloud(aboveR301, belowR301, Color.RED, Color.GREEN); 
+
+def aboveR3 = R3 + CloudThickness; 
+def belowR3 = R3 - CloudThickness; 
+AddCloud(aboveR3, belowR3, Color.RED, Color.GREEN); 
+
+def aboveR2 = R2 + CloudThickness; 
+def belowR2 = R2 - CloudThickness; 
+AddCloud(aboveR2, belowR2, Color.RED, Color.GREEN); 
+
+def aboveR1 = R1 + CloudThickness; 
+def belowR1 = R1 - CloudThickness; 
+AddCloud(aboveR1, belowR1, Color.RED, Color.GREEN); 
+
+def abovepp = PP + CloudThickness; 
+def belowpp = PP - CloudThickness; 
+AddCloud(abovepp, belowpp, Color.CYAN, Color.CYAN); 
+
+def aboveS1 = S1 + CloudThickness; 
+def belowS1 = S1 - CloudThickness; 
+AddCloud(aboveS1, belowS1, Color.GREEN, Color.RED); 
+
+def aboveS2 = S2 + CloudThickness; 
+def belowS2 = S2 - CloudThickness; 
+AddCloud(aboveS2, belowS2, Color.GREEN, Color.RED); 
+
+def aboveS3 = S3 + CloudThickness; 
+def belowS3 = S3 - CloudThickness; 
+AddCloud(aboveS3, belowS3, Color.GREEN, Color.RED); 
+
+def aboveS301 = otherS3 + CloudThickness; 
+def belowS301 = otherS3 - CloudThickness; 
+AddCloud(aboveS301, belowS301, Color.GREEN, Color.RED); 
+
+################################################################ 
+
+
+# HEIKIN ASHI SECTION WHICH PAINTS THE BARS GREEN OR RED, AND IT IS DISPLAYED AS A MOVING AVERAGE OF ITSELF, FROM 1 PERIOD TO ANY OF CHOICE, DEFAULT IS 5 
+
+
+input HeikinAshiBarPaintingAndCloudExpMALenght = 5; 
+
+def HAMALenght = HeikinAshiBarPaintingAndCloudExpMALenght; 
+def haclose = EXPAVERAGE((open+high+low+close)/4,HAMALenght); 
+def HAC = (haclose-haclose[1])+haclose; 
+rec haopen = EXPAVERAGE(compoundValue(1,(haopen[1]+haclose[1])/2,(open[1]+close[1])/2),HAMALenght); 
+
+
+def haopenn = haopen; 
+def HAO = (haopen - HAOPEN[1])+HAOPEN; 
+def diff = hac-hao; 
+
+ASSIGNPriceColor(IF diff>0 THEN Color.GREEN ELSE Color.RED) ; 
+
+
+################################################################ 
+
+# THIS SECTION PLOTS THE HEIKIN ASHI CLOUD 
+
+# AddCloud(haclose, haopenn, Color.GREEN, Color.RED);  
+
+################################################################ 
+
+# THIS SECTION PLOTS ARROW SIGNALS WHEN THE HEIKIN ASHI DIFF CHANGES DIRECTION 
+
+plot BUY2 = diff>0 and diff[1]<0; 
+   BUY2.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+   BUY2.SetDefaultColor(GetColor(1)); 
+   BUY2.setLineWeight(3); 
+   BUY2.HIDEBUBBLE(); 
+
+plot SELL2 = diff<0 and diff[1]>0; 
+   SELL2.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN); 
+   SELL2.SetDefaultColor(GetColor(0)); 
+   SELL2.setLineWeight(3); 
+   SELL2.HIDEBUBBLE(); 
+
+
+################################################################ 
+
+# THIS SECTION PLOTS THE LINES SURROUNDING THE HEIKIN ASHI CLOUD 
+
+#Plot HeikinAshiCloseLineOnCloud = hac; 
+
+#HeikinAshiCloseLineOnCloud.AssignValueColor(if diff > 0 then #color.green else color.red); 
+
+#HeikinAshiCloseLineOnCloud.HideBubble(); 
+
+#Plot HeikinAshiOpenLineOnCloud = hao; 
+#HeikinAshiOpenLineOnCloud.AssignValueColor(if diff < 0 then #color.red else color.green); 
+#HeikinAshiOpenLineOnCloud.HideBubble(); 
+
+
+################################################################ 
+
+# THIS SECTION PLOTS THE SMA OF THE HIGHEST HIGH AND LOWEST LOW OF A PAST PERIOD AMOUNT AND IS USED AS A REFERENCE SMA ONLY. 
+
+INPUT HhOrLlPeriods = 58; 
+INPUT HhOrLlSmaSmoothingPeriods = 58; 
+
+DEF HHV = HIGHEST(price1,HHORLLperiods);
+DEF LLV = LOWEST(price1,HHORLLperiods);
+DEF HHVLLVDIFF = (HHV+LLV)/2;
+ 
+plot HHLLSMA = AVERAGE(HHVLLVDIFF,HHORLLSMASMOOTHINGPERIODS); 
+   HHLLSMA.setPaintingStrategy(PaintingStrategy.DASHES); 
+   HHLLSMA.SetLineWeight(2); 
+   HHLLSMA.SetDefaultColor(color.pink); 
+   HHLLSMA.hidebubble(); 

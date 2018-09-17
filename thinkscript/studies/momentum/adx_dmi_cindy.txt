@@ -1,0 +1,51 @@
+#http://tos.mx/GPL82y  
+# use #HINT: .... to create a tiny question mark help bubble on list of study names (to right of the study's name).  Use \n in your hint to create line breaks  
+
+#HINT: This study is a copy/paste/tweak of the TOS study for DMI with the addition of ability to show horizontal lines across ADX values\n\n 0-20 ADX indicates chop or no trend\n 20-25 watch for signs new trend might be starting\n over 25 = trending\n 25-50 strong trend\n over 50 watch for signs trend might be at risk of ending  
+
+# use declare lower; if you always want your custom study to appear below the chart (or use declare upper; if you always want your custom study to appear on the chart)  
+
+declare lower;  
+ 
+
+# input creates fields in the Edit Studies box to allow users to make changes without need to alter the ThinkScript code  
+
+# using #HINT name of input: ... allows you to create tiny help bubbles in the Edit Studies box to right of that input field  
+
+input length = 14; #HINT length: 14 is the default length from J. Wells Wilder, \n who made his ADX and the DMI system available for public use in 1978  
+
+input averageType = AverageType.WILDERS;  
+
+input ADX_line = 25; #HINT ADX_line: This creates a horizontal line on the study.  \n\nEdit as desired:  \n 0-20 ADX indicates chop or no trend\n 20-25 watch for signs new trend might be starting\n over 25 = trending\n 25-50 strong trend\n over 50 watch for signs trend might be at risk of ending  
+
+input Show_Signal_lines_for_DMI_Cross = yes; #HINT Show_Signal_lines_for_DMI_Cross: if yes, will plot vertical lines at points where DI+ and DI- cross if ADX is also > 20 at time of cross  
+
+input Sound_AudibleAlert_for_DMI_Cross = yes;  #HINT Sound_AudibleAlert_for_DMI_Cross: if yes, will sound an audible alert and post to Messages center when DI+ and DI- cross if ADX is also > 20 at time of cross  
+
+  
+
+  
+
+# def allows you to create or define new "words" for ThinkScript to save time and typing by using the new "words" later in the code  
+
+  
+
+# plot tells ThinkScript what information you want visible, and the following lines for each plot tell ThinkScript how you want that information displayed (color, line weight, etc.).  Plot also creates ability in the Edit Studies box to check or un-check "show plot"  
+
+  
+
+def hiDiff = high - high[1];  
+
+def loDiff = low[1] - low;  
+
+  
+
+def plusDM = if hiDiff > loDiff and hiDiff > 0 then hiDiff else 0;  
+
+def minusDM =  if loDiff > hiDiff and loDiff > 0 then loDiff else 0;  
+
+  
+
+  
+
+ 

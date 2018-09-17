@@ -1,0 +1,115 @@
+# MovAvgAdaptiveUpdated_TASC 
+
+# We have put together a study for thinkorswim based on the article Adaptive Moving Averages by Vitali Apirine # in the Apr issue of TASC.  http://tos.mx/MYXu1P#  Name it Moving AverageAdaptive_Updated. 
+
+# JQ: the change seems to be in the addition of the mode input 
+
+# TASC April 2018 
+
+ 
+
+input price = close; 
+
+input fastLength = 2; 
+
+input slowLength = 30; 
+
+input effRatioLength = 10; 
+
+input mode = {default KAMA, AMA}; 
+
+ 
+
+Assert(fastLength > 0, "'fast length' must be positive: " + fastLength); 
+
+Assert(slowLength > 0, "'slow length' must be positive: " + slowLength); 
+
+ 
+
+def direction; 
+
+def volatility; 
+
+def ER; 
+
+ 
+
+switch (mode) { 
+
+case KAMA: 
+
+    direction = AbsValue(price - price[effRatioLength]); 
+
+    volatility = Sum(AbsValue(price - price[1]), effRatioLength); 
+
+    ER = if volatility != 0 then direction / volatility else 0; 
+
+case AMA: 
+
+    direction = Double.NaN; 
+
+    volatility = Double.NaN; 
+
+    ER = AbsValue((price - Lowest(low, effRatioLength)) - 
+
+(Highest(high, effRatioLength) - price)) / (Highest(high, 
+
+effRatioLength) - Lowest(low, effRatioLength)); 
+
+} 
+
+ 
+
+def FastSF = 2 / (fastLength + 1); 
+
+def SlowSF = 2 / (slowLength + 1); 
+
+def ScaledSF = ER * (FastSF - SlowSF) + SlowSF; 
+
+def AMA = CompoundValue(1, AMA[1] + Sqr(ScaledSF) * (price - AMA[1]), 
+
+price); 
+
+ 
+
+plot MovAvgAdaptive = AMA; 
+
+MovAvgAdaptive.SetDefaultColor(GetColor(1)); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+13:57 Paris: UTC, in case you'd like some accompanying notes for that Vitali Apirine study you posted earlier, here's what I have from my notes 
+
+ 
+
+The term adaptive moving average is associated with the Kaufman adaptive moving average (KAMA), developed by Perry Kaufman. In this article I will discuss the adaptive moving average (AMA), which is based on the KAMA but has subtle differences. 
+
+ 
+
+The AMA is designed to account for the location of the close relative to the high–low range. You’ll find that AMA closely follows prices and can be combined with KAMA to identify turning points and filter price movements. 
+
+ 
+
+How’s it calculated? 
+
+ 
+
+The values 10, 2, and 30 are the typical settings used with the AMA; however, other values can be substituted depending on your trading style and goals. These settings are similar to KAMA. 
+
+ 
+
+10 is the number of periods 
+
+2 is the number of periods for the fastest EMA constant 
+
+30 is the number of periods for the slowest EMA constant. 

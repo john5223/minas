@@ -1,0 +1,25 @@
+# ALMA (Arnaud Legoux Moving Average) 
+# ALMA is based on a shifted Gaussian distribution  
+# Mobius 
+# Chat Room Request 
+# ALMA color change added by ZupDog 
+ 
+input offset = 2; 
+input sigma = .5; 
+input length = 8; 
+plot alma_ = (fold n = 0 to length 
+              with s 
+              do s + getValue(Exp(-Power(n - Floor(offset * length), 2)/ 
+                             (2 * Power((length + 1) / sigma, 2)))*  
+                     getValue(close, n), n, length)) /  
+              fold nn = 0 to length  
+              with ss  
+              do ss + getValue(Exp(-Power(nn - Floor(offset * length), 2)/ 
+                              (2 * Power((length + 1) / sigma, 2))), nn); 
+ 
+ 
+alma_.DefineColor("Up", GetColor(1)); 
+alma_.DefineColor("Down", GetColor(0)); 
+alma_.AssignValueColor(if alma_ > alma_[1] then alma_.color("Up") else alma_.color("Down")); 
+
+# End Code ALMA 

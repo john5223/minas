@@ -1,0 +1,45 @@
+C 266.57 
+SPY4MID 0:4/23/18 0:2E7QE H:2E7zg L:2E535 c:26ES7 R:254 
+PolychromMtm (CLOSE, 8, -0_258847 -0.04 
+LinearRegrReversaI (14) 
+Style 
+Studies 
+Patterns 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2010-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input price = close; 
+
+input length = 8; 
+
+input bxo = 0.2; 
+
+input sxo = -0.04; 
+
+ 
+
+def num = fold indexN = 1 to length + 1 with accuN do accuN + (price - getValue(price, indexN, length)) / Sqrt(indexN); 
+
+def denom = fold indexD = 1 to length + 1 with accuD do accuD + Sqrt(indexD); 
+
+ 
+
+plot PM = num / denom; 
+
+plot BuyLevel = bxo; 
+
+plot SellLevel = sxo; 
+
+
+PM.SetDefaultColor(GetColor(8)); 
+BuyLevel.SetDefaultColor(GetColor(5)); 
+SellLevel.SetDefaultColor(GetColor(1)); 

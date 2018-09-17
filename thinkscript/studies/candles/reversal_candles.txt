@@ -1,0 +1,108 @@
+Reversal Candles 
+
+by Mobius (Mobius) 2 years ago  
+
+Share Save  
+
+
+Study includes 2 unique candles - Saikou / Hikui Candles that indicate a reversal in trend. Codes originated by Mobius 
+
+http://tos.mx/x0zfGt 
+
+ 
+
+From <https://mytrade.com/profile/Mobius/statuses/5656551>  
+
+# Blown Top (Reversal Candle) 
+
+# Mobius 
+
+# V01.02.2015 Shared Chat Room 01.16.2016 
+
+ 
+
+input n = 10; 
+
+input n2 = 5; 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def RelRange = (close - Lowest(low, n)) / 
+
+    (highest(high, n) - lowest(low, n)) > .8; 
+
+def Range = High - Low; 
+
+def hR = Range == GetValue(Range, GetMaxValueOffset(range, n), n); 
+
+def hh = high == GetValue(high, GetMaxValueOffset(high, n), n); 
+
+def bodyTop = Max(close, open); 
+
+def BlownTop = (high - bodyTop) > .75 * Average(BodyHeight(), n); 
+
+plot HighRB = RelRange and hR and hh and BlownTop and Low < Low[1] and close < open; 
+
+     HighRB.SetPaintingStrategy(PaintingStrategy.Boolean_Arrow_Down); 
+
+     HighRB.SetLineWeight(2); 
+
+     HighRB.SetDefaultColor(Color.Plum); 
+
+AddChartBubble(HighRB, High + (TickSize() * 4), "BlownTop", Color.Gray, yes); 
+
+ 
+
+# Saikou / Hikui Candles that indicate a reveresal in trend 
+
+# Candle Pattern originated by Mobius  
+
+#Saikou (Supreme Candle)   Hikui (low/humble Candle) 
+
+# V01.2014 
+
+ 
+
+plot Saikou = h == GetValue(h, GetMaxValueOffset(h, n2), n2) and 
+
+              c < c[2] and 
+
+              isLongBlack() and 
+
+              BodyHeight() > Average(BodyHeight(), n2) and 
+
+              l <= getValue(l, GetMaxValueOffset(l, n2), n2); 
+
+     Saikou.SetPaintingStrategy(PaintingStrategy.Boolean_Arrow_Down); 
+
+     Saikou.SetLineWeight(3); 
+
+     Saikou.SetDefaultColor(Color.Plum); 
+
+AddChartBubble(Saikou, High + (TickSize() * 4), "Saikou", Color.Gray, yes); 
+
+plot Hikui = l == GetValue(l, GetMinValueOffset(l, n2), n2) and 
+
+             c > c[2] and 
+
+             BodyHeight() > Average(BodyHeight(), n2) and 
+
+             h > h[1]; 
+
+     Hikui.SetPaintingStrategy(PaintingStrategy.Boolean_Arrow_Up); 
+
+     Hikui.SetLineWeight(3); 
+
+     Hikui.SetDefaultColor(Color.White); 
+
+AddChartBubble(Hikui, low - (TickSize() * 10), "Hikui", Color.Gray, no); 
+
+# End Reversal Candles 

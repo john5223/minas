@@ -1,0 +1,23 @@
+ Mr. Script: Volume profile scan 
+
+ 
+
+def yyyymmdd = GetYYYYMMDD(); 
+
+def day_number = DaysFromDate(First(yyyymmdd)) + GetDayOfWeek(First(yyyymmdd)); 
+
+def period = Floor(day_number / 7); 
+
+def cond = 0 < period - period[1]; 
+
+profile vol = VolumeProfile("startNewProfile" = cond, "onExpansion" = no); 
+
+vol.Show("va color" = Color.YELLOW); 
+
+def b = vol.GetLowestValueArea(); 
+
+plot c = close <= b and close >= (b*.9); 
+
+ 
+
+c.setPaintingStrategy(paintingStrategy.BOOLEAN_ARROW_UP); 

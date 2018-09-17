@@ -1,0 +1,76 @@
+Style 
+SPY3 M ID 
+266.57 
+0:267.26 H:2E78g 
+Studies 
+Patterns 
+c 26535 c 266.57 
+R: 2.54 
+Predictive) 0.97894 02 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+ 
+
+input length = 13; 
+
+input paintBars = yes; 
+
+ 
+
+def EMA = ExpAverage(close, length); 
+
+def MACD = ExpAverage(close, 12) - ExpAverage(close, 26); 
+
+def MACDHist = MACD - ExpAverage(MACD, 9); 
+
+def GreenPrice = EMA > EMA[1] and MACDHist > MACDHist[1]; 
+
+def RedPrice = EMA < EMA[1] and MACDHist < MACDHist[1]; 
+
+ 
+
+plot Bullish = GreenPrice; 
+
+plot Neutral = !GreenPrice and !RedPrice; 
+
+plot Bearish = RedPrice; 
+
+ 
+
+Bullish.SetDefaultColor(Color.UPTICK); 
+
+Bullish.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+Bullish.SetLineWeight(3); 
+
+Bullish.hide(); 
+
+Neutral.SetDefaultColor(Color.BLUE); 
+
+Neutral.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+Neutral.SetLineWeight(3); 
+
+Neutral.hide(); 
+
+Bearish.SetDefaultColor(Color.DOWNTICK); 
+
+Bearish.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+Bearish.SetLineWeight(3); 
+
+Bearish.hide(); 
+
+ 
+
+DefineGlobalColor("Bullish", Color.UPTICK); 
+
+DefineGlobalColor("Neutral", Color.BLUE); 
+
+DefineGlobalColor("Bearish", Color.DOWNTICK); 
+
+AssignPriceColor(if !paintBars then Color.CURRENT else if GreenPrice then globalColor("Bullish") else if RedPrice then globalColor("Bearish") else globalColor("Neutral")); 

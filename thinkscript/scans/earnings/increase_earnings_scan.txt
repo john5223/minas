@@ -1,0 +1,87 @@
+ Nick Name N.A.G®: Someone asked me last week about an increasing earnings scan for 2 quarters (I think).  This will do it.  I've written extensive notes for the curious to explain how it works, how and why the statements are built the way they are.  If you want to see it just make it a lower study. 
+
+ 
+
+#Increasing Earnings Scan 
+
+#NN tslounge, chat request 
+
+#v2.28.14.1 
+
+#Scan for earnings > previous quarter earnings 
+
+#times_up input determines the number of times earnings increased 
+
+#Example: times_up = 4, scan checks for earnings increasing at least 4 quarters in a row 
+
+#default = 2 since 2 was the requested number 
+
+#extensive notes are provided for the curious 
+
+input times_up = 2; 
+
+ 
+
+#define a variable for GetActualEarnings() for efficiency 
+
+def gae = GetActualEarnings(); 
+
+ 
+
+#Description of recs are written in plain English, followed by the corresponding script use 
+
+ 
+
+# We need to get the earnings value and carry it forward so we can compare the next earnings to it 
+
+#if earnings are reported: if(!isNaN(gae), 
+
+#then get the earnings number: gae, 
+
+#else keep the last earnings number: earn[1]); 
+
+ 
+
+rec ern = if(!isNaN(gae), gae, ern[1]); 
+
+#if there are never any earnings this will always = Double.NaN 
+
+ 
+
+#Now to determine if earnings are increasing enough times in a row we need to count every time they increase.  If earnings are < prior quarter, we'll reset the count to 0. 
+
+ 
+
+#CompoundValue is used to make sure the count initializes with a number, 0 in this case.  If it starts with Double.NaN, it may not work. 
+
+ 
+
+#start this on the first bar: (CompoundValue(1, 
+
+#if earnings are reported: if(!isNaN(gae), 
+
+#then if earnings are greater than the prior earnings value: if(ern > ern[1], 
+
+#count it by adding 1 to the previous count: ern_up[1] + 1, 
+
+#else set the count to 0: 0), 
+
+#else (if earnings aren't reported) keep the previous count value: ern_up[1]), 
+
+#intialize the value of the variable to 0: 0); 
+
+rec ern_up = CompoundValue(1, if(!isNaN(gae), if(ern > ern[1], ern_up[1] + 1, 0), ern_up[1]), 0); 
+
+ 
+
+#plot the result of ern_up >= times_up 
+
+#if you plot this in a study it will plot 1 (true, earnings have increased at least a number of quarters = to times_up input) or 0 (false, they haven't increased that many times) 
+
+plot scan = ern_up >= times_up; 
+
+ 
+
+#If you wanted to scan for earnings increasing only x number of times and not more, change >= to == .  e.g. with times_up == 2, using >= means earnings increasing 4 times in a row meet the criteria. 
+
+#end 

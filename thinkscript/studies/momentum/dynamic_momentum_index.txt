@@ -1,0 +1,84 @@
+266.57 
+Style 
+Draw i ngs 
+SPY3MID 026726 H:26789 L:26535 R:254 
+DynamicMomentumlndex(CLOSE, 5, 10, 14, 3, 30) 50.4908 70 30 
+cybercyclesoscillator(om, CLOSE) 4.5286 
+O &2SE4E 
+Studies 
+Patterns 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2010-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input price = close; 
+
+input stdevLength = 5; 
+
+input avgOfStdevLength = 10; 
+
+input DYMILength = 14; 
+
+input DYMILengthLowerLimit = 3; 
+
+input DYMILengthUpperLimit = 30; 
+
+ 
+
+Assert(DYMILengthLowerLimit > 0, "'dymi length lower limit' must be positive: " + DYMILengthLowerLimit); 
+
+Assert(DYMILength between DYMILengthLowerLimit and DYMILengthUpperLimit, "'dymi length' must be between lower and upper limit: " + DYMILength); 
+
+ 
+
+def std = StDev(price, stdevLength); 
+
+def ratio = std / Average(std, avgOfStdevLength); 
+
+def dynamicLength = Floor(DYMILength / ratio); 
+
+def limitedLength = if dynamicLength < DYMILengthLowerLimit then DYMILengthLowerLimit else if dynamicLength > DYMILengthUpperLimit then DYMILengthUpperLimit else dynamicLength; 
+
+def sf = 2 / (limitedLength + 1); 
+
+def bn = Max(BarNumber(), 0); 
+
+# 10^-5 precision for ema multiplier 
+
+def expIndex = Max(1, bn - Ceil(-5 / Lg(1 - sf))); 
+
+def fromIndex = if IsNaN(expIndex) then 1 else expIndex; 
+
+def chg = price - price[1]; 
+
+def absChg = AbsValue(chg); 
+
+def netChgAvg = fold indexN = fromIndex to bn + 1 with accuN do sf * (if IsNaN(GetValue(chg, bn - indexN)) then 0 else GetValue(chg, bn - indexN)) + (1 - sf) * accuN; 
+
+def totChgAvg = fold indexT = fromIndex to bn + 1 with accuT do sf * (if IsNaN(GetValue(absChg, bn - indexT)) then 0 else GetValue(absChg, bn - indexT)) + (1 - sf) * accuT; 
+
+def RSI = if totChgAvg == 0 then 50 else 50 * (netChgAvg / totChgAvg + 1); 
+
+ 
+
+plot DYMI = RSI; 
+
+plot OverBought = 70; 
+
+plot OverSold = 30; 
+
+ 
+
+DYMI.SetDefaultColor(GetColor(8)); 
+
+OverBought.SetDefaultColor(GetColor(5)); 
+
+OverSold.SetDefaultColor(GetColor(5)); 

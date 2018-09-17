@@ -1,0 +1,79 @@
+#hint:<b>TSI_NEBULA Moving Averages</b>\nTSI_NEBULA Moving Averages shows the 50-DAY and 200-DAY moving averages on your INTRADAY chart.</li><li></li><li> <li><b>ThinkSwimIndicators.com</b></li> 
+
+ 
+
+#TSI_Nebula Moving Averages 
+
+# (c) 2010 
+
+#Copyright Authorship: ThinkSwimIndicators.com 
+
+ 
+
+ 
+
+#========================================================================== 
+
+# >>>                   NEBULA Moving Averages                        <<< [ 
+
+#.........................................................................[ 
+
+#                                                                         [ 
+
+#                         -----=== O ===-----                             [ 
+
+#                                                                         [ 
+
+#****COPYRIGHT NOTICE: "NEBULA Moving Averages" is free to use by the gen-[ 
+
+# eral public.  Distribution or modification is prohibited.  All content, [ 
+
+# form, and style, likewise, is protected by copyright.                   [ 
+
+#                                                                         [ 
+
+#                         -----=== x ===-----                             [ 
+
+#                                                                         [ 
+
+# ThinkSwimIndicators.com  will  CONTINUE  to release FREE indicators--of [ 
+
+# the  highest quality and caliber--for the Thinkorswim Trading platform, [ 
+
+# for use by all.  Many of our free indicators surpass the Quality & Use- [ 
+
+# fulness of indicators offered for "purchase" by other sites. We suggest [ 
+
+# that  you  visit the free "Learning Center"  at our website for further [ 
+
+# information on the use of this indicator. "GO: Master the Markets!" (TM)[ 
+
+#========================================================================== 
+
+ 
+
+declare upper; 
+
+ 
+
+input DAYPriceThreshold = 0.75; 
+
+def _50_DAY_pre = Average(close (period = "Day"), 50); 
+
+def Show__50_DAY = between(close, _50_DAY_pre - DAYPriceThreshold, _50_DAY_pre + DAYPriceThreshold); 
+
+plot _50_DAY = if(Show__50_DAY, _50_DAY_pre, Double.NaN); 
+
+_50_DAY.SetDefaultColor(Color.ORANGE); 
+
+AddChartBubble(_50_DAY and !IsNaN(close) and IsNaN(close[-1]), _50_DAY, "50-Day MA", Color.YELLOW); 
+
+def _200_DAY_pre = Average(close (period = "Day"), 200); 
+
+def Show__200_DAY = between(close, _200_DAY_pre - DAYPriceThreshold, _200_DAY_pre + DAYPriceThreshold); 
+
+plot _200_DAY = if(Show__200_DAY, _200_DAY_pre, Double.NaN); 
+
+_200_DAY.SetDefaultColor(Color.DARK_ORANGE); 
+
+AddChartBubble(_200_DAY and !IsNaN(close) and IsNaN(close[-1]), _200_DAY, "200-Day MA", Color.YELLOW); 

@@ -1,0 +1,64 @@
+# MACDdivergence_Mobius 
+
+# MACD Divergence 
+
+# Values in MACD are default values 
+
+# If Price and MACD are Divergent Bar will be colored White 
+
+# Mobius 
+
+# Chat Room Request 03.10.2014 
+
+ 
+
+input fastLength = 13; 
+
+input slowLength = 21; 
+
+input MACDLength =  8; 
+
+input AverageType = {SMA, default EMA}; 
+
+def Divergence = if MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType) 
+
+                 is less than   
+
+                         MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType)[1] and 
+
+                    high > high[1] 
+
+                 then 1 
+
+                 else Double.NaN; 
+
+AssignPriceColor(if !isNaN(Divergence)  
+
+                then Color.White 
+
+                else Color.Current);  
+
+a APPLE INC COM 
+168.38 
+Draw i ngs 
+AAPL 2 M ID [NASDAQ] 
+0: 17087 H: 17248 
+L: 1682 
+c: 168.38 
+Share 
+R: 428 
+Style 
+Studies 
+Patterns 

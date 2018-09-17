@@ -1,0 +1,119 @@
+Draw i ngs 
+spy 4 M ID 
+266.57 
+0:267.26 H:267.89 
+Style 
+Studies 
+Patterns 
+L: 265.35 C: 266.57 
+R: 2.54 
+StochasticFast(80, 20, 10, 3, 
+LinearRegrReversaI (14) I 
+HIGH, Low, CLOSE, No) 43.149 61.2532 80 20 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input over_bought = 80; 
+
+input over_sold = 20; 
+
+input KPeriod = 10; 
+
+input DPeriod = 3; 
+
+input priceH = high; 
+
+input priceL = low; 
+
+input priceC = close; 
+
+input averageType = AverageType.SIMPLE; 
+
+input showBreakoutSignals = {default "No", "On FastK", "On FastD", "On FastK & FastD"}; 
+
+ 
+
+plot FastK = reference StochasticFull(over_bought, over_sold, KPeriod, DPeriod, priceH, priceL, priceC, 1, averageType).FullK; 
+
+plot FastD = reference StochasticFull(over_bought, over_sold, KPeriod, DPeriod, priceH, priceL, priceC, 1, averageType).FullD; 
+
+plot OverBought = over_bought; 
+
+plot OverSold = over_sold; 
+
+ 
+
+def upK = FastK crosses above OverSold; 
+
+def upD = FastD crosses above OverSold; 
+
+def downK = FastK crosses below OverBought; 
+
+def downD = FastD crosses below OverBought; 
+
+ 
+
+plot UpSignal; 
+
+plot DownSignal; 
+
+switch (showBreakoutSignals) { 
+
+case "No": 
+
+    UpSignal = Double.NaN; 
+
+    DownSignal = Double.NaN; 
+
+case "On FastK": 
+
+    UpSignal = if upK then OverSold else Double.NaN; 
+
+    DownSignal = if downK then OverBought else Double.NaN; 
+
+case "On FastD": 
+
+    UpSignal = if upD then OverSold else Double.NaN; 
+
+    DownSignal = if downD then OverBought else Double.NaN; 
+
+case "On FastK & FastD": 
+
+    UpSignal = if upK or upD then OverSold else Double.NaN; 
+
+    DownSignal = if downK or downD then OverBought else Double.NaN; 
+
+} 
+
+ 
+
+UpSignal.setHiding(showBreakoutSignals == showBreakoutSignals."No"); 
+
+DownSignal.setHiding(showBreakoutSignals == showBreakoutSignals."No"); 
+
+ 
+
+FastK.SetDefaultColor(GetColor(5)); 
+
+FastD.SetDefaultColor(GetColor(0)); 
+
+OverBought.SetDefaultColor(GetColor(1)); 
+
+OverSold.SetDefaultColor(GetColor(1)); 
+
+UpSignal.SetDefaultColor(Color.UPTICK); 
+
+UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+DownSignal.SetDefaultColor(Color.DOWNTICK); 
+
+DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 

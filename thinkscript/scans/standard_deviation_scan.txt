@@ -1,0 +1,67 @@
+ 
+
+Std Dev Chnl Scan 
+
+def _sdcU = StandardDevChannel().UpperLine; 
+plot scanSDC = close >= _sdcU and close[1] < _sdcu[1]; 
+
+
+following the same logic the sdcL must be : 
+
+ def _sdcL = StandardDevChannel().LowerLine; 
+ plot scanSDC = close <= _sdcL and close[1] > _sdcL[1]; 
+
+ 
+
+
+ 
+
+  
+
+Std dev Channel 
+
+ 
+ I am trying to write a script that will alert when price cross the 
+ upper/lower line of the Standard Deviation Channel (SDC). I have used this 
+script below successfully with the Ichimoku study: 
+
+
+ Crosses(Ichimoku().Chikou, Ichimoku()."Span B")[26]  
+
+def SDC_Upper = StandardDevChannel().UpperLine; 
+plot scanSDC = close >= SDC_Upper and close[1] < SDC_Upper [1]; 
+ 
+Following the same logic the SDC lower cross is : 
+
+ def SDC_Lower = StandardDevChannel().LowerLine; 
+ plot scanSDC = close <= SDC_Lower and close[1] > SDC_Lower [1]; 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 

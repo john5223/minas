@@ -1,0 +1,19 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+# 
+ 
+declare lower; 
+ 
+input length = 14; 
+input colorNormLength = 14; 
+input price = close; 
+ 
+assert(length > 0, "'length' must be positive: " + length); 
+ 
+plot ROC = if price[length] != 0 then (price / price[length] - 1) * 100 else 0; 
+plot ZeroLine = 0; 
+ 
+ROC.DefineColor("Highest", Color.YELLOW); 
+ROC.DefineColor("Lowest", Color.LIGHT_RED); 
+ROC.AssignNormGradientColor(colorNormLength, ROC.color("Lowest"), ROC.color("Highest")); 
+ZeroLine.SetDefaultColor(GetColor(5)); 

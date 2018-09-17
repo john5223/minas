@@ -1,0 +1,63 @@
+Archivist's Note: The green lower study is titled FloatingPL and is provided in all ToS desktop installations. 
+
+# Strategy  IBS_LongOnly_AI 
+
+# 
+
+# Designed for Daily Bars 
+
+ 
+
+def IBS =  (close – low) / (high – low) * 100; 
+
+def BuyLine = 10; 
+
+ 
+
+def buy = IBS < 10 ; 
+
+def sell = close >  high [1]; 
+
+ 
+
+AddOrder(OrderType.BUY_AUTO, buy, tickcolor = GetColor(0), arrowcolor = GetColor(0), name = "IBS_LE"); 
+
+ 
+
+AddOrder(OrderType.SELL_AUTO, sell, tickcolor = GetColor(0), arrowcolor = GetColor(0), name = "IBS_EXIT"); 
+
+ 
+
+Alert(buy, "BULL SIGNAL" + GetSymbol(), Alert.ONCE, Sound.Bell); 
+
+Alert(sell, "BEAR SIGNAL" + GetSymbol(), Alert.ONCE, Sound.Ring); 
+
+Futures Trader from shared config - chubbybcy - 861021301 Mainßthinkcrswim [build 1924] 
+Futures Trader 
+POWERSHARES QQQ TRUST UNIT SER 1 ET; 
+156.63 
+QQQ6MID D: 0: 14901 H: 14903 L: 147.53 C: 147.74 R: IS Y: 
+las EXIT 
+EXTO Eligible 
+FPL: SCOO 
+Volume 
+29,297, 126 
+Bs EXIT* 
+100 
+style 
+3,'12 
+Drawings 
+las_EXlT 
+3,'19 
+Studies 
+Patterns 
+10,'30 
+11,'6 
+11,'20 
+ES_LE 
+12.14 
+12.111 
+las EXIT o 
+2.'12 
+4/9 4' 16 
+Shared drawings 

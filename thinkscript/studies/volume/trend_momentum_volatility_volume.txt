@@ -1,0 +1,120 @@
+ 
+
+Machine generated alternative text:
+266.56 
+Style Drawings Studies Patterns 
+D: 0267 H: L: C: 26858 R: 184 CLOSE, 13, 
+spy 4 M ID 
+Chart Aggregation is Daily I Chart Length is 83 Daily Bars Trend Momentum Volatility Volume 
+Dots on candles represent high W)lume days 
+VolumeAvg{501 
+1,'22 1,'2g 2,'S 2,'12 
+3,'S 3,'12 
+3,'1g 
+ 
+
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+ 
+
+input displayStudyNames =  yes; 
+
+input displayReminders = yes;  
+
+input price = close; 
+
+input keltnerLength = 13; 
+
+input volumeFastLength = 1; 
+
+input volumeSlowLength = 20; 
+
+input ADXLength = 10; 
+
+input SMALength = 8; 
+
+input volumeOscThreshold = 0.5; 
+
+input paintBars = yes; 
+
+ 
+
+def keltnerSMA = Average(hlc3, keltnerLength); 
+
+def avgRange = Average(high - low, keltnerLength); 
+
+def volumeOsc = reference VolumeOsc("fast length" = volumeFastLength, "slow length" = volumeSlowLength, "diff type" = "percent"); 
+
+def ADX = reference ADX(ADXLength, AverageType.WILDERS); 
+
+def SMA = Average(price, SMALength); 
+
+ 
+
+plot KeltnerHigh = keltnerSMA + avgRange; 
+
+plot KeltnerMid = keltnerSMA; 
+
+plot KeltnerLow = keltnerSMA - avgRange; 
+
+plot VolumeSpike = volumeOsc > volumeOscThreshold; 
+
+ 
+
+KeltnerHigh.SetDefaultColor(GetColor(4)); 
+
+KeltnerMid.SetDefaultColor(GetColor(4)); 
+
+KeltnerMid.SetStyle(Curve.LONG_DASH); 
+
+KeltnerLow.SetDefaultColor(GetColor(4)); 
+
+VolumeSpike.SetDefaultColor(GetColor(1)); 
+
+VolumeSpike.SetLineWeight(3); 
+
+VolumeSpike.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+ 
+
+DefineGlobalColor("Up", Color.UPTICK); 
+
+DefineGlobalColor("Neutral", Color.GRAY); 
+
+DefineGlobalColor("Down", Color.DOWNTICK); 
+
+AssignPriceColor( if !paintBars 
+
+    then Color.CURRENT 
+
+    else if ADX > ADX[1] and price > SMA 
+
+        then globalColor("Up") 
+
+        else if ADX > ADX[1] and price < SMA 
+
+            then globalColor("Down") 
+
+            else globalColor("Neutral")); 
+
+ 
+
+addlabel (displayStudyNames, " Trend Momentum Volatility Volume", color.white); 
+
+addlabel ( displayReminders, " Dots on candles represent high volume days ", color.white); 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 

@@ -1,0 +1,186 @@
+Machine generated alternative text:
+266.61 
+Share D 
+Style Drawings Studies 
+EXTO Eligible 
+SPY4MID D: 0: 26881 H: L: C: R:Y45 1226, 9, EMA) WA yes 
+Chart Aggregation is Daily Chart Length is 82 Daily Bars White candles indicate divergence. Wedges indicates direction 
+MACDWithPrices(CLOSE, la 26, g, EMA, 0.0) -0118179 -1.06841 
+PMACDeq: 266.5 PMAcDlevel: 267.98 PMAcosignal: 254.58 
+1,'15 
+2.112 
+3,112 
+3,119 
+4/16 
+4/30 
+Patterns 
+5/14 
+ 
+
+ 
+
+# ToS Name: MACD_DivergenceCandles_MobiusEtAl 
+
+# Archive Name: MACD Divergence Candles_MobiusEtAl 
+
+# Certain comments by Johnny Quotron 
+
+ 
+
+ 
+
+# 04.21.2018  Johnny Quotron..upon inspection it appears this script is incomplete. 
+
+#    The script identifies divergences only when the MACD histogram is falling and the high is rising 
+
+#    I will do my best to correct this  
+
+#    added wedges to enhance visibility 
+
+ 
+
+# Study 
+
+ 
+
+# Posted in the thinkscript lounge on March 14, 2018 
+
+# 12:30 Wally: # MACD Divergence  
+
+# http://tos.mx/YtIZcq#  
+
+# MACDdivergence_Mobius 
+
+# MACD Divergence 
+
+# Values in MACD are default values 
+
+# If Price and MACD are Divergent Bar will be colored White 
+
+# Price for the purpose if identifying the Divergence is based on High rather than Close by JQ 
+
+# Mobius 
+
+# Chat Room Request 03.10.2014 
+
+ 
+
+input displayReminderLabel = yes; 
+
+input fastLength = 12;          #  length was 13 in wally share 
+
+input slowLength = 26;         #  length was 21 in wally share 
+
+input MACDLength =  9;       #  length was 8 in wally share 
+
+input AverageType = {SMA, default EMA}; 
+
+ 
+
+def DivergenceUP = if MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType) 
+
+                 is less than   
+
+                         MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType)[1] and 
+
+                    high > high[1] 
+
+                 then 1 
+
+                 else Double.NaN;    # if the MACD Histogram is Falling and the High is rising then "DivergenceUP" by JQ 
+
+ 
+
+AssignPriceColor(if !isNaN(DivergenceUP)  
+
+                then Color.White 
+
+                else Color.Current);          # if DivergenceUP is a number then paint the candle white by JQ 
+
+ 
+
+ 
+
+# wedge plot by JQ 
+
+plot DivergenceWedgeUP = DivergenceUP; 
+
+divergenceWedgeUP.setpaintingstrategy(paintingstrategy.boolean_wedge_up); 
+
+divergenceWedgeUP.setdefaultcolor(color.white); 
+
+ 
+
+ 
+
+ 
+
+ 
+
+# Divergence Down Logic 
+
+ 
+
+ 
+
+def DivergenceDN = if MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType) 
+
+                 is greater than   
+
+                         MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType)[1] and 
+
+                    low < low[1] 
+
+                 then 1 
+
+                 else Double.NaN;    # if the MACD Histogram is Falling and the High is rising then "DivergenceDN" by JQ 
+
+ 
+
+AssignPriceColor(if !isNaN(DivergenceDN)  
+
+                then Color.white 
+
+                else Color.Current);          # if DivergenceDN is a number then paint the candle white by JQ 
+
+ 
+
+# wedge plot by JQ 
+
+plot DivergenceWedgeDN = DivergenceDN; 
+
+divergenceWedgeDN.setpaintingstrategy(paintingstrategy.boolean_wedge_down); 
+
+divergenceWedgeDN.setdefaultcolor(color.white); 
+
+ 
+
+addlabel (displayReminderLabel, " White candles indicate divergence.  Wedges indicates direction ", color.white); 
+
+ 
+
+# End code 

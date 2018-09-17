@@ -1,0 +1,42 @@
+
+http://tos.mx/Rrqd0G  
+
+  
+
+15:14 growex: Hiya everyone. Here's a lil tool to measure volatility..  
+
+  
+
+#VM_StochVol  
+
+#GROWEX  
+
+declare lower;  
+
+input lookback = 50;  
+
+def s1 = fold i = 0 to lookback with n = 0 do  
+
+      n + Power(AbsValue(Log(close[i] / GetValue(close, i)[1])), 2);  
+
+def s2 = fold j = 0 to lookback with k = 0 do  
+
+      k + Log(close[j] / GetValue(close, j)[1]);  
+
+def    sh1 = Sqrt(s1);  
+
+def    sh2 = s2 / Sqrt(lookback - 1);  
+
+plot vols = sh1 - sh2;  
+
+  
+
+  
+
+16:20 AlphaInvestor: looks like it is kinda a standard error (standard deviation of log returns as a proportion of stock price)  
+
+16:21 AlphaInvestor: At least that is this layman's interpretation  
+
+16:29 AlphaInvestor: Actually, that interpretation isn't correct  
+
+16:30 AlphaInvestor: thought it was being divided by sqrt of the log returns, but it is being divided by the sqrt of the lookback  

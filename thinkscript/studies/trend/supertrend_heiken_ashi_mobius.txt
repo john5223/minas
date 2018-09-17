@@ -1,0 +1,58 @@
+ # Mobius 
+# SuperTrend HeikenAshi 
+# Chat Room Request 
+# V03.10.2015 
+# Up = (HIGH + LOW) / 2 + Multiplier * ATR 
+# Down = (HIGH + LOW) / 2 – Multiplier * ATR 
+# When the change of trend occurs, the indicator flips 
+
+# For RP: Add AR trend, Aberrant Vol, R State, PTR 
+
+input AtrMult = .70; 
+input nATR = 4; 
+input AvgType = AverageType.HULL; 
+input PaintBars = yes; 
+input BubbleOn = no; 
+input ShowLabel = no; 
+input AlertOn = no; 
+input PlotLine = no; 
+ 
+def HAopen; 
+def HAhigh; 
+def HAlow; 
+def HAclose; 
+HAopen = CompoundValue(1, (haopen[1] + haclose[1]) / 2, (open[1] + close) / 2); 
+HAhigh = Max(high, close[1]); 
+HAlow = Min(low, close[1]); 
+haclose = (HAopen + HAclose[1] + HAlow + close) / 4; 
+def v = volume; 
+def bar = barNumber(); 
+def EOD = if SecondsTillTime(1545) == 0 and 
+             SecondsFromTime(1545) == 0 
+          then 1 
+          else 0; 
+def NotActive = if SecondsFromTime(1545) > 0 
+                then 1 
+                else 0; 
+def ATR = MovingAverage(AvgType, TrueRange(HAhigh, HAclose, HAlow), nATR); 
+def UP = HL2 + (AtrMult * ATR); 
+def DN = HL2 + (-AtrMult * ATR); 
+def ST = if close < ST[1]  
+         then Round(UP / tickSize(), 0) * tickSize() 
+         else Round(DN / tickSize(), 0) * tickSize(); 
+plot SuperTrend = ST; 
+SuperTrend.SetHiding(!PlotLine); 
+SuperTrend.AssignValueColor(if close < ST then Color.RED else Color.GREEN); 
+SuperTrend.SetPaintingStrategy(PaintingStrategy.Line); 
+AssignPriceColor(if PaintBars and close < ST  
+                 then Color.RED  
+                 else if PaintBars and close > ST  
+                      then Color.GREEN  
+                      else Color.CURRENT); 
+plot ST_point = if isNaN(close[-1]) 
+                then ST 
+                else double.nan; 
+ST_point.SetStyle(Curve.Points); 
+ST_point.SetLineWeight(3); 
+ST_point.SetDefaultColor(Color.Yellow); 
+# End Code SuperTrend HeikenAshi 

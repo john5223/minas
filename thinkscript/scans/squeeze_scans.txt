@@ -1,0 +1,77 @@
+BB/TTM Squeeze 
+
+BollingerBandsSMA()."lowerband"[1] > KeltnerChannels()."lower_band" [1] and 
+BollingerBandsSMA()."lowerband" < KeltnerChannels()."lower_band" 
+
+ Mobius©: that will get you the first candle after a squeeze 
+********************************************************** 
+the above code would be the beginning of a squeeze and this would be the first candle after a squeeze ends. Stans uses the lower bands, this one uses the upper bands. 
+
+
+BollingerBandsSMA(length = 20)."upperband"[1] < reference 
+
+KeltnerChannels."Upper_Band"[1] and BollingerBandsSMA(length = 20)."upperband" > reference 
+
+KeltnerChannels."Upper_Band" 
+
+****************************************************************** 
+
+
+#The scan for the squeeze will be: 
+
+Plot scan = BollingerBands().UpperBand < KeltnerChannels().Upper_Band 
+
+
+#The scan for the squeeze plus buy confirmation is: 
+
+def sqz = BollingerBands().UpperBand < KeltnerChannels().Upper_Band; 
+
+def momo = TTM_Squeeze().Histogram; 
+
+plot Buy = !sqz and momo > 0 and momo >= momo[1]; 
+
+************************************************************** 
+
+Squeeze Exit / MACD Scan 
+
+# Squeeze Exit / MACD Scan 
+
+BollingerBandsSMA()."UpperBand" is greater than KeltnerChannels()."Upper_Band" and 
+BollingerBandsSMA()."UpperBand"[1] is less than KeltnerChannels()."Upper_Band"[1] and 
+MACD() > 0 and 
+MACD() > MACD()[1] 
+
+ 
+
+
+
+#######################################################33
+
+
+
+
+stocks one period out of the squeeze: 
+
+ Mobius©:  this scans for stocks one period out of the squeeze: 
+
+# Squeeze 
+
+# Bollinger Bands 
+def sDev = stdev(close, 20); 
+def MidLine = Average(close, 20); 
+def LowerBand = MidLine + (-2 * sDev); 
+
+#  Keltner Channel 
+def shift = 2 * AvgTrueRange(high, close, low, 20); 
+def Lower_Band = MidLine - shift; 
+
+# Scans for stocks that are one period out of a squeeze 
+plot squeezeend =  LowerBand < Lower_Band and LowerBand[1] > Lower_Band[1]; 
+
+ 
+
+
+
+ 
+
+ 

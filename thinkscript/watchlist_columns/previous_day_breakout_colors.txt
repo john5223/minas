@@ -1,0 +1,37 @@
+ #This custom column plots the high or low break compared to the previous day's. Green is a high break. Red is a low break. Pink is a hi and low break with the hi break amt shown. 
+
+#Title = Broke, Revision 9/25/13 
+
+#Revised:  12:03 PM 9/25/2013 
+
+ 
+
+def HiBroke = If (close > high[1] ,1,0); 
+
+def LoBroke = If (close  < low[1] ,1,0); 
+
+def BothBroke = If (HiBroke && LoBroke, 1,0); 
+
+def HiBrokeAmt = If HiBroke then (close - high[1] ) else double.nan; 
+
+def LoBrokeAmt = If LoBroke then (low[1] - close) else double.nan; 
+
+ 
+
+Addlabel(1,  if HiBroke && !LoBroke then round(HiBrokeAmt,2) 
+
+else if !HiBroke && LoBroke then round(LoBrokeAmt,2) 
+
+else  if HiBroke && LoBroke then  round(HiBrokeAmt,2) 
+
+else 0, color.yellow); 
+
+ 
+
+AssignBackgroundColor(if HiBroke then color.Dark_green 
+
+else if LoBroke then color.Light_red 
+
+else if HiBroke && LoBroke then color.pink 
+
+else color.current); 

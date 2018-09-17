@@ -1,0 +1,21 @@
+http://tos.mx/IneQLb  
+Mobius (Mobius)  
+Elders Moving Average Envelope 
+
+From <https://mytrade.com/profile/Mobius/statuses/8439469>  
+# Elders Moving Average Envelope 
+# Mobius 
+# Envelope captures 95% of data  
+# Chat Room Request 01.01.2017 
+
+input n = 21; 
+input SDlength = 21; 
+input value = close; 
+input widthOfChannel = 2.0; 
+
+def dist = HighestAll(StDev(value, SDlength)) * widthOfChannel; 
+plot LR = ExpAverage(value, n); 
+plot UpperBand = LR + dist; 
+plot LowerBand = LR - dist; 
+
+# End Code 

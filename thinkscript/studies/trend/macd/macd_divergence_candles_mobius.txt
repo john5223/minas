@@ -1,0 +1,65 @@
+# ToS Name: MACD_DivergenceCandles_Mobius 
+
+# Archive Name: MACD Divergence Candles_Mobius 
+
+# Certain comments by Johnny Quotron 
+
+ 
+
+# MACDdivergence_Mobius 
+
+# MACD Divergence 
+
+# Values in MACD are default values 
+
+# If Price and MACD are Divergent Bar will be colored White 
+
+# Price for the purpose if identifying the Divergence is based on High rather than Close by JQ 
+
+# Mobius 
+
+# Chat Room Request 03.10.2014 
+
+ 
+
+input fastLength = 13;          # this is not the standard Fast Length of 12 by JQ 
+
+input slowLength = 21;         # this is not the standard slow length of 26 by JQ 
+
+input MACDLength =  8;       # this is not the standard MACD length of 9  by JQ 
+
+input AverageType = {SMA, default EMA}; 
+
+ 
+
+def Divergence = if MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType) 
+
+                 is less than   
+
+                         MACD(fastLength = fastLength, 
+
+                         slowLength = slowLength, 
+
+                         MACDLength = MACDLength, 
+
+                         AverageType = AverageType)[1] and 
+
+                    high > high[1] 
+
+                 then 1 
+
+                 else Double.NaN;    # if the MACD Histogram is Falling and the High is rising then "Divergence" 
+
+ 
+
+AssignPriceColor(if !isNaN(Divergence)  
+
+                then Color.White 
+
+                else Color.Current);          # if Divergence is a number then paint the candle white by JQ 

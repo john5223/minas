@@ -1,0 +1,1529 @@
+#Hint:<b>BullishCandlesticks(20)</b>\nPlots and identifies all 20 candlesticks or 3 individually selected candlesticks. Can be used with any aggregation period. Alerts, bubbles and labels may be toggled on/off. Within 'edit studies', any candle pattern can be isolated. A number-ID system is incorporated to enhance chart readability or the candle names may be used. 
+
+#Title = BullishCandlePlots 
+
+#Revision date 3:36 PM 9/29/2013 
+
+#Report any problems to 'StanL' on TOS' ThinkScript Lounge 
+
+declare upper; 
+
+declare once_per_bar; 
+
+ 
+
+input TurnAlertOff = yes;#hint TurnAlertOff:Turns on and off the alerts for any selected label that shows 
+
+ 
+
+input showLabel = yes;#hint showLabel:Turns on and off the showing of candle names in labels atop the plot 
+
+ 
+
+input showBubble = {default none, Verbose, ID_Number};#Hint showBubble:Choice of what format the candle bubble ID should have 
+
+ 
+
+input ShowAll = yes;#Hint ShowAll:A YES shows all candle where they exist. NO yturns off this plot so that individual candles may be selected in ShowFirst, ShowSecond or ShowThird. 
+
+ 
+
+def BubNone = If (showBubble == showBubble.none, 1, 0); 
+
+def BubVerb = If (showBubble == showBubble.Verbose, 1, 0); 
+
+def BubNumb =  If (showBubble == showBubble.ID_Number, 1, 0); 
+
+ 
+
+##################################################### 
+
+############ Define the three selection Enums ################# 
+
+##################################################### 
+
+input ShowFirst = {default none, Hammer_1, InvertedHammer_2, ThreeOutsideUp_3, 
+
+ ThreeInsideUp_4, PiercingLine_5, ThreeWhiteSoldiers_6, MorningDojiStar_7, ConcealingBabySwallow_8, HighPriceGappingPlay_9, HomingPigeon_10, MatchingLow_11, MatHold_12, MorningStar_13, RisingThreeMethods_14, StickSandwich_15, ThreeStarsInTheSouth_16, UniqueThreeRiverBottom_17, UpsideGapThreeMethods_18, UpsideTasukiGap_19};#hint ShowFirst:Select the candle to show 
+
+input ShowSecond =  {default none, Hammer_1, InvertedHammer_2, ThreeOutsideUp_3, 
+
+ ThreeInsideUp_4, PiercingLine_5, ThreeWhiteSoldiers_6, MorningDojiStar_7, ConcealingBabySwallow_8, HighPriceGappingPlay_9, HomingPigeon_10, MatchingLow_11, MatHold_12, MorningStar_13, RisingThreeMethods_14, StickSandwich_15, ThreeStarsInTheSouth_16, UniqueThreeRiverBottom_17, UpsideGapThreeMethods_18, UpsideTasukiGap_19};#hint ShowSecond:Select the candle to show 
+
+ 
+
+input ShowThird =  {default none, Hammer_1, InvertedHammer_2, ThreeOutsideUp_3, 
+
+ ThreeInsideUp_4, PiercingLine_5, ThreeWhiteSoldiers_6, MorningDojiStar_7, ConcealingBabySwallow_8, HighPriceGappingPlay_9, HomingPigeon_10, MatchingLow_11, MatHold_12, MorningStar_13, RisingThreeMethods_14, StickSandwich_15, ThreeStarsInTheSouth_16, UniqueThreeRiverBottom_17, UpsideGapThreeMethods_18, UpsideTasukiGap_19};#hint ShowThird:Select the candle to show 
+
+ 
+
+################################################### 
+
+############ Process Input 'ShowFirst' Enum ################## 
+
+################################################### 
+
+def candle; 
+
+switch (ShowFirst) { 
+
+case Hammer_1: 
+
+    candle = If(ShowFirst.Hammer(), Hammer(), Double.NaN); 
+
+case InvertedHammer_2: 
+
+    candle =  If(ShowFirst.InvertedHammer(), InvertedHammer(), Double.NaN); 
+
+case ThreeOutsideUp_3: 
+
+    candle = If(ShowFirst.ThreeOutsideUp(), ThreeOutsideUp(), Double.NaN); 
+
+case ThreeInsideUp_4: 
+
+    candle = If(ShowFirst.ThreeInsideUp(), ThreeInsideUp(), Double.NaN); 
+
+case PiercingLine_5: 
+
+    candle = If(ShowFirst.PiercingLine(), PiercingLine(), Double.NaN); 
+
+case ThreeWhiteSoldiers_6: 
+
+    candle = If(ShowFirst.ThreeWhiteSoldiers(), ThreeWhiteSoldiers(), Double.NaN); 
+
+case MorningDojiStar_7: 
+
+    candle = If(ShowFirst.MorningDojiStar() , MorningDojiStar(), Double.NaN); 
+
+case ConcealingBabySwallow_8: 
+
+    candle = If(ShowFirst.ConcealingBabySwallow() , ConcealingBabySwallow(), Double.NaN); 
+
+case HighPriceGappingPlay_9: 
+
+    candle = If(ShowFirst.HighPriceGappingPlay()   , HighPriceGappingPlay(), Double.NaN); 
+
+case HomingPigeon_10: 
+
+    candle = If(ShowFirst.HomingPigeon()   , HomingPigeon(), Double.NaN); 
+
+case MatchingLow_11: 
+
+    candle = If(ShowFirst.MatchingLow()   , MatchingLow(), Double.NaN); 
+
+case MatHold_12: 
+
+    candle = If(ShowFirst.MatHold()   , MatHold(), Double.NaN); 
+
+case MorningStar_13: 
+
+    candle = If(ShowFirst.MatHold()  , MatHold(), Double.NaN); 
+
+case RisingThreeMethods_14: 
+
+    candle = If(ShowFirst.RisingThreeMethods()   , RisingThreeMethods(), Double.NaN); 
+
+case StickSandwich_15: 
+
+    candle = If(ShowFirst.StickSandwich() , StickSandwich(), Double.NaN); 
+
+case ThreeStarsInTheSouth_16: 
+
+    candle = If(ShowFirst.ThreeStarsInTheSouth()  , ThreeStarsInTheSouth(), Double.NaN); 
+
+case UniqueThreeRiverBottom_17: 
+
+    candle = If(ShowFirst.UniqueThreeRiverBottom()  , UniqueThreeRiverBottom(), Double.NaN); 
+
+case UpsideGapThreeMethods_18: 
+
+    candle = If(ShowFirst.UpsideGapThreeMethods()  , UpsideGapThreeMethods(), Double.NaN); 
+
+case UpsideTasukiGap_19: 
+
+    candle = If(ShowFirst.UpsideTasukiGap(), UpsideTasukiGap(), Double.NaN); 
+
+case none: 
+
+    candle = Double.NaN; 
+
+}  # Closing of switch (ShowFirst) { 
+
+ 
+
+plot Show1st = candle; 
+
+Show1st.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+Show1st.SetDefaultColor(Color.GREEN); 
+
+Show1st.SetLineWeight(5); 
+
+##################################################### 
+
+############ Process Input 'ShowSecond' Enum ################# 
+
+##################################################### 
+
+ 
+
+def candle2; 
+
+switch (ShowSecond) { 
+
+case Hammer_1: 
+
+    candle2 = If(ShowSecond.Hammer() , Hammer(), Double.NaN); 
+
+case InvertedHammer_2: 
+
+    candle2 =  If(ShowSecond.InvertedHammer() , InvertedHammer(), Double.NaN); 
+
+case ThreeOutsideUp_3: 
+
+    candle2 = If(ShowSecond.ThreeOutsideUp() , ThreeOutsideUp(), Double.NaN); 
+
+case ThreeInsideUp_4: 
+
+    candle2 = If(ShowSecond.ThreeInsideUp() , ThreeInsideUp(), Double.NaN); 
+
+case PiercingLine_5: 
+
+    candle2 = If(ShowSecond.PiercingLine()   , PiercingLine(), Double.NaN); 
+
+case ThreeWhiteSoldiers_6: 
+
+    candle2 = If(ShowSecond.ThreeWhiteSoldiers()  , ThreeWhiteSoldiers(), Double.NaN); 
+
+case MorningDojiStar_7: 
+
+    candle2 = If(ShowSecond.MorningDojiStar()  , MorningDojiStar(), Double.NaN); 
+
+case ConcealingBabySwallow_8: 
+
+    candle2 = If(ShowSecond.ConcealingBabySwallow() , ConcealingBabySwallow(), Double.NaN); 
+
+case HighPriceGappingPlay_9: 
+
+    candle2 = If(ShowSecond.HighPriceGappingPlay()  , HighPriceGappingPlay(), Double.NaN); 
+
+case HomingPigeon_10: 
+
+    candle2 = If(ShowSecond.HomingPigeon()  , HomingPigeon(), Double.NaN); 
+
+case MatchingLow_11: 
+
+    candle2 = If(ShowSecond.MatchingLow()  , MatchingLow(), Double.NaN); 
+
+case MatHold_12: 
+
+    candle2 = If(ShowSecond.MatHold()  , MatHold(), Double.NaN); 
+
+case MorningStar_13: 
+
+    candle2 = If(ShowSecond.MatHold() , MatHold(), Double.NaN); 
+
+case RisingThreeMethods_14: 
+
+    candle2 = If(ShowSecond.RisingThreeMethods()  , RisingThreeMethods(), Double.NaN); 
+
+case StickSandwich_15: 
+
+    candle2 = If(ShowSecond.StickSandwich() , StickSandwich(), Double.NaN); 
+
+case ThreeStarsInTheSouth_16: 
+
+    candle2 = If(ShowSecond.ThreeStarsInTheSouth() , ThreeStarsInTheSouth(), Double.NaN); 
+
+case UniqueThreeRiverBottom_17: 
+
+    candle2 = If(ShowSecond.UniqueThreeRiverBottom() , UniqueThreeRiverBottom(), Double.NaN); 
+
+case UpsideGapThreeMethods_18: 
+
+    candle2 = If(ShowSecond.UpsideGapThreeMethods() , UpsideGapThreeMethods(), Double.NaN); 
+
+case UpsideTasukiGap_19: 
+
+    candle2 = If(ShowSecond.UpsideTasukiGap()  , UpsideTasukiGap(), Double.NaN); 
+
+case none: 
+
+    candle2 = Double.NaN; 
+
+} 
+
+ 
+
+plot Show2nd = candle2; 
+
+Show2nd.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+Show2nd.SetDefaultColor(Color.GREEN); 
+
+Show2nd.SetLineWeight(5); 
+
+########################################################### 
+
+############ Process Input 'Showthird' Enum ############### 
+
+########################################################### 
+
+ 
+
+def candle3; 
+
+switch (ShowThird) { 
+
+case Hammer_1: 
+
+    candle3 = If(ShowThird.Hammer() , Hammer(), Double.NaN); 
+
+case InvertedHammer_2: 
+
+    candle3 =  If(ShowThird.InvertedHammer() , InvertedHammer(), Double.NaN); 
+
+case ThreeOutsideUp_3: 
+
+    candle3 = If(ShowThird.ThreeOutsideUp() , ThreeOutsideUp(), Double.NaN); 
+
+case ThreeInsideUp_4: 
+
+    candle3 = If(ShowThird.ThreeInsideUp() , ThreeInsideUp(), Double.NaN); 
+
+case PiercingLine_5: 
+
+    candle3 = If(ShowThird.PiercingLine()   , PiercingLine(), Double.NaN); 
+
+case ThreeWhiteSoldiers_6: 
+
+    candle3 = If(ShowThird.ThreeWhiteSoldiers()  , ThreeWhiteSoldiers(), Double.NaN); 
+
+case MorningDojiStar_7: 
+
+    candle3 = If(ShowThird.MorningDojiStar()  , MorningDojiStar(), Double.NaN); 
+
+case ConcealingBabySwallow_8: 
+
+    candle3 = If(ShowThird.ConcealingBabySwallow() , ConcealingBabySwallow(), Double.NaN); 
+
+case HighPriceGappingPlay_9: 
+
+    candle3 = If(ShowThird.HighPriceGappingPlay()  , HighPriceGappingPlay(), Double.NaN); 
+
+case HomingPigeon_10: 
+
+    candle3 = If(ShowThird.HomingPigeon()  , HomingPigeon(), Double.NaN); 
+
+case MatchingLow_11: 
+
+    candle3 = If(ShowThird.MatchingLow()  , MatchingLow(), Double.NaN); 
+
+case MatHold_12: 
+
+    candle3 = If(ShowThird.MatHold()  , MatHold(), Double.NaN); 
+
+case MorningStar_13: 
+
+    candle3 = If(ShowThird.MatHold() , MatHold(), Double.NaN); 
+
+case RisingThreeMethods_14: 
+
+    candle3 = If(ShowThird.RisingThreeMethods()  , RisingThreeMethods(), Double.NaN); 
+
+case StickSandwich_15: 
+
+    candle3 = If(ShowThird.StickSandwich() , StickSandwich(), Double.NaN); 
+
+case ThreeStarsInTheSouth_16: 
+
+    candle3 = If(ShowThird.ThreeStarsInTheSouth() , ThreeStarsInTheSouth(), Double.NaN); 
+
+case UniqueThreeRiverBottom_17: 
+
+    candle3 = If(ShowThird.UniqueThreeRiverBottom() , UniqueThreeRiverBottom(), Double.NaN); 
+
+case UpsideGapThreeMethods_18: 
+
+    candle3 = If(ShowThird.UpsideGapThreeMethods() , UpsideGapThreeMethods(), Double.NaN); 
+
+case UpsideTasukiGap_19: 
+
+    candle3 = If(ShowThird.UpsideTasukiGap()  , UpsideTasukiGap(), Double.NaN); 
+
+case none: 
+
+    candle3 = Double.NaN; 
+
+} 
+
+plot Show3rd = candle3; 
+
+Show3rd.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+Show3rd.SetDefaultColor(Color.GREEN); 
+
+Show3rd.SetLineWeight(5); 
+
+######################################################## 
+
+######## Then following applies to Show1st, Show2nd & Show3rd plots ########## 
+
+######## The conditions for all 3 plots are implemented ################ 
+
+######################################################## 
+
+ 
+
+##### 1 ################ Hammer() ############################# 
+
+def ThreeShows_1 = If (ShowFirst == ShowFirst.Hammer_1 or ShowSecond == ShowSecond.Hammer_1 or ShowThird == ShowThird.Hammer_1, 1, 0); 
+
+rec Ham_Trig = If(Hammer().bullish , BarNumber(), Ham_Trig[1]); 
+
+#Def Ham_label = if(Trig_bar > 0, 1, 0); 
+
+ 
+
+AddLabel(Ham_Trig > 0  && showLabel  && ThreeShows_1, "1=Hammer" , Color.GREEN); 
+
+ 
+
+Alert(Hammer() && !TurnAlertOff, "HammerAlert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(Hammer() && (BubVerb or BubNumb) && ThreeShows_1 , high ,  if BubNumb  
+
+then "1" 
+
+else if BubVerb 
+
+then "Hammer" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+###################### Debugging Labels ############### 
+
+#AddLabel(yes, Concat("Ham_Trig > 0 is = ", Ham_Trig > 0), Color.WHITE); 
+
+#AddLabel(yes, Concat("Total Bars = ", + BarNumber()), Color.WHITE); 
+
+#AddLabel(yes, Concat("Ham_Trig value = ", Ham_Trig), Color.WHITE); 
+
+#AddLabel(yes, Concat("ShowBubble = ", showBubble), Color.WHITE); 
+
+#AddLabel(yes, Concat("ShowFirstT = ", ShowFirst ), Color.WHITE);  # 
+
+#AddLabel(yes, Concat("ShowSecondT = ", ShowSecond ), Color.WHITE);# 
+
+#AddLabel(yes, Concat("ShowThirdT = ", ShowThird ), Color.WHITE);  # 
+
+#AddLabel(yes, Concat("ShowLabel = ", showLabel ), Color.WHITE);       # 
+
+#AddLabel(yes, Concat("TurnAlertOff = ", TurnAlertOff ), Color.WHITE); # 
+
+#AddLabel(yes, Concat("ThreeShows = ", ThreeShows_1), Color.WHITE);   
+
+########################################################## 
+
+ 
+
+##### 2 ################ InvertedHammer() ################################# 
+
+def ThreeShows_2 = If (ShowFirst == ShowFirst.InvertedHammer_2 or ShowSecond == ShowSecond.InvertedHammer_2 or ShowThird == ShowThird.InvertedHammer_2, 1, 0); 
+
+rec InvertedHammer_Trig = If(InvertedHammer().bullish , BarNumber(), InvertedHammer_Trig[1]); 
+
+ 
+
+AddLabel(InvertedHammer_Trig > 0  && showLabel  && ThreeShows_2, "2=InvertedHammer", Color.GREEN); 
+
+Alert(InvertedHammer() && !TurnAlertOff, "InvertedHammer Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(InvertedHammer() && (BubVerb or BubNumb) && ThreeShows_2, low ,  if BubNumb  
+
+then "2" 
+
+else if BubVerb 
+
+then "InvertedHammer" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+##### 3 ################ ThreeOutsideUp() ############################### 
+
+def ThreeShows_3 = If (ShowFirst == ShowFirst.ThreeOutsideUp_3 or ShowSecond == ShowSecond.ThreeOutsideUp_3 or ShowThird == ShowThird.ThreeOutsideUp_3, 1, 0); 
+
+rec ThreeOutsideUp_Trig = If(ThreeOutsideUp().bullish , BarNumber(), ThreeOutsideUp_Trig[1]); 
+
+ 
+
+AddLabel(ThreeOutsideUp_Trig > 0  && showLabel  && ThreeShows_3, "3=ThreeOutsideUp", Color.GREEN); 
+
+Alert(ThreeOutsideUp() && !TurnAlertOff, "ThreeOutsideUp Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeOutsideUp() && (BubVerb or BubNumb) && ThreeShows_3, low ,  if BubNumb  
+
+then "3" 
+
+else if BubVerb 
+
+then "ThreeOutsideUp" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+####### 4 ############## ThreeInsideUp() ########################### 
+
+def ThreeShows_4 = If (ShowFirst == ShowFirst.ThreeInsideUp_4 or ShowSecond == ShowSecond.ThreeInsideUp_4 or ShowThird == ShowThird.ThreeInsideUp_4, 1, 0); 
+
+rec ThreeInsideUp_Trig = If(ThreeInsideUp().bullish , BarNumber(), ThreeInsideUp_Trig[1]); 
+
+ 
+
+AddLabel(ThreeInsideUp_Trig > 0  && showLabel  && ThreeShows_4, "4=ThreeInsideUp", Color.GREEN); 
+
+Alert(ThreeInsideUp() && !TurnAlertOff, "ThreeInsideUp Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeInsideUp() && (BubVerb or BubNumb) && ThreeShows_4 , low ,  if BubNumb  
+
+then "4" 
+
+else if BubVerb 
+
+then "ThreeInsideUp" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+###### 5 ############### PiercingLine() ########################### 
+
+def ThreeShows_5 = If (ShowFirst == ShowFirst.PiercingLine_5 or ShowSecond == ShowSecond.PiercingLine_5 or ShowThird == ShowThird.PiercingLine_5, 1, 0); 
+
+rec PiercingLine_Trig = If(PiercingLine().bullish , BarNumber(), PiercingLine_Trig[1]); 
+
+ 
+
+AddLabel(PiercingLine_Trig > 0  && showLabel  && ThreeShows_5, "5=PiercingLine", Color.GREEN); 
+
+Alert(PiercingLine() && !TurnAlertOff, "PiercingLine Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(PiercingLine() && (BubVerb or BubNumb) && ThreeShows_5 , low ,  if BubNumb  
+
+then "5" 
+
+else if BubVerb 
+
+then "PiercingLine" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+###### 6 ############### ThreeWhiteSoldiers()  ####################### 
+
+def ThreeShows_6 = If (ShowFirst == ShowFirst.ThreeWhiteSoldiers_6 or ShowSecond == ShowSecond.ThreeWhiteSoldiers_6 or ShowThird == ShowThird.ThreeWhiteSoldiers_6, 1, 0); 
+
+rec ThreeWhiteSoldiers_Trig = If(ThreeWhiteSoldiers().bullish , BarNumber(), ThreeWhiteSoldiers_Trig[1]); 
+
+AddLabel(ThreeWhiteSoldiers_Trig > 0  && showLabel  && ThreeShows_6, "6=ThreeWhiteSoldiers", Color.GREEN); 
+
+Alert(ThreeWhiteSoldiers() && !TurnAlertOff, "ThreeWhiteSoldiers Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeWhiteSoldiers() && (BubVerb or BubNumb) && ThreeShows_6 , low ,  if BubNumb  
+
+then "6" 
+
+else if BubVerb 
+
+then "ThreeWhiteSoldiers" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+####### 7 ############## MorningDojiStar() ########################### 
+
+def ThreeShows_7 = If (ShowFirst == ShowFirst.MorningDojiStar_7 or ShowSecond == ShowSecond.MorningDojiStar_7 or ShowThird == ShowThird.MorningDojiStar_7, 1, 0); 
+
+rec MorningDojiStar_Trig = If(MorningDojiStar().bullish , BarNumber(), MorningDojiStar_Trig[1]); 
+
+ 
+
+AddLabel(MorningDojiStar_Trig > 0  && showLabel  && ThreeShows_7,  "7=MorningDojiStar", Color.GREEN); 
+
+Alert(MorningDojiStar() && !TurnAlertOff, "MorningDojiStar Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MorningDojiStar() && (BubVerb or BubNumb) && ThreeShows_7 , low ,  if BubNumb  
+
+then "7" 
+
+else if BubVerb 
+
+then "MorningDojiStar" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+####### 8 ############## ConcealingBabySwallow() ####################### 
+
+def ThreeShows_8 = If (ShowFirst == ShowFirst.ConcealingBabySwallow_8 or ShowSecond == ShowSecond.ConcealingBabySwallow_8 or ShowThird == ShowThird.ConcealingBabySwallow_8, 1, 0); 
+
+rec ConcealingBabySwallow_Trig = If(ConcealingBabySwallow().bullish , BarNumber(), ConcealingBabySwallow_Trig[1]); 
+
+ 
+
+AddLabel(ConcealingBabySwallow_Trig > 0  && showLabel  && ThreeShows_8,  "8=ConcealingBabySwallow", Color.GREEN); 
+
+Alert(ConcealingBabySwallow() && !TurnAlertOff, "ConcealingBabySwallow Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ConcealingBabySwallow() && (BubVerb or BubNumb) && ThreeShows_8, low ,  if BubNumb  
+
+then "8" 
+
+else if BubVerb 
+
+then "ConcealingBabySwallow" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+ 
+
+######## 9 ############# HighPriceGappingPlay() ##################### 
+
+def ThreeShows_9 = If (ShowFirst == ShowFirst.HighPriceGappingPlay_9 or ShowSecond == ShowSecond.HighPriceGappingPlay_9 or ShowThird == ShowThird.HighPriceGappingPlay_9, 1, 0); 
+
+rec HighPriceGappingPlay_Trig = If(HighPriceGappingPlay().bullish , BarNumber(), HighPriceGappingPlay_Trig[1]); 
+
+ 
+
+AddLabel(HighPriceGappingPlay_Trig > 0  && showLabel  && ThreeShows_9, "9=HighPriceGappingPlay", Color.GREEN); 
+
+Alert(HighPriceGappingPlay() && !TurnAlertOff, "HighPriceGappingPlay Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(HighPriceGappingPlay() && (BubVerb or BubNumb) && ThreeShows_9 , low ,  if BubNumb  
+
+then "9" 
+
+else if BubVerb 
+
+then "HighPriceGappingPlay" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+######## 10 ############# HomingPigeon() ########################### 
+
+def ThreeShows_10 = If (ShowFirst == ShowFirst.HomingPigeon_10 or ShowSecond == ShowSecond.HomingPigeon_10 or ShowThird == ShowThird.HomingPigeon_10, 1, 0); 
+
+rec HomingPigeon_Trig = If(HomingPigeon().bullish , BarNumber(), HomingPigeon_Trig[1]); 
+
+ 
+
+AddLabel(HomingPigeon_Trig > 0  && showLabel  && ThreeShows_10, "10=HomingPigeon", Color.GREEN); 
+
+Alert(HomingPigeon() && !TurnAlertOff, "HomingPigeon Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(HomingPigeon() && (BubVerb or BubNumb) && ThreeShows_10 , low ,  if BubNumb  
+
+then "10" 
+
+else if BubVerb 
+
+then "HomingPigeon" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+####### 11 ############## MatchingLow() ########################### 
+
+def ThreeShows_11 = If (ShowFirst == ShowFirst.MatchingLow_11 or ShowSecond == ShowSecond.MatchingLow_11 or ShowThird == ShowThird.MatchingLow_11, 1, 0); 
+
+rec MatchingLow_Trig = If(MatchingLow().bullish , BarNumber(), MatchingLow_Trig[1]); 
+
+ 
+
+AddLabel(MatchingLow_Trig > 0  && showLabel  && ThreeShows_11, "11=MatchingLow", Color.GREEN); 
+
+Alert(MatchingLow() && !TurnAlertOff, "MatchingLow Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MatchingLow() && (BubVerb or BubNumb) && ThreeShows_11 , low ,  if BubNumb  
+
+then "11" 
+
+else if BubVerb 
+
+then "MatchingLow" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+####### 12 ############## MatHold() ########################### 
+
+def ThreeShows_12 = If (ShowFirst == ShowFirst.MatHold_12 or ShowSecond == ShowSecond.MatHold_12 or ShowThird == ShowThird.MatHold_12, 1, 0); 
+
+rec MatHold_Trig = If(MatHold().bullish , BarNumber(), MatHold_Trig[1]); 
+
+ 
+
+AddLabel(MatHold_Trig > 0  && showLabel  && ThreeShows_12,  "12=MatHold", Color.GREEN); 
+
+Alert(MatHold() && !TurnAlertOff, "MatHold Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MatHold() && (BubVerb or BubNumb) && ThreeShows_12 , low ,  if BubNumb  
+
+then "12" 
+
+else if BubVerb 
+
+then "MatHold" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+ 
+
+####### 13 ############## MorningStar()########################### 
+
+def ThreeShows_13 = If (ShowFirst == ShowFirst.MorningStar_13 or ShowSecond == ShowSecond.MorningStar_13 or ShowThird == ShowThird.MorningStar_13, 1, 0); 
+
+rec MorningStar_Trig = If(MorningStar().bullish , BarNumber(), MorningStar_Trig[1]); 
+
+ 
+
+AddLabel(MorningStar_Trig > 0  && showLabel  && ThreeShows_13, "13=MorningStar", Color.GREEN); 
+
+Alert(MorningStar() && !TurnAlertOff, "MorningStar Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MorningStar() && (BubVerb or BubNumb) && ThreeShows_13 , low ,  if BubNumb  
+
+then "13" 
+
+else if BubVerb 
+
+then "MorningStar" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+ 
+
+####### 14 ############### RisingThreeMethods()######################### 
+
+def ThreeShows_14 = If (ShowFirst == ShowFirst.RisingThreeMethods_14 or ShowSecond == ShowSecond.RisingThreeMethods_14 or ShowThird == ShowThird.RisingThreeMethods_14, 1, 0); 
+
+rec RisingThreeMethods_Trig = If(RisingThreeMethods().bullish , BarNumber(), RisingThreeMethods_Trig[1]); 
+
+ 
+
+AddLabel(RisingThreeMethods_Trig > 0  && showLabel  && ThreeShows_14, "14=RisingThreeMethods", Color.GREEN); 
+
+Alert(RisingThreeMethods() && !TurnAlertOff, "RisingThreeMethods Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(RisingThreeMethods() && (BubVerb or BubNumb) && ThreeShows_14 , low ,  if BubNumb  
+
+then "14" 
+
+else if BubVerb 
+
+then "RisingThreeMethods" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+ 
+
+###### 15 ################ StickSandwich() ########################## 
+
+def ThreeShows_15 = If (ShowFirst == ShowFirst.StickSandwich_15 or ShowSecond == ShowSecond.StickSandwich_15 or ShowThird == ShowThird.StickSandwich_15, 1, 0); 
+
+rec StickSandwich_Trig = If(StickSandwich().bullish , BarNumber(), StickSandwich_Trig[1]); 
+
+ 
+
+AddLabel(StickSandwich_Trig > 0  && showLabel  && ThreeShows_15, "15=StickSandwich", Color.GREEN); 
+
+Alert(StickSandwich() && !TurnAlertOff, "StickSandwich Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(StickSandwich() && (BubVerb or BubNumb) && ThreeShows_15 , low ,  if BubNumb  
+
+then "15" 
+
+else if BubVerb 
+
+then "StickSandwich" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+###### 16 ########## ThreeStarsInTheSouth() ############################ 
+
+def ThreeShows_16 = If (ShowFirst == ShowFirst.ThreeStarsInTheSouth_16 or ShowSecond == ShowSecond.ThreeStarsInTheSouth_16 or ShowThird == ShowThird.ThreeStarsInTheSouth_16, 1, 0); 
+
+rec ThreeStarsInTheSouth_Trig = If(ThreeStarsInTheSouth().bullish , BarNumber(), ThreeStarsInTheSouth_Trig[1]); 
+
+ 
+
+AddLabel(ThreeStarsInTheSouth_Trig > 0  && showLabel  && ThreeShows_16, "16=ThreeStarsInTheSouth", Color.GREEN); 
+
+Alert(ThreeStarsInTheSouth() && !TurnAlertOff, "ThreeStarsInTheSouth Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeStarsInTheSouth() && (BubVerb or BubNumb) && ThreeShows_16 , low ,  if BubNumb  
+
+then "16" 
+
+else if BubVerb 
+
+then "ThreeStarsInTheSouth" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+###### 17########## UniqueThreeRiverBottom() ############################ 
+
+def ThreeShows_17 = If (ShowFirst == ShowFirst.UniqueThreeRiverBottom_17 or ShowSecond == ShowSecond.UniqueThreeRiverBottom_17 or ShowThird == ShowThird.UniqueThreeRiverBottom_17, 1, 0); 
+
+rec UniqueThreeRiverBottom_Trig = If(UniqueThreeRiverBottom().bullish , BarNumber(), UniqueThreeRiverBottom_Trig[1]); 
+
+ 
+
+AddLabel(UniqueThreeRiverBottom_Trig > 0  && showLabel  && ThreeShows_17,  "17=UniqueThreeRiverBottom", Color.GREEN); 
+
+Alert(UniqueThreeRiverBottom() && !TurnAlertOff, "UniqueThreeRiverBottom Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UniqueThreeRiverBottom() && (BubVerb or BubNumb) && ThreeShows_17 , low ,  if BubNumb  
+
+then "17" 
+
+else if BubVerb 
+
+then "UniqueThreeRiverBottom" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+ 
+
+###### 18 ########## UpsideGapThreeMethods() ############################ 
+
+ 
+
+def ThreeShows_18 = If (ShowFirst == ShowFirst.UpsideGapThreeMethods_18 or ShowSecond == ShowSecond.UpsideGapThreeMethods_18 or ShowThird == ShowThird.UpsideGapThreeMethods_18, 1, 0); 
+
+rec UpsideGapThreeMethods_Trig = If(UpsideGapThreeMethods().bullish , BarNumber(), UpsideGapThreeMethods_Trig[1]); 
+
+ 
+
+AddLabel(UpsideGapThreeMethods_Trig > 0  && showLabel  && ThreeShows_18, "18=UpsideGapThreeMethods", Color.GREEN); 
+
+Alert(UpsideGapThreeMethods() && !TurnAlertOff, "UpsideGapThreeMethods Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UpsideGapThreeMethods() && (BubVerb or BubNumb) && ThreeShows_18 , low ,  if BubNumb  
+
+then "18" 
+
+else if BubVerb 
+
+then "UpsideGapThreeMethods" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+###### 19 ########## UpsideTasukiGap() ############################ 
+
+ 
+
+def ThreeShows_19 = If (ShowFirst == ShowFirst.UpsideTasukiGap_19 or ShowSecond == ShowSecond.UpsideTasukiGap_19 or ShowThird == ShowThird.UpsideTasukiGap_19, 1, 0); 
+
+rec UpsideTasukiGap_Trig = If(UpsideTasukiGap().bullish , BarNumber(), UpsideTasukiGap_Trig[1]); 
+
+ 
+
+AddLabel(UpsideTasukiGap_Trig > 0  && showLabel  && ThreeShows_19, "19=UpsideTasukiGap", Color.GREEN); 
+
+Alert(UpsideTasukiGap() && !TurnAlertOff, "UpsideTasukiGap Alert", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UpsideTasukiGap() && (BubVerb or BubNumb) && ThreeShows_19 , low ,  if BubNumb  
+
+then "19" 
+
+else if BubVerb 
+
+then "UpsideTasukiGap" 
+
+ else "" , 
+
+  Color.WHITE , no); 
+
+ 
+
+ 
+
+##################################################### 
+
+############## Processing 'Show All' = yes ####################### 
+
+##################################################### 
+
+ 
+
+##### 1 ################ Hammer() & showAll ################## 
+
+def  candleAll_41 = If(ShowAll == yes , Hammer(), Double.NaN); 
+
+plot Ham = candleAll_41; 
+
+Ham.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+Ham.SetDefaultColor(Color.GREEN); 
+
+Ham.SetLineWeight(5); 
+
+rec Hammer_Trig_41 = If (Hammer().bullish, + BarNumber(), Hammer_Trig_41[1] ); 
+
+ 
+
+AddLabel(Hammer_Trig_41 > 0 && showLabel && ShowAll, "1=Hammer" , Color.GREEN); 
+
+Alert(Hammer()  && !TurnAlertOff && ShowAll, "Hammer", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(Hammer() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "1" 
+
+else if BubVerb 
+
+then "Hammer" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 2 ################ InvertedHammer() & showAll ################ 
+
+def candleAll_42 =  If(ShowAll == yes , InvertedHammer(), Double.NaN); 
+
+plot IH = candleAll_42; 
+
+IH.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+IH.SetDefaultColor(Color.GREEN); 
+
+IH.SetLineWeight(5); 
+
+ 
+
+rec InvertedHammer_Trig_42 = If (InvertedHammer().bullish , + BarNumber(), InvertedHammer_Trig_42[1] ); 
+
+AddLabel(InvertedHammer_Trig_42 > 0 && showLabel && ShowAll,  "2=InvertedHammer" , Color.GREEN); 
+
+Alert(InvertedHammer()  && !TurnAlertOff && ShowAll, "InvertedHammer", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(InvertedHammer() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "2" 
+
+else if BubVerb 
+
+then "InvertedHammer" 
+
+ else "" ,  Color.WHITE , no); 
+
+##### 3 ################ ThreeOutsideUp() & showAll ################ 
+
+def candleAll_43 = If(ShowAll == yes , ThreeOutsideUp(), Double.NaN); 
+
+plot TOU = candleAll_43; 
+
+TOU.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+TOU.SetDefaultColor(Color.GREEN); 
+
+TOU.SetLineWeight(5); 
+
+ 
+
+rec ThreeOutsideUp_Trig_43 = If (ThreeOutsideUp().bullish, + BarNumber(), ThreeOutsideUp_Trig_43[1] ); 
+
+AddLabel(ThreeOutsideUp_Trig_43 > 0 && showLabel && ShowAll, "3=ThreeOutsideUp" , Color.GREEN); 
+
+Alert(ThreeOutsideUp()  && !TurnAlertOff && ShowAll, "ThreeOutsideUp", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeOutsideUp() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "3" 
+
+else if BubVerb 
+
+then "ThreeOutsideUp" 
+
+ else "" ,  Color.WHITE , no); 
+
+#AddChartLabel(yes, concat("Trig value =  ", ThreeOutsideUp_Trig_43), color.white);  
+
+#AddChartLabel(yes, concat("Total Bars =  ", + BarNumber()), color.white);  
+
+##### 4 ################ ThreeInsideUp() & showAll ################# 
+
+def    candleAll_44 = If(ShowAll == yes , ThreeInsideUp(), Double.NaN); 
+
+plot TIU = candleAll_44; 
+
+TIU.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+TIU.SetDefaultColor(Color.GREEN); 
+
+TIU.SetLineWeight(5); 
+
+ 
+
+rec ThreeInsideUp_Trig_44 = If (ThreeInsideUp().bullish == yes , + BarNumber(), ThreeInsideUp_Trig_44[1] ); 
+
+AddLabel(ThreeInsideUp_Trig_44 > 0 && showLabel && ShowAll, "4=ThreeInsideUp" , Color.GREEN); 
+
+Alert(ThreeInsideUp()  && !TurnAlertOff && ShowAll, "ThreeInsideUp", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeInsideUp() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "4" 
+
+else if BubVerb 
+
+then "ThreeInsideUp" 
+
+ else "" ,  Color.WHITE , no); 
+
+##### 5 ################ PiercingLine() & showAll ###################### 
+
+def    candleAll_45 = If(ShowAll == yes  , PiercingLine(), Double.NaN); 
+
+plot PL = candleAll_45; 
+
+PL.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+PL.SetDefaultColor(Color.GREEN); 
+
+PL.SetLineWeight(5); 
+
+ 
+
+rec PiercingLine_Trig_45 = If (PiercingLine().bullish == yes , + BarNumber(), PiercingLine_Trig_45[1] ); 
+
+AddLabel(PiercingLine_Trig_45 > 0 && showLabel && ShowAll, "5=PiercingLine" , Color.GREEN); 
+
+Alert(PiercingLine()  && !TurnAlertOff && ShowAll, "PiercingLine", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(PiercingLine() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "5" 
+
+else if BubVerb 
+
+then "PiercingLine" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 6 ################ ThreeWhiteSoldiers() & showAll ################## 
+
+def    candleAll_46 = If(ShowAll == yes, ThreeWhiteSoldiers(), Double.NaN); 
+
+plot TWS = candleAll_46; 
+
+TWS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+TWS.SetDefaultColor(Color.GREEN); 
+
+TWS.SetLineWeight(5); 
+
+ 
+
+rec ThreeWhiteSoldiers_Trig_46 = If (ThreeWhiteSoldiers().bullish == yes , + BarNumber(), ThreeWhiteSoldiers_Trig_46[1] ); 
+
+AddLabel(ThreeWhiteSoldiers_Trig_46 > 0 && showLabel && ShowAll, "6=ThreeWhiteSoldiers" , Color.GREEN); 
+
+Alert(ThreeWhiteSoldiers()  && !TurnAlertOff && ShowAll, "ThreeWhiteSoldiers", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeWhiteSoldiers() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "6" 
+
+else if BubVerb 
+
+then "ThreeWhiteSoldiers" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 7 ################ MorningDojiStar() & showAll ###################### 
+
+def    candleAll_47 = If(ShowAll == yes  , MorningDojiStar(), Double.NaN); 
+
+plot MDS = candleAll_47; 
+
+MDS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+MDS.SetDefaultColor(Color.GREEN); 
+
+MDS.SetLineWeight(5); 
+
+ 
+
+ 
+
+rec MorningDojiStar_Trig_47 = If (MorningDojiStar().bullish == yes , + BarNumber(), MorningDojiStar_Trig_47[1] ); 
+
+AddLabel(MorningDojiStar_Trig_47 > 0 && showLabel && ShowAll, "7=MorningDojiStar" , Color.GREEN); 
+
+Alert(MorningDojiStar()  && !TurnAlertOff && ShowAll, "MorningDojiStar", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MorningDojiStar() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "7" 
+
+else if BubVerb 
+
+then "MorningDojiStar" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 8  ########### ConcealingBabySwallow() & showAll ################### 
+
+def candleAll_48 = If(ShowAll == yes , ConcealingBabySwallow(), Double.NaN); 
+
+plot CBS = candleAll_48; 
+
+CBS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+CBS.SetDefaultColor(Color.GREEN); 
+
+CBS.SetLineWeight(5); 
+
+ 
+
+rec ConcealingBabySwallow_Trig_48 = If (ConcealingBabySwallow().bullish == yes , + BarNumber(), ConcealingBabySwallow_Trig_48[1] ); 
+
+AddLabel(ConcealingBabySwallow_Trig_48 > 0 && showLabel && ShowAll, "8=ConcealingBabySwallow" , Color.GREEN); 
+
+Alert(ConcealingBabySwallow()  && !TurnAlertOff && ShowAll, "ConcealingBabySwallow", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ConcealingBabySwallow() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "8" 
+
+else if BubVerb 
+
+then "ConcealingBabySwallow" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+#####  9 ########### HighPriceGappingPlay() & showAll ##################### 
+
+def candleAll_49 = If(ShowAll == yes , HighPriceGappingPlay(), Double.NaN); 
+
+plot HPGP = candleAll_49; 
+
+HPGP.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+HPGP.SetDefaultColor(Color.GREEN); 
+
+HPGP.SetLineWeight(5); 
+
+ 
+
+rec HighPriceGappingPlay_Trig_49 = If (HighPriceGappingPlay().bullish == yes , + BarNumber(), HighPriceGappingPlay_Trig_49[1] ); 
+
+AddLabel(HighPriceGappingPlay_Trig_49 > 0 && showLabel && ShowAll, "9=HighPriceGappingPlay" , Color.GREEN); 
+
+Alert(HighPriceGappingPlay()  && !TurnAlertOff && ShowAll, "HighPriceGappingPlay", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(HighPriceGappingPlay() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "9" 
+
+else if BubVerb 
+
+then "HighPriceGappingPlay" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 10  ################ HomingPigeon() & showAll ################# 
+
+def candleAll_50 = If(ShowAll == yes  , HomingPigeon(), Double.NaN); 
+
+plot HP = candleAll_50; 
+
+HP.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+HP.SetDefaultColor(Color.GREEN); 
+
+HP.SetLineWeight(5); 
+
+ 
+
+rec HomingPigeon_Trig_50 = If (HomingPigeon().bullish == yes , + BarNumber(),HomingPigeon_Trig_50[1] ); 
+
+AddLabel(HomingPigeon_Trig_50 > 0 && showLabel && ShowAll, "10=HomingPigeon" , Color.GREEN); 
+
+Alert(HomingPigeon()  && !TurnAlertOff && ShowAll, "HomingPigeon", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(HomingPigeon() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "10" 
+
+else if BubVerb 
+
+then "HomingPigeon" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+#AddChartLabel(yes, concat("Trig value =  ", HomingPigeon_Trig_50), color.white);  
+
+#AddChartLabel(yes, concat("Total Bars =  ", + BarNumber()), color.white);  
+
+##### 11 ################ MatchingLow() & showAll ################# 
+
+def candleAll_51 = If(ShowAll == yes , MatchingLow(), Double.NaN); 
+
+plot ML = candleAll_51; 
+
+ML.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+ML.SetDefaultColor(Color.GREEN); 
+
+ML.SetLineWeight(5); 
+
+ 
+
+rec MatchingLow_Trig_51 = If (MatchingLow().bullish == yes , + BarNumber(), MatchingLow_Trig_51[1] ); 
+
+AddLabel(MatchingLow_Trig_51 > 0 && showLabel && ShowAll, "11=MatchingLow" , Color.GREEN); 
+
+Alert(MatchingLow()  && !TurnAlertOff && ShowAll, "MatchingLow", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MatchingLow() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "11" 
+
+else if BubVerb 
+
+then "MatchingLow" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 12 ################ MatHold() & showAll ################## 
+
+def candleAll_52 = If(ShowAll == yes  , MatHold(), Double.NaN); 
+
+plot MH = candleAll_52; 
+
+MH.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+MH.SetDefaultColor(Color.GREEN); 
+
+MH.SetLineWeight(5); 
+
+ 
+
+rec MatHold_Trig_52 = If (MatHold().bullish == yes , + BarNumber(), MatHold_Trig_52[1] ); 
+
+AddLabel(MatHold_Trig_52 > 0 && showLabel && ShowAll, "12=MatHold" , Color.GREEN); 
+
+Alert(MatHold()  && !TurnAlertOff && ShowAll, "MatHold", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MatHold() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "12" 
+
+else if BubVerb 
+
+then "MatHold" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 13  ################ MorningStar() & showAll ################ 
+
+def candleAll_53 = If(ShowAll == yes , MorningStar(), Double.NaN); 
+
+plot MS = candleAll_53; 
+
+MS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+MS.SetDefaultColor(Color.GREEN); 
+
+MS.SetLineWeight(5); 
+
+ 
+
+rec MorningStar_Trig_53 = If (MorningStar().bullish == yes , + BarNumber(), MorningStar_Trig_53[1] ); 
+
+AddLabel(MorningStar_Trig_53 > 0 && showLabel && ShowAll, "13=MorningStar" , Color.GREEN); 
+
+Alert(MorningStar()  && !TurnAlertOff && ShowAll, "MorningStar", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(MorningStar() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "13" 
+
+else if BubVerb 
+
+then "MorningStar" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 14 ########## RisingThreeMethods() & showAll #################### 
+
+def candleAll_54 = If(ShowAll == yes  , RisingThreeMethods(), Double.NaN); 
+
+plot RTM = candleAll_54; 
+
+RTM.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+RTM.SetDefaultColor(Color.GREEN); 
+
+RTM.SetLineWeight(5); 
+
+ 
+
+rec RisingThreeMethods_Trig_54 = If (RisingThreeMethods().bullish == yes , + BarNumber(), RisingThreeMethods_Trig_54[1] ); 
+
+AddLabel(RisingThreeMethods_Trig_54 > 0 && showLabel && ShowAll, "14=RisingThreeMethods" , Color.GREEN); 
+
+Alert(RisingThreeMethods()  && !TurnAlertOff && ShowAll, "RisingThreeMethods", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(RisingThreeMethods() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "14" 
+
+else if BubVerb 
+
+then "RisingThreeMethods" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 15  ################ StickSandwich() & showAll ################ 
+
+def candleAll_55 = If(ShowAll == yes , StickSandwich(), Double.NaN); 
+
+plot SS = candleAll_55; 
+
+SS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+SS.SetDefaultColor(Color.GREEN); 
+
+SS.SetLineWeight(5); 
+
+ 
+
+rec StickSandwich_Trig_55 = If (StickSandwich().bullish == yes , + BarNumber(), StickSandwich_Trig_55[1] ); 
+
+AddLabel(StickSandwich_Trig_55 > 0 && showLabel && ShowAll,  "15=StickSandwich" , Color.GREEN); 
+
+Alert(StickSandwich()  && !TurnAlertOff && ShowAll, "StickSandwich", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(StickSandwich() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "15" 
+
+else if BubVerb 
+
+then "StickSandwich" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 16 ########### ThreeStarsInTheSouth() & showAll ############## 
+
+def candleAll_56 = If(ShowAll == yes , ThreeStarsInTheSouth(), Double.NaN); 
+
+plot TSITS = candleAll_56; 
+
+TSITS.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+TSITS.SetDefaultColor(Color.GREEN); 
+
+TSITS.SetLineWeight(5); 
+
+ 
+
+rec ThreeStarsInTheSouth_Trig_56 = If (ThreeStarsInTheSouth().bullish == yes , + BarNumber(), ThreeStarsInTheSouth_Trig_56[1] ); 
+
+AddLabel(ThreeStarsInTheSouth_Trig_56 > 0 && showLabel && ShowAll, "16=ThreeStarsInTheSouth" , Color.GREEN); 
+
+Alert(ThreeStarsInTheSouth()  && !TurnAlertOff && ShowAll, "ThreeStarsInTheSouth", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(ThreeStarsInTheSouth() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "16" 
+
+else if BubVerb 
+
+then "ThreeStarsInTheSouth" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 17  ######### UniqueThreeRiverBottom() & showAll ############# 
+
+def candleAll_57 = If(ShowAll == yes, UniqueThreeRiverBottom(), Double.NaN); 
+
+plot UTRB = candleAll_57; 
+
+UTRB.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+UTRB.SetDefaultColor(Color.GREEN); 
+
+UTRB.SetLineWeight(5); 
+
+ 
+
+rec UniqueThreeRiverBottom_Trig_57 = If (UniqueThreeRiverBottom().bullish == yes , + BarNumber(), UniqueThreeRiverBottom_Trig_57[1] ); 
+
+AddLabel(UniqueThreeRiverBottom_Trig_57 > 0 && showLabel && ShowAll, "17=UniqueThreeRiverBottom" , Color.GREEN); 
+
+Alert(UniqueThreeRiverBottom()  && !TurnAlertOff && ShowAll, "UniqueThreeRiverBottom", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UniqueThreeRiverBottom() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "17" 
+
+else if BubVerb 
+
+then "UniqueThreeRiverBottom" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 18 ########## UpsideGapThreeMethods() & showAll ############ 
+
+def candleAll_58 = If(ShowAll == yes , UpsideGapThreeMethods(), Double.NaN); 
+
+plot UGTM = candleAll_58; 
+
+UGTM.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+UGTM.SetDefaultColor(Color.GREEN); 
+
+UGTM.SetLineWeight(5); 
+
+ 
+
+rec UpsideGapThreeMethods_Trig_58 =  If (UpsideGapThreeMethods().bullish == yes , + BarNumber(), UpsideGapThreeMethods_Trig_58[1]); 
+
+AddLabel(UpsideGapThreeMethods_Trig_58 > 0 && showLabel && ShowAll, "18=UpsideGapThreeMethods" , Color.GREEN); 
+
+Alert(UpsideGapThreeMethods()  && !TurnAlertOff && ShowAll, "UpsideGapThreeMethods", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UpsideGapThreeMethods() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "18" 
+
+else if BubVerb 
+
+then "UpsideGapThreeMethods" 
+
+ else "" ,  Color.WHITE , no); 
+
+ 
+
+##### 19  ################ UpsideTasukiGap() & showAll ################# 
+
+def    candleAll_59 = If(ShowAll == yes  , UpsideTasukiGap(), Double.NaN); 
+
+plot UTG = candleAll_59; 
+
+UTG.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP); 
+
+UTG.SetDefaultColor(Color.GREEN); 
+
+UTG.SetLineWeight(5); 
+
+ 
+
+rec UpsideTasukiGap_Trig_59 = If (UpsideTasukiGap().bullish == yes , + BarNumber(), UpsideTasukiGap_Trig_59[1] ); 
+
+AddLabel(UpsideTasukiGap_Trig_59 > 0 && showLabel && ShowAll, "19=UpsideTasukiGap" , Color.GREEN); 
+
+Alert(UpsideTasukiGap()  && !TurnAlertOff && ShowAll, "UpsideTasukiGap", Alert.BAR, Sound.Chimes); 
+
+AddChartBubble(UpsideTasukiGap() && (BubVerb or BubNumb) && (ShowAll) , low ,  if BubNumb  
+
+then "19" 
+
+else if BubVerb 
+
+then "UpsideTasukiGap" 
+
+ else "" ,  Color.WHITE , no); 
+
+########################################################## 
+
+#################### End of showAll processing  ###################### 
+
+########################################################## 

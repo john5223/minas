@@ -1,0 +1,28 @@
+# Archive Name: McGinley Dynamic Indicator_Mobius 
+# Archive Section: Trend     
+# Suggested Tos Name: McGinleyDynamicIndicator_Mobius 
+# Archive Date: 5.05.2018 
+# Archive Notes:  Lounge 5.02.2018 
+# 16:59 Mobius: An oldie but goodie 
+# 17:01 Mobius: The lag on that is only a few bars and that lag can be mostly removed by detrending it by half the input length 
+ 
+# A More Advanced Adaptive Moving Average 
+# McGinley Dynamic Indicator 
+# Mobius 
+# V03.11.2011 
+#  D = D[1] + (I - D[1]) / ( N * (I/D[1])^4) 
+# where D[1] = yesterday's Dynamic, I = today's price, N = smoothing factor. 
+
+
+input I = close; 
+input N = 13; 
+ 
+def D; 
+D = CompoundValue(1, D[1] + (I - D[1]) /  (N * Power((I / D[1]), 4)), I); 
+ 
+plot MDI = D; 
+MDI.SetPaintingStrategy(PaintingStrategy.LINE); 
+MDI.SetLineWeight(1); 
+MDI.SetDefaultColor(Color.White); 
+ 
+# End Code McGinley Dynamic Indicator 

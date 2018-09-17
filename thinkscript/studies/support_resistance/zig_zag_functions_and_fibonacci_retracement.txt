@@ -1,0 +1,389 @@
+TOS ZigZag functions And Fibonacci retracement levels 
+
+*************************************************** 
+
+ 
+
+declare fullrange; 
+
+ 
+
+input Required_Reversal = 1.0; 
+
+input fib1 = 0.382; 
+
+input fib2 = 0.50; 
+
+input fib3 = 0.618; 
+
+input fib4 = 0.786; 
+
+input fib5 = -0.236; 
+
+input fib6 = -0.382; 
+
+input fib7 = -0.5; 
+
+ 
+
+def ZZData = ZigZagSign("reversal amount" = Required_Reversal); 
+
+def ZZSign = ZigZagTrendSign("reversal amount" = Required_Reversal); 
+
+ 
+
+def barClosed = if isNan(ZZData[-1]) then 0 else 1; 
+
+def ZZConfirm = if !isNan(ZZSign) then 1 else 0; 
+
+ 
+
+def isLow = if (barclosed and ZZConfirm and ZZData < ZZData[-1] and ZZData < ZZData[1] and ZZSign == -1, 1, 0); 
+
+def isHigh = if (barclosed and ZZConfirm and ZZData > ZZData[-1] and ZZData > ZZData[1] and ZZsign == 1, 1, 0); 
+
+ 
+
+rec prevLow = compoundValue("historical data" = 0, "visible data" = if(isLow[1], min(lowest(low,3),low[-1]), prevLow[1])); 
+
+rec prevHigh = compoundValue("historical data" = 0, "visible data" = if(isHigh[1], max(highest(high,3),high[-1]), prevHigh[1])); 
+
+ 
+
+def deltaHL = prevHigh - prevLow; 
+
+def ret1 = deltaHL * fib1; 
+
+def ret2 = deltaHL * fib2; 
+
+def ret3 = deltaHL * fib3; 
+
+def ret4 = deltaHL * fib4; 
+
+def ret5 = deltaHL * fib5; 
+
+def ret6 = deltaHL * fib6; 
+
+def ret7 = deltaHL * fib7; 
+
+ 
+
+rec direction = if(isLow, 1, if(isHigh, -1, direction[1])); 
+
+ 
+
+def fA = if(direction > 0 , prevLow, prevHigh); 
+
+rec fAe = if(!isNan(close[-1]), fA, fAe[1]); 
+
+plot pivotA = if isNan(close[-1]) then fAe else double.nan; 
+
+ 
+
+pivotA.setDefaultColor(color.white); 
+
+pivotA.SetLineWeight(1); 
+
+pivotA.setStyle(curve.SHORT_DASH); 
+
+ 
+
+def fB = if(direction > 0, prevHigh, prevLow); 
+
+rec fBe = if(!isNan(close[-1]), fB, fBe[1]); 
+
+plot pivotB = if isNan(close[-1]) then fBe else double.nan; 
+
+ 
+
+pivotB.setDefaultColor(color.white); 
+
+pivotB.SetLineWeight(1); 
+
+pivotB.setStyle(curve.SHORT_DASH); 
+
+ 
+
+def f1c = if(direction > 0 , prevLow + ret1, prevHigh - ret1); 
+
+rec f1e = if(!isNan(close[-1]), f1c, f1e[1]); 
+
+plot f1 = if isNan(close[-1]) then f1e else double.nan; 
+
+f1.SetDefaultColor(color.dark_gray); 
+
+f1.SetLineWeight(1); 
+
+ 
+
+def f2c = if(direction > 0 , prevLow + ret2, prevHigh - ret2); 
+
+rec f2e = if(!isNan(close[-1]), f2c, f2e[1]); 
+
+plot f2 = if isNan(close[-1]) then f2e else double.nan; 
+
+f2.SetDefaultColor(color.yellow); 
+
+f2.SetLineWeight(1); 
+
+ 
+
+def f3c = if(direction > 0 , prevLow + ret3, prevHigh - ret3); 
+
+rec f3e = if(!isNan(close[-1]), f3c, f3e[1]); 
+
+plot f3 = if isNan(close[-1]) then f3e else double.nan; 
+
+f3.SetDefaultColor(color.red); 
+
+f3.SetLineWeight(1); 
+
+ 
+
+def f4c = if(direction > 0 , prevLow + ret4, prevHigh - ret4); 
+
+rec f4e = if(!isNan(close[-1]), f4c, f4e[1]); 
+
+plot f4 = if isNan(close[-1]) then f4e else double.nan; 
+
+f4.SetDefaultColor(color.dark_gray); 
+
+f4.SetLineWeight(1); 
+
+ 
+
+def f5c = if(direction > 0 , prevLow + ret5, prevHigh - ret5); 
+
+rec f5e = if(!isNan(close[-1]), f5c, f5e[1]); 
+
+plot f5 = if isNan(close[-1]) then f5e else double.nan; 
+
+f5.SetDefaultColor(color.white); 
+
+f5.SetLineWeight(3); 
+
+f5.setStyle(curve.SHORT_DASH); 
+
+ 
+
+def f6c = if(direction > 0 , prevLow + ret6, prevHigh - ret6); 
+
+rec f6e = if(!isNan(close[-1]), f6c, f6e[1]); 
+
+plot f6= if isNan(close[-1]) then f6e else double.nan; 
+
+f6.SetDefaultColor(color.dark_gray); 
+
+f6.SetLineWeight(1); 
+
+f6.setStyle(curve.SHORT_DASH); 
+
+ 
+
+def f7c = if(direction > 0 , prevLow + ret7, prevHigh - ret7); 
+
+rec f7e = if(!isNan(close[-1]), f7c, f7e[1]); 
+
+plot f7 = if isNan(close[-1]) then f7e else double.nan; 
+
+f7.SetDefaultColor(color.dark_GRAY); 
+
+f7.SetLineWeight(1); 
+
+f7.setStyle(curve.SHORT_DASH); 
+
+ 
+
+###################################################### 
+
+#############after auto update for compatability ######################################### 
+
+##ZigZag and Fibs 
+
+ 
+
+input Required_Reversal = 1.05; 
+
+input fib1 = 0.382; 
+
+input fib2 = 0.50; 
+
+input fib3 = 0.618; 
+
+input fib4 = 0.786; 
+
+input fib5 = -0.236; 
+
+input fib6 = -0.382; 
+
+input fib7 = -0.5; 
+
+ 
+
+def ZZData = ZigZagSign("reversal amount" = Required_Reversal); 
+
+def ZZSign = ZigZagTrendSign("reversal amount" = Required_Reversal); 
+
+ 
+
+def barClosed = if IsNaN(ZZData[-1]) then 0 else 1; 
+
+def ZZConfirm = if !IsNaN(ZZSign) then 1 else 0; 
+
+ 
+
+def isLow = If (barClosed and ZZConfirm and ZZData < ZZData[-1] and ZZData < ZZData[1] and ZZSign == -1, 1, 0); 
+
+def isHigh = If (barClosed and ZZConfirm and ZZData > ZZData[-1] and ZZData > ZZData[1] and ZZSign == 1, 1, 0); 
+
+ 
+
+rec prevLow = compoundValue("historical data" = 0, "visible data" = If(isLow[1], Min(Lowest(low, 3), low[-1]), prevLow[1])); 
+
+rec prevHigh = compoundValue("historical data" = 0, "visible data" = If(isHigh[1], Max(Highest(high, 3), high[-1]), prevHigh[1])); 
+
+ 
+
+def deltaHL = prevHigh - prevLow; 
+
+def ret1 = deltaHL * fib1; 
+
+def ret2 = deltaHL * fib2; 
+
+def ret3 = deltaHL * fib3; 
+
+def ret4 = deltaHL * fib4; 
+
+def ret5 = deltaHL * fib5; 
+
+def ret6 = deltaHL * fib6; 
+
+def ret7 = deltaHL * fib7; 
+
+ 
+
+rec direction = If(isLow, 1, If(isHigh, -1, direction[1])); 
+
+ 
+
+def fA = If(direction > 0 , prevLow, prevHigh); 
+
+rec fAe = If(!IsNaN(close[-1]), fA, fAe[1]); 
+
+plot pivotA = if IsNaN(close[-1]) then fAe else Double.NaN; 
+
+ 
+
+pivotA.SetDefaultColor(Color.WHITE); 
+
+pivotA.SetLineWeight(1); 
+
+pivotA.SetStyle(Curve.SHORT_DASH); 
+
+ 
+
+def fB = If(direction > 0, prevHigh, prevLow); 
+
+rec fBe = If(!IsNaN(close[-1]), fB, fBe[1]); 
+
+plot pivotB = if IsNaN(close[-1]) then fBe else Double.NaN; 
+
+ 
+
+pivotB.SetDefaultColor(Color.WHITE); 
+
+pivotB.SetLineWeight(1); 
+
+pivotB.SetStyle(Curve.SHORT_DASH); 
+
+ 
+
+def f1c = If(direction > 0 , prevLow + ret1, prevHigh - ret1); 
+
+rec f1e = If(!IsNaN(close[-1]), f1c, f1e[1]); 
+
+plot f1 = if IsNaN(close[-1]) then f1e else Double.NaN; 
+
+f1.SetDefaultColor(Color.DARK_GRAY); 
+
+f1.SetLineWeight(1); 
+
+ 
+
+def f2c = If(direction > 0 , prevLow + ret2, prevHigh - ret2); 
+
+rec f2e = If(!IsNaN(close[-1]), f2c, f2e[1]); 
+
+plot f2 = if IsNaN(close[-1]) then f2e else Double.NaN; 
+
+f2.SetDefaultColor(Color.YELLOW); 
+
+f2.SetLineWeight(1); 
+
+ 
+
+def f3c = If(direction > 0 , prevLow + ret3, prevHigh - ret3); 
+
+rec f3e = If(!IsNaN(close[-1]), f3c, f3e[1]); 
+
+plot f3 = if IsNaN(close[-1]) then f3e else Double.NaN; 
+
+f3.SetDefaultColor(Color.RED); 
+
+f3.SetLineWeight(1); 
+
+ 
+
+def f4c = If(direction > 0 , prevLow + ret4, prevHigh - ret4); 
+
+rec f4e = If(!IsNaN(close[-1]), f4c, f4e[1]); 
+
+plot f4 = if IsNaN(close[-1]) then f4e else Double.NaN; 
+
+f4.SetDefaultColor(Color.DARK_GRAY); 
+
+f4.SetLineWeight(1); 
+
+ 
+
+def f5c = If(direction > 0 , prevLow + ret5, prevHigh - ret5); 
+
+rec f5e = If(!IsNaN(close[-1]), f5c, f5e[1]); 
+
+plot f5 = if IsNaN(close[-1]) then f5e else Double.NaN; 
+
+f5.SetDefaultColor(Color.WHITE); 
+
+f5.SetLineWeight(3); 
+
+f5.SetStyle(Curve.SHORT_DASH); 
+
+ 
+
+def f6c = If(direction > 0 , prevLow + ret6, prevHigh - ret6); 
+
+rec f6e = If(!IsNaN(close[-1]), f6c, f6e[1]); 
+
+plot f6 = if IsNaN(close[-1]) then f6e else Double.NaN; 
+
+f6.SetDefaultColor(Color.DARK_GRAY); 
+
+f6.SetLineWeight(1); 
+
+f6.SetStyle(Curve.SHORT_DASH); 
+
+ 
+
+def f7c = If(direction > 0 , prevLow + ret7, prevHigh - ret7); 
+
+rec f7e = If(!IsNaN(close[-1]), f7c, f7e[1]); 
+
+plot f7 = if IsNaN(close[-1]) then f7e else Double.NaN; 
+
+f7.SetDefaultColor(Color.DARK_GRAY); 
+
+f7.SetLineWeight(1); 
+
+f7.SetStyle(Curve.SHORT_DASH); 
+
+######################################## 

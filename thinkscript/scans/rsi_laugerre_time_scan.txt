@@ -1,0 +1,277 @@
+# Scan for RSI in Laguerre Time Scan 
+
+# Mobius 
+
+# Chat Room Request 03.28.2017 
+
+ 
+
+#Inputs:  
+
+input nFE = 8; 
+
+# Variables: 
+
+def o; 
+
+def h; 
+
+def l; 
+
+def c; 
+
+def CU1; 
+
+def CU2; 
+
+def CU; 
+
+def CD1; 
+
+def CD2; 
+
+def CD; 
+
+def L0; 
+
+def L1; 
+
+def L2; 
+
+def L3; 
+
+def RSI; 
+
+ 
+
+# Calculations 
+
+o = (open + close[1]) / 2; 
+
+h = Max(high, close[1]); 
+
+l = Min(low, close[1]); 
+
+c = (o + h + l + close) / 4; 
+
+def gamma = Log(Sum((Max(high, close[1]) - Min(low, close[1])), nFE) /  
+
+        (Highest(high, nFE) - Lowest(low, nFE))) 
+
+            / Log(nFE); 
+
+L0 = (1 – gamma) * c + gamma * L0[1]; 
+
+L1 = -gamma * L0 + L0[1] + gamma * L1[1]; 
+
+L2 = -gamma * L1 + L1[1] + gamma * L2[1]; 
+
+L3 = -gamma * L2 + L2[1] + gamma * L3[1]; 
+
+if L0 >= L1 
+
+then { 
+
+    CU1 = L0 - L1; 
+
+    CD1 = 0; 
+
+} else { 
+
+    CD1 = L1 - L0; 
+
+    CU1 = 0; 
+
+} 
+
+if L1 >= L2 
+
+then { 
+
+    CU2 = CU1 + L1 - L2; 
+
+    CD2 = CD1; 
+
+} else { 
+
+    CD2 = CD1 + L2 - L1; 
+
+    CU2 = CU1; 
+
+} 
+
+if L2 >= L3 
+
+then { 
+
+    CU = CU2 + L2 - L3; 
+
+    CD = CD2; 
+
+} else { 
+
+    CU = CU2; 
+
+    CD = CD2 + L3 - L2; 
+
+} 
+
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0; 
+
+ 
+
+# Note Comment-Out (#) whichever scan not being used. 
+
+# Long Scan 
+
+ plot Long = sum(RSI > .9, 4) >= 4; 
+
+# Short Scan 
+
+#plot Short = sum(RSI < .1, 4) >= 4; 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+# Scan for RSI in Laguerre Time With Fractal Energy 
+
+# http://tos.mx/GeHqBf 
+
+# Mobius 
+
+# V02.07.2014 
+
+# V03.06.15.2016 
+
+#Scan 
+
+#Inputs:  
+
+input nFE = 8; 
+
+# Variables: 
+
+def o; 
+
+def h; 
+
+def l; 
+
+def c; 
+
+def CU1; 
+
+def CU2; 
+
+def CU; 
+
+def CD1; 
+
+def CD2; 
+
+def CD; 
+
+def L0; 
+
+def L1; 
+
+def L2; 
+
+def L3; 
+
+def RSI; 
+
+# Calculations 
+
+o = (open + close[1]) / 2; 
+
+h = Max(high, close[1]); 
+
+l = Min(low, close[1]); 
+
+c = (o + h + l + close) / 4; 
+
+def gamma = Log(Sum((Max(high, close[1]) - Min(low, close[1])), nFE) /  
+
+        (Highest(high, nFE) - Lowest(low, nFE))) 
+
+            / Log(nFE); 
+
+L0 = (1 – gamma) * c + gamma * L0[1]; 
+
+L1 = -gamma * L0 + L0[1] + gamma * L1[1]; 
+
+L2 = -gamma * L1 + L1[1] + gamma * L2[1]; 
+
+L3 = -gamma * L2 + L2[1] + gamma * L3[1]; 
+
+if L0 >= L1 
+
+then { 
+
+    CU1 = L0 - L1; 
+
+    CD1 = 0; 
+
+} else { 
+
+    CD1 = L1 - L0; 
+
+    CU1 = 0; 
+
+} 
+
+if L1 >= L2 
+
+then { 
+
+    CU2 = CU1 + L1 - L2; 
+
+    CD2 = CD1; 
+
+} else { 
+
+    CD2 = CD1 + L2 - L1; 
+
+    CU2 = CU1; 
+
+} 
+
+if L2 >= L3 
+
+then { 
+
+    CU = CU2 + L2 - L3; 
+
+    CD = CD2; 
+
+} else { 
+
+    CU = CU2; 
+
+    CD = CD2 + L3 - L2; 
+
+} 
+
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0; 
+
+# Note Comment-Out (#) whichever scan not being used. 
+
+# Long Scan 
+
+ plot Long = RSI crosses above .2 and gamma > .6; 
+
+# Short Scan 
+
+#plot Short = RSI crosses below .8 and gamma > .6; 
+
+ 

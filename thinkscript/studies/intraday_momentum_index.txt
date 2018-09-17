@@ -1,0 +1,49 @@
+266.57 
+Style 
+Draw i ngs 
+SPY3MID 026726 H:26789 L:26535 R:254 
+Studies 
+Patterns 
+IntradayMomentumIndex (14) 49.1341 
+70 30 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 14; 
+
+ 
+
+def CloseOpenDiff = if close > open then close - open else 0; 
+
+def OpenCloseDiff = if close < open then open - close else 0; 
+
+def avgCloseOpen = Average(CloseOpenDiff, length); 
+
+def avgOpenClose = Average(OpenCloseDiff, length); 
+
+ 
+
+plot IMI = avgCloseOpen / (avgCloseOpen + avgOpenClose) * 100; 
+
+IMI.SetDefaultColor(GetColor(8)); 
+
+ 
+
+plot OverBought = 70; 
+
+OverBought.SetDefaultColor(GetColor(5)); 
+
+ 
+
+plot OverSold = 30; 
+
+OverSold.SetDefaultColor(GetColor(5)); 

@@ -1,0 +1,84 @@
+http://tos.mx/UZTm1R  
+Mobius (Mobius)  
+Multi-Aggregation Momentum Squeeze Study 
+From <https://mytrade.com/profile/Mobius/statuses/7598775>  
+# Momentum Squeeze Multiple Aggregations 
+# Mobius 
+# V01.06.2011 Chat room discussion 
+#hint: Squeeze Label with directional color for both aggregations. Label is green when momentum is ascending, red when descending. User Input for separate Squeeze and Oscillator lenghts and Secondary Aggregation. 
+ 
+declare lower; 
+
+input Slength = 20; #hint Slength: Length for Squeeze 
+input Klength = 20; #hint Klength: Length for Oscillator 
+input SDmult = 2.0; #hint SDMult: Multiplier for Standard Deviation 
+input ATRmult = 1.5;#hint ATRmult: Multiplier for the Average True Range  
+input SecondaryAggregation = AggregationPeriod.Fifteen_Min; 
+
+def h = high; 
+def l = low; 
+def c = close; 
+def c2 = close(period = SecondaryAggregation)[1]; 
+def h2 = high(period = SecondaryAggregation)[1]; 
+def l2 = low(period = SecondaryAggregation)[1]; 
+def K = (Highest(h, Klength) + Lowest(l, Klength)) /  
+         2 + ExpAverage(c, Klength); 
+def K2 = (Highest(h2, Klength) + Lowest(l2, Klength)) /  
+          2 + ExpAverage(c2, Klength); 
+plot Momo = Inertia(c - K / 2, Klength); 
+     Momo.setPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+     Momo.setLineWeight(4); 
+     Momo.assignValueColor(if Momo > Momo[1] and Momo > 0 
+                           then Color.Cyan 
+                           else if Momo > 0 and Momo < Momo[1] 
+                                then Color.Blue 
+                                else if Momo < 0 and Momo < Momo[1] 
+                                     then Color.Red 
+                                     else Color.Yellow); 
+plot Momo2 = Inertia(c2 - K / 2, Klength); 
+     Momo2.setPaintingStrategy(PaintingStrategy.Line); 
+     Momo2.setLineWeight(2); 
+     Momo2.assignValueColor(if Momo2 > Momo2[1] and Momo2 > 0 
+                            then Color.Green 
+                            else if Momo > 0 and Momo < Momo[1] 
+                                 then Color.Yellow 
+                                 else if Momo < 0 and Momo < Momo[1] 
+                                      then Color.Plum 
+                                      else Color.Yellow); 
+def SD = StDev(c, Slength); 
+def Avg = Average(c, Slength); 
+def ATR = Average(TrueRange(h, c, l), Slength); 
+def SDup = Avg + (SdMult * Sd); 
+def ATRup = Avg + (AtrMult * ATR); 
+def Pointlocation = Round(HighestAll(Momo) *1.1, 0); 
+plot Squeeze = if SDup < ATRup  
+               then pointLocation 
+               else Double.NaN; 
+     Squeeze.SetPaintingStrategy(PaintingStrategy.Points); 
+     Squeeze.SetLineWeight(4); 
+     Squeeze.SetDefaultColor(Color.Red); 
+plot zero = if IsNaN(c)  
+            then Double.NaN  
+            else 0; 
+     zero.SetPaintingStrategy(PaintingStrategy.line); 
+     zero.SetLineWeight(1); 
+     zero.SetDefaultColor(Color.gray); 
+def SD2 = StDev(c2, Slength); 
+def Avg2 = Average(c2, Slength); 
+def ATR2 = Average(TrueRange(h2, c2, l2), Slength); 
+def SDup2 = Avg2 + (SdMult * SD2); 
+def ATRup2 = Avg2 + (AtrMult * ATR2); 
+plot Squeeze2 = if SDup2 < ATRup2  
+                then if isNaN(c) then double.nan else PointLocation * 1.10 
+                else Double.NaN; 
+     Squeeze2.SetPaintingStrategy(PaintingStrategy.Points); 
+     Squeeze2.SetLineWeight(4); 
+     Squeeze2.SetDefaultColor(Color.Red); 
+def aggregation = SecondaryAggregation / 1000 / 60; 
+AddLabel(!isNaN(Squeeze), "Squeeze On Chart Aggregation", if isAscending(Momo) 
+                                     then Color.Green 
+                                     else Color.Red); 
+AddLabel(!isNaN(Squeeze2), "Squeeze On " + Aggregation + " Min. Aggregation", if isAscending(Momo2) 
+                                    then Color.Green 
+                                    else Color.Red); 
+# End Code - Momentum Squeeze 

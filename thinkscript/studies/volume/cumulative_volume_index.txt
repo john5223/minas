@@ -1,0 +1,20 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+# 
+ 
+declare lower; 
+
+input exchange = {default NYSE, NASDAQ, AMEX}; 
+ 
+def breadth; 
+switch (exchange) { 
+case NYSE: 
+    breadth = close("$UVOL") - close("$DVOL"); 
+case NASDAQ: 
+    breadth = close("$UVOL/Q") - close("$DVOL/Q"); 
+case AMEX: 
+    breadth = close("$UVOA") - close("$DVOA"); 
+} 
+
+plot CVI = if isNaN(close) then Double.NaN else TotalSum(if isNaN(breadth) then 0 else breadth); 
+CVI.SetDefaultColor(GetColor(8)); 

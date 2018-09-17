@@ -1,0 +1,105 @@
+#Tick Values and Distribution Script 
+
+#Thank you to Justin Williams for coding this for ShadowTrader 
+
+ 
+
+#ShadowTrader (Copyright ShadowTrader), a division of ShadowTrader Technologies, LLC. 2017. All rights reserved. This ShadowTrader Script is for educational purposes only.  ShadowTrader is not responsible for the use,  functionality or the performance of this Script. This work is copyrighted by ShadowTrader and all rights of this work under the license are reserved. Use of the ShadowTrader licensed code is for private use only and any other use are prohibited. By exercising any of the rights herein, you are accepting the terms of this license. You have a non-exclusive right to use or alter the ShadowTrader code. Use of this ShadowTrader Script other than as provided for in this license is prohibited. Any redistribution is strictly prohibited and will be enforced. 
+
+ 
+
+input ShowDistArrows = yes; 
+
+input ShowCloud = no; 
+
+input UpThreshold = 1000; 
+
+input DownThreshold = -1000; 
+
+input DistArrowLevel = 1300; 
+
+input ShowHiLo = yes; 
+
+ 
+
+def Above = if close > UpThreshold then 1 else 0; 
+
+def Below = if close < DownThreshold then 1 else 0; plot pline; plot nline; pline = UpThreshold; nline = DownThreshold; pline.SetStyle(Curve.LONG_DASH); pline.SetDefaultColor(Color.RED); nline.SetStyle(Curve.LONG_DASH); nline.SetDefaultColor(Color.GREEN); Def cloudhigh = if ShowCloud then pline else Double.NaN; Def cloudlow = if ShowCloud then nline else Double.NaN; AddCloud (cloudhigh, cloudlow, Color.DARK_GRAY, Color.DARK_GRAY); AddLabel(ShowHiLo,“HI ”+AsText(high(“$TICK”, ”Day”, ”LAST”)), Color.ORANGE); AddLabel(ShowHiLo,“LO ”+AsText(low(“$TICK”, ”Day”, ”LAST”)), Color.ORANGE); AddLabel(close >= 0 and close <= UpThreshold,close+ " ”,Color.GREEN); 
+
+AddLabel(close < 0 and close >= DownThreshold,close+ " ”,Color.RED); 
+
+AddLabel(close > UpThreshold,"Above "+AsText(UpThreshold)+"! "+ close, Color.GREEN); 
+
+AddLabel(close < DownThreshold,"Below "+AsText(DownThreshold)+"! "+close, Color.RED); 
+
+ 
+
+#Distribution Function 
+
+def Less = If((close < 0), 1, 0); def Greater = If((close > 0), 1, 0); 
+
+def closeByPeriod = close(period = “DAY”)[-1]; 
+
+def newDay = if !IsNaN(closeByPeriod) then 0 else 1; 
+
+plot DistributionUp; 
+
+plot DistributionDown; 
+
+ 
+
+if !IsNaN(close(period = “DAY”)[-1]) 
+
+then { 
+
+ 
+
+DistributionUp = Double.NaN; 
+
+DistributionDown = Double.NaN; 
+
+ 
+
+} else { 
+
+ 
+
+DistributionUp = if newDay and ShowDistArrows and Greater then +DistArrowLevel else Double.NaN; 
+
+DistributionDown = if newDay and ShowDistArrows and Less then -DistArrowLevel else Double.NaN; 
+
+} 
+
+ 
+
+DistributionUp.SetStyle(Curve.POINTS); 
+
+DistributionUp.SetPaintingStrategy(PaintingStrategy.LINE_VS_TRIANGLES); 
+
+DistributionUp.SetDefaultColor(Color.GREEN); 
+
+DistributionUp.SetLineWeight(3); 
+
+DistributionDown.SetStyle(Curve.POINTS); 
+
+DistributionDown.SetPaintingStrategy(PaintingStrategy.LINE_VS_TRIANGLES); 
+
+DistributionDown.SetDefaultColor(Color.RED); 
+
+DistributionDown.SetLineWeight(3); 
+
+ 
+
+#ZeroLine 
+
+plot zeroline = 0; 
+
+zeroline.SetDefaultColor(Color.CYAN); 
+
+zeroline.SetStyle(Curve.LONG_DASH); 
+
+zeroline.HideTitle(); 
+
+zeroline.HideBubble(); 
+
+ 

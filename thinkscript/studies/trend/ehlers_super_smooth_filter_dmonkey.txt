@@ -1,0 +1,75 @@
+ 
+
+ 
+
+S 264.73 
+SPY4MID D: 0: 28773 H: 28798 L: 2847 C: 28474 
+O Chart Aggregation is Daily Chart Length is 82 Daily Bars 
+R: 3.28 
+Style Drawings Studies Patterns 
+EhlersSuperSmootherFiIter_DMonkey (CLOSE, 101 
+ 
+
+# Archive Name: Ehlers Super Smoother Filter_DMonkey 
+
+# ToS Name: EhlersSuperSmootherFilter_DMonkey 
+
+# 4.24.2018 thinkScript Lounge  
+
+ 
+
+# Notes: The thinkorswim coding of the Ehlers Super Smoother Filter paints an unwanted line far below the candles until the calculation reaches equilibrium.  The DMonkey fix eliminates this unpleasant "tail" 
+
+ 
+
+ 
+
+## 
+
+# Base Code provided by: TD Ameritrade IP Company, Inc. (c) 2013-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input cutoffLength = 10; 
+
+ 
+
+assert(cutoffLength > 0, "cutoffLength must be positive: " + cutoffLength); 
+
+ 
+
+def a1 = Exp(-Double.Pi * Sqrt(2) / cutoffLength); 
+
+def coeff2 = 2 * a1 * Cos(Sqrt(2) * Double.Pi / cutoffLength); 
+
+def coeff3 = - Sqr(a1); 
+
+def coeff1 = 1 - coeff2 - coeff3; 
+
+def filt = if IsNaN(price + price[1]) then filt[1] else coeff1 * (price + price[1]) / 2 + coeff2 * filt[1] + coeff3 * filt[2]; 
+
+ 
+
+#plot SuperSmootherFilter = if !IsNaN(price) then filt else Double.NaN;    # original tos code 
+
+#superSmootherFilter.setHiding(if (barnumber() < 1 * cutoffLength,1,0));    # original tos code 
+
+#SuperSmootherFilter.SetDefaultColor(GetColor(5));    # original tos code 
+
+ 
+
+# =============== DMonkey Fix functions perfectly == commented out for education purposes ======= 
+
+plot SuperSmootherFilter_byDMonkey = if barnumber() < cutoffLength then double.nan else if !IsNaN(price) then filt else Double.NaN; 
+
+SuperSmootherFilter_byDMonkey.SetDefaultColor(GetColor(1)); 
+
+SuperSmootherFilter_byDMonkey.setLineWeight(3); 
+
+Hope I managed the notes and attribution appropriately 
+
+ 

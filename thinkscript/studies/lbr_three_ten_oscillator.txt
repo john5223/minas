@@ -1,0 +1,46 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2011-2018 
+# 
+
+declare lower; 
+input price = close; 
+input calculationMode = {default Normal, Alternate}; 
+
+
+plot FastLine; 
+
+switch (calculationMode) { 
+
+case Normal: 
+
+    FastLine = Average(price, 3) - Average(price, 10); 
+
+case Alternate: 
+
+    FastLine = Average(price - Average(price[3], 3), 2); 
+
+} 
+
+plot SlowLine = Average(FastLine, 16); 
+
+plot Hist = FastLine; 
+
+plot ZeroLine = 0; 
+
+ 
+
+FastLine.SetDefaultColor(GetColor(1)); 
+
+SlowLine.SetDefaultColor(GetColor(8)); 
+
+Hist.DefineColor("Positive", Color.UPTICK); 
+
+Hist.DefineColor("Negative", Color.DOWNTICK); 
+
+Hist.AssignValueColor(if Hist >= 0 then Hist.color("Positive") else Hist.color("Negative")); 
+
+Hist.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Hist.HideTitle(); 
+
+ZeroLine.SetDefaultColor(GetColor(7)); 

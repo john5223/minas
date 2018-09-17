@@ -1,0 +1,22 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+# 
+ 
+declare lower; 
+ 
+input over_Sold = 20; 
+input over_Bought = 80; 
+ 
+input length = 14; 
+input movingAvgLength = 1; 
+ 
+plot MoneyFlowIndex = Average(moneyflow(high, close, low, volume, length), movingAvgLength); 
+plot OverBought = over_Bought; 
+plot OverSold = over_Sold; 
+ 
+MoneyFlowIndex.DefineColor("OverBought", GetColor(5)); 
+MoneyFlowIndex.DefineColor("Normal", GetColor(7)); 
+MoneyFlowIndex.DefineColor("OverSold", GetColor(1)); 
+MoneyFlowIndex.AssignValueColor(if MoneyFlowIndex > over_Bought then MoneyFlowIndex.color("OverBought") else if MoneyFlowIndex > over_Sold then MoneyFlowIndex.color("Normal") else MoneyFlowIndex.color("OverSold")); 
+OverBought.SetDefaultColor(GetColor(8)); 
+OverSold.SetDefaultColor(GetColor(8)); 

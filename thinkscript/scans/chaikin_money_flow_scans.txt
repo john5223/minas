@@ -1,0 +1,13 @@
+
+# scan CMF Bearish Crossover: http://tos.mx/RHAMzC 
+ 
+ChaikinMoneyFlow()."CMF" crosses below ChaikinMoneyFlow()."ZeroLine" 
+
+
+ 
+# scan CMF Bullish Crossover: http://tos.mx/WjwYHK 
+ChaikinMoneyFlow()."CMF" crosses above ChaikinMoneyFlow()."ZeroLine" 
+
+
+
+

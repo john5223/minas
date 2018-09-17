@@ -1,0 +1,82 @@
+# Scales the RSI In Laguerre Time to the Price Chart. A fresh way to look at a very efficient study. In essence a 0 Lag Moving Average  
+# http://tos.mx/3VSyPI  
+
+# RSI in Laguerre Time Scaled to Price Self Adjusting  
+# Mobius  
+# V01.08.2016  
+  
+input nFE = 8;#hint nFE: length for Fractal Energy calculation.   
+  
+script Scale {  
+ input c = close;  
+ input Min = 0;  
+ input Max = 1;  
+ def hh = HighestAll(c);  
+ def ll = LowestAll(c);  
+ plot Range = (((Max - Min) * (c - ll)) /  (hh - ll)) + Min;  
+}  
+# Variables:  
+def o;  
+def h;  
+def l;  
+def c;  
+def gamma;  
+def CU1;  
+def CU2;  
+def CU;  
+def CD1;  
+def CD2;  
+def CD;  
+def L0;  
+def L1;  
+def L2;  
+def L3;  
+def RSI;  
+def min;  
+def max;  
+# Calculations  
+o = open;  
+h = high;  
+l = low;  
+c = close;  
+gamma = Log(Sum((Max(h, c[1]) - Min(l, c[1])), nFE) /   
+        (Highest(h, nFE) - Lowest(l, nFE))) / Log(nFE);  
+L0 = (1 – gamma) * c + gamma * L0[1];  
+L1 = -gamma * L0 + L0[1] + gamma * L1[1];  
+L2 = -gamma * L1 + L1[1] + gamma * L2[1];  
+L3 = -gamma * L2 + L2[1] + gamma * L3[1];  
+if L0 >= L1  
+then {  
+    CU1 = L0 - L1;  
+    CD1 = 0;  
+} else {  
+    CD1 = L1 - L0;  
+    CU1 = 0;  
+}  
+if L1 >= L2  
+then {  
+    CU2 = CU1 + L1 - L2;  
+    CD2 = CD1;  
+} else {  
+    CD2 = CD1 + L2 - L1;  
+    CU2 = CU1;  
+}  
+if L2 >= L3  
+then {  
+    CU = CU2 + L2 - L3;  
+    CD = CD2;  
+} else {  
+    CU = CU2;  
+    CD = CD2 + L3 - L2;  
+}  
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0;  
+min = lowest(c);  
+max = highest(c);  
+Plot RescaledRSI = Scale(c = RSI, min = min, max = max);  
+
+    RescaledRSI.SetStyle(Curve.Firm);  
+     RescaledRSI.SetLineWeight(2);  
+     RescaledRSI.AssignValueColor(if ReScaledRSI > RescaledRSI[1]   
+                                  then color.cyan  
+                                  else color.yellow);  
+# End Code Scaled RSI_Laguerre  

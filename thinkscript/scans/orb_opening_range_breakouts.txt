@@ -1,0 +1,223 @@
+# Opening Range Breakout Downward Scan
+# Mobius
+def Active = if SecondsTillTime(0830) > 0 and SecondsFromTime(0900) <= 0
+  then 1
+  else 0;d
+def ActiveLow = if Active and !Active[1]
+  then low
+  else if Active and low < ActiveLow[1]
+          then low
+          else ActiveLow[1];
+
+plot Breakout = if !Active and close < ActiveLow
+  then 1
+  else 0;
+
+# End Code
+
+
+-----------------------------------------------------
+
+
+# Opening Range Breakout Upward Scan
+# Mobius
+def Active = if SecondsTillTime(0830) > 0 and SecondsFromTime(0900) <= 0
+  then 1
+  else 0;
+def ActiveHigh = if Active and !Active[1]
+  then high
+  else if Active and high > ActiveHigh[1]
+          then high
+          else ActiveHigh[1];
+
+plot Breakout = if !Active and close > ActiveHigh
+  then 1
+  else 0;
+
+# End Code
+
+-----------------------------------------------------
+
+
+13:15 Mobius: jh.. here's an ORB breakout from OR High scan. You need to run this as a Dynamic WatchList against whatever list of stuff you want.
+
+
+def Active = if SecondsFromTime(0930) > 0 and
+                 SecondsTillTime(0945) >= 0
+              then 1
+              else 0;
+def ActiveHigh = if Active and !Active[1]
+                  then high
+                  else if Active and
+                          high > ActiveHigh[1]
+                        then high
+                        else ActiveHigh[1];
+plot Breakout = if !Active and close > ActiveHigh
+                 then 1
+                 else 0;
+
+
+-----------------------------------------------------
+
+
+13:17 Mobius: Here's the scan code for the breakdown
+
+def Active = if SecondsFromTime(0930) > 0 and
+                 SecondsTillTime(0945) >= 0
+              then 1
+              else 0;
+def ActiveLow = if Active and !Active[1]
+                  then low
+                  else if Active and
+                          low < ActiveLow[1]
+                        then low
+                        else ActiveLow[1];
+plot Breakout = if !Active and close < ActiveLow
+                 then 1
+                 else 0;
+
+
+
+
+13:20 jharvey: and you can change the aggregation period? or should it be set?
+13:20 Mobius: you can do whatever you want
+13:20 Mobius: I use the first 30 min for my range
+
+
+-----------------------------------------------------
+
+
+## ORB
+
+# ORB Breakout Scan
+# Mobius
+# 10.18.2016
+
+# Scans for current price above the OR upper band and EMA(6)
+# crossed above the OR upper band within the last 8 bars
+
+def ShowTodayOnly = 1 ; # {"No", default "Yes"};
+def S = ShowTodayOnly;
+
+def CL = close ;
+def HI = high ;
+def StartTime = 0930 ;
+def EndTime = 0945 ;
+
+def Active = if SecondsFromTime(StartTime) > 0 and
+                SecondsTillTime(EndTime) >= 0
+             then 1
+             else 0;
+
+def today =
+  if  S == 0
+      or GetDay() == GetLastDay()
+      and SecondsFromTime(StartTime) >= 0
+    then HI
+    else 0;
+
+def highbar = if today and Active and HI == HighestAll(HI) then BarNumber() else Double.NaN;
+# The bar of the condition was a previous bar
+def highbarsago = barnumber() > HighestAll(highbar);
+
+def ActiveHigh =
+  if  Active
+      and today
+      and !Active[1]
+    then HI
+    else if  Active
+             and today
+             and HI > ActiveHigh[1]
+           then HI
+           else ActiveHigh[1];
+def Breakout =
+  if  !Active
+      and today
+      and CL > ActiveHigh
+      and expAverage(CL, 5) > expAverage(CL, 10) within 2 bars
+#      and expAverage(CL, 6) > ActiveHigh within 8 bars
+    then 1
+    else 0;
+
+Plot BreakoutB = Breakout ;
+
+# End Code
+
+
+
+
+-----------------------------------------------------
+
+
+
+## Opening Range Breakout
+## linus, 2014 Feb 22, v0.6
+
+declare lower;  # for testing on chart.
+
+input UseDate = No;
+
+#hint DateToScanFor: if UseDate = Yes then set to the date on which the scanner will search;
+input DateToScanFor = 20140220;
+
+#hint FindAllBreakouts: If Yes then all breakouts after the opening range will be
+flagged, else if No then just the first breakout (up or down) will be flagged.
+input FindAllBreakouts = Yes;
+
+#hint TradeZoneStartTime: Entry must be at or after this time to be found, in Eastern time.
+input TradeZoneStartTime = 930;
+
+#hint TradeZoneEndTime: Entry must be before this time to be found, in Eastern time.
+input TradeZoneEndTime = 1600;
+
+#hint MinutesInRange: Duration in minutes of opening range.
+input MinutesInRange = 1;
+
+#hint TargetRange: If 0, don't scan for TargetRange.  If greater than zero and less than 5 then multiply the height of the range by TargetRange to determine when targets have been hit. [Example: TargetRange = 0.5 scans for price above Range High + ((Height of Range) * 0.5), or price below Range Low - ((Height of Range) * 0.5)].
+input TargetRange = 0.0;
+
+
+#hint price: Price used to signal an entry when crossing opening range.
+input price = close;
+
+def dateOK = !UseDate or DaysFromDate(DateToScanFor) == 0;
+def startSecs = SecondsFromTime(TradeZoneStartTime);
+
+# True if the current bar is in the opening range.
+def inOR = startSecs >= 0 and startSecs < MinutesInRange * 60;
+
+
+# True if in the trade zone.
+def inTradeZone = startSecs >= 0 and SecondsTillTime(TradeZoneEndTime) > 0;
+
+
+# H2, L2 store the current high and low of opening range.
+
+def H2 = if !inTradeZone then Double.NaN else if inOR and !inOR[1] then high else if inOR and H2[1] < high then high else H2[1];
+
+def L2 = if !inTradeZone then Double.NaN else if inOR and !inOR[1] then low else if inOR and L2[1] > low then low else L2[1];
+
+# pastOR is 0 if not in the trading zone, or in the opening range. pastOR is 1 if at the first bar after the opening range.  pastOR is 2 if past the first bar after range.
+
+def pastOR = CompoundValue(1, if !inTradeZone or inOR or !dateOK then 0 else if !inOR and inOR[1] then 1 else if pastOR[1] == 1 then 2 else pastOR[1], 0);
+
+
+def target = if !pastOR then 0 else if TargetRange > 0 and TargetRange < 5 then (H2 - L2) * TargetRange else 0;
+
+
+# Breakout is 1 if price has crossed above opening range, -1 if price has crossed below then opening range, else is 0.
+
+def signal = compoundValue(1,
+    if !pastOR then 0
+    else if signal[1] != 0 and !FindAllBreakouts then signal[1]
+    else if price > H2 + target then 1
+    else if price < L2 - target then -1
+    else 0
+, 0);
+
+plot Breakout = if !isNaN(close) then signal else Double.NaN;
+
+Breakout.SetPaintingStrategy(PaintingStrategy.LINE_VS_POINTS);
+Breakout.AssignValueColor(if Breakout > 0 then Color.GREEN else if Breakout < 0 then Color.RED else Color.GRAY);
+
+## END SCAN

@@ -1,0 +1,29 @@
+# Archive Name:  MACD with Bollinger Bands for Volatility Identification_Mobius 
+# Archive Tab: Momentum 
+# Tos Name: MACD_Bollinger_Mobius 
+
+# MACD Bollinger 
+# Mobius 
+# Chat room request 05.03.2018 
+
+declare lower; 
+input fastLength = 12; 
+input slowLength = 26; 
+input MACDLength = 9; 
+input averageType = AverageType.EXPONENTIAL; 
+input showBreakoutSignals = no; 
+input smoothing = 3; 
+
+plot MACD = MACD()."Diff"; 
+     MACD.SetStyle(Curve.Points); 
+     MACD.AssignValueColor(if MACD > MACD[1] 
+                           then color.green 
+                           else color.red); 
+
+def SD = StDev(MACD()."Value", smoothing); 
+def upperband = Average(MACD + SD, smoothing); 
+def lowerband = Average(MACD - SD, smoothing); 
+
+Addcloud(MACD, if MACD < MACD[1] then upperBand else lowerband, color.green, color.red, no); 
+
+# End Code MACD Bollinger 

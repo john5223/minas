@@ -1,0 +1,298 @@
+POC (P)oints (O)f (C)ontrol 
+
+by Mobius (Mobius) 2 years ago  
+
+Share Save  
+
+
+Plots the last 10 days POC's  Chart data must be 10 days long to plot them all. 
+
+http://tos.mx/Egjg6K 
+
+ 
+
+From <https://mytrade.com/profile/Mobius/statuses/5473925>  
+
+# Points Of Control Support / Resistance Areas 
+
+# Mobius 
+
+# V01.03.08.2016 
+
+# Locates last 10 Points of Control based on RTH only 
+
+ 
+
+declare Hide_On_Daily; 
+
+ 
+
+input RthBegin  = 0930; #hint RthBegin: Regular Trading Hours Begin. 
+
+input RthEnd    = 1600; #hint RthEnd: Regular Trading Hours End. 
+
+input AtrLength = 4;    #hint AtrLength: Length for Average True Range Calculation. 
+
+input RoundingFunction = .5; #hint RoundingFunction: Round to nearest ? 
+
+input MaxRisk = 2.00; #hint MaxRisk: Maximum Risk around pivots. 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def ATR = HighestAll(if isNaN(c[-1]) 
+
+    then if Average(TrueRange(h, c, l), AtrLength) < MaxRisk 
+
+         then Average(TrueRange(h, c, l), AtrLength) 
+
+         else MaxRisk 
+
+         else double.nan); 
+
+def locate = isNaN(close[13]) and !isNaN(close[14]); 
+
+def RTH = SecondsFromTime(RthBegin) > 0 and 
+
+          SecondsTillTime(RthEnd) >= 0; 
+
+def cond = RTH != RTH[1]; 
+
+profile vol = VolumeProfile("startNewProfile" = cond,  
+
+                            "onExpansion" = no,  
+
+                            "numberOfProfiles" = 20,  
+
+                            "pricePerRow" = PricePerRow.TICKSIZE,  
+
+                            "value area percent" = 68.4); 
+
+def poc = if RTH  
+
+    then Round(vol.GetPointOfControl() / RoundingFunction, 0) * RoundingFunction  
+
+    else Double.NaN; 
+
+def Poc1 = if !RTH and RTH[1] 
+
+    then poc[1] 
+
+    else Poc1[1]; 
+
+def Poc2 = if !RTH and RTH[1] 
+
+    then Poc1[1] 
+
+    else Poc2[1]; 
+
+def Poc3 = if !RTH and RTH[1] 
+
+    then Poc2[1] 
+
+    else Poc3[1]; 
+
+def Poc4 = if !RTH and RTH[1] 
+
+    then Poc3[1] 
+
+    else Poc4[1]; 
+
+def Poc5 = if !RTH and RTH[1] 
+
+    then Poc4[1] 
+
+    else Poc5[1]; 
+
+def Poc6 = if !RTH and RTH[1] 
+
+    then Poc5[1] 
+
+    else Poc6[1]; 
+
+def Poc7 = if !RTH and RTH[1] 
+
+    then Poc6[1] 
+
+    else Poc7[1]; 
+
+def Poc8 = if !RTH and RTH[1] 
+
+    then Poc7[1] 
+
+    else Poc8[1]; 
+
+def Poc9 = if !RTH and RTH[1] 
+
+    then Poc8[1] 
+
+    else Poc9[1]; 
+
+def Poc10 = if !RTH and RTH[1] 
+
+    then Poc9[1] 
+
+    else Poc10[1]; 
+
+plot pc =  HighestAll(if isNaN(c[-1]) 
+
+     then poc 
+
+     else double.nan); 
+
+     pc.SetStyle(Curve.Firm); 
+
+     pc.SetLineWeight(2); 
+
+addCloud(pc-ATR, pc+ATR, createColor(150,7,5), createColor(150,7,5)); 
+
+addChartBubble(locate, pc, "POC", createColor(150,7,5), yes); 
+
+plot pc1 = HighestAll(if isNaN(c[-1]) 
+
+     then Poc1 
+
+     else double.nan); 
+
+     pc1.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc1-ATR, pc1+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc1, "POC 1", createColor(150,7,5), yes); 
+
+plot pc2 = HighestAll(if isNaN(c[-1]) 
+
+     then poc2 
+
+     else double.nan); 
+
+     pc2.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc2-ATR, pc2+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc2, "POC 2", createColor(150,7,5), yes); 
+
+plot pc3 = HighestAll(if isNaN(c[-1]) 
+
+     then poc3 
+
+     else double.nan); 
+
+     pc3.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc3-ATR, pc3+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc3, "POC 3", createColor(150,7,5), yes); 
+
+plot pc4 = HighestAll(if isNaN(c[-1]) 
+
+     then poc4 
+
+     else double.nan); 
+
+     pc4.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc4-ATR, pc4+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc4, "POC 4", createColor(150,7,5), yes); 
+
+plot pc5 = HighestAll(if isNaN(c[-1]) 
+
+     then poc5 
+
+     else double.nan); 
+
+     pc5.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc5-ATR, pc5+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc5, "POC 5", createColor(150,7,5), yes); 
+
+plot pc6 = HighestAll(if isNaN(c[-1]) 
+
+     then poc6 
+
+     else double.nan); 
+
+     pc6.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc6-ATR, pc6+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc6, "POC 6", createColor(150,7,5), yes); 
+
+plot pc7 = HighestAll(if isNaN(c[-1]) 
+
+     then poc7 
+
+     else double.nan); 
+
+     pc7.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc7-ATR, pc7+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc7, "POC 7", createColor(150,7,5), yes); 
+
+plot pc8 = HighestAll(if isNaN(c[-1]) 
+
+     then poc8 
+
+     else double.nan); 
+
+     pc8.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc8-ATR, pc8+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc8, "POC 8", createColor(150,7,5), yes); 
+
+plot pc9 = HighestAll(if isNaN(c[-1]) 
+
+     then poc9 
+
+     else double.nan); 
+
+     pc9.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc9-ATR, pc9+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc9, "POC 9", createColor(150,7,5), yes); 
+
+plot pc10 = HighestAll(if isNaN(c[-1]) 
+
+     then poc10 
+
+     else double.nan); 
+
+     pc10.SetStyle(Curve.Long_Dash); 
+
+addCloud(pc10-ATR, pc10+ATR, color.dark_gray, color.dark_gray); 
+
+addChartBubble(locate, pc10, "POC 10", createColor(150,7,5), yes); 
+
+pc.AssignValueColor(if (pc == pc1) or (pc == pc2) or (pc == pc3) or (pc == pc4) or (pc == pc5) or (pc == pc6) or (pc == pc7) or (pc == pc8) or (pc == pc9) or (pc == pc10) then color.dark_green else color.orange); 
+
+pc1.AssignValueColor(if (pc1 == pc) or (pc1 == pc2) or (pc1 == pc3) or (pc1 == pc4) or (pc1 == pc5) or (pc1 == pc6) or (pc1 == pc7) or (pc1 == pc8) or (pc1 == pc9) or (pc1 == pc10) then color.dark_green else color.orange); 
+
+pc2.AssignValueColor(if (pc2 == pc) or (pc2 == pc1) or (pc2 == pc3) or (pc2 == pc4) or (pc2 == pc5) or (pc2 == pc6) or (pc2 == pc7) or (pc2 == pc8) or (pc2 == pc9) or (pc2 == pc10) then color.dark_green else color.orange); 
+
+pc3.AssignValueColor(if (pc3 == pc) or (pc3 == pc1) or (pc3 == pc2) or (pc3 == pc4) or (pc3 == pc5) or (pc3 == pc6) or (pc3 == pc7) or (pc3 == pc8) or (pc3 == pc9) or (pc3 == pc10) then color.dark_green else color.orange); 
+
+pc4.AssignValueColor(if (pc4 == pc) or (pc4 == pc1) or (pc4 == pc2) or (pc4 == pc3) or (pc4 == pc5) or (pc4 == pc6) or (pc4 == pc7) or (pc4 == pc8) or (pc4 == pc9) or (pc4 == pc10) then color.dark_green else color.orange); 
+
+pc5.AssignValueColor(if (pc5 == pc) or (pc5 == pc1) or (pc5 == pc2) or (pc5 == pc3) or (pc5 == pc4) or (pc5 == pc6) or (pc5 == pc7) or (pc5 == pc8) or (pc5 == pc9) or (pc5 == pc10) then color.dark_green else color.orange); 
+
+pc6.AssignValueColor(if (pc6 == pc) or (pc6 == pc1) or (pc6 == pc2) or (pc6 == pc3) or (pc6 == pc4) or (pc6 == pc5) or (pc6 == pc7) or (pc6 == pc8) or (pc6 == pc9) or (pc6 == pc10) then color.dark_green else color.orange); 
+
+pc7.AssignValueColor(if (pc7 == pc) or (pc7 == pc1) or (pc7 == pc2) or (pc7 == pc3) or (pc7 == pc4) or (pc7 == pc5) or (pc7 == pc6) or (pc7 == pc8) or (pc7 == pc9) or (pc7 == pc10) then color.dark_green else color.orange); 
+
+pc8.AssignValueColor(if (pc8 == pc) or (pc8 == pc1) or (pc8 == pc2) or (pc8 == pc3) or (pc8 == pc4) or (pc8 == pc5) or (pc8 == pc6) or (pc8 == pc7) or (pc8 == pc9) or (pc8 == pc10) then color.dark_green else color.orange); 
+
+pc9.AssignValueColor(if (pc9 == pc) or (pc9 == pc1) or (pc9 == pc2) or (pc9 == pc3) or (pc9 == pc4) or (pc9 == pc5) or (pc9 == pc6) or (pc9 == pc7) or (pc9 == pc8) or (pc9 == pc10) then color.dark_green else color.orange); 
+
+pc10.AssignValueColor(if (pc10 == pc) or (pc10 == pc1) or (pc10 == pc2) or (pc10 == pc3) or (pc10 == pc4) or (pc10 == pc5) or (pc10 == pc6) or (pc10 == pc7) or (pc10 == pc8) or (pc10 == pc9) then color.dark_green else color.orange); 

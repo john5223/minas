@@ -1,0 +1,75 @@
+File : /Codes by R Houser/BigMike_VolumeGraphSTUDY.ts 
+
+Uploaded by : rdhouser <rhouser@...> 
+
+Description : Similar to VolumeAvg built-in study, but uses Linear Regression 
+
+Slope to determine up or down days 
+
+ 
+
+ 
+
+declare lower; 
+
+declare weak_volume_dependency; 
+
+ 
+
+input length        = 8; 
+
+input price         = close; 
+
+input volLength     = 50; 
+
+input refLine       = 400; 
+
+input showRefLine   = yes; 
+
+input showAlerts    = yes; 
+
+ 
+
+def slope           = LinearRegressionSlope( price, length ); 
+
+# def yIntercept  = MovingAverage( AverageType.Simple, price, length ) + ( slope * length / 2 ); Left this in here for reference only, 
+
+#     this script only needs slope; 
+
+ 
+
+plot Vol            = volume; 
+
+plot VolAvg         = MovingAverage( AverageType.EXPONENTIAL, MovingAverage( AverageType.EXPONENTIAL, volume, volLength ), volLength ); 
+
+plot ReferenceLine  = refLine; 
+
+ 
+
+#===============================[ Look & Feel ]================================ 
+
+Vol.DefineColor( "up", Color.BLUE ); 
+
+Vol.DefineColor( "dn", Color.DOWNTICK ); 
+
+Vol.AssignValueColor( if slope > 0 then Vol.Color( "up" ) else Vol.Color( "dn" ) ); 
+
+Vol.SetPaintingStrategy( PaintingStrategy.HISTOGRAM ); 
+
+Vol.SetLineWeight( 3 ); 
+
+ 
+
+VolAvg.SetDefaultColor( Color.CYAN ); 
+
+ 
+
+ReferenceLine.SetDefaultColor( Color.MAGENTA ); 
+
+ReferenceLine.SetHiding( !showRefLine ); 
+
+ 
+
+#==================================[ Alerts ]================================== 
+
+Alert( showAlerts and volume > ReferenceLine, "Volume GT Reference", Alert.BAR, Sound.Chimes ); 

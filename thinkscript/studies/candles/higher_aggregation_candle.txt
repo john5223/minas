@@ -1,0 +1,79 @@
+ 
+
+ 
+
+Machine generated alternative text:
+Charts 
+INQ 
+INQ 2 d 2m 
+201E 
+4809.oo 
+0:480825 
+H:480g L:480775 
+z 1.25 
+4817 
+481E 
+4815 
+4814 
+4813 
+4812 
+4811 
+4810
+ 
+
+ 
+
+ 
+
+ 
+
+# Higher Aggregation Candle Color 
+
+# Mobius 
+
+# V01.04.2011 
+
+ 
+
+input agg = AggregationPeriod.Fifteen_Min; 
+
+input TrendPeriods = 6; 
+
+ 
+
+def o = open(period = agg); 
+
+def h = high(period = agg); 
+
+def l = low(period = agg); 
+
+def c = close(period = agg); 
+
+def hh = highest(h, trendPeriods); 
+
+def ll = lowest(l, trendPeriods); 
+
+def trend = if ((c - ll) / (hh - ll)) > .5  
+
+            then 1 
+
+            else 0; 
+
+AssignPriceColor(if trend then color.green else color.red); 
+
+# End Code 
+
+Higher Trend Candle Color 
+
+by Mobius (Mobius) 2 years ago  
+
+Share Save  
+
+
+Colors the Candles according to the higher aggregations trend. 
+
+http://tos.mx/FBHHT4 
+
+ 
+
+From <https://mytrade.com/profile/Mobius/statuses/5748369>  

@@ -1,0 +1,440 @@
+ 
+
+3X scan script by RH 
+
+ 
+
+Caution this does not match the results of using Three_X_Oscillator directly. 
+
+ 
+
+by R. Houser modified by SFL 
+
+TOS title =  
+
+The 3X script is moderately complex, if you're scanning for a single time frame you can always simplify the script to that single time frame, so for example here's a simplified version for the DAY timeframe: 
+
+Correction, the 10 in line 5 is the slowD length. 
+
+============================================= 
+
+ 
+
+ 
+
+# This is the scan that avoids referencing the larger Three_X_Oscillator 
+
+#TOS title = Scan_3XOsc_fav 
+
+input Val_StochD = 50;#hint Val_StochD:The scan value desired. OB/OS = 80/20 
+
+input Withih_Bars = 3;#hint Withih_Bars: The numbers of within-bars used in the scan 
+
+def lowest_low        = Lowest( low, 10 ); 
+
+def highest_high      = Highest( high, 10 ); 
+
+def fastK             = if ( highest_high - lowest_low ) <= 0 then 0 else 100 * ( close - lowest_low ) / ( highest_high - lowest_low ); 
+
+def fastD             = ExpAverage( fastK, 3 ); 
+
+plot SlowD = reference StochasticFull().FullD; 
+
+def stochD            = ExpAverage( slowD, 10 );#Complies with the correction note above 
+
+ 
+
+plot scan3x = stochD > Val_StochD and stochD[1] <= Val_StochD  within Withih_Bars bars ;# for a crossing scan. 
+
+#plot scan3x = stochD < Val_StochD within Withih_Bars bars ;# Bearish scan for value below the input  
+
+#plot scan3x = stochD > Val_StochD within Withih_Bars bars ;# Bullish scan for value above the input 
+
+============================================= 
+
+You can see a lot has been stripped out. This uses the default values in the 3X oscillator, you will have to manually change four numbers if you want to tune it differently, 1) in lines 1 and 2 the 10 is the fastK length, 2) in line 4 the 3 is the smoothing factor, 3) in line 5 the 10 is the slowK length, and 4) in the plot line the 25 is the threshold value. 
+
+ 
+
+Put this into a study filter on the scan tab and save the scan so you don't have to cut-and-paste every time you want to use it. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Three_X_Oscllator scan 
+
+ 
+
+Used for the Three_X_Oscllator study scan 
+
+ 
+
+Three_X_Oscillator()."stochD" crosses above 35 within 3 bars 
+
+ 
+
+# 35 is good turn-up value. 50 is an good established value. 
+
+Combine with other study scans 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+RH's 3X Osc scan 
+
+ 
+
+ 
+
+6-8-2012 
+
+Yes, but not using the whole Three_X_Indicator script, as it is too complex. But you could use the part of the code and construct the scan for pBUY and pSELL, you'll never be able to scan for sBUY or sSELL as it uses rec variables and a day look ahead. I broke out the essential part of the script and installed in a chart study called Three_X_Scan: 
+
+declare lower; 
+
+ 
+
+input K_period        = 10; 
+
+input D_period        = 10; 
+
+input SlowTrendLength = 3; 
+
+input smoothing_type  = { default EMA, SMA }; 
+
+input stochastic_type = { FAST, default SLOW }; 
+
+ 
+
+def aggPer            = getAggregationPeriod(); 
+
+def adjAggPer         = if aggPer == AggregationPeriod.MIN then 
+
+                          AggregationPeriod.THREE_MIN 
+
+                        else if aggPer == AggregationPeriod.TWO_MIN then 
+
+                          AggregationPeriod.FIVE_MIN 
+
+                        else if aggPer == AggregationPeriod.THREE_MIN then 
+
+                          AggregationPeriod.TEN_MIN 
+
+                        else if aggPer == AggregationPeriod.FOUR_MIN then 
+
+                          AggregationPeriod.TEN_MIN 
+
+                        else if aggPer == AggregationPeriod.FIVE_MIN then 
+
+                          AggregationPeriod.FIFTEEN_MIN 
+
+                        else if aggPer == AggregationPeriod.TEN_MIN then 
+
+                          AggregationPeriod.THIRTY_MIN 
+
+                        else if aggPer == AggregationPeriod.FIFTEEN_MIN then 
+
+                          AggregationPeriod.HOUR 
+
+                        else if aggPer == AggregationPeriod.TWENTY_MIN then 
+
+                          AggregationPeriod.HOUR 
+
+                        else if aggPer == AggregationPeriod.THIRTY_MIN then 
+
+                          AggregationPeriod.TWO_HOURS 
+
+                        else if aggPer == AggregationPeriod.HOUR then 
+
+                          AggregationPeriod.FOUR_HOURS 
+
+                        else if aggPer == AggregationPeriod.TWO_HOURS then 
+
+                          AggregationPeriod.DAY 
+
+                        else if aggPer == AggregationPeriod.FOUR_HOURS then 
+
+                          AggregationPeriod.DAY 
+
+                        else if aggPer == AggregationPeriod.DAY then 
+
+                          AggregationPeriod.THREE_DAYS 
+
+                        else if aggPer == AggregationPeriod.TWO_DAYS then 
+
+                          AggregationPeriod.WEEK 
+
+                        else if aggPer == AggregationPeriod.THREE_DAYS then 
+
+                          AggregationPeriod.WEEK 
+
+                        else if aggPer == AggregationPeriod.FOUR_DAYS then 
+
+                          AggregationPeriod.MONTH 
+
+                        else if aggPer == AggregationPeriod.WEEK then 
+
+                          AggregationPeriod.MONTH 
+
+                        else if aggPer == AggregationPeriod.MONTH then 
+
+                          AggregationPeriod.MONTH 
+
+                        else 
+
+                          Double.NaN; 
+
+ 
+
+def _kPeriod; 
+
+def _dPeriod; 
+
+def _slowTrendLength; 
+
+if aggPer == AggregationPeriod.MONTH then { 
+
+  _kPeriod          = K_period * 3; 
+
+  _dPeriod          = D_period * 3; 
+
+  _slowTrendLength  = SlowTrendLength * 3; 
+
+} else { 
+
+  _kPeriod          = K_period; 
+
+  _dPeriod          = D_period; 
+
+  _slowTrendLength  = SlowTrendLength; 
+
+} 
+
+ 
+
+def priceH            = high( period = adjAggPer ); 
+
+def priceL            = low( period = adjAggPer ); 
+
+def priceC            = close( period = adjAggPer ); 
+
+ 
+
+def lowest_low        = lowest( low, _kPeriod ); 
+
+def highest_high      = highest( high, _kPeriod ); 
+
+def fastK             = if ( highest_high - lowest_low ) <= 0 then 0 else 100 * ( close - lowest_low ) / ( highest_high - lowest_low ); 
+
+def fastD             = if smoothing_type == smoothing_type.EMA then ExpAverage( fastK, _dPeriod ) else Average( fastK, _dPeriod ); 
+
+def slowK             = fastD; 
+
+def slowD             = if smoothing_type == smoothing_type.EMA then ExpAverage( slowK, _dPeriod ) else Average( slowK, _dPeriod ); 
+
+ 
+
+#---Stochastic 
+
+plot stochD            = if stochastic_type == stochastic_type.FAST then fastD else slowD; 
+
+stochD.SetPaintingStrategy( PaintingStrategy.POINTS ); 
+
+stochD.AssignValueColor( if stochD >= stochD[1] then Color.CYAN else if stochD < stochD[1] then Color.BLUE else Color.GRAY ); 
+
+ 
+
+ 
+
+Here's the scan/custom column for pBUY: 
+
+def tresX = Three_X_Scan().stochD; 
+
+plot scan3x = tresX > 25 and tresX[1] <= 25; 
+
+ 
+
+And wonders of wonders, this scan worked and it found 71 stocks on a day aggregation period. 
+
+ 
+
+Here's the scan/custom column for pSELL: 
+
+def tresX = Three_X_Scan().stochD; 
+
+plot scan3x = tresX < 85 and tresX[1] >= 85; 
+
+ 
+
+And this worked as well, it found 16 stocks on a day aggregation period. 
+
+ 
+
+So apparently some study filter scans are working, but "VolumeAvg( length=50 ).VolAvg" does not. 
+
+ 
+
+Good Luck. 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

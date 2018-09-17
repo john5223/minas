@@ -1,0 +1,112 @@
+266.57 
+SPY4MID 
+LinearRegrReversaI (14) I O 
+Style Drawings Studies Patterns 
+026726 H:26789 L:26535 R:2.54 ReverseEngineeringMACD(CLOSE, g, ENA 0.0) 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input fastLength = 12; 
+
+input slowLength = 26; 
+
+input MACDLength = 9; 
+
+input AverageType = {SMA, default EMA}; 
+
+input MACDLevel = 0.0; 
+
+ 
+
+def fastCoeff = 2 / (1 + fastLength); 
+
+def slowCoeff = 2 / (1 + slowLength); 
+
+def prevFastEMA = ExpAverage(price, fastLength)[1]; 
+
+def prevSlowEMA = ExpAverage(price, slowLength)[1]; 
+
+def prevFastSMA = Average(price, fastLength)[1]; 
+
+def prevSlowSMA = Average(price, slowLength)[1]; 
+
+def prevDiff; 
+
+def crossDiff; 
+
+def denominator; 
+
+ 
+
+plot PMACDeq; 
+
+plot PMACDlevel; 
+
+plot MA_PMACDeq; 
+
+plot PMACDsignal; 
+
+ 
+
+switch (AverageType) { 
+
+case SMA: 
+
+    crossDiff = slowLength * price[fastLength] - fastLength * price[slowLength]; 
+
+    denominator = slowLength - fastLength; 
+
+    prevDiff = prevFastSMA - prevSlowSMA; 
+
+    PMACDlevel = (crossDiff + fastLength * slowLength * (MACDLevel - prevDiff)) / denominator; 
+
+    if IsNaN(price[1]) { 
+
+        PMACDeq = Double.NaN; 
+
+        MA_PMACDeq = Double.NaN; 
+
+    } else { 
+
+        PMACDeq = crossDiff / denominator; 
+
+        MA_PMACDeq = Average(PMACDeq, MACDLength); 
+
+    } 
+
+    PMACDsignal = (crossDiff + fastLength * slowLength * (Average(prevDiff, MACDLength - 1) - prevDiff)) / denominator; 
+
+case EMA: 
+
+    crossDiff = prevFastEMA * fastCoeff - prevSlowEMA * slowCoeff; 
+
+    denominator = fastCoeff - slowCoeff; 
+
+    prevDiff = prevFastEMA - prevSlowEMA; 
+
+    PMACDeq = crossDiff / denominator; 
+
+    PMACDlevel = (MACDLevel - prevDiff + crossDiff) / denominator; 
+
+    MA_PMACDeq = ExpAverage(PMACDeq, MACDLength); 
+
+    PMACDsignal = (ExpAverage(prevDiff, MACDLength) - prevDiff + crossDiff) / denominator; 
+
+} 
+
+ 
+
+PMACDeq.SetDefaultColor(GetColor(1)); 
+
+MA_PMACDeq.SetDefaultColor(GetColor(8)); 
+
+PMACDlevel.SetDefaultColor(GetColor(3)); 
+
+PMACDsignal.SetDefaultColor(GetColor(5)); 

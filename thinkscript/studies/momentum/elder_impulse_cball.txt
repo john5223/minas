@@ -1,0 +1,144 @@
+#Name:             ElderImpulse 
+
+#Programmed By:    Chris Ball (chris.m.ball@gmail.com) on 11/2/08 
+
+#Posted At:        http://chartingwithchris.blogspot.com 
+
+#Description:      This study can be adopted for display in many formats, however by default, it will display itself as a dot below each candle for the day.  Think of this system as telling you what you "may" do, rather than what you "must" do.  Alexander Elder created this system as a means of filtration rather than recommendation. 
+
+ 
+
+input length = 13; 
+
+ 
+
+def EMA = MovAvgExponential(length=length)."AvgExp"; 
+
+def MACDHist = MACDHistogram()."Diff"; 
+
+ 
+
+def impulseSignal = if (EMA < EMA[1] and MACDHist < MACDHist[1]) 
+
+                    then 0 
+
+                    else if (EMA > EMA[1] and MACDHist > MACDHist[1]) 
+
+                    then 1 
+
+                    else -1; 
+
+ 
+
+plot signal = low*0.95; 
+
+signal.assignValueColor(if impulseSignal == 1 then Color.Green else if impulseSignal == 0 then Color.Red else Color.Blue); 
+
+signal.setpaintingstrategy(paintingstrategy.points); 
+
+signal.setLineWeight(3); 
+
+signal.hideBubble(); 
+
+AD8E 
+O ADOBE SYSTEMS INC COM 
+223.54 
+c: 223.54 
+R: 72 
+(CLOSE) 
+Share 
+theoTrade_Projection Pivots (21 
+Style Drawings Studies Patterns 
+ADBE4 M ID [NASDAQ] 
+01227.94 L:221E1 
+_ 26: 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+ 
+
+input length = 13; 
+
+input paintBars = yes; 
+
+ 
+
+def EMA = ExpAverage(close, length); 
+
+def MACD = ExpAverage(close, 12) - ExpAverage(close, 26); 
+
+def MACDHist = MACD - ExpAverage(MACD, 9); 
+
+def GreenPrice = EMA > EMA[1] and MACDHist > MACDHist[1]; 
+
+def RedPrice = EMA < EMA[1] and MACDHist < MACDHist[1]; 
+
+ 
+
+plot Bullish = GreenPrice; 
+
+plot Neutral = !GreenPrice and !RedPrice; 
+
+plot Bearish = RedPrice; 
+
+ 
+
+Bullish.SetDefaultColor(Color.UPTICK); 
+
+Bullish.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+Bullish.SetLineWeight(3); 
+
+Bullish.hide(); 
+
+Neutral.SetDefaultColor(Color.BLUE); 
+
+Neutral.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+Neutral.SetLineWeight(3); 
+
+Neutral.hide(); 
+
+Bearish.SetDefaultColor(Color.DOWNTICK); 
+
+Bearish.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS); 
+
+Bearish.SetLineWeight(3); 
+
+Bearish.hide(); 
+
+ 
+
+DefineGlobalColor("Bullish", Color.UPTICK); 
+
+DefineGlobalColor("Neutral", Color.BLUE); 
+
+DefineGlobalColor("Bearish", Color.DOWNTICK); 
+
+AssignPriceColor(if !paintBars then Color.CURRENT else if GreenPrice then globalColor("Bullish") else if RedPrice then globalColor("Bearish") else globalColor("Neutral")); 
+
+ 
+
+ 
+
+AD8E 
+O ADOBE SYSTEMS INC COM 
+223.54 
+c: 223.54 
+R: 72 
+(CLOSE) 
+Share 
+theoTrade_Projection Pivots (21 
+Style 
+Drawi ngs 
+Studies Patterns 
+ADBE4 M ID [NASDAQ] 
+01227.94 L:221E1 
+_ 26: 
+no) N,'A N,'A N,'A N,'A N,'A N,'A N,'A Elder.„ 
+ 
+
+Curator's Comment: The logic for this study mirrors the built in ThinkOrSwim logic in the "Impulse" indicator.  What is different is that this script paints colored points rather that repaints candles.  The ThinkOrSwim Impulse indicator is pictured below with this indicator as well. 

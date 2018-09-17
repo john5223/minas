@@ -1,0 +1,480 @@
+ 
+
+
+ 
+
+ 
+
+# Stochastic Normalization 
+
+# Underlying & Secondary Symbol Normalized in Stochastic Range 
+
+# Mobius 
+
+# 11.27.2017 
+
+# Nube added GlobalAD Line 12.6.17 
+
+# Nube added Markets Above MA 7.1.18 
+
+ 
+
+declare lower; 
+
+ 
+
+input FirstSym  = { Default GlobalAD, Ticker }; 
+
+input secondSym = "/NQ"; 
+
+input cloud     = no; 
+
+input over_bought = .85; 
+
+input over_sold = .15; 
+
+input KPeriod = 10; 
+
+input DPeriod = 10; 
+
+input slowing_period = 3; 
+
+input averageType = AverageType.SIMPLE; 
+
+input maLength = 200; 
+
+ 
+
+def na = Double.NaN; 
+
+ 
+
+# Global AD Line 
+
+ 
+
+def rut  = if !IsNaN(close("rut")) then close("rut") else rut[1]; # Russel 2k 
+
+def ewc  = if !IsNaN(close("EWC")) then close("EWC") else ewc[1]; # Canada 
+
+def ewj  = if !IsNaN(close("ewj")) then close("ewj") else ewj[1]; # Japan 
+
+def ewu  = if !IsNaN(close("ewu")) then close("ewu") else ewu[1]; # England 
+
+def ewq  = if !IsNaN(close("ewq")) then close("ewq") else ewq[1]; # France 
+
+def ewg  = if !IsNaN(close("ewg")) then close("ewg") else ewg[1];# Germany 
+
+def ewa  = if !IsNaN(close("ewa")) then close("ewa") else ewa[1];# Australia 
+
+def ewh  = if !IsNaN(close("ewh")) then close("ewh") else ewh[1];# Hong Kong 
+
+def ewp  = if !IsNaN(close("ewp")) then close("ewp") else ewp[1];# Spain 
+
+def ewd  = if !IsNaN(close("ewd")) then close("ewd") else ewd[1];# Sweden 
+
+def ewi  = if !IsNaN(close("ewi")) then close("ewi") else ewi[1];# Italy 
+
+def ewk  = if !IsNaN(close("ewk")) then close("ewk") else ewk[1];# Belguim 
+
+def eis  = if !IsNaN(close("eis")) then close("eis") else eis[1];# Israel 
+
+def ewo  = if !IsNaN(close("ewo")) then close("ewo") else ewo[1];# Austria 
+
+def ewt  = if !IsNaN(close("ewt")) then close("ewt") else ewt[1];# Taiwan  
+
+def ewz  = if !IsNaN(close("ewz")) then close("ewz") else ewz[1];# Brazil  
+
+def eww  = if !IsNaN(close("eww")) then close("eww") else eww[1];# Mexico  
+
+def ewm  = if !IsNaN(close("ewm")) then close("ewm") else ewm[1];# Malaysia  
+
+def thd  = if !IsNaN(close("thd")) then close("thd") else thd[1];# Thailand  
+
+def tur  = if !IsNaN(close("tur")) then close("tur") else tur[1];# Turkey  
+
+def ech  = if !IsNaN(close("ech")) then close("ech") else ech[1];# Chile  
+
+def qat  = if !IsNaN(close("qat")) then close("qat") else qat[1];# Qatar  
+
+def epu  = if !IsNaN(close("epu")) then close("epu") else epu[1];# Peru  
+
+def pgal = if !IsNaN(close("pgal")) then close("pgal") else pgal[1];#Portugal 
+
+def eden = if !IsNaN(close("eden")) then close("eden") else eden[1];#Denmark 
+
+def enor = if !IsNaN(close("enor")) then close("enor") else enor[1];#Norway 
+
+def eirl = if !IsNaN(close("eirl")) then close("eirl") else eirl[1];#Ireland 
+
+def efnl = if !IsNaN(close("efnl")) then close("efnl") else efnl[1];#Finland 
+
+def epol = if !IsNaN(close("epol")) then close("epol") else epol[1]; #Poland  
+
+def erus = if !IsNaN(close("erus")) then close("erus") else erus[1]; # Russia 
+
+def inda = if !IsNaN(close("inda")) then close("inda") else inda[1]; # India 
+
+def mchi = if !IsNaN(close("mchi")) then close("mchi") else mchi[1]; # China  
+
+def icol = If(!IsNaN(close("icol")), close("icol"), icol[1]); # Colombia 
+
+def ephe = If(!IsNaN(close("ephe")), close("ephe"), ephe[1]); # Phillipines  
+
+def eido = If(!IsNaN(close("eido")), close("eido"), eido[1]); # Indonesia  
+
+def enzl = If(!IsNaN(close("enzl")), close("enzl"), enzl[1]); # New Zealand 
+
+def eza  = If(!IsNaN(close("eza")), close("eza"), eza[1]);    # South Africa  
+
+def ews  = If(!IsNaN(close("ews")), close("ews"), ews[1]);    # Singapore 
+
+def ewl  = If(!IsNaN(close("ewl")), close("ewl"), ewl[1]);    # Switzerland 
+
+def ewn  = If(!IsNaN(close("ewn")), close("ewn"), ewn[1]);    # Netherlands 
+
+def ewy  = If(!IsNaN(close("ewy")), close("ewy"), ewy[1]);    # South Korea  
+
+def uae  = If(!IsNaN(close("uae")), close("uae"), uae[1]);#United Arab Emirates  
+
+# Getting a + or - for each ticker 
+
+def srut   = Sign(rut - rut[1]); 
+
+def sewc   = Sign(ewc - ewc[1]); 
+
+def sewj   = Sign(ewj - ewj[1]); 
+
+def sewu   = Sign(ewu - ewu[1]); 
+
+def sewq   = Sign(ewq - ewq[1]); 
+
+def sewl   = Sign(ewl - ewl[1]); 
+
+def sewg   = Sign(ewg - ewg[1]); 
+
+def sewa   = Sign(ewa - ewa[1]); 
+
+def sewh   = Sign(ewh - ewh[1]); 
+
+def sewn   = Sign(ewn - ewn[1]); 
+
+def sewp   = Sign(ewp - ewp[1]); 
+
+def sewd   = Sign(ewd - ewd[1]); 
+
+def sewi   = Sign(ewi - ewi[1]); 
+
+def sewk   = Sign(ewk - ewk[1]); 
+
+def sews   = Sign(ews - ews[1]); 
+
+def seis   = Sign(eis - eis[1]); 
+
+def sewo   = Sign(ewo - ewo[1]); 
+
+def sewy   = Sign(ewy - ewy[1]); 
+
+def sewt   = Sign(ewt - ewt[1]); 
+
+def seza   = Sign(eza - eza[1]); 
+
+def sewz   = Sign(ewz - ewz[1]); 
+
+def seww   = Sign(eww - eww[1]); 
+
+def sewm   = Sign(ewm - ewm[1]); 
+
+def sthd   = Sign(thd - thd[1]); 
+
+def stur   = Sign(tur - tur[1]); 
+
+def sech   = Sign(ech - ech[1]); 
+
+def sqat   = Sign(qat - qat[1]); 
+
+def suae   = Sign(uae - uae[1]); 
+
+def sepu   = Sign(epu - epu[1]); 
+
+def spgal  = Sign(pgal - pgal[1]); 
+
+def seden  = Sign(eden - eden[1]); 
+
+def senor  = Sign(enor - enor[1]); 
+
+def seirl  = Sign(eirl - eirl[1]); 
+
+def senzl  = Sign(enzl - enzl[1]); 
+
+def sefnl  = Sign(efnl - efnl[1]); 
+
+def sepol  = Sign(epol - epol[1]); 
+
+def sephe  = Sign(ephe - ephe[1]); 
+
+def seido  = Sign(eido - eido[1]); 
+
+def serus  = Sign(erus - erus[1]); 
+
+def sinda  = Sign(inda - inda[1]); 
+
+def smchi  = Sign(mchi - mchi[1]); 
+
+def sicol  = Sign(icol - icol[1]); 
+
+              
+
+def arut   = rut > MovingAverage(averageType,rut,maLength); 
+
+def aewc   = ewc > MovingAverage(averageType,ewc,maLength); 
+
+def aewj   = ewj > MovingAverage(averageType,ewj,maLength); 
+
+def aewu   = ewu > MovingAverage(averageType,ewu,maLength); 
+
+def aewq   = ewq > MovingAverage(averageType,ewq,maLength); 
+
+def aewl   = ewl > MovingAverage(averageType,ewl,maLength); 
+
+def aewg   = ewg > MovingAverage(averageType,ewg,maLength); 
+
+def aewa   = ewa > MovingAverage(averageType,ewa,maLength); 
+
+def aewh   = ewh > MovingAverage(averageType,ewh,maLength); 
+
+def aewn   = ewn > MovingAverage(averageType,ewn,maLength); 
+
+def aewp   = ewp > MovingAverage(averageType,ewp,maLength); 
+
+def aewd   = ewd > MovingAverage(averageType,ewd,maLength); 
+
+def aewi   = ewi > MovingAverage(averageType,ewi,maLength); 
+
+def aewk   = ewk > MovingAverage(averageType,ewk,maLength); 
+
+def aews   = ews > MovingAverage(averageType,ews,maLength); 
+
+def aeis   = eis > MovingAverage(averageType,eis,maLength); 
+
+def aewo   = ewo > MovingAverage(averageType,ewo,maLength); 
+
+def aewy   = ewy > MovingAverage(averageType,ewy,maLength); 
+
+def aewt   = ewt > MovingAverage(averageType,ewt,maLength); 
+
+def aeza   = eza > MovingAverage(averageType,eza,maLength); 
+
+def aewz   = ewz > MovingAverage(averageType,ewz,maLength); 
+
+def aeww   = eww > MovingAverage(averageType,eww,maLength); 
+
+def aewm   = ewm > MovingAverage(averageType,ewm,maLength); 
+
+def athd   = thd > MovingAverage(averageType,thd,maLength); 
+
+def atur   = tur > MovingAverage(averageType,tur,maLength); 
+
+def aech   = ech > MovingAverage(averageType,ech,maLength); 
+
+def aqat   = qat > MovingAverage(averageType,qat,maLength); 
+
+def auae   = uae > MovingAverage(averageType,uae,maLength); 
+
+def aepu   = epu > MovingAverage(averageType,epu,maLength); 
+
+def apgal  = pgal > MovingAverage(averageType,pgal,maLength); 
+
+def aeden  = eden > MovingAverage(averageType,eden,maLength); 
+
+def aenor  = enor > MovingAverage(averageType,enor,maLength); 
+
+def aeirl  = eirl > MovingAverage(averageType,eirl,maLength); 
+
+def aenzl  = enzl > MovingAverage(averageType,enzl,maLength); 
+
+def aefnl  = efnl > MovingAverage(averageType,efnl,maLength); 
+
+def aepol  = epol > MovingAverage(averageType,epol,maLength); 
+
+def aephe  = ephe > MovingAverage(averageType,ephe,maLength); 
+
+def aeido  = eido > MovingAverage(averageType,eido,maLength); 
+
+def aerus  = erus > MovingAverage(averageType,erus,maLength); 
+
+def ainda  = inda > MovingAverage(averageType,inda,maLength); 
+
+def amchi  = mchi > MovingAverage(averageType,mchi,maLength); 
+
+def aicol  = icol > MovingAverage(averageType,icol,maLength); 
+
+ 
+
+def gAD = srut + sewc + sewj + sewu + sewq + sewl + sewg + sewa + sewh + sewn + sewi + sewd + sewp + sewk + sews + seis + sewo + spgal + seden + senor + seirl + senzl + sefnl + sewy + sewt + seza + sewz + seww + sewm + sthd + stur + sech + sqat + suae + sepu + sepol + sephe + seido + serus + sinda + smchi + sicol; 
+
+ 
+
+def sumAboveMA = arut + aewc + aewj + aewu + aewq + aewl + aewg + aewa + aewh + aewn + aewd + aewp + aewi + aewk + aews + aeis + aewo + apgal + aeden + aenor + aeirl + aenzl + aefnl + aewy + aewt + aeza + aewz + aeww + aewm + athd + atur + aech + aqat + auae + aepu + aepol + aephe + aeido + aerus + ainda + amchi + aicol; 
+
+ 
+
+def globalAD = if   !IsNaN(close)   
+
+               then globalAD[1] + gAD 
+
+               else na; 
+
+def marketsAboveMA = sumAboveMA / 42; 
+
+ 
+
+def h = high(SecondSym); 
+
+def l = low(SecondSym); 
+
+def c = close(SecondSym); 
+
+ 
+
+def hs; 
+
+def ls; 
+
+def cs; 
+
+switch (FirstSym) { 
+
+case GlobalAD: 
+
+        hs = globalAD; 
+
+        ls = globalAD; 
+
+        cs = globalAD; 
+
+case Ticker: 
+
+        hs = high(); 
+
+        ls = low(); 
+
+        cs = close(); 
+
+}; 
+
+ 
+
+def hSS = if   !IsNaN(hs) 
+
+          then hs 
+
+          else hSS[1]; 
+
+def lSS = if   !IsNaN(ls) 
+
+          then ls 
+
+          else lSS[1]; 
+
+def cSS = if   !IsNaN(cs) 
+
+          then cs 
+
+          else cSS[1];; 
+
+def lowest_k = Lowest(l, KPeriod); 
+
+def lowest_ks = Lowest(lSS, KPeriod); 
+
+def c1 = c - lowest_k; 
+
+def c1s = cSS - lowest_ks; 
+
+def c2 = Highest(h, KPeriod) - lowest_k; 
+
+def c2s = Highest(hSS, KPeriod) - lowest_ks; 
+
+def FastK = if c2 != 0 then c1 / c2 else 0; 
+
+def FastKs = if c2s != 0 then c1s / c2s else 0; 
+
+ 
+
+plot  
+
+OverBought = over_bought; 
+
+OverBought.  SetDefaultColor(Color.Gray); 
+
+OverBought.  SetStyle(Curve.Long_Dash); 
+
+OverBought.  HideBubble(); 
+
+OverbOught.  HideTitle(); 
+
+ 
+
+plot  
+
+OverSold = over_sold; 
+
+OverSold.  SetDefaultColor(Color.Gray); 
+
+OverSold.  SetStyle(Curve.Long_Dash); 
+
+OverSold.  HideBubble(); 
+
+OverSold.  HideTitle(); 
+
+ 
+
+plot  
+
+FullK = MovingAverage(averageType, FastK, slowing_period); 
+
+FullK.  SetDefaultColor(CreateColor(225, 225, 150)); 
+
+ 
+
+plot  
+
+FullKs = if   !IsNaN(c)  
+
+         then MovingAverage(averageType, FastKs, slowing_period) 
+
+         else na; 
+
+FullKs.  AssignValueColor(if   FullKs < FullKs[1]  
+
+                        then Color.DownTick 
+
+                        else Color.UpTick);  
+
+ 
+
+plot 
+
+globalTrend; 
+
+globalTrend.  SetDefaultColor(CreateColor(200,100,200)); 
+
+globalTrend = if   !IsNaN(close) 
+
+              then marketsAboveMA 
+
+              else na; 
+
+ 
+
+AddLabel(if(hs == high(),1,0),GetSymbol(), if FullKs < FullKs[1] then Color.DownTick else Color.UpTick); 
+
+AddLabel(if(hs == GlobalAD,1,0),"Global A/D", if FullKs < FullKs[1] then Color.DownTick else Color.UpTick); 
+
+AddLabel(1, SecondSym, GetColor(8)); 
+
+AddLabel(1, " Markets above "+maLength+" period moving average : " + AsPercent(marketsAboveMA), CreateColor(200,100,200)); 
+
+ 
+
+# End Code Stochastic Normalization 

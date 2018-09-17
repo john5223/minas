@@ -1,0 +1,141 @@
+Support Candle Defined as: A Candle where price has broken below the recent trading range but closed higher than the midpoint of the candle on the highest volume of the recent range. Study plots most recent Support Candle high and low as a support zone and all past Support Candles with an UP Arrow below them. There's a User Input toggle for plotting past support lines... 
+
+TOS Share Link:  Copy and paste to "Open shared item" 
+
+http://tos.mx/D0XXBO 
+
+ 
+
+From <https://www.mytrade.com/profile/Mobius/statuses/8725079>  
+
+# Support Candles 
+
+# Mobius 
+
+# V01.10.2017 
+
+# Defined as: A Candle where price has broken below the recent trading range but closed higher than the midpoint of the candle on the highest volume of the recent range. 
+
+# Study plots most recent Support Candle high and low as a support zone and all past Support Candles with an UP Arrow below them. There's a User Input toggle for plotting past support lines. 
+
+ 
+
+input Range = 10; 
+
+input Past_Support = no; 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def bar = barNumber(); 
+
+def v = volume; 
+
+def SCbar = if Min(c, o) > hl2 and  
+
+             ((c - l) / (h - l)) > .5 and 
+
+              (V - lowest(v, Range)) / (highest(v, Range) - lowest(v, Range)) >= 1 
+
+            then bar 
+
+            else double.nan; 
+
+def SCH = if bar == HighestAll(SCbar) 
+
+          then h 
+
+          else SCH[1]; 
+
+def SCL = if bar == HighestAll(SCbar) 
+
+          then l 
+
+          else SCL[1]; 
+
+plot all_SCs = if !isNaN(SCbar) 
+
+               then l 
+
+               else double.nan; 
+
+     all_SCs.SetPaintingStrategy(PaintingStrategy.Arrow_UP); 
+
+     All_SCs.SetLineWeight(1); 
+
+     All_SCs.SetDefaultColor(Color.Cyan); 
+
+plot SCHH = if bar >= HighestAll(SCbar) 
+
+            then HighestAll(if isNaN(close[-1]) 
+
+                            then SCH 
+
+                            else double.nan) 
+
+            else double.nan; 
+
+     SCHH.SetStyle(Curve.Firm); 
+
+     SCHH.SetLineWeight(1); 
+
+     SCHH.SetDefaultColor(Color.Gray); 
+
+plot SCLL = if bar >= HighestAll(SCbar) 
+
+           then HighestAll(if isNaN(close[-1]) 
+
+                           then SCL 
+
+                           else double.nan) 
+
+           else double.nan; 
+
+     SCLL.SetStyle(Curve.Firm); 
+
+     SCLL.SetLineWeight(1); 
+
+     SCLL.SetDefaultColor(Color.Gray); 
+
+AddCloud(SCLL, SCHH, Color.Gray, Color.Gray); 
+
+def all_SCh = if !isNaN(SCbar) 
+
+               then h 
+
+               else all_SCh[1]; 
+
+plot all_SCHs = all_SCh; 
+
+     all_SCHs.SetPaintingStrategy(PaintingStrategy.Horizontal); 
+
+     all_SCHs.SetLineWeight(1); 
+
+     all_SCHs.SetDefaultColor(Color.Cyan); 
+
+     all_SCHs.SetHiding(!Past_Support); 
+
+def all_SCl = if !isNaN(SCbar) 
+
+               then l 
+
+               else all_SCl[1]; 
+
+plot all_SCLs = all_SCl; 
+
+     all_SCls.SetPaintingStrategy(PaintingStrategy.Horizontal); 
+
+     All_SCls.SetLineWeight(1); 
+
+     All_SCls.SetDefaultColor(Color.Cyan); 
+
+     All_SCls.SetHiding(!Past_Support); 
+
+# End Code - Support Candles 

@@ -1,0 +1,32 @@
+
+declare lower; 
+
+ 
+
+input length = 20; 
+
+input momentum = 5; 
+
+ 
+
+assert(momentum > 0, "'momentum' must be positive: " + momentum); 
+
+ 
+
+def emaInc = ExpAverage(Max(close - close[momentum], 0), length); 
+
+def emaDec = ExpAverage(Max(close[momentum] - close, 0), length); 
+
+plot RMI = if emaDec == 0 then 0 else 100 - 100 / (1 + emaInc / emaDec); 
+
+plot OverBought = 70; 
+
+plot OverSold = 30; 
+
+ 
+
+RMI.SetDefaultColor(GetColor(1)); 
+
+OverBought.SetDefaultColor(GetColor(8)); 
+
+OverSold.SetDefaultColor(GetColor(8)); 

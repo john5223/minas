@@ -1,0 +1,483 @@
+# Bull Flag on Pole - SCAN  
+
+# Mobius  
+
+# V01.02.2014  
+
+# Price trend - Upward leading to the pattern. The price should rise by at least 90% in less than 2 months.  
+
+# Shape - A consolidation pattern forms after price doubles. It usually doesn't look like a flag or pennant, just a pause in the price rise.  
+
+# Volume - Recedes for best performance  
+
+# Confirmation - The pattern confirms as valid when price closes above the highest peak in the pattern.  
+
+  
+
+input n = 21;  
+
+input s = 55;  
+
+def upward = IsAscending(HL2, 65);  
+
+def p = (highest(high, 21) / close[65]) > 1.1;  
+
+def o = open;  
+
+def h = high;  
+
+def l = low;  
+
+def c = close;  
+
+def HH = if h < highest(h, 51) * .75  
+
+         then 0  
+
+         else if h > HH[1]  
+
+         then h  
+
+         else HH[1];  
+
+def CIB = Inertia(((Log(Sum(TrueRange(h, c, l), n) /  
+
+            (Highest(if h >= c[1] then h else c[1], n) -   
+
+             Lowest(if l <= c[1]  then l else c[1], n))) /   
+
+             Log(10)) / (Log(n) / Log(10))) * 100, s);  
+
+def CI = if CIB > CIB[1]  
+
+         then 1 else Double.NaN;  
+
+plot Flag = if upward and p    
+
+            then 1  
+
+            else Double.NaN;  
+
+  
+
+-----------------------------------------------------------------------------------------------------------  
+
+  
+
+# Bear Flag on Pole - SCAN  
+
+# Mobius  
+
+# V01.02.2014  
+
+# Price trend - Downward leading to the pattern. The price should fall for at least 2 months.  
+
+# Shape - A consolidation pattern forms. It usually doesn't look like a flag or pennant, just a pause in the price decline.  
+
+# Volume - Recedes for best performance  
+
+# Confirmation - The pattern confirms as valid when price closes below the lowest trough in the pattern.  
+
+  
+
+def o = open;  
+
+def h = high;  
+
+def l = low;  
+
+def c = close;  
+
+def BBl = BollingerBands().LowerBand;  
+
+def KCl = KeltnerChannels().Lower_Band;  
+
+def downward = isDescending(close, 42);  
+
+def p = (c[42] / lowest(l, 21)) > 1.2;  
+
+def squeezeLow = if BBl < KCl  
+
+                   then squeezeLow[1]  
+
+                   else if BBl crosses above KCl  
+
+                   then l  
+
+                   else if BBl > KCl and l < squeezeLow[1]  
+
+                        then l  
+
+                        else squeezeLow[1];   
+
+def NotSqueeze = BBl < KCl;  
+
+plot Flag = if downward and  
+
+               p and  
+
+               NotSqueeze and  
+
+               close crosses below squeezeLow  
+
+            then 1  
+
+            else Double.NaN;  
+
+# End Code Bear Flag   
+
+  
+
+-----------------------------------------------------------------------------------------------------------  
+
+  
+
+  
+
+# Flag Scan  
+
+# Mobius  
+
+# 11.27.2015  
+
+  
+
+def PoleCond = if Highest(high, 21) >= Close[84] * 2 then high else Double.Nan;  
+
+def Consolidation = if Lowest(low, 21) > PoleCond *.75 then low else Double.NaN;  
+
+plot Current = if close between Consolidation * 1.1 and PoleCond then close else Double.Nan;  
+
+  
+
+  
+
+----------------------------------------------------------------------------------------------------------  
+
+  
+
+#from dmonkey chat 081116  
+
+script VariableMinOffset {  
+
+input price = close;  
+
+input length = 0;  
+
+  
+
+plot VMin;  
+
+if !IsNaN(price) and !IsNaN(length) {  
+
+VMin = fold i = 0 to length with o do if GetValue(price, i) < GetValue(price, o) then i else o;  
+
+} else {  
+
+VMin = Double.NaN;  
+
+}  
+
+}  
+
+  
+
+script VariableLRS {  
+
+input price = close;  
+
+input length = 0;  
+
+  
+
+plot VLRS;  
+
+if !IsNaN(price) and length != 1 {  
+
+VLRS = 6 * ( ( fold i1 = 0 to length with s1 do s1 + (length - i1) * GetValue(price, i1) ) / ( (1 + length) / 2 * length ) - ( fold i2 = 0 to length with s2 do s2 + GetValue(price, i2) ) / length ) / (length - 1);  
+
+} else if length == 1 {  
+
+VLRS = 0;  
+
+} else {  
+
+VLRS = Double.NaN;  
+
+}  
+
+}  
+
+  
+
+input maxFlagLength = 15;  
+
+input maxFlagHeight = 2.5;  
+
+input maxPoleLength = 23;  
+
+input minPoleHeight = 5.5;  
+
+input upTrendLength = 70;  
+
+input minAtrPercentChange = 5.0;  
+
+  
+
+Assert(maxPoleLength > 0, "'maxPoleLength' must be positive: " + maxPoleLength);  
+
+  
+
+def x1 = GetMaxValueOffset(close, maxFlagLength)[2] + 2;  
+
+def x2 = x1 + 1;  
+
+def lfOffset = VariableMinOffset(close, x2);  
+
+def lf = GetValue(close, lfOffset);  
+
+def top = Max(GetValue(close, x1), GetValue(close, x1 + 1));  
+
+def atr = Average(TrueRange(high,  close,  low),  40);  
+
+def LRSX = VariableLRS(close[1], x1);  
+
+def LRSX1 = VariableLRS(close, x1);  
+
+def LRSX2;  
+
+if x1 == 2 {  
+
+LRSX2 = LRSX2[1];  
+
+} else if x1 > 2 {  
+
+LRSX2 = VariableLRS(close[2], x1 - 1);  
+
+} else {  
+
+LRSX2 = Double.NaN;  
+
+}  
+
+  
+
+def condition1 = top - lf < maxFlagHeight * atr and x2 > 2 and x2 <= maxFlagLength;  
+
+def condition2 =  if IsNaN(LRSX) or IsNaN(LRSX1) or IsNaN(LRSX2) then no else LRSX < 0 and (LRSX1 < 0 or LRSX2 < 0);  
+
+def y23 = VariableMinOffset(close, maxPoleLength + x2);  
+
+def bottom = GetValue(close, y23);  
+
+def pole = top - bottom;  
+
+def condition3 = pole > minPoleHeight * atr and y23 > x2;  
+
+def condition4 = bottom - Lowest(low, upTrendLength) > 0;  
+
+def condition5 = (atr / GetValue(atr, y23) - 1) * 100 > minAtrPercentChange;  
+
+  
+
+plot Flag = condition1 and condition2 and condition3 and condition4 and condition5;  
+
+Flag.SetPaintingStrategy(PaintingStrategy.BOOLEAN_POINTS);  
+
+Flag.SetLineWeight(3);  
+
+  
+
+-------------------------------------------------------------------------------------------------------------------  
+
+  
+
+# Bull flag indicator   
+
+# posted by ElGordo 081216 chat  
+
+  
+
+# Input and basic definitions  
+
+  
+
+input pChg = 0.25;  
+
+  
+
+# Daily minimum percent increase during expansion phase (def=1.50)  
+
+  
+
+def C = close;  
+
+def O = open;  
+
+def H = high;  
+
+def L = low;  
+
+def V = volume;  
+
+  
+
+# isHigh is to stop a plotting issue inertia code, don’t post touch it!  
+
+  
+
+def isHigh = C > 20000;  
+
+  
+
+# Expansion range price and volume  
+
+  
+
+def XRANGE = C[3] - O[5];  
+
+  
+
+def XRANGEH = H[3] - O[5];  
+
+def XVOL = V[5] + V[4] + V[3];  
+
+  
+
+# Define average true ranges and amount above  
+
+  
+
+def atr = Average(TrueRange(high, C, low), 1.0);  
+
+def EXPANDER = atr > (Average(atr) * 1.10);  
+
+def EXPNDR = if EXPANDER[5] && EXPANDER[4] && EXPANDER[3]  
+
+then 1  
+
+else 0;  
+
+  
+
+# Percentage change characteristics  
+
+  
+
+def PercentChg = Round(100 * (C / C[1] - 1), 3);  
+
+def PCCOUNT = if (PercentChg[5] > pChg && PercentChg[4] > pChg && PercentChg[3] > pChg)  
+
+or Round(100 * (C[3] / C[5] - 1), 3) > 10.0  
+
+then 1  
+
+else 0;  
+
+  
+
+# Higher than average V characteristics  
+
+  
+
+def Volavg = if (V[5] + V[4] + V[3]) / 3 > Average(V) * 1.10  
+
+then 1  
+
+else 0;  
+
+  
+
+# Price action characteristics  
+
+  
+
+def CandleAction = (C[5] > O[5] && C[4] > O[4] && C[3] > O[3]);  
+
+def Signal = if EXPNDR == 1 && Volavg == 1 && CandleAction && PCCOUNT  
+
+then 1  
+
+else 0;  
+
+  
+
+# 3-day consolidation settings  
+
+  
+
+def CRANGE = Highest(H, 3) - Lowest(L, 3);  
+
+def UPDRIFT = Highest(H, 3) < (H[3] + (XRANGEH * 0.25));  
+
+def CONVOL = V[0] + V[1] + V[2];  
+
+  
+
+# Ratio calculations  
+
+  
+
+def XCRATIO = XRANGE / CRANGE;  
+
+def XVRATIO = XVOL / CONVOL;  
+
+  
+
+# Confirmations and plot formatting  
+
+  
+
+plot BULL = if XCRATIO > 2 && XVRATIO > 1.20 && UPDRIFT && Signal == 1  
+
+then 1  
+
+else 0;  
+
+  
+
+BULL.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);  
+
+BULL.SetDefaultColor(Color.LIME);  
+
+BULL.SetLineWeight(2);  
+
+  
+
+AssignPriceColor(if BULL  
+
+then Color.BLUE  
+
+else Color.CURRENT);  
+
+  
+
+plot STPPRICE = If(BULL and C > 0, (C[3] - (XRANGE * 0.40)),  
+
+If(C < 0 and !BULL , (C[0] + (XRANGE * 0.95)), Double.NaN));  
+
+  
+
+STPPRICE.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);  
+
+STPPRICE.SetDefaultColor(Color.RED);  
+
+STPPRICE.SetLineWeight(2);  
+
+  
+
+plot TGTPRICE = If(BULL and C > 0, (C[0] + (XRANGE * 0.90)),  
+
+If(C < 0 and !BULL , (C[0] - (XRANGE * 0.40)), Double.NaN));  
+
+  
+
+TGTPRICE.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);  
+
+TGTPRICE.SetDefaultColor(Color.GREEN);  
+
+TGTPRICE.SetLineWeight(2);  
+
+  
+
+#EndCode  

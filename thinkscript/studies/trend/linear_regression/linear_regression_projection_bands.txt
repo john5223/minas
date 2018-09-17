@@ -1,0 +1,43 @@
+#hint:<b>LinRegr_of_ProjectionBands</b>\nThis study plots the linear regression of the ProjectionBands study. Arrows are plotted at the min and max values to indicate possible long and short opportunities\nTick (133) charts present better views.\n The bands are based on LR so this study is a LR of a LR. 
+
+ 
+
+Input PB_length = 14;#hint PB_length:Length of the ProjectionBands. Larger values spread the bands further apart. 
+
+input LR_length = 10;#hint LR_length:The Linear Regression length. The shorter the length, the more volatile the chart. A good default is 10. 
+
+ 
+
+def UPB = ProjectionBands(PB_length).MaxBound; 
+
+#def LR_UPB = Inertia(UPB, 10); 
+
+def LR_UPB = LinearRegCurve(0, LR_length, UPB); 
+
+plot data1 = LR_UPB; 
+
+ 
+
+def Min_LR_UPB = if data1 < data1[1] && data1 < data1 [-1] then 1 else 0; 
+
+plot D_Min_LR = if Min_LR_UPB == 1 then LR_UPB else double.nan; 
+
+D_Min_LR.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+D_Min_LR.SetLineWeight(3); 
+
+D_Min_LR.SetDefaultColor(Color.UPTICK); 
+
+ 
+
+ 
+
+def Max_LR_UPB = if data1 > data1[1] && data1 > data1 [-1] then 1 else 0;plot D_Max_LR = if Max_LR_UPB == 1 then LR_UPB else double.nan; 
+
+D_Max_LR.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+D_Max_LR.SetLineWeight(3); 
+
+D_Max_LR.SetDefaultColor(Color.DOWNTICK); 
+
+#input Show_Labels = yes; 

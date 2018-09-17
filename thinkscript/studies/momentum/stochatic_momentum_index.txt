@@ -1,0 +1,67 @@
+C 266.57 
+SPY4MID 0:4/23/18 0:2E7QE H:2E7zg L:2E535 c:26ES7 R:2.54 
+Style 
+Studies 
+Patterns 
+StochasticMomentumIndex(40.O, -40.0, 3, 5) 3.60071 
+LinearRegrReversaI (14) 
+243202 40 _40 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input over_bought = 40.0; 
+
+input over_sold = -40.0; 
+
+input percentDLength = 3; 
+
+input percentKLength = 5; 
+
+ 
+
+def min_low = lowest(low, percentKLength); 
+
+def max_high = highest(high, percentKLength); 
+
+def rel_diff = close - (max_high + min_low)/2; 
+
+def diff = max_high - min_low; 
+
+ 
+
+def avgrel = expaverage(expaverage(rel_diff, percentDLength), percentDLength); 
+
+def avgdiff = expaverage(expaverage(diff, percentDLength), percentDLength); 
+
+ 
+
+plot SMI = if avgdiff != 0 then avgrel / (avgdiff / 2) * 100 else 0; 
+
+smi.setDefaultColor(getColor(1)); 
+
+ 
+
+plot AvgSMI = expaverage(smi, percentDLength); 
+
+avgsmi.setDefaultColor(getcolor(5)); 
+
+ 
+
+plot overbought = over_bought; 
+
+overbought.setDefaultColor(getcolor(5)); 
+
+ 
+
+plot oversold = over_sold; 
+
+oversold.setDefaultColor(getcolor(5)); 

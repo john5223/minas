@@ -1,0 +1,74 @@
+# Archive Name: MACD with Bollinger Bands_AI 
+# Archive Section: Momentum 
+# Suggested Tos Name: MACD_w_BollingerBands_AI 
+# Archive Date: 5.05.2018 
+# Archive Notes:  
+
+# AI_BollingerBands_on_MACD_v1 
+# Requestor: jonallyn 
+
+#16:51 jonallyn: Thanks for the clarificantion. Let me rephrase my question. Can anyone help me? I would like to have the Bolinger Bands (CLOSE, 20, 0, -2.0, 2.0 Simple)  on the MACD (9,12,26) 
+
+#16:40 jonallyn: AlphaInvestor - here is the link to the YouTube video. Perhaps this will help. https://www.youtube.com/watch?v=vnEp9Krqrm0 
+
+
+declare lower; 
+# MACD Stuff 
+input fastLength = 12; 
+input slowLength = 26; 
+input MACDLength = 9; 
+input averageType = AverageType.EXPONENTIAL; 
+input showBreakoutSignals = no; 
+
+plot Value = MovingAverage(averageType, close, fastLength) - MovingAverage(averageType, close, slowLength); 
+plot Avg = MovingAverage(averageType, Value, MACDLength); 
+
+plot Diff = Value - Avg; 
+plot ZeroLine = 0; 
+
+plot UpSignal = if Diff crosses above ZeroLine then ZeroLine else Double.NaN; 
+plot DownSignal = if Diff crosses below ZeroLine then ZeroLine else Double.NaN; 
+
+UpSignal.SetHiding(!showBreakoutSignals); 
+DownSignal.SetHiding(!showBreakoutSignals); 
+
+Value.SetDefaultColor(GetColor(1)); 
+Avg.SetDefaultColor(GetColor(8)); 
+Diff.SetDefaultColor(GetColor(5)); 
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+Diff.SetLineWeight(3); 
+Diff.DefineColor("Positive and Up", Color.GREEN); 
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN); 
+Diff.DefineColor("Negative and Down", Color.RED); 
+Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then Diff.color("Positive and Up") else Diff.color("Positive and Down") else if Diff < Diff[1] then Diff.color("Negative and Down") else Diff.color("Negative and Up")); 
+
+ZeroLine.SetDefaultColor(GetColor(0)); 
+UpSignal.SetDefaultColor(Color.UPTICK); 
+UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+DownSignal.SetDefaultColor(Color.DOWNTICK); 
+DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+# Bollinger Band Stuff 
+
+plot price = Value; 
+
+input displace = 0; 
+input length = 20; 
+input Num_Dev_Dn = -2.0; 
+input Num_Dev_up = 2.0; 
+
+def sDev = stdev(data = price[-displace], length = length); 
+plot MidLine = ExpAverage(data = price[-displace], length = length); 
+plot LowerBand = MidLine + num_Dev_Dn * sDev; 
+plot UpperBand = MidLine + num_Dev_Up * sDev; 
+
+LowerBand.SetDefaultColor(color.gray); 
+MidLine.SetDefaultColor(color.gray); 
+UpperBand.SetDefaultColor(color.gray); 
+
+def range = upperBand - lowerBand; 
+def change = range/range[1] - 1 > .50; 
+
+# End Study 

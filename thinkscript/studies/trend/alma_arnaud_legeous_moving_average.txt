@@ -1,0 +1,106 @@
+# ArnaudLegouxMA_Mobius 
+
+# ALMA (Arnaud Legoux Moving Average) 
+
+# ALMA is based on a shifted Gaussian distribution  
+
+# Mobius 
+
+# Chat Room Request 
+
+# ALMA color change added by ZupDog 
+
+ 
+
+input offset = 2; 
+
+input sigma = .5; 
+
+input length = 8; 
+
+plot alma_ = (fold n = 0 to length 
+
+              with s 
+
+              do s + getValue(Exp(-Power(n - Floor(offset * length), 2)/ 
+
+                             (2 * Power((length + 1) / sigma, 2)))*  
+
+                     getValue(close, n), n, length)) /  
+
+              fold nn = 0 to length  
+
+              with ss  
+
+              do ss + getValue(Exp(-Power(nn - Floor(offset * length), 2)/ 
+
+                              (2 * Power((length + 1) / sigma, 2))), nn); 
+
+ 
+
+ 
+
+alma_.DefineColor("Up", GetColor(1)); 
+
+alma_.DefineColor("Down", GetColor(0)); 
+
+alma_.AssignValueColor(if alma_ > alma_[1] then alma_.color("Up") else alma_.color("Down")); 
+
+ 
+
+# End Code ALMA 
+
+O SPDRS&P TR UNIT ET; 
+Draw i ngs 
+SPY3MID 026342 H:2E511 L:258 
+259.72 
+c: 25972 
+R: 711 
+EXTO Eligible 
+(CLOSE) 
+Share 
+0.5, 8) 261.34 
+3,112 
+Style 
+Studies 
+Patterns 
+2.112 
+2.119 
+3,119 
+4/16 
+Unsaved drawings 
+# ALMA (Arnaud Legoux Moving Average)  
+
+# ALMA is based on a shifted Gaussian distribution   
+
+# Mobius  
+
+# Chat Room Request  
+
+  
+
+input offset = 2;  
+
+input sigma = .5;  
+
+input length = 8;  
+
+plot alma_ = (fold n = 0 to length  
+
+              with s  
+
+              do s + getValue(Exp(-Power(n - Floor(offset * length), 2)/  
+
+                             (2 * Power((length + 1) / sigma, 2)))*   
+
+                     getValue(close, n), n, length)) /   
+
+              fold nn = 0 to length   
+
+              with ss   
+
+              do ss + getValue(Exp(-Power(nn - Floor(offset * length), 2)/  
+
+                              (2 * Power((length + 1) / sigma, 2))), nn);  
+
+# End Code ALMA  

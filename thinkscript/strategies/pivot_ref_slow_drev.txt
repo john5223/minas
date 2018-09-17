@@ -1,0 +1,60 @@
+
+
+input direction = {default "Long", "Short"};
+input tradeSize = 100;
+input KPeriod = 10;
+input DPeriod = 10;
+input priceH = high;
+input priceL = low;
+input priceC = close;
+input averageType = AverageType.SIMPLE;
+
+def SlowD = reference StochasticFull(80,20,KPeriod,DPeriod,priceH,priceL,priceC,3,averageType).FullD;
+
+def pivotLow = low > low[1] and low[1] < low[2] and low[2] < low[3];
+
+def pivotHigh = high < high[1] and high[1] > high[2];
+
+def pivotLowReversal = ( pivotLow and close > high[1] ) or ( pivotLow[1] and close > high[2] and low > low[2] and high[1] < high[2] );
+
+def exitLong = SlowD < SlowD[1] and SlowD[1] < SlowD[2] and highest(pivotLowReversal[0],2) == 0;
+
+def pivotHighReversal = ( pivotHigh and close < low[1] ) or ( pivotHigh[2] and close < low[2] and high < high[2] and low[1] > low[2] );
+
+def exitShort = SlowD > SlowD[1] and SlowD[1] > SlowD[2] and highest(pivotHighReversal, 2) == 0;
+
+def shortEntry;
+def shortExit;
+def longEntry;
+def longExit;
+
+def flipOrder;
+switch (direction) {
+case "Long":
+    longEntry = pivotLowReversal;
+    longExit = exitLong;
+    shortEntry = no;
+    shortExit = no;
+    flipOrder = 1;
+case "Short":
+    shortEntry = pivotHighReversal;
+    shortExit = exitShort;
+    longEntry = no;
+    longExit = no;
+    flipOrder = 0;
+}
+;
+
+#AddOrder( if flipOrder == 1 then OrderType.BUY_AUTO else OrderType.SELL_AUTO, entry, open[-1], tradeSize, if flipOrder == 1 then Color.BLUE else Color.PINK, if flipOrder == 1 then Color.BLUE else Color.PINK, if flipOrder == 0 then "Pivot Low Rev @ " +open[-1] else "Pivot High Rev @ " +open[-1]);
+
+#AddOrder( if flipOrder == 1 then OrderType.SELL_TO_CLOSE else OrderType.BUY_TO_CLOSE, exit, open[-1], tradeSize, if flipOrder == 1 then Color.PINK else Color.BLUE, if flipOrder == 1 then Color.PINK else Color.BLUE, "SlowD Reversal @ " + open[-1]);
+
+AddOrder(OrderType.BUY_AUTO, longEntry, open[-1], tradeSize, Color.BLUE, Color.BLUE, "Pivot Low Rev @ " +open[-1]);
+AddOrder(OrderType.SELL_TO_CLOSE, longExit, open[-1], tradeSize, Color.PINK, Color.PINK, "SlowD Reversal @ " + open[-1]);
+ 
+AddOrder(OrderType.SELL_AUTO, shortEntry, open[-1], tradeSize, Color.PINK, Color.PINK, "Pivot High Rev @ " + open[-1]);
+AddOrder(OrderType.BUY_TO_CLOSE, shortExit, open[-1], tradeSize, Color.BLUE, Color.BLUE, "SlowD Reveral @ " +open[-1]);
+
+
+
+

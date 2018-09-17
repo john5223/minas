@@ -1,0 +1,56 @@
+# Momentum Squeeze 
+# Mobius 
+# Added Squeeze Label with directional color 
+# Label is green when momentum is ascending, red when descending 
+# thinkScript Lounge 2018-04-04 
+ 
+declare lower; 
+
+input length = 20; #hint length: Length for average calculation 
+input SDmult = 2.0; 
+input ATRmult = 1.5; 
+
+   def c = close; 
+   def h = high; 
+   def l = low; 
+   def K = (Highest(h, length) + Lowest(l, length)) /  
+               2 + ExpAverage(c, length); 
+   
+plot Momo = if isNaN(close)  
+              then double.nan 
+              else Inertia(c - K / 2, length); 
+       Momo.setPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+       Momo.setLineWeight(3); 
+       Momo.assignValueColor(if Momo > Momo[1] and Momo > 0 
+                             then Color.Cyan 
+                             else if Momo > 0 and Momo < Momo[1] 
+                             then Color.Blue 
+                             else if Momo < 0 and Momo < Momo[1] 
+                             then Color.Red 
+                             else Color.Yellow); 
+
+def SD = StDev(c, length); 
+def Avg = Average(c, length); 
+def ATR = Average(TrueRange(h, c, l), length); 
+def SDup = Avg + (SdMult * Sd); 
+def ATRup = Avg + (AtrMult * ATR); 
+
+plot Squeeze = if isNaN© 
+               then double.nan 
+               else if SDup < ATRup  
+               then 0  
+               else Double.NaN; 
+     Squeeze.SetPaintingStrategy(PaintingStrategy.Points); 
+     Squeeze.SetLineWeight(3); 
+     Squeeze.SetDefaultColor(Color.Red); 
+ 
+
+plot zero = if IsNaN(c) or !IsNaN(Squeeze) then Double.NaN else 0; 
+     zero.SetPaintingStrategy(PaintingStrategy.Points); 
+     zero.SetLineWeight(3); 
+     zero.SetDefaultColor(Color.Green); 
+ 
+AddLabel(!isNaN(Squeeze), "Squeeze", if isAscending(Momo) 
+                                     then Color.Green 
+                                     else Color.Red); 
+# End Code - Momentum Squeeze 

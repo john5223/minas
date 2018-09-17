@@ -1,0 +1,342 @@
+Share 
+10 D 5m 
+E-mini 500 Index Futures, EL 2710.50 
+0:2710 H:2711 L:270Y75 C: 27105 
+Draw i 
+Studies 
+R: 125 
+30 70 
+Patterns 
+2720 
+2719 
+2718 
+2716 
+2713 
+2710 
+2709 
+2707 
+2706 
+2704 
+70, 30, CLOSE, WILDERS, 30, 10) 448743 
+RSI Rising: 44.57 
+WA 57.3554 38.563 
+Shared drawings 
+ 
+
+ 
+
+# RSIwithFractalPivots_Amalia 
+
+# reposted to chatroom 04.18.2018 
+
+ 
+
+########START  Code 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 14; 
+
+input over_Bought = 70; 
+
+input over_Sold = 30; 
+
+input price = close; 
+
+input averageType = AverageType.WILDERS; 
+
+input New_HI_LO = 30; 
+
+ 
+
+ 
+
+def NetChgAvg = MovingAverage(averageType, price - price[1], length); 
+
+def TotChgAvg = MovingAverage(averageType, AbsValue(price - price[1]), length); 
+
+def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0; 
+
+ 
+
+plot RSI = 50 * (ChgRatio + 1); 
+
+plot OverSold = over_Sold; 
+
+plot OverBought = over_Bought; 
+
+ 
+
+RSI.DefineColor("OverBought", GetColor(5)); 
+
+RSI.DefineColor("Normal", GetColor(7)); 
+
+RSI.DefineColor("OverSold", GetColor(1)); 
+
+RSI.AssignValueColor(if RSI > over_Bought then RSI.color("OverBought") else if RSI < over_Sold then RSI.color("OverSold") else RSI.color("Normal")); 
+
+OverSold.SetDefaultColor(GetColor(8)); 
+
+OverBought.SetDefaultColor(GetColor(8)); 
+
+ 
+
+plot NEWHIGH = if RSI == highest(RSI, new_HI_LO) then RSI else Double.NAN;  
+
+NEWHIGH.setpaintingStrategy(paintingStrategy.POINTS); 
+
+NEWHIGH.setdefaultColor(color.light_green); 
+
+NewHIGH.setlineWeight(1); 
+
+ 
+
+plot NEWLOW = if RSI == lowest(RSI, new_HI_LO) then RSI else Double.NAN;  
+
+NEWLOW.setpaintingStrategy(paintingStrategy.POINTS); 
+
+NEWLOW.setdefaultColor(color.light_RED); 
+
+NEWLOW.setlineWeight(1); 
+
+ 
+
+# Fractals 
+
+# 1/5/17 Amalia added Aggregation periods? 
+
+ 
+
+def H = RSI;  
+
+def L = RSI;  
+
+ 
+
+input sequenceCount = 10; 
+
+ 
+
+def maxSideLength = sequenceCount + 10; 
+
+def upRightSide = fold i1 = 1 to maxSideLength + 1  
+
+                  with count1  
+
+                  while count1 != sequenceCount and  
+
+                        count1 != -1  
+
+                  do if GetValue(H, -i1) > H or  
+
+                       (GetValue(H, -i1) == H and 
+
+                        count1 == 0)  
+
+                     then -1 
+
+                     else if GetValue(H, -i1) < H  
+
+                          then count1 + 1  
+
+                          else count1; 
+
+def upLeftSide = fold i2 = 1 to maxSideLength + 1  
+
+                 with count2  
+
+                 while count2 != sequenceCount and  
+
+                       count2 != -1  
+
+                 do if GetValue(H, i2) > H or  
+
+                      (GetValue(H, i2) == H and  
+
+                       count2 >= 1)  
+
+                    then -1 
+
+                    else if GetValue(H, i2) < H  
+
+                         then count2 + 1  
+
+                         else count2; 
+
+def downRightSide = fold i3 = 1 to maxSideLength + 1  
+
+                    with count3  
+
+                    while count3 != sequenceCount and  
+
+                          count3 != -1  
+
+                    do if GetValue(L, -i3) < L or  
+
+                         (GetValue(L, -i3) == L and  
+
+                          count3 == 0)  
+
+                          then -1 
+
+                        else if GetValue(H, -i3) > L  
+
+                             then count3 + 1  
+
+                             else count3; 
+
+def downLeftSide = fold i4 = 1 to maxSideLength + 1  
+
+                   with count4  
+
+                   while count4 != sequenceCount and  
+
+                         count4 != -1 
+
+                   do if GetValue(L, i4) < L or  
+
+                        (GetValue(L, i4) == L and  
+
+                         count4 >= 1)  
+
+                      then -1 
+
+                      else if GetValue(L, i4) > L  
+
+                      then count4 + 1  
+
+                      else count4; 
+
+ 
+
+plot UpFractal = if upRightSide == sequenceCount and  
+
+                    upLeftSide == sequenceCount  
+
+                 then RSI  
+
+                 else Double.NaN; 
+
+plot DownFractal = if downRightSide == sequenceCount and  
+
+                      downLeftSide == sequenceCount  
+
+                   then RSI 
+
+                   else Double.NaN; 
+
+ 
+
+UpFractal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+UpFractal.SetDefaultColor(color.RED); 
+
+UpFractal.SetLineWeight(2); 
+
+DownFractal.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+DownFractal.SetDefaultColor(color.GREEN); 
+
+DownFractal.SetLineWeight(2); 
+
+ 
+
+ 
+
+def Pre_hi = if !isnan(upfractal) then upfractal else pre_hi[1]; 
+
+ 
+
+plot high_line = pre_hi; 
+
+high_line.setpaintingStrategy(paintingStrategy.DASHES); 
+
+high_line.setdefaultColor(color.CYAN); 
+
+ 
+
+def Pre_lo = if !isnan(downFractal) then downFractal else pre_lo[1]; 
+
+ 
+
+plot lo_line = pre_lo; 
+
+lo_line.setpaintingStrategy(paintingStrategy.DASHES); 
+
+lo_line.setdefaultColor(color.MAGENTA); 
+
+ 
+
+addlabel(yes,  
+
+if RSI >= OverBought && RSI >= RSI[1] 
+
+    then "RSI OB & Rising: " +round(RSI, 2) 
+
+else if RSI >= OverBought && RSI < RSI[1] 
+
+    then "RSI OB & Falling: " +round(RSI, 2) 
+
+else if RSI <= OverSold && RSI < RSI[1] 
+
+    then "RSI OS & Falling: " +round(RSI, 2) 
+
+else if RSI <= OverSold && RSI >= RSI[1] 
+
+    then "RSI OS & Rising: " +round(RSI, 2) 
+
+else if RSI < OverBought && RSI > OverSold && RSI >= RSI[1] 
+
+    then "RSI Rising: " +round(RSI, 2) 
+
+else if RSI < OverBought && RSI > OverSold && RSI < RSI[1] 
+
+    then "RSI Falling: " +round(RSI, 2) 
+
+else "", 
+
+if RSI >= OverBought && RSI >= RSI[1] 
+
+    then color.dark_orange 
+
+else if RSI >= OverBought && RSI < RSI[1] 
+
+    then color.yellow 
+
+else if RSI <= OverSold && RSI < RSI[1] 
+
+    then createcolor(000, 100, 100) 
+
+else if RSI <= OverSold && RSI >= RSI[1] 
+
+    then color.cyan 
+
+else if RSI < OverBought && RSI > OverSold && RSI >= RSI[1] 
+
+    then color.green 
+
+else if RSI < OverBought && RSI > OverSold && RSI < RSI[1] 
+
+    then color.red 
+
+else color.gray); 
+
+ 
+
+ 
+
+plot Buffer = if RSI <= OverSold then RSI - 10 else if RSI >= OverBought then RSI + 10 else double.nan; 
+
+Buffer.setdefaultColor(color.black); 
+
+Buffer.hidetitle(); 
+
+Buffer.hidebubble(); 
+
+ 
+
+####END Code 

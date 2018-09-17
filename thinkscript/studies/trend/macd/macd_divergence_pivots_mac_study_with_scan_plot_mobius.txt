@@ -1,0 +1,226 @@
+ 
+
+272.98 
+SPYIYID 0:5'14'18 0:273E4 H:27408 
+Share 
+EXTO Eligible 
+L:2723E c:272S8 R: 172 
+Drawings Studies 
+Style T 
+12, 26, 
+Patterns 
+2778 
+257.5 
+ 
+
+ 
+
+## OneNote Archive Name: MACD Divergence Pivots With MA Study with Scan Plot _Mobius 
+
+## Archive Section: Momentum 
+
+## Suggested Tos Name: MACD_DivergencePivots_withMA_andScanPlot 
+
+## Archive Date: 5.14.2018 
+
+## Archive Notes: Upper Study.  A sibling lower study exists as well. 
+
+ 
+
+## "##" indicates an addition or adjustment by the OneNote Archivist 
+
+ 
+
+## Original Code Follows 
+
+ 
+
+ 
+
+# MACD Divergence Pivots With MA Study with Scan Plot 
+
+# Mobius 
+
+# V01.01.11.2016  Chat Room Request 
+
+ 
+
+input n = 2; 
+
+input fastLength = 12; 
+
+input slowLength = 26; 
+
+input MACDLength = 9; 
+
+input averageType = AverageType.EXPONENTIAL; 
+
+input MovingAvgLength = 200; 
+
+ 
+
+def h = high; 
+
+def l = low; 
+
+def bar = barNumber(); 
+
+def Diff = MACD(fastLength, slowLength, MACDLength, averageType).Diff; 
+
+def CurrMACDh = if Diff > 0 
+
+                then fold i = 1 to n + 1  
+
+                with p = 1 
+
+                while p  
+
+                do Diff > getValue(Diff, -i) 
+
+                else 0;  
+
+def CurrMACDPivotH = if (bar > n and  
+
+                         Diff == highest(Diff, n) and  
+
+                         CurrMACDh)  
+
+                     then h  
+
+                     else double.NaN; 
+
+def CurrMACDl = if Diff < 0 
+
+                then fold j = 1 to n + 1  
+
+                with q = 1 
+
+                while q  
+
+                do Diff < getValue(Diff, -j) 
+
+                else 0; 
+
+def CurrMACDPivotL = if (bar > n and  
+
+                         Diff == lowest(Diff, n) and  
+
+                         CurrMACDl)  
+
+                     then l  
+
+                     else double.NaN; 
+
+def CurrPHBar = if !isNaN(CurrMACDPivotH)  
+
+                then bar  
+
+                else CurrPHBar[1]; 
+
+def CurrPLBar = if !isNaN(CurrMACDPivotL)  
+
+                then bar  
+
+                else CurrPLBar[1]; 
+
+def PHpoint = if !isNaN(CurrMACDPivotH)  
+
+              then CurrMACDPivotH  
+
+              else PHpoint[1]; 
+
+def priorPHBar = if PHpoint != PHpoint[1]  
+
+                 then CurrPHBar[1]  
+
+                 else priorPHBar[1]; 
+
+def PLpoint = if !isNaN(CurrMACDPivotL)  
+
+              then CurrMACDPivotL  
+
+              else PLpoint[1]; 
+
+def priorPLBar = if PLpoint != PLpoint[1]  
+
+                 then CurrPLBar[1]  
+
+                 else priorPLBar[1]; 
+
+def HighPivots = bar >= highestAll(priorPHBar); 
+
+def LowPivots = bar >= highestAll(priorPLBar); 
+
+def pivotHigh = if HighPivots  
+
+                then CurrMACDPivotH  
+
+                else double.NaN; 
+
+plot PlotHline = pivotHigh; 
+
+    PlotHline.enableApproximation(); 
+
+    PlotHline.SetDefaultColor(GetColor(7)); 
+
+    PlotHline.SetStyle(Curve.Short_DASH); 
+
+plot pivotLow = if LowPivots  
+
+                then CurrMACDPivotL  
+
+                else double.NaN; 
+
+    pivotLow.enableApproximation(); 
+
+    pivotLow.SetDefaultColor(GetColor(7)); 
+
+    pivotLow.SetStyle(Curve.Short_DASH); 
+
+plot PivotDot = if !isNaN(pivotHigh)  
+
+                then pivotHigh  
+
+                else if !isNaN(pivotLow)  
+
+                     then pivotLow 
+
+                     else double.NaN; 
+
+    pivotDot.SetDefaultColor(GetColor(7)); 
+
+    pivotDot.SetPaintingStrategy(PaintingStrategy.POINTS); 
+
+    pivotDot.SetLineWeight(3); 
+
+# End Code Pivots with Projections 
+
+# Moving Average 
+
+Plot MA = Average(close, MovingAvgLength); 
+
+MA.SetStyle(Curve.Firm); 
+
+MA.AssignValueColor(if MA > MA[1] 
+
+                   then color.green 
+
+                   else color.red); 
+
+# Scan Plot for Negative Divergence 
+
+plot ScanCond = if !isNaN(PivotLow) and close < MA 
+
+                then 1 
+
+                else 0; 
+
+ScanCond.SetPaintingStrategy(PaintingStrategy.Boolean_Arrow_DOWN); 
+
+ScanCond.SetDefaultColor(Color.Red); 
+
+ScanCond.SetLineWeight(3); 
+
+ 
+
+# End Study MACD Pivots and MA  

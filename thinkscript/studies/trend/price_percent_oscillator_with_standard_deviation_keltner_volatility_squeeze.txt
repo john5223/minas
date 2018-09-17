@@ -1,0 +1,80 @@
+Mobius©: Jessica - 
+
+# PPO (Percent Price Oscillator) With SD/Keltner Volatility Squeeze 
+# Mobius 
+# V01.02.2014 
+ 
+declare Lower; 
+ 
+input nShort = 8; 
+input nLong = 13; 
+input Smoothed = 5; 
+input length = 20; 
+input SdMult = 2; 
+input ATRmult = 1.5; 
+ 
+def o = open; 
+def l = low; 
+def h = high; 
+def c = vwap; 
+def v = volume; 
+plot PPO = 100 * ((ExpAverage(c, nShort) - ExpAverage(c, nLong)) / ExpAverage(c, nLong)); 
+     PPO.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     PPO.SetLineWeight(4); 
+plot PPOsmoothed = ExpAverage(PPO, Smoothed); 
+     PPOsmoothed.AssignValueColor(if PPOSmoothed > PPOSmoothed[1] 
+                                  then Color.Dark_Green 
+                                  else Color.Dark_Red);; 
+     PPOsmoothed.SetLineWeight(1); 
+ 
+def cond1 = PPO == Lowest(PPO, 30); 
+def cond2 = PPO > PPO[1]; 
+def cond3 = PPO == Highest(PPO,30); 
+def cond4 = PPO < PPO[1]; 
+ 
+plot Signal = if cond1[1] and cond2 
+              then PPO 
+              else Double.NaN; 
+     Signal.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     Signal.SetLineWeight(4); 
+     Signal.SetDefaultColor(Color.Plum); 
+plot Signal2 = if cond3[1] and cond4 
+               then PPO 
+               else Double.NaN; 
+     Signal2.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     Signal2.SetLineWeight(4); 
+     Signal2.SetDefaultColor(Color.Plum); 
+ 
+   def SD = StDev(c, length); 
+   def Avg = Average(c, length); 
+   def ATR = Average(TrueRange(h, c, l), length); 
+   def SDup = Avg + (SdMult * Sd); 
+   def ATRup = Avg + (AtrMult * ATR); 
+ 
+  plot Squeeze = if SDup < ATRup  
+                 then 0  
+                 else Double.NaN; 
+       Squeeze.SetPaintingStrategy(PaintingStrategy.Line_VS_Points); 
+       Squeeze.SetLineWeight(2); 
+       Squeeze.SetDefaultColor(Color.Red); 
+ 
+  plot zero = if IsNaN(c) or !IsNaN(Squeeze) then Double.NaN else 0; 
+       zero.SetPaintingStrategy(PaintingStrategy.Line_VS_Points); 
+       zero.SetLineWeight(2); 
+       zero.SetDefaultColor(Color.Green); 
+     PPO.AssignValueColor(if PPO > PPO[1] and isNaN(Signal) 
+                          then Color.Green 
+                          else if !isNaN(Signal) or !isNaN(Signal2) 
+                          then Color.Plum 
+                          else Color.Red); 
+#end 
+####### pPPO EXPLAINED ######## 
+The nine-day average as a fraction of the 26-day average; hence, percentage price oscillator. 
+ 
+For analysts who choose to use the percentage price oscillator, a value outside the range of -10% to +10% is supposed  
+to indicate a stock being oversold or overbought, respectively. DO NOT USE FOR DECISIONS BY ITSELF. 
+ 
+ 
+################################ 
+
+ 

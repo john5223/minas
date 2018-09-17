@@ -1,0 +1,92 @@
+MORGAN 
+55.20 
+Share 
+Style Drawings Studies 
+(CLOSE, 5314 no nc 
+Patterns 
+MSIYID O: 0: H: L: 5488 C: R: 
+P/E Ratio: 13.5 Div Yield: 1.81% PayoutRatio: 24.45% rs o- 
+s4&38 
+_ 17, g, 
+547137 
+ 
+
+## Archive Name: MACD_withBreakoutSignals_InvTools 
+
+## Archive Section: Momentum 
+
+## Suggested Tos Name: MACD_withBreakoutSignals_InvTools 
+
+## Archive Date: 5.13.2018 
+
+## Archive Notes:  
+
+ 
+
+## "##" indicates an addition by the Archivist 
+
+ 
+
+#Number Two MACD with Breakout Signals  ken.rose@investools.com 
+
+declare lower; 
+
+ 
+
+input fastLength = 8; 
+
+input slowLength = 17; 
+
+input MACDLength = 9; 
+
+input AverageType = {SMA, default EMA}; 
+
+ 
+
+plot Diff = MACD(fastLength, slowLength, MACDLength, AverageType).Diff; 
+
+ 
+
+Diff.SetDefaultColor(GetColor(5)); 
+
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Diff.SetLineWeight(3); 
+
+Diff.DefineColor("Positive and Up", Color.GREEN); 
+
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN); 
+
+Diff.DefineColor("Negative and Down", Color.RED); 
+
+Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then Diff.Color("Positive and Up") else Diff.Color("Positive and Down") else if Diff < Diff[1] then Diff.Color("Negative and Down") else Diff.Color("Negative and Up")); 
+
+ 
+
+plot zeroline = 0; 
+
+zeroline.assignValueColor(getcolor(7)); 
+
+ 
+
+def crossedb = Crosses(diff, 0, CrossingDirection.BELOW); 
+
+plot crossbelow = if crossedb then crossedb-1 else double.NaN; 
+
+crossbelow.AssignValueColor(getcolor(5)); 
+
+crossbelow.SetPaintingStrategy(PaintingStrategy.arrow_DOWN); 
+
+ 
+
+def crossedu = Crosses(diff, 0, CrossingDirection.above); 
+
+plot crossabove = if crossedu then crossedu-1 else double.NaN; 
+
+crossabove.AssignValueColor(getcolor(1)); 
+
+crossabove.SetPaintingStrategy(PaintingStrategy.arrow_up); 
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 

@@ -1,0 +1,57 @@
+#HINT: This study plots volume that occurred at different prices.  For example, if timePerProfile of CHART is selected then net total volume of the horizontal volume-by-price will be equal to the net total volume of the vertical volume bars under the chart.\n\n Use horizontal volume-by-price to find areas of hidden support/resistance by noticing prices where largest volume occurred.\n.  
+
+
+input pricePerRowHeightMode = {default AUTOMATIC, TICKSIZE, CUSTOM};  
+input customRowHeight = 1.0;  
+input timePerProfile = {default CHART, MINUTE, HOUR, DAY, WEEK, MONTH, "OPT EXP", BAR}; #HINT timePerProfile: If onExpansion is set to no, select CHART to have horizontal volume-by-price include all volume for entire chart. Or select an aggregation period to show horizontal volume-by-price include only total volume for that time period (for example select MONTH to show only 1 month of volume on aa 1-year daily chart)  
+input onExpansion = no; #HINT onExpansion: no will plot horizontal volume-by-price bars under the chart bars/candles.  onExpansion yes will plot in the extra space to right of the chart.  
+input opacity = 40; #HINT opacity: If onExpansion is set to no, DECREASE the opacity number to make price bars/candles easier to see on top of the horizontal volume-by-price bars  
+input profiles = 1000; #HINT profiles: The numberOfProfiles parameter defines the number of profiles to be displayed if onExpansion is set to no. If onExpansion is set to yes then this parameter is ignored and only one profile is shown.  
+input multiplier = 1;  
+
+
+def period;  
+def yyyymmdd = getYyyyMmDd();  
+def seconds = secondsFromTime(0);  
+def month = getYear() * 12 + getMonth();  
+def day_number = daysFromDate(first(yyyymmdd)) + getDayOfWeek(first(yyyymmdd));  
+def dom = getDayOfMonth(yyyymmdd);  
+def dow = getDayOfWeek(yyyymmdd - dom + 1);  
+def expthismonth = (if dow > 5 then 27 else 20) - dow;  
+def exp_opt = month + (dom > expthismonth);  
+switch (timePerProfile) {  
+case CHART:  
+    period = 0;  
+case MINUTE:  
+    period = floor(seconds / 60 + day_number * 24 * 60);  
+case HOUR:  
+    period = floor(seconds / 3600 + day_number * 24);  
+case DAY:  
+    period = countTradingDays(min(first(yyyymmdd), yyyymmdd), yyyymmdd) - 1;  
+case WEEK:  
+    period = floor(day_number / 7);  
+case MONTH:  
+    period = floor(month - first(month));  
+case "OPT EXP":  
+    period = exp_opt - first(exp_opt);  
+case BAR:  
+    period = barNumber() - 1;  
+}  
+   
+def count = CompoundValue(1, if period != period[1] then (count[1] + period - period[1]) % multiplier else count[1], 0);  
+def cond = count < count[1] + period - period[1];  
+def height;  
+switch (pricePerRowHeightMode) {  
+case AUTOMATIC:  
+    height = PricePerRow.AUTOMATIC;  
+case TICKSIZE:  
+    height = PricePerRow.TICKSIZE;  
+case CUSTOM:  
+    height = customRowHeight;  
+}  
+   
+profile volumeByPrice = volumeProfile("startNewProfile" = cond, "onExpansion" = onExpansion, "numberOfProfiles" = profiles, "pricePerRow" = height);  
+   
+DefineGlobalColor("Profile", color.CYAN);  
+   
+volumeByPrice.show(globalColor("Profile"), color.CURRENT, color.CURRENT, opacity);  

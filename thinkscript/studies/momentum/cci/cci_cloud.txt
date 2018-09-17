@@ -1,0 +1,61 @@
+CCI_Cloud study 
+
+ 
+
+input length = 14; 
+
+ 
+
+def price = close + low + high; 
+
+def linDev = lindev(price, length); 
+
+plot CCI = if linDev == 0 then 0 else (price - Average(price, length)) / 
+
+linDev / 0.015; 
+
+plot ZeroLine = 0; 
+
+ 
+
+CCI.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+CCI.SetLineWeight(1); 
+
+CCI.AssignValueColor(if CCI > 0 then color.black else color.black); 
+
+ZeroLine.setDefaultColor(GetColor(7)); 
+
+ 
+
+plot CCIline = CCI; 
+
+cciline.setdefaultColor(color.black); 
+
+AddCloud(data1 = cciline, data2 = zeroLine, color1 = Color.GREEN, 
+
+color2=color.red); 
+
+ 
+
+plot lowLine = -45; 
+
+lowLine.SetDefaultColor(Color.YELLOW); 
+
+lowLine.HideBubble(); 
+
+lowLine.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+lowLine.SetLineWeight(1); 
+
+ 
+
+plot highLine = 45; 
+
+highLine.SetDefaultColor(Color.YELLOW); 
+
+highLine.HideBubble(); 
+
+highLine.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+highLine.SetLineWeight(1); 

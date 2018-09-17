@@ -1,0 +1,630 @@
+
+# Opening_Range_Breakout Strategy with Risk and Target Lines
+# Mobius
+# This is V03.02.2017  Other versions start with V01.01.2001 Ported to TOS 06.2011
+#hint: Opening Range Breakout is one of the original Floor Trader Strategies.\n Why it works: Overnight orders accumulate. Those orders being placed during the first 15 minutes of Regular Trading Hours combined with the typical high volume in the first 30 minutes of trading make this the most volatile trading period of the day. Regularly released reports during the first 30 minutes of trading add to the volatility and effect the days direction.\n  Features of this study: The yellow dashed line is the Day Filter Line and is used to determin the trend direction for the day. The dominant time spent above or below this line during the Opening Range Period typically determines the days trend. Green points indicate a close at EOD above the yellow line. Red Points a close below the yellow line. Yellow points a neutral or balanced day, close Between the Opening Range Extremes and often very near the Day Filter Line. The Opening Range is plotted with a green and red dashed line. Trades can be taken when there is an open outside these range lines. Up to 5 Targets are generated using Average True Range to plot target lines. When price crosses the first target line part of the trade should be taken as Risk Off profit and a stop should be placed at the entry point ensuring a profitable trade. If price crosses further targets stops should be moved to the preceeding target until stopped or your profit target is met. Initial Risk Stops are an open below the bar's low prior to entry or the Risk Lines plotted below the Opening range Lines. When price tests the opening range lines from below for the upper line or above for the lower lines trades can be taken with a first target to the yellow line from either direction and a Risk Stop line outside the opening range at the First Target lines or a close outside the Opening Range Lines. \n FYI the color of Probable close direction points are statistically accurate between 60% and 70% of the time. Trading against the direction of the ORB's Day Filtered Direction should be considered counter trend trades.\n As of 01.03.2017 You have just under a 52% probability that a DAILY bar will close green. So a 60% to 70% probability is a nice edge.
+# Deletions / Additions: Deleted - Globex High / Low, Globex Volume and Averages. Additions - Previous days Average Opening Ranges as additional support and resistance lines. Highs averaged from open to high and lows averaged from open to low.
+
+declare Hide_On_Daily;
+declare Once_per_bar;
+
+input OrMeanS  = 0930.0; #hint OrMeanS: Begin Mean Period. Usually Market Open EST.
+input OrMeanE  = 0935.0; #hint OrMeanE: End Mean period. Usually End of first bar.
+input OrBegin  = 0930.0; #hint OrBegin: Beginning for Period of Opening Range Breakout.
+input OrEnd    = 1000.0; #hint OrEnd: End of Period of Opening Range Breakout.
+input RthEnd   = 1615;
+input CloudOn  = no;       #hint CloudOn: Clouds Opening Range.
+input AlertOn  = yes;      #hint AlertOn: Alerts on cross of Opening Range.
+input ShowTodayOnly = yes;   
+input nAtr = 4;            #hint nATR: Lenght for the ATR Risk and Target Lines.
+input AtrTargetMult = 2.0; #hint ATRmult: Multiplier for the ATR calculations.
+input InitialRisk = 1.00;
+input ShowTargetBubbles = yes;
+
+  def h = high;
+  def l = low;
+  def c = close;
+  def bar = barNumber();
+  def BubbleX = bar == HighestAll(bar);
+  def s = ShowTodayOnly;
+  def Agg = GetAggregationPeriod() /1000/60;
+  def RTH = if SecondsFromTime(0930) >= 0 and
+               SecondsFromTime(1600) >= 0
+            then 1
+            else 0;
+  def ORActive = if secondsTillTime(OrMeanE) > 0 and
+                    secondsFromTime(OrMeanS) >= 0 
+                 then 1 
+                 else 0;
+  def today = if s == 0 
+              or getDay() == getLastDay() and
+                 secondsFromTime(OrMeanS) >= 0 
+              then 1 
+              else 0;
+  def ORHigh = if ORHigh[1] == 0 
+               or ORActive[1] == 0 and 
+                  ORActive == 1 
+               then h 
+               else if ORActive and
+                       h > ORHigh[1] 
+               then h 
+               else ORHigh[1];
+  def ORLow = if ORLow[1] == 0 
+              or ORActive[1] == 0 and
+                 ORActive == 1 
+              then l 
+              else if ORActive and
+                      l < ORLow[1] 
+              then l 
+              else ORLow[1];
+  def ORWidth = ORHigh - ORLow;
+  def na = double.nan;
+  def ORHA = if ORActive 
+             or today < 1 
+             then na 
+             else ORHigh;
+  def ORLA = if ORActive 
+             or today < 1 
+             then na 
+             else ORLow;
+  def O = ORHA - Round(((ORHA - ORLA) / 2) / TickSize(), 0) * TickSize();
+  def ORActive2 = if secondsTillTime(OREnd) > 0 and
+                     secondsFromTime(ORBegin) >= 0 
+                  then 1 
+                  else 0;
+  def ORHigh2 = if ORHigh2[1] == 0 
+                  or ORActive2[1] == 0 and
+                     ORActive2 == 1 
+                then h
+                else if ORActive2 and
+                        h > ORHigh2[1] 
+                then h 
+                else ORHigh2[1];
+  def ORLow2 = if ORLow2[1] == 0 
+                or ORActive2[1] == 0 and
+                   ORActive2 == 1 
+               then l 
+               else if ORActive2 and
+                       l < ORLow2[1] 
+               then l 
+               else ORLow2[1];
+  def ORWidth2 = ORHigh2 - ORLow2;
+  def TimeLine = if secondsTillTime(OREnd) == 0  
+                 then 1 
+                 else 0;
+  def ORmeanBar = if !ORActive and ORActive[1]
+                  then barNumber()
+                  else ORmeanBar[1];
+  def ORendBar = if !ORActive2 and ORActive2[1]
+                 then barNumber()
+                 else ORendBar[1];
+  def ORL = if (o == 0 , na, o);
+plot ORLext = if ShowTodayOnly and barNumber() >= highestAll(ORmeanBar) 
+              then HighestAll(if isNaN(c[-1]) 
+                              then ORL[1] 
+                              else double.nan)
+              else if !ShowTodayOnly
+                   then ORL
+              else double.nan;
+     ORLext.SetDefaultColor(color.Yellow);
+     ORLext.SetStyle(curve.Long_DASH);
+     ORLext.SetLineWeight(3);
+     ORLext.HideTitle();
+  def ORH2 = if ORActive2 
+             or today < 1 
+             then na 
+             else ORHigh2;
+plot ORH2ext = if ShowTodayOnly and barNumber() >= highestAll(ORendBar) 
+               then HighestAll(if isNaN(c[-1]) 
+                               then ORH2[1] 
+                               else double.nan) 
+               else if !ShowTodayOnly
+                    then ORH2
+               else double.nan;
+     ORH2ext.SetDefaultColor(color.Green);
+     ORH2ext.SetStyle(curve.Long_DASH);
+     ORH2ext.SetLineWeight(3);
+     ORH2ext.HideTitle();
+  def ORL2 = if ORActive2 
+               or today < 1 
+             then na 
+             else ORLow2;
+plot ORL2ext = if ShowTodayOnly and barNumber() >= highestAll(ORendBar) 
+               then HighestAll(if isNaN(c[-1]) 
+                               then ORL2[1] 
+                               else double.nan) 
+               else if !ShowTodayOnly
+                    then ORL2
+               else double.nan;
+     ORL2ext.SetDefaultColor(color.Red);
+     ORL2ext.SetStyle(curve.Long_DASH);
+     ORL2ext.SetLineWeight(3);
+     ORL2ext.HideTitle();
+  def RelDay = (ORL - ORL2) / (ORH2 - ORL2);
+  def dColor = if RelDay > .5
+               then 5
+               else if RelDay < .5
+                    then 6
+               else 4;
+  def pos = (ORH2 - ORL2)/10;
+plot d1  = if (TimeLine , ORH2, na);
+plot d2  = if (TimeLine , ORH2 - ( pos * 2), na);
+plot d3  = if (TimeLine , ORH2 - ( pos * 3), na);
+plot d4  = if (TimeLine , ORH2 - ( pos * 4), na);
+plot d5  = if (TimeLine , ORH2 - ( pos * 5), na);
+plot d6  = if (TimeLine , ORH2 - ( pos * 6), na);
+plot d7  = if (TimeLine , ORH2 - ( pos * 7), na);
+plot d8  = if (TimeLine , ORH2 - ( pos * 8), na);
+plot d9  = if (TimeLine , ORH2 - ( pos * 9), na);
+plot d10 = if (TimeLine ,(ORL2), na);
+     d1.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d2.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d3.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d4.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d5.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d6.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d7.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d8.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d9.SetPaintingStrategy(PaintingStrategy.POINTS);
+    d10.SetPaintingStrategy(PaintingStrategy.POINTS);
+     d1.AssignValueColor(GetColor(Dcolor));
+     d2.AssignValueColor(GetColor(Dcolor));
+     d3.AssignValueColor(GetColor(Dcolor));
+     d4.AssignValueColor(GetColor(Dcolor));
+     d5.AssignValueColor(GetColor(Dcolor));
+     d6.AssignValueColor(GetColor(Dcolor));
+     d7.AssignValueColor(GetColor(Dcolor));
+     d8.AssignValueColor(GetColor(Dcolor));
+     d9.AssignValueColor(GetColor(Dcolor));
+    d10.AssignValueColor(GetColor(Dcolor));
+     d1.HideBubble();
+     d2.HideBubble();
+     d3.HideBubble();
+     d4.HideBubble();
+     d5.HideBubble();
+     d6.HideBubble();
+     d7.HideBubble();
+     d8.HideBubble();
+     d9.HideBubble();
+    d10.HideBubble();
+     d1.HideTitle();
+     d2.HideTitle();
+     d3.HideTitle();
+     d4.HideTitle();
+     d5.HideTitle();
+     d6.HideTitle();
+     d7.HideTitle();
+     d8.HideTitle();
+     d9.HideTitle();
+    d10.HideTitle();
+addCloud(if CloudOn == yes 
+         then orl 
+         else double.nan
+       , orl2, createColor(50,25,25), createColor(50,25,25));
+addCloud(if CloudOn == yes 
+         then orl 
+         else double.nan
+       , orh2, createColor(25,50,50), createColor(25,50,50));
+def T = Round(Floor(RthEnd / agg), 0) * agg;
+def Settlement = if SecondsTillTime(T) == 0 and
+                    SecondsFromTime(T) == 0
+                 then Round(VWAP / TickSize(), 0) * TickSize()
+                 else Settlement[1];
+def SettlementBar = if SecondsTillTime(T) == 0 and
+                       SecondsFromTime(T) == 0
+                    then bar
+                    else SettlementBar[1];
+plot SettlementClose = if bar >= HighestAll(SettlementBar)
+                       then HighestAll(if isNaN(close[-1])
+                                       then Settlement
+                                       else double.nan)
+                       else double.nan;
+     SettlementClose.SetLineWeight(1);
+     SettlementClose.SetStyle(Curve.Long_Dash);
+     SettlementClose.SetDefaultColor(Color.Gray);
+     SettlementClose.HideTitle();
+AddChartBubble(BubbleX, SettlementClose, "PC", color.Gray, 0);
+# Begin Stretch
+  def RTHBar1 = if ORActive and !ORActive[1]
+                then bar
+                else double.nan;
+  def ORDays = if ORActive and !ORActive[1]
+               then ORDays[1] + 1
+               else ORDays[1];
+  def OROpenSum = if ORActive and !ORActive[1]
+                  then OROpenSum[1] + open
+                  else OROpenSum[1];
+  def ORHighSum = if bar == OREndBar
+                  then CompoundValue(1, ORHighSum[1] + ORHigh2, 0)
+                  else ORHighSum[1];
+  def ORLowSum = if bar == OREndBar
+                 then CompoundValue(1, ORLowSum[1] + ORLow2, 0)
+                 else ORLowSum[1];
+  def OROpenAvg = OROpenSum / ORDays;
+  def ORHighAvg = ORHighSum / ORDays;
+  def ORLowAvg = ORLowSum / ORDays;
+  def OROpenToHighAvgRange = ORHighAvg - OROpenAvg;
+  def OROpenToLowAvgRange = OROpenAvg - ORLowAvg;
+  def RTHOpen = if bar == HighestAll(RTHBar1)
+                then open
+                else RTHOpen[1];
+plot RTHo = if bar > HighestAll(RTHBar1)
+            then HighestAll(if isNaN(close[-1])
+                            then RTHOpen
+                            else double.nan)
+            else double.nan;
+     RTHo.SetStyle(Curve.Short_Dash);
+     RTHo.SetDefaultColor(Color.Dark_Gray);
+     RTHo.HideTitle();
+AddChartBubble(BubbleX, RTHo, "RTH-O", color.Gray, 0);
+plot StretchHigh = if bar > HighestAll(RTHBar1)
+                   then HighestAll(if isNaN(close[-1])
+                   then Round((RTHOpen + OROpenToHighAvgRange) / TickSize(), 0) * TickSize()
+                   else double.nan)
+                   else double.nan;
+     StretchHigh.SetLineWeight(3);
+     StretchHigh.SetStyle(Curve.Short_Dash);
+     StretchHigh.SetDefaultColor(Color.Green);
+     StretchHigh.HideTitle();
+AddChartBubble(BubbleX, StretchHigh, ORdays + " Day ORH", color.Green, 1);
+plot StretchLow = if bar > HighestAll(RTHBar1)
+                  then HighestAll(if isNaN(close[-1])
+                  then Round((RTHOpen - OROpenToLowAvgRange) / TickSize(), 0) * TickSize()
+                  else double.nan)
+                  else double.nan;
+     StretchLow.SetLineWeight(3);
+     StretchLow.SetStyle(Curve.Short_Dash);
+     StretchLow.SetDefaultColor(Color.Red);
+     StretchLow.HideTitle();
+AddChartBubble(BubbleX, StretchLow, ORdays+ " Day ORL", color.Red, 0);
+plot PriceLine = HighestAll(if isNaN(close[-1])
+                            then close
+                            else double.nan);
+     PriceLine.SetLineWeight(1);
+     PriceLine.SetPaintingStrategy(PaintingStrategy.Line);
+     PriceLine.SetDefaultColor(Color.Cyan);
+     PriceLine.HideTitle();
+# Begin Risk Algorithm
+# First Breakout or Breakdown bars
+  def Bubbleloc1 = isNaN(c[-1]);
+  def BreakoutBar = if ORActive
+                    then double.nan
+                    else if !ORActive and c crosses above ORH2
+                         then bar
+                         else if !isNaN(BreakoutBar[1]) and c crosses ORH2
+                              then BreakoutBar[1]
+                    else BreakoutBar[1];
+  def ATR = if ORActive2
+  then Round((Average(TrueRange(h, c, l), nATR)) / TickSize(), 0) * TickSize()
+  else ATR[1];
+  def cond1 =  if h > ORH2 and 
+                  h[1] <= ORH2
+               then Round((ORH2  + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize() 
+               else cond1[1];
+plot ORLriskUP = if bar >= OREndBar and !ORActive and today 
+                 then HighestAll(ORH2ext - InitialRisk) 
+                 else double.nan;
+     ORLriskUP.SetStyle(Curve.Long_Dash);
+     ORLriskUP.SetDefaultColor(Color.Green);
+     ORLriskUP.HideTitle();
+  def crossUpBar = if c crosses above ORH2
+                   then bar
+                   else double.nan;
+AddChartBubble(bar == HighestAll(crossUpBar-10), ORLriskUP, "Risk ORH", color.green, no);
+plot ORLriskDN = if bar >= OREndBar and !ORActive and today
+                 then HighestAll(ORL2ext + InitialRisk) 
+                 else double.nan;
+     ORLriskDN.SetStyle(Curve.Long_Dash);
+     ORLriskDN.SetDefaultColor(Color.Red);
+     ORLriskDN.HideTitle();
+  def crossDnBar = if h crosses below ORL2ext
+                   then bar
+                   else double.nan;
+AddChartBubble(bar == HighestAll(crossDnBar - 10), HighestAll(ORLriskDN), "Risk ORL", color.red, yes);
+# High Targets
+plot Htarget = if bar >= HighestAll(OREndBar)
+               then HighestAll(cond1)
+               else double.nan;
+     Htarget.SetPaintingStrategy(paintingStrategy.Squares);
+     Htarget.SetLineWeight(1);
+     Htarget.SetDefaultColor(Color.White);
+     Htarget.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, cond1, "RO", color.white, if c > Htarget then no else yes);
+  def condHtarget2 = if h crosses above cond1
+  then Round((cond1 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget2[1];
+plot Htarget2 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then  HighestAll(if isNaN(c[-1])
+                                 then condHtarget2 
+                                 else double.nan)
+                else double.nan;
+     Htarget2.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget2.SetLineWeight(1);
+     Htarget2.SetDefaultColor(Color.Plum);
+     Htarget2.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget2, "T2", color.plum, if c > Htarget2 
+                                                          then no 
+                                                          else yes);
+  def condHtarget3 = if h crosses above Htarget2
+  then Round((condHtarget2 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget3[1];
+plot Htarget3 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget3
+                                else double.nan) 
+                else double.nan;
+     Htarget3.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget3.SetLineWeight(1);
+     Htarget3.SetDefaultColor(Color.Plum);
+     Htarget3.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget3, "T3", color.plum, if c > Htarget3 then no else yes);
+  def condHtarget4 = if h crosses above Htarget3
+  then Round((condHtarget3 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget4[1];
+plot Htarget4 = if bar >= HighestAll(OREndBar) #BreakoutBar) 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget4 
+                                else double.nan)
+                else double.nan;
+     Htarget4.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget4.SetLineWeight(1);
+     Htarget4.SetDefaultColor(Color.Plum);
+     Htarget4.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget4, "T4", color.plum, if c > Htarget4 then no else yes);
+  def condHtarget5 = if h crosses above Htarget4
+  then Round((condHtarget4 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget5[1];
+plot Htarget5 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget5
+                                else double.nan) 
+                else double.nan;
+     Htarget5.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget5.SetLineWeight(1);
+     Htarget5.SetDefaultColor(Color.Plum);
+     Htarget5.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget5, "T5", color.plum, if c > Htarget5 then no else yes);
+  def condHtarget6 = if h crosses above Htarget5
+  then Round((condHtarget5 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget6[1];
+plot Htarget6 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget6 
+                                else double.nan)
+                else double.nan;
+     Htarget6.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget6.SetLineWeight(1);
+     Htarget6.SetDefaultColor(Color.Plum);
+     Htarget6.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget6, "T6", color.plum, if c > Htarget6 then no else yes);
+  def condHtarget7 = if h crosses above Htarget6
+  then Round((condHtarget6 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget7[1];
+plot Htarget7 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget7 
+                                else double.nan)
+                else double.nan;
+     Htarget7.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget7.SetLineWeight(1);
+     Htarget7.SetDefaultColor(Color.Plum);
+     Htarget7.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget7, "T7", color.plum, if c > Htarget7 then no else yes);
+  def condHtarget8 = if h crosses above Htarget7
+  then Round((condHtarget7 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget8[1];
+plot Htarget8 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget8 
+                                else double.nan)
+                else double.nan;
+     Htarget8.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget8.SetLineWeight(1);
+     Htarget8.SetDefaultColor(Color.Plum);
+     Htarget8.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget8, "T8", color.plum, if c > Htarget8 then no else yes);
+  def condHtarget9 = if h crosses above Htarget8
+  then Round((condHtarget8 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget9[1];
+plot Htarget9 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                then HighestAll(if isNaN(c[-1])
+                                then condHtarget9 
+                                else double.nan)
+                else double.nan;
+     Htarget9.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget9.SetLineWeight(1);
+     Htarget9.SetDefaultColor(Color.Plum);
+     Htarget9.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget9, "T9", color.plum, if c > Htarget9 then no else yes);
+  def condHtarget10 = if h crosses above Htarget9
+  then Round((condHtarget9 + (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condHtarget10[1];
+plot Htarget10 = if bar >= HighestAll(OREndBar) #BreakoutBar 
+                 then HighestAll(if isNaN(c[-1])
+                                 then condHtarget10
+                                 else double.nan)
+                 else double.nan;
+     Htarget10.SetPaintingStrategy(PaintingStrategy.Squares);
+     Htarget10.SetLineWeight(1);
+     Htarget10.SetDefaultColor(Color.Plum);
+     Htarget10.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condHtarget10, "T10", color.plum, if c > Htarget10 then no else yes);
+# Low Targets
+  def cond2 = if L < ORL2 and 
+                 L[1] >= ORL2 
+              then Round((ORL2  - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+              else cond2[1];
+plot Ltarget =  if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then cond2
+                                else double.nan)
+                else double.nan;
+     Ltarget.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget.SetLineWeight(1);
+     Ltarget.SetDefaultColor(Color.White);
+     Ltarget.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, cond2, "RO", color.white, if c < Ltarget 
+                                                     then yes 
+                                                     else no);
+  def condLtarget2 = if l crosses below Ltarget
+  then Round((cond2 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget2[1];
+plot Ltarget2 =  if bar >= HighestAll(OREndBar)
+                 then highestAll(if isNaN(c[-1])
+                                 then condLtarget2
+                                 else double.nan)
+                 else double.nan;
+     Ltarget2.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget2.SetLineWeight(1);
+     Ltarget2.SetDefaultColor(Color.Plum);
+     Ltarget2.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget2, "T2", color.plum, if c < condLtarget2 
+                                                              then yes 
+                                                              else no);
+  def condLtarget3 = if l crosses below Ltarget2
+  then Round((condLtarget2 - (ATR * AtrTargetMult)) / TickSize(), 0) * TickSize()
+  else condLtarget3[1];
+plot Ltarget3 = if bar >= HighestAll(ORendBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget3 
+                                else double.nan)
+                else double.nan;
+     Ltarget3.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget3.SetLineWeight(1);
+     Ltarget3.SetDefaultColor(Color.Plum);
+     Ltarget3.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget3, "T3", color.plum, if c > Ltarget3 then no else yes);
+  def condLtarget4 = if l crosses below Ltarget3
+  then Round((condLtarget3 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget4[1];
+plot Ltarget4 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget4 
+                                else double.nan)
+                else double.nan;
+     Ltarget4.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget4.SetLineWeight(1);
+     Ltarget4.SetDefaultColor(Color.Plum);
+     Ltarget4.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget4, "T4", color.plum, if c < Ltarget4 
+                                                              then yes 
+                                                              else no);
+  def condLtarget5 = if l crosses below Ltarget4
+  then Round((condLtarget4 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget5[1];
+plot Ltarget5 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget5 
+                                else double.nan)
+                else double.nan;
+     Ltarget5.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget5.SetLineWeight(1);
+     Ltarget5.SetDefaultColor(Color.Plum);
+     Ltarget5.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget5, "T5", color.plum, if c < Ltarget5 
+                                                              then yes 
+                                                              else no);
+  def condLtarget6 = if l crosses below Ltarget5
+  then Round((condLtarget5 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget6[1];
+plot Ltarget6 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget6 
+                                else double.nan)
+                else double.nan;
+     Ltarget6.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget6.SetLineWeight(1);
+     Ltarget6.SetDefaultColor(Color.Plum);
+     Ltarget6.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget6, "T6", color.plum, if c < Ltarget6 
+                                                              then yes 
+                                                              else no);
+  def condLtarget7 = if l crosses below Ltarget6
+  then Round((condLtarget6 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget7[1];
+plot Ltarget7 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget7 
+                                else double.nan)
+                else double.nan;
+     Ltarget7.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget7.SetLineWeight(1);
+     Ltarget7.SetDefaultColor(Color.Plum);
+     Ltarget7.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget7, "T7", color.plum, if c < Ltarget7 
+                                                              then yes 
+                                                              else no);
+  def condLtarget8 = if l crosses below Ltarget7
+  then Round((condLtarget7 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget8[1];
+plot Ltarget8 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget8 
+                                else double.nan)
+                else double.nan;
+     Ltarget8.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget8.SetLineWeight(1);
+     Ltarget8.SetDefaultColor(Color.Plum);
+     Ltarget8.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget8, "T8", color.plum, if c < Ltarget8 
+                                                              then yes 
+                                                              else no);
+  def condLtarget9 = if l crosses below Ltarget8
+  then Round((condLtarget8 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget9[1];
+plot Ltarget9 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget9 
+                                else double.nan)
+                else double.nan;
+     Ltarget9.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget9.SetLineWeight(1);
+     Ltarget9.SetDefaultColor(Color.Plum);
+     Ltarget9.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget9, "T9", color.plum, if c < Ltarget9 
+                                                              then yes 
+                                                              else no);
+  def condLtarget10 = if l crosses below Ltarget9
+  then Round((condLtarget9 - (AtrTargetMult * ATR)) / TickSize(), 0) * TickSize()
+  else condLtarget10[1];
+plot Ltarget10 = if bar >= HighestAll(OREndBar)
+                then highestAll(if isNaN(c[-1])
+                                then condLtarget10 
+                                else double.nan)
+                else double.nan;
+     Ltarget10.SetPaintingStrategy(PaintingStrategy.Squares);
+     Ltarget10.SetLineWeight(1);
+     Ltarget10.SetDefaultColor(Color.Plum);
+     Ltarget10.HideTitle();
+AddChartBubble(ShowTargetBubbles and BubbleLoc1, condLtarget10, "T10", color.plum, if c < Ltarget10
+                                                              then yes 
+                                                              else no);
+# Day Trend Label
+def DayTrend = if RTHOpen > SettlementClose
+               then 1
+               else 0;
+def ORTrend = if RelDay < .5
+              then 1
+              else 0;
+addLabel(1, if DayTrend and ORTrend
+            then "UP > " + AsDollars(RTHopen)
+            else if (DayTrend and !ORTrend)
+                   or 
+                    (!DayTrend and ORTrend)
+                 then "Prob Range Day" 
+            else "DN < " + AsDollars(RTHopen), 
+            if DayTrend and ORTrend
+            then color.green
+            else if (DayTrend and !ORTrend)
+                   or
+                    (!DayTrend and ORTrend)
+                 then color.white
+            else color.red);
+# Time Reminders
+AddVerticalLine(secondsTillTime(0930) == 0, "RTH", color.cyan, Curve.Short_Dash);
+AddVerticalLine(secondsTillTime(1030) == 0, "End EU", color.cyan, Curve.Short_Dash);
+AddVerticalLine(secondsTillTime(1200) == 0, "Lunch", color.cyan, Curve.Short_Dash);
+AddVerticalLine(secondsTillTime(1500) == 0, "Lst Hr", color.cyan, Curve.Short_Dash);
+AddVerticalLine(secondsTillTime(1615) == 0, "RTH End", color.cyan, Curve.Short_Dash); 
+# End Code ORB V03
+

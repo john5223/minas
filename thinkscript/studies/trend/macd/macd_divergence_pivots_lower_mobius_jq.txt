@@ -1,0 +1,120 @@
+http://tos.mx/bXgSiz 
+## Archive Name: MACD Divergence Pivots Lower Study _Mobius_JQ 
+## Archive Section: Momentum 
+## Suggested Tos Name: MACD_DivergencePivotsLower_Mobius_JQ 
+## Archive Date: 5.13.2018 
+## Archive Notes:  
+
+## "##" indicates an addition by the Archivist 
+
+# MACD Divergence Pivots Lower Study 
+# Mobius 
+# V02.05.2015 
+# Added Bar color to match MACD color so divergence is obvious. Altered fold expressions.  
+#This version of the MACD Divergence Study should be kept. 
+#At this point the only way to translate the MACD data to the upper chart is to scale the MACD study to the upper chart and then plot the signal Lines. The Two studies will be able to be run in tandem. But it will be important to have all user inputs the same. 
+## 5.13.2018 added the option to paint bars or not at the users discretion.. JQ 
+
+
+declare lower; 
+
+input n = 2; 
+input fastLength = 12; 
+input slowLength = 26; 
+input MACDLength = 9; 
+input averageType = AverageType.EXPONENTIAL; 
+input PaintBars = no; ## 5.13.2018 JQ 
+
+def bar = barNumber(); 
+plot Diff = MACD(fastLength, slowLength, MACDLength, averageType).Diff; 
+
+     Diff.SetDefaultColor(GetColor(5)); 
+     Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+     Diff.SetLineWeight(3); 
+     Diff.DefineColor("Positive and Up", Color.GREEN); 
+     Diff.DefineColor("Positive and Down", Color.DARK_GREEN); ## was dark_green 
+     Diff.DefineColor("Negative and Down", Color.RED); 
+     Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+     Diff.AssignValueColor(if Diff >= 0 
+                           then if Diff > Diff[1] 
+                           then Diff.color("Positive and Up") 
+                           else Diff.color("Positive and Down") 
+                           else if Diff < Diff[1]  
+                                then Diff.color("Negative and Down")  
+                                else Diff.color("Negative and Up")); 
+
+def CurrMACDh = if Diff > 0 
+                then fold i = 1 to n + 1  
+                with p = 1 
+                while p  
+                do Diff > getValue(Diff, -i) 
+                else 0;  
+
+def CurrMACDPivotH = if (bar > n and  
+                         Diff == highest(Diff, n) and  
+                         CurrMACDh)  
+                     then Diff  
+                     else double.NaN; 
+
+def CurrMACDl = if Diff < 0 
+                then fold j = 1 to n + 1  
+                with q = 1 
+                while q  
+                do Diff < getValue(Diff, -j) 
+                else 0; 
+
+def CurrMACDPivotL = if (bar > n and  
+                         Diff == lowest(Diff, n) and  
+                         CurrMACDl)  
+                     then Diff  
+                     else double.NaN; 
+
+def CurrPHBar = if !isNaN(CurrMACDPivotH)  
+                then bar  
+                else CurrPHBar[1]; 
+
+def CurrPLBar = if !isNaN(CurrMACDPivotL)  
+                then bar  
+                else CurrPLBar[1]; 
+
+def PHpoint = if !isNaN(CurrMACDPivotH)  
+              then CurrMACDPivotH  
+              else PHpoint[1]; 
+def priorPHBar = if PHpoint != PHpoint[1]  
+                 then CurrPHBar[1]  
+                 else priorPHBar[1]; 
+def PLpoint = if !isNaN(CurrMACDPivotL)  
+              then CurrMACDPivotL  
+              else PLpoint[1]; 
+def priorPLBar = if PLpoint != PLpoint[1]  
+                 then CurrPLBar[1]  
+                 else priorPLBar[1]; 
+def HighPivots = bar >= highestAll(priorPHBar); 
+def LowPivots = bar >= highestAll(priorPLBar); 
+def pivotHigh = if HighPivots  
+                then CurrMACDPivotH  
+                else double.NaN; 
+plot PlotHline = pivotHigh; 
+    PlotHline.enableApproximation(); 
+    PlotHline.SetDefaultColor(GetColor(7)); 
+    PlotHline.SetStyle(Curve.Short_DASH); 
+plot pivotLow = if LowPivots  
+                then CurrMACDPivotL  
+                else double.NaN; 
+    pivotLow.enableApproximation(); 
+    pivotLow.SetDefaultColor(GetColor(7)); 
+    pivotLow.SetStyle(Curve.Short_DASH); 
+plot PivotDot = if !isNaN(pivotHigh)  
+                then pivotHigh  
+                else if !isNaN(pivotLow)  
+                     then pivotLow 
+                     else double.NaN; 
+    pivotDot.SetDefaultColor(GetColor(7)); 
+    pivotDot.SetPaintingStrategy(PaintingStrategy.POINTS); 
+    pivotDot.SetLineWeight(3); 
+ 
+AssignPriceColor(if PaintBars == 1 then Diff.TakeValueColor() else color.CURRENT) ; 
+
+#AssignPriceColor(Diff.TakeValueColor()); 
+
+# End Code Pivots with Projections 

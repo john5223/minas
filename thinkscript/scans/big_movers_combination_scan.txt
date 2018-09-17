@@ -1,0 +1,27 @@
+# big movers 
+
+def CCr = Average(close,2); 
+def CCg = Average(close[3],3); 
+def C1 = if (CCr[0] > CCg[0] AND CCr[1] < CCg[1]) then 1 else if (CCr[0] < CCg[0] AND CCr[1] > CCg[1]) then -1 else 0; 
+ 
+def RSI = RSIWilder(length = 13).RSI; 
+def highestRSI = Highest(RSI, 21); 
+def lowestRSI = Lowest(RSI, 21); 
+def RSIS = (RSI - lowestRSI) / (highestRSI - lowestRSI); 
+def Kpd = Average(RSIS, 3); 
+def Dpd = Average(Kpd, 5); 
+def C2 = if (Kpd[0] > Dpd[0] AND Kpd[1] < Dpd[1]) then 1 else if (Kpd[0] < Dpd[0] AND Kpd[1] > Dpd[1]) then -1 else 0; 
+ 
+def MACDr = ExpAverage(close,8) - ExpAverage(close,13); 
+def MACDg = ExpAverage(MACDr,5); 
+def C3 = if (MACDr[0] > MACDg[0] AND MACDr[1] < MACDg[1]) then 1 else if (MACDr[0] < MACDg[0] AND MACDr[1] > MACDg[1]) then -1 else 0; 
+
+def DIr = DIPlus(5); 
+def DIg = DIMinus(5); 
+def C4 = if (DIr[0] > DIg[0] AND DIr[1] < DIg[1]) then 1 else if (DIr[0] < DIg[0] AND DIr[1] > DIg[1]) then -1 else 0; 
+def Count = C1 + C2 + C3 + C4; 
+plot Decision = if Count >=3 OR Count <=-3 then 1 else double.nan; 
+
+ 
+
+ 

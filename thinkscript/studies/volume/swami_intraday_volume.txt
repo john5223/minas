@@ -1,0 +1,58 @@
+ 
+
+266.56 
+Draw i ngs 
+spy 1 D 10m 
+D: O: 26871 H: 26893 L: 
+Chart Aggregation is 10 Mins Chart Length 
+is 39 10 Min Bars 
+13:00 
+10m 
+R:04 
+14:00 
+Style 
+VolumeAvg(S0) 
+Thermo SwamiIntradayVoIume (12481 
+12:00 
+Mon 
+Studies 
+10:10 
+Patterns 
+267.5 
+267.25 
+26675 
+265.75 
+11:00 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2012-2018 
+
+# 
+
+# Source code isn't available. 
+
+ 
+
+#thermo input : length 
+
+#thermo minValue : 12 
+
+#thermo maxValue : 48 
+
+#thermo minColor : 0, 0, 255 
+
+#thermo maxColor : 255, 255, 255 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 30; 
+
+ 
+
+plot Aurora = Double.NaN; 

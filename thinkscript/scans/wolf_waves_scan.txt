@@ -1,0 +1,17 @@
+11:15 Vimes: This is likely obvious to power users of TOS, but i have really found some value in incorporating some of the support resistance studies from Mobius into a scan against a large list of buy/trading candidates that I maintain as part of my routine research.
+This might helps focus a list of maybe 200 equities into a few target opportunities as they arise.
+
+Some example using the wolf waves study, and building a couple of variations on this theme depending on your trading style (obviously you can adjust the settings to your liking)
+This assumes you have a copy of the Wolf Waves study saved as named, or you can modify accordingly.
+
+#Scan 1: Near Pivot (R1)
+def r1 = WolfWaves_Mobius(8);
+plot scan = Between(close, 0.98 * r1, r1);
+
+#Scan 2: Near Support (S1)
+def S1 = WolfWaves_Mobius(8).S1;
+plot scan = Between(close, S1, 1.02*S1);
+
+#Scan 3: Power from Pivot (price break through R1 with volume)
+def r1 = WolfWaves_Mobius(8);
+plot scan = close>r1 and volume>1.10*average(volume[1],10);

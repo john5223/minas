@@ -1,0 +1,45 @@
+declare lower;
+
+input price = close;
+input superfast_length = 8;
+input fast_length = 13;
+input slow_length = 21;
+input displace = 0;
+ 
+def mov_avg8 = ExpAverage(price[-displace], superfast_length);
+def mov_avg13 = ExpAverage(price[-displace], fast_length);
+def mov_avg21 = ExpAverage(price[-displace], slow_length);
+ 
+#moving averages
+def Superfast = mov_avg8;
+def Fast = mov_avg13;
+def Slow = mov_avg21;
+ 
+def buy = mov_avg8 > mov_avg13 and mov_avg13 > mov_avg21 and low > mov_avg8;
+def stopbuy = mov_avg8 <= mov_avg13;
+def buynow = !buy[1] and buy;
+def buysignal = CompoundValue(1, if buynow and !stopbuy then 1 else if buysignal[1]==1 and stopbuy then 0 else buysignal[1], 0);
+ 
+def Buy_Signal = buysignal[1] == 0 and buysignal==1;
+def Momentum_Down = buysignal[1] ==1 and buysignal==0;
+
+def sell = mov_avg8 < mov_avg13 and mov_avg13 < mov_avg21 and high < mov_avg8;
+def stopsell = mov_avg8 >= mov_avg13;
+def sellnow = !sell[1] and sell;
+
+def sellsignal = CompoundValue(1, if sellnow and !stopsell then 1 else if sellsignal[1]==1 and stopsell then 0 else sellsignal[1], 0);
+ 
+def Sell_Signal = sellsignal[1] ==0 and sellsignal;
+def Momentum_Up = sellsignal[1]==1 and sellSignal==0;
+ 
+# when using this as a custom scan, change the word plot to def
+# then remove the '#' from in front of one of the "plot Scan" statements below
+plot Colorbars = if buysignal ==1 then 1 else if sellsignal ==1 then -1 else if buysignal ==0 or sellsignal==0 then 0 else 0;
+
+# use this first Scan plot for SLM Ribbon Momentum UP
+#plot Scan = if Colorbars == 1 then yes else no;
+
+# use this second Scan plot for SLM Ribbon Momentum DOWN
+#plot Scan = if Colorbars == -1 then yes else no;
+
+assignBackgroundColor(if Colorbars == 1 then color.GREEN else if Colorbars == -1 then color.RED else color.BLACK);

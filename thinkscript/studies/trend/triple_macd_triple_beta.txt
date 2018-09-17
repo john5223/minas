@@ -1,0 +1,119 @@
+ RCG3:  
+
+ 
+
+#Triple MACD Beta: Reverse Engineered MACD added 
+
+declare lower; 
+
+input study= {default macd, reverse_macd}; 
+
+input agg2 = AggregationPeriod.FIFTEEN_MIN; 
+
+input agg3 = AggregationPeriod.HOUR; 
+
+input fast = 12; 
+
+input slow = 26; 
+
+input Length = 9; 
+
+input macdlevel= 0.0; 
+
+ 
+
+plot zero = 0; 
+
+zero.setdefaultcolor(color.white); 
+
+ 
+
+plot hist1; 
+
+plot hist2; 
+
+plot hist3; 
+
+ 
+
+switch(study){ 
+
+    Case macd: 
+
+        hist1 = ((ExpAverage(close, fast) - ExpAverage(close,                   slow)) - (ExpAverage((ExpAverage(close, fast) -                  ExpAverage(close, slow)), Length))); 
+
+ 
+
+        hist2 = ((ExpAverage(close(period = agg2), fast) -                       ExpAverage(close(period = agg2), slow)) -                        (ExpAverage((ExpAverage(close(period = agg2),                    fast) - ExpAverage(close(period = agg2),                         slow)), Length))); 
+
+ 
+
+ 
+
+        hist3 = ((ExpAverage(close(period = agg3), fast) -                       ExpAverage(close(period = agg3), slow)) -                        (ExpAverage((ExpAverage(close(period = agg3),                    fast) - ExpAverage(close(period = agg3),                         slow)), Length))); 
+
+ 
+
+    Case reverse_macd: 
+
+         hist1 = (((ExpAverage(close, fast)[1] * 2 / (1 + fast)           - ExpAverage(close, slow)[1] * 2 / (1 + slow)) / (2 /           (1 + fast) - 2 / (1 + slow)))- 
+
+ 
+
+          (ExpAverage(((ExpAverage(close, fast)[1] * 2 / (1 +             fast) - ExpAverage(close, slow)[1] * 2 / (1 + slow))             / (2/(1 + fast) - 2 / (1 + slow))), Length))); 
+
+ 
+
+        hist2 =(((ExpAverage(close(period= agg2), fast)[1] * 2                 / (1 + fast) - ExpAverage(close(period= agg2),                  slow)[1] * 2 / (1 + slow)) / (2 /(1 + fast) - 2                 / (1 + slow)))- 
+
+ 
+
+              (ExpAverage(((ExpAverage(close(period= agg2),                    fast)[1] * 2 / (1 + fast) -                                     ExpAverage(close(period= agg2), slow)[1] * 2 /                 (1 + slow)) / (2/(1 + fast) - 2 / (1 + slow))),                 Length))); 
+
+ 
+
+        hist3 = (((ExpAverage(close(period= agg3), fast)[1] * 2                 / (1 + fast) - ExpAverage(close(period= agg3),                  slow)[1] * 2 / (1 + slow)) / (2 /(1 + fast) - 2                 / (1 + slow)))- 
+
+ 
+
+              (ExpAverage(((ExpAverage(close(period= agg3),                    fast)[1] * 2 / (1 + fast) -                                     ExpAverage(close(period= agg3), slow)[1] * 2 /                 (1 + slow)) / (2/(1 + fast) - 2 / (1 + slow))),                 Length))); 
+
+ 
+
+} 
+
+ 
+
+ 
+
+hist1.SetPaintingStrategy(PaintingStrategy.line); 
+
+hist2.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+hist3.SetPaintingStrategy(PaintingStrategy.SQUARED_HISTOGRAM); 
+
+ 
+
+hist1.SetLineWeight(2); 
+
+hist2.SetLineWeight(3); 
+
+ 
+
+ 
+
+hist1.AssignValueColor(if hist1 > 0 then color.gray else color.yellow); 
+
+hist2.AssignValueColor(if hist2 > 0 then createcolor(34,139,34) else createcolor(220,20,60)); 
+
+hist3.AssignValueColor(if hist3 > 0 then createcolor(13,80,0) else createcolor(128,0,0)); 
+
+ 
+
+ 
+
+#hist1.AssignValueColor(createcolor(143, 188, 143)); 
+
+#hist2.AssignValueColor(createcolor(34, 139, 34)); 
+
+#hist3.AssignValueColor(color.dark_green); 

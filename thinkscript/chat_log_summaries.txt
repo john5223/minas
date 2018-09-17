@@ -1,0 +1,141 @@
+
+# Favorite studies
+
+`Mobius`: 
+- ORB for intraday
+- Linear Regression Channels
+- RSI in Laguerre Time
+- Fractal Pivots
+
+`AlphaInvestor`:
+- Fractal_Pivots
+- RSI_Laguerre
+- BollingerBands
+- RelativeVolumeStDev or VolumePercentR
+- IV_Percentile
+- Expected_Move_based_on_SeriesVolatility
+- ORB
+- LRC_with_Fibs (linear regression channel with fibonacci lines)
+
+`whatsup`:
+- crossover of midrange of the 1h ORB
+
+
+# Favorite strategies
+
+## Mobius
+
+### Pairs
+
+    12:47 Mobius: big... If a sector is out of favor - what logically is it doing?
+    12:48 bigworm: the sector is diverging from what other sectors and the market is doing?
+    12:50 Mobius: It's either in a down trend or consolidating with drift in a downtrend. Either makes that pair more volatile. Volatility adds a lot of risk in a pairs trade. You want a low risk environment such as sideways with upward drift for the best market neutral trades. 
+
+
+### Standard deviation options
+
+Sell puts till you are assigned and then hedge with options until something fundamental changes. 
+
+
+A squeeze at or near the top of a mean channel or linear regression channel is usually a sell signal.
+
+
+One at the bottom of a mean channel is usually a good buy entry. Alerts set for that condition. After that alert I set one for relative extreme volume and enter if the following bar is positive. 
+
+
+A simple option strategy to deploy is an in/out vertical spread. Look for a $2 wide spread that will cost ydou about 1.00. Sell them when you've made 50-60%. Buy calls when price is at or below 2 standar deviations and buy puts when price is at or above 2 standard deviations, both using 21 periods. When FE is at or above .6, your probability of profit is well over 80%. With in/out vertical there is zero risk in time decay when those parameters. Buying 30 to 35 days out you'll never bin the them more than a week. Trade so small you don't care if you make money till your proficient. 
+
+
+### Supertrend
+
+
+    Mobius: Since I'm a big advocate of Fractal integrity (looking to higher aggregations for trends and trading lower aggregations) I use this to color candles according to a higher aggregationi
+    11:33 Mobius©: ez.. I am trading supertrend live with an automated platform. It trades at the cross of the bid
+    11:36 Mobius©: on the TOS platform, if you watch it closely you will see the point of intersection. If you trade that bar the stop is the low of that bar. If you trade then next bar you can often get that same price. If the open is much higher due to that bars expansion forget the trade.
+    11:36 Mobius©: The stop is still what is not the low of the previous bar
+    11:38 Mobius©: Like PSAR it does best in a trending market. Days like today where there is a large price expansion overnight, I've found it combines well with ORB
+    11:38 Mobius©: If there's no ORB trade I wouldn't trade SuperTrend either
+    ww
+    11:40 ez4u: your ST is much tighter compared to the  PSAR. I assume that the extra whipsaws you experience are outweighted by the earlier entries
+    11:40 scalper: MOBIUS what would  you say is the  best study to act as a filter of when not to take a trade with supertrend?
+    11:42 ez4u: I'm guessing a "squeeze study" of some sort
+    11:42 Harndog: Scalper....zzz created a lower study for the Heikin Ashi Candles. http://tos.mx/gcPu0K￼
+    . It might be a useful guide
+    11:44 Mobius©: ez - most whipsaws are overnight or on days when the price expansion has occurred overnight. The great trades it signals has this year far outweighed the handful of bad signals
+    11:47 Mobius©: ez.. as I said above - If price is locked in the opening range I don't trade superTrend. It's a simple strategy. And as those that have been around a while here know, I like simple.
+    11:50 Mobius©: superTrend is an easy study to understand. It expands and contracts with the Average True Range. A trend expands and contracts as it starts and ends.
+    11:51 Mobius©: ORB is the same. It's in balance inside the Opening Range and expands when it crosses those lines.
+    12:28 ez4u: Mobius, not understanding automated platforms, is the automation the reason the cross over is not a difinite point in price like the psar? Or is there another reason you wrote it that way
+    12:37 Mobius©: ez.. PSAR is no more or less a defined point than the superTrend point. The way they are determined is similar. PSAR adds a fixed value to price up until a limit is reached. SuperTrend adds the ATR to price with no limit.
+    12:39 Mobius©: I've rewritten PSAR to also add a value adjusted by a volatility factor instead of a fixed value. It works very close to superTrend
+    12:42 Mobius©: Why not just change the supertrend to color a background red or green and then put it into a watchlist at different aggregations. Then you have 4 boxes in a row that change from green to red
+
+### Trend Magic
+
+    Mobius_CCI_ATR_Trendline_aka_Trend_Magic
+    15:15 Nube: "Basically if the Close is above or below the 50 period CCI zero line. The 5 period ATR is used to draw the line above the High or below the Low"
+    15:15 Nube: That's what I could find on it.
+    15:16 AlphaInvestor: That sounds like Mobius Trend Magic
+    15:17 AlphaInvestor: but Mobius used a 20 period CCI
+    15:18 AlphaInvestor: a 4 period ATR, and had a multiplier factor for the ATR
+
+
+## Alpha Investor
+
+
+### Mean reversion
+
+    16:18 AlphaInvestor: 
+    A couple thoughts
+        a) price outside the Bollinger Bands will eventually mean revert
+        b) a CCI above 200 or below -200 will mean revert
+        c) Zscore
+    16:22 FrankB3: Price outside the Hurst Cycle Bands is the best...  but is distorted on the hard right edge
+    16:25 Vimes: i also use bands and wait for a hook on a short term ema or rsi-laguerre
+
+
+### Options around earnings
+
+    13:50 Vimes: I guess for a thinkscript twist for Frank If you scan for stocks that have a historically low IV and are trading in a tight range maybe they would be good candidates for your calendar
+    12:52 AlphaInvestor: to make this work you need Low IV 90 days out and High IV  now. because you are Buying the 90 day out Strangle, and selling the near expiration one
+    12:53 AlphaInvestor: So the best time for this is with elevated front IV. When does that happen ... around earnings!
+    12:54 AlphaInvestor: I do Double Diagonals (not Double Calendars) into earnings all the time. That is why I know there isn't a 10% return for double calendars just sitting on the floor for me to pick up.
+    12:58 AlphaInvestor: Vimes - here is the type of trade that I do into earnings - the RH symbol was from helping someone else - I have no intention of trading RH
+    12:58 AlphaInvestor: BUY +1 1/1/-1/-1 CUSTOM RH 100 (Weeklys) 22 JUN 18/22 JUN 18/15 JUN 18/15 JUN 18 125/101/123/103 CALL/PUT/CALL/PUT @-.30 LMT
+    13:02 AlphaInvestor: Actually, this one has a better probability - but I would only do it for a credit
+    BUY +1 DBL DIAG RH 100 (Weeklys) 22 JUN 18/15 JUN 18 140/91/138/93 CALL/PUT/CALL/PUT @.30 LMT
+    13:02 Vimes: Why not the same strikes? because you think the stock will move?
+    13:03 AlphaInvestor: Logic
+    Sell the Front Week high implied volatitly at approximately 2 standard devation move
+    Buy the 
+    13:04 AlphaInvestor: Buy the Back Week lower implied volatitiy options - one strike out (in this case i needed 2 strikes (2 dollars)
+    13:05 AlphaInvestor: you are Buing, but sometimes you can buy it for a Credit because the front IV is so much higher - I only do it for a credit
+    13:05 AlphaInvestor: after earnings the volatiltiy will crush on the front week options (back week too but much less).
+    13:05 Vimes: very interesting idea - not something i have ever done but will look at it? do you put a trade like that on often?
+    13:07 AlphaInvestor: After E on a move inside the strikes, close it out. You made money because you sold it for a credit and you will be able to buy it back for less because of the IV crush - but you don't make much
+    after E, onm a move TO one of the short strikes - this is your Max Profit - look at the Risk Profile graph. Close that side, and try to close the opposite side short strike for a nickel or less (no commish), leaving the long strike on that side as a free lottery ticket.
+    13:08 Vimes: yeah the risk/reward is very attractive
+    13:08 AlphaInvestor: if it moves PAST one of the short strikes it is a busted trade - you are risk defined so the pain isn't too bad, and you used 2 standard deviation move, so it shouldn't happen often
+    13:08 Vimes: might try a few
+    13:09 Vimes: i have always played earnings directional buy calls for a run into earnings and sell before - seem sto work for me but maybe i'm lucky
+    13:09 AlphaInvestor: Vimes - practice in Paper Money - I did, for over 6 months to perfect the strirke placement ... Before I traded it with real $$$
+    13:09 AlphaInvestor: I know someone else that does that, but I do not
+    13:12 AlphaInvestor: Vimes - do you see how by placing the short strikes on the front month at around 2 standard deviations (the second one I posted) the breakevens are at about a 3 sigma move.
+    13:15 Vimes: i thiink so if i 'm reading it right looks like its right between 2 and 3 sig
+    13:16 Vimes: let me look at the second one still had the RH trade
+    13:18 Vimes: yes i see that - so i guess likely why its a slight debit versus the first one?
+    13:19 AlphaInvestor: Yes.
+    13:20 AlphaInvestor: I only do them for a credit - that way if nothing happens, I cover my commish and make a few bucks, every once in a while I hit one out of the park, very very rarely does one go bad because the breakeven is so far out (32 dollars in RH case)
+    13:22 AlphaInvestor: As I said, I woudln't actually do RH (its a retailer - eww), but it would be a good Paper Money case study
+    13:28 Vimes: Even it ffalls on earnigns to 200 day support the trade makes money
+
+
+### Other Chat logs
+
+    17:53 AlphaInvestor: I can find the best NEW vertical to trade using Premium per Day - Risk and Commission Adjusted, or I can pick it based on Kelly Criterion.
+    I can also find the optimal roll expiration using similar logic
+
+    14:52 AlphaInvestor: The Grail - a) a set of no more than a dozen carefully selected Technical Analsyis indicators that you know backwards forwards and updide dow b) a Plan and the discipline to follow your plan, c) a thorough understanding of fundamentals and Fundamental Analysis, d) a curious mind and a commitment to lifetime learning, e) patience when needed, the abiltiy to react quickly when required, and the wisdom to know when each is appropriate.
+
+    14:59 AlphaInvestor: I learned option from Dk, and SLS. I would never trade like DK, but would like SLS ... but really I trade like ME. I know the concepts and have traded lots of spreads only to find out later that they have names. I just throw things together that meet a need.
+

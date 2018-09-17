@@ -1,0 +1,59 @@
+#Title = SFL_Williams_percent_R 
+
+# The Williams%R indicator is famous for the -20 and -80 % levels to indicate 
+
+ #overbought and oversold conditions. Watch for the 2 lines to cross on  
+
+# the -20 and -80 centerlines for your potential signals. 
+
+ 
+
+    declare lower; 
+
+ 
+
+    input Length = 14; 
+
+    input OverBought = -20; 
+
+    input OverSold = -80; 
+
+    input MovAvgLength = 9; 
+
+ 
+
+    def highest = Highest(high, Length); 
+
+    def lowest = Lowest(low, Length); 
+
+    def data = if highest == lowest then -100 else (highest - close) / (highest - lowest) * (-100); 
+
+ 
+
+   # plot PercentR_SMA = if( data > 0, 0, data); 
+
+   # PercentR_SMA.SetDefaultColor(Color.pink); 
+
+Plot LabelLine = 50;# To prevent labels interferring with upper data 
+
+plot PercentR_SMA = if data > 0 then 0 else data; 
+
+PercentR_SMA.assignvaluecolor (if PercentR_SMA > -50 then color.green else if PercentR_SMA < -50 then color.red else color.current); 
+
+    plot Over_Sold = overSold; 
+
+    Over_Sold.SetDefaultColor(GetColor(8)); 
+
+    plot Over_Bought = overBought; 
+
+    Over_Bought.SetDefaultColor(GetColor(8)); 
+
+    plot SMA = Average(data =PercentR_SMA, length = MovAvgLength); 
+
+    SMA.SetDefaultColor(GetColor(5)); 
+
+AddLabel(yes, "PercentR_SMA < -50",Color.red); 
+
+AddLabel(yes, "PercentR_SMA > -50",Color.green); 
+
+############ EOC ################## 

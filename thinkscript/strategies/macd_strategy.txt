@@ -1,0 +1,373 @@
+ Here's a very simple STRATEGY to get some of you fine coders to start thinking of taking things to the next level. Put this in the STRATEGY NOT study part of TOS. Note the different profits as you scroll through the aggregations. Keep in mind as aggregations change so does the length of the reported times. A separate spread sheet of profit and loss is available by right clicking on any of the Buy or Sell points and using the Show Report function. 
+
+ 
+
+# MACD Strategy 
+
+# Mobius 
+
+# Mobius.rts@gmail.com 
+
+# V.01.07.2012 
+
+ 
+
+#wizard input: n_f 
+
+#wizard text: n_f: 
+
+#hint n_f: Periods for the Fast EMA. 
+
+#wizard input: n_s 
+
+#wizard text: n_s: 
+
+#hint n_s: Periods for the Slow EMA. 
+
+#wizard input: n_n 
+
+#wizard text: n_n: 
+
+#hint n_n: Period for the Slow EMA Smoothing Function. 
+
+ 
+
+Input n_f = 13; 
+
+Input n_s = 21; 
+
+Input n_n = 8; 
+
+Input SellEndOfDay = yes; 
+
+Input CloseTime = 1600; 
+
+Input MinBeforeClose = 10; 
+
+ 
+
+def c = close; 
+
+def Seconds = MinBeforeClose * 60; 
+
+def secondsRemained = secondsTillTime(CloseTime); 
+
+def F = (c * .15) + (.85 * ExpAverage(c, n_f)[1]); 
+
+def SS = (c * .075) + (.925 * ExpAverage(c, n_s)[1]); 
+
+def MACD = F - SS; 
+
+def MACDSL = ExpAverage(MACD, n_n); 
+
+def zero = 0; 
+
+ 
+
+AssignPriceColor(if MACD > 0 and MACD > MACD[1] and MACD[1] > MACD[2] 
+
+                                 then Color.Green 
+
+                                 else if MACD < 0 and MACD > MACDSL 
+
+                                           then Color.Gray 
+
+                                          else if MACD crosses above 0 
+
+                                                   then Color.White 
+
+                                                  else if MACD crosses below 0 
+
+                                                           then Color.Blue 
+
+                                                            else Color.Red); 
+
+ 
+
+def buy = MACD > MACDSL and MACD > 0 or MACD crosses Lowest(MACD, n_s); 
+
+def sell = if SellEndOfDay == yes 
+
+                    then ( secondsRemained >= 0 and secondsRemained <= Seconds ) or 
+
+                              ( MACD < MACDSL and MACDSL < MACDSL[1] and MACDSL[1] > MACDSL[2] ) or 
+
+                              MACD crosses below 0 or 
+
+                              MACD crosses Highest(MACD, n_s) 
+
+                    else ( MACD < MACDSL and MACDSL < MACDSL[1] and MACDSL[1] > MACDSL[2]) or 
+
+                               MACD crosses below 0 or 
+
+                              MACD crosses Highest(MACD, n_s) 
+
+; 
+
+ 
+
+addOrder(OrderType.BUY_AUTO, condition = buy, price = open, tickColor = Color. Green, 
+
+                    arrowColor = Color.Green, name = "BUY"); 
+
+ 
+
+ 
+
+addOrder(OrderType.SELL_AUTO, condition = sell, price = open, tickcolor = Color.Red, 
+
+                       arrowcolor = Color.Red, name = "SELL"); 
+
+ 
+
+# End Code 
+
+ 
+
+The above Strategy, as written, is always in the market either long or short. It could easily be changed to just be a long or just a short strategy. 
+
+ 
+
+There are many enhancements that can be made. A choppiness indicator to keep it out of trades at appropriate times, a time filter to shut it off during parts of the day, additional non-colinear indicators such as a stochastic to identify momentum or and RSI. Linear Regression could be used to allow trades only in a certain type of trending market. The point is there is a lot more than just drawing lines, dots and colors on charts available to us. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Mobius©: A more refined version of the MACD strategy - Tests well: 
+
+ 
+
+ 
+
+# MACD Strategy 
+
+# Mobius 
+
+# Mobius.rts@gmail.com 
+
+# V.02.07.2012 
+
+# Added Fractal Choppiness for excluding trades in choppy areas 
+
+# Added hints for wizard 
+
+# Refined Order Management 
+
+ 
+
+#hint: The MACD Strategy uses a MACD to generate Buy and Sell signals. \n In the dafault mode it is always in the market either Long or Short. \n A Fractal Choppiness Indicator is used to disable the Buy signal when the equity is in a Choppy Zone. \n Hints are at each variable click on the ? icon. 
+
+ 
+
+#wizard input: n_f 
+
+#wizard text: n_f: 
+
+#hint n_f: Periods for the Fast EMA. 
+
+#wizard input: n_s 
+
+#wizard text: n_s: 
+
+#hint n_s: Periods for the Slow EMA. 
+
+#wizard input: n_n 
+
+#wizard text: n_n: 
+
+#hint n_n: Period for the Slow EMA Smoothing Function. 
+
+#wizard input: SellEndOfDay 
+
+#wizard text: SellEndOfDay: 
+
+#hint SellEndOfDay: Yes = Postion closed at the end of the day. \n The signal is sent on the opening of the next bar so make sure to leave enough time for the close to be carried out. 
+
+#wizard input: CloseTime 
+
+#wizard text: CloseTime: 
+
+#hint CloseTime: Time is Eastern Standard Time. 
+
+#wizard input: MinBeforeClose 
+
+#wizard text: MinBeforeClose: 
+
+#hint MinBeforeClose: Minutes before 1600 when the signal is assigned. \n The close will actually happen at the open of the following bar. 
+
+#wizard input: nC 
+
+#wizard text: nC: 
+
+#hint nC: Periods for the calculation of the Fractal Choppiness Indicator. 
+
+#wizard input: nCA 
+
+#wizard text: nCA: 
+
+#hint nCA: Periods to calculate the Average value for the Fractal Choppiness Indicator. 
+
+#wizard input: Choppy 
+
+#wizard text: Choppy: 
+
+#hint Choppy: Value indicating the beginning of the Choppy Zone. \n (Usually a value between 50 and 61.8) \n Buy Signals will not be generated in the Choppy Zone. \n To disable this feature set the Value at 100. 
+
+#wizard input: CIx 
+
+#wizard text: CIx: 
+
+#hint CIx: CIB uses the Choppiness Indicators (B)ase line as the signal line.\n CIA uses the (A)verage of the Choppiness Indicator. 
+
+ 
+
+Input n_f = 13; 
+
+Input n_s = 21; 
+
+Input n_n = 8; 
+
+Input SellEndOfDay = yes; 
+
+Input CloseTime = 1600; 
+
+Input MinBeforeClose = 10; 
+
+input nC = 34; 
+
+input nCA = 8; 
+
+input Choppy = 61.8; 
+
+input CIx = {default CIB, CIA}; 
+
+ 
+
+def o = open; 
+
+def h = high; 
+
+def l = low; 
+
+def c = close; 
+
+def Seconds = MinBeforeClose * 60; 
+
+def secondsRemained = secondsTillTime(CloseTime); 
+
+def F = (c * .15) + (.85 * ExpAverage(c, n_f)[1]); 
+
+def SS = (c * .075) + (.925 * ExpAverage(c, n_s)[1]); 
+
+def MACD = F - SS; 
+
+def MACDSL = ExpAverage(MACD, n_n); 
+
+def zero = 0; 
+
+ 
+
+# Fractal Choppiness Indicator 
+
+def CIA = 100 * log( sum( TrueRange(h, c, l), nC)) / ( Highest(c[1], nC) - Lowest(c[1], nC)) 
+
+                                                                                                   / log(nC); 
+
+ 
+
+def CIB = ((log(sum(TrueRange(h, c, l), nC) / (Highest( if h >= c[1] 
+
+                                                                                       then h 
+
+                                                                                else c[1], nC) - Lowest( if l <= c[1] 
+
+                                                                                              then l 
+
+                                                                        else c[1], nC))) / log(10)) / (log(nC) / log(10))) * 100; 
+
+ 
+
+def CI = if CIx == CIx.CIB then CIB else CIA; 
+
+def CIavg = Average(CI, nCA); 
+
+def ex = if CIavg > Choppy then 1 else 0; 
+
+ 
+
+# Chart Management 
+
+AssignPriceColor(if ex == 1 then color.yellow 
+
+                                                        else if MACD > 0 and MACD > MACD[1] and MACD[1] > MACD[2] 
+
+                                                                 then Color.Green 
+
+                                                                 else if MACD < 0 and MACD > MACDSL 
+
+                                                                           then Color.Gray 
+
+                                                                           else if MACD crosses above 0 
+
+                                                                                     then Color.White 
+
+                                                                                    else if MACD crosses below 0 
+
+                                                                                              then Color.Blue 
+
+                                                                                              else Color.Red); 
+
+ 
+
+ # Order Management 
+
+def buy = ex != 1 and ( MACD > MACDSL and MACD > 0 or 
+
+                                              MACD crosses Lowest(MACD, n_s)) ; 
+
+ 
+
+def sell = if SellEndOfDay == yes 
+
+                    then ( secondsRemained >= 0 and secondsRemained <= Seconds) or 
+
+                             ( MACD < MACDSL and MACDSL < MACDSL[1] and MACDSL[1] > MACDSL[2] ) or 
+
+                             MACD crosses below 0 or 
+
+                             MACD crosses Highest(MACD, n_s) 
+
+                       else ( MACD < MACDSL and MACDSL < MACDSL[1] and MACDSL[1] > MACDSL[2])                     or MACD crosses below 0 or 
+
+MACD crosses Highest(MACD, n_s 
+
+) 
+
+; 
+
+addOrder(OrderType.BUY_AUTO, condition = buy, price = open, tickcolor = Color. Green, 
+
+                      arrowcolor = Color.Green, name = "BUY"); 
+
+ 
+
+addOrder(OrderType.SELL_AUTO, condition = sell, price = open, tickcolor = Color.Red, 
+
+                     arrowcolor = Color.Red, name = "SELL"); 
+
+ 
+
+ 
+
+# End Code 
+
+ 
+
+ 
+
+ 

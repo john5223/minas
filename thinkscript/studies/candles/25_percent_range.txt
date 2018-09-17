@@ -1,0 +1,129 @@
+Archivist's Comment:  Note the use of the Color.CURRENT constant.  
+
+ 
+
+Description 
+
+ 
+
+Refers to the default plot color (or redefined color in case it was changed on the UI). When using the AssignPriceColor function the constant is responsible for price bars color. In combintaion with the AssignBackgroundColor function the constant defines the corresponding background color. 
+
+Example 
+
+ 
+
+See the SetDefaultColor function in the Look and Feel functions section. 
+
+ 
+
+# 25% Range Candles  
+
+# blt  
+
+# 7.28.2016  
+
+ 
+
+input length = 15; 
+
+input length1 = 50; 
+
+input avgType = AverageType. EXPONENTIAL; 
+
+ 
+
+plot ma = MovingAverage(averagetype = avgType, close, length); 
+
+ma.SetDefaultColor(Color.CYAN); 
+
+ma.SetLineWeight(2); 
+
+ 
+
+plot ma1 = MovingAverage(averagetype = avgType, close, length1); 
+
+ 
+
+input pullbacklengthmax = 5; 
+
+input pullbacklengthmin = 3; 
+
+ 
+
+def top25 = if close > low + .75 * (high - low) then 1 else 0; 
+
+def bot25 = if close < high - .75 * (high - low) then 1 else 0; 
+
+ 
+
+def up = if top25[1] == 1 and 
+
+close[1] > open[1] and 
+
+close[1] > ma[1] and 
+
+Sum(ma[1] < ma, pullbacklengthmax) >= pullbacklengthmin and 
+
+high >= high[1] and 
+
+close > open 
+
+then 1 
+
+else 0; 
+
+ 
+
+plot uparrow = if up[1] == 0 and up == 1 then low - .03 else Double.NaN; 
+
+uparrow.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+uparrow.AssignValueColor(if close <= open or close < ma1 then Color.CURRENT else Color.CYAN); 
+
+uparrow.SetLineWeight(3); 
+
+ 
+
+def dn = if bot25[1] == 1 and 
+
+close[1] < open[1] and 
+
+close[1] < ma[1] and 
+
+Sum(ma[1] > ma, pullbacklengthmax) >= pullbacklengthmin and 
+
+low <= low[1] and 
+
+close < open 
+
+then 1 
+
+else 0; 
+
+ 
+
+plot dnarrow = if dn[1] == 0 and dn == 1 then high + .03 else Double.NaN; 
+
+dnarrow.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+dnarrow.AssignValueColor(if close >= open or close > ma1 then Color.CURRENT else Color.YELLOW); 
+
+dnarrow.SetLineWeight(3); 
+
+Charts Prophet 
+Flexible Grid 
+Product Depth 
+AAPL 
+APPLE INC COM 168.39 
+AAPL 4 M ID [NASDAQ] 
+D: 0: 16687 H: 16844 L: 1665 C: 
+0 5 Bar SMA 10 Bar SMA 20BarSMA 50 Bar SMA 200BarSMA 
+Share D 
+Style Drawings Studies 
+18743 R: Y: 17783 (10, CLOSE) WA EXPONENTIAL, 5,31 172.34 171.77 WA WA 
+1.4965% current Yield 0.63 
+:Dividend 
+Patterns 
+187.5 
+157.5 
+147.5 

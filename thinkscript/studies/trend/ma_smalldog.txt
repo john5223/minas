@@ -1,0 +1,243 @@
+ sdi_ma - moving average with my own kung-fu. 
+
+One might not think that there is much innovation left in the basic moving average study but I, hereby,  challenge you to think again. In the moving average study presented below I introduce several innovations that I have not seen elsewhere: 
+
+ 
+
+ 
+
+ Firstly, I introduce the idea of a linear extension. I take the change between the last two bars of the moving average study and project that as a straight line into the future. This is the dashed red line that eminates from the 30 day exponential moving average like a laser-beam from the head of a snake. 
+
+ 
+
+Secondly, I introduce the idea of color coding to help illuminate trending vs. flat behavior. Where the moving average is orange is where the moving average is within 5% of the moving average value 30 (configurable) bars prior. Where the moving average is red is where the moving average value has moved more than 5% away from the moving average value 30 bars prior. Because of the distortions introduced by modern charting techniques it is not always readily apparent when the squiggles in the moving average really amount to much percentage-wise. Also, if you are a follower of the InvesTools method this will help you discern when to apply the volume rule to a trading signal. 
+
+ 
+
+An alternative criteria is used for the color-coding switch on less volatile stocks. If the moving average has moved up or down 30 (config.) consecutive bars without moving more than 5% then the color also changes to red to indicate a quietly trending stock. 
+
+ 
+
+Lastly, I introduce the concept of decorating the moving average to show when the underlying price has moved significantly far away, percentage-wise, from the average. In the above chart above of CAT we see that the last two bars of the moving average are decorated with pink triangles. These are configured to display when the price is more than 10% away from the moving average. CAT has been beat up by the anticipated downgrade of US debt which has resulted in a rapid price decline and CAT might be oversold here. 
+
+ 
+
+ 
+
+Here is the code for the study: 
+
+ 
+
+######################### 
+
+# sdi_ma: Small Dog Investor Moving Average 
+
+# 
+
+#hint: Displays a moving average with some additional signals. In the default configuration, when the MA is trending, as defined by 30 consecutive up/down moves, OR the MA is more than 5% away from the MA 30 bars prior then the MA appears in red. When the moving average is nontrending and within 5% of the value 30 bars prior then the MA appears in orange. When price is more than 10% away from the MA, the MA line is decorated with hot pink triangles. In the right extension we show a straight line projection taken from the last two bars. Version: 1.1 
+
+# 
+
+# source: smalldoginvestor.blogspot.com 
+
+# author: allen everhart 8/4/2011 
+
+# revised: 8/21/2011 added price data series selection. 
+
+# 
+
+# copylefts reserved. This is free software. That means you are free 
+
+# to use or modify it for your own usage but not for resale. 
+
+# Help me get the word out about my blog by keeping this header 
+
+# in place.  
+
+ 
+
+#hint price: Choose data series to average over. 
+
+input price = close; 
+
+#def price = close; 
+
+#hint type: Choose between Simple and Exponential Moving Average. 
+
+input type = { default EXP, SMP } ; 
+
+#hint length: Number of bars in moving average. 
+
+input length = 30 ; 
+
+#hint flatPct: Main criteria for color-coded trend changes. 
+
+input flatPct = 5.0 ; 
+
+#hint compLength: Number of consecutive up/down bars to use as the secondary criteria for color-coded trend changes. 
+
+input compLength = 30 ; 
+
+#hint hotPct: Criteria for the hot decoration. 
+
+input hotPct = 10.0 ; 
+
+ 
+
+def ma = 
+
+  if type == type.SMP then 
+
+    simpleMovingAvg(price, length) 
+
+  else 
+
+    movAvgExponential(price, length) 
+
+; 
+
+rec maUpBars = 
+
+  if ma > ma[1] then 
+
+    maUpBars[1] + 1 
+
+  else if ma == ma[1] then 
+
+    maUpBars[1] 
+
+  else 
+
+    0 
+
+; 
+
+#plot up = maUpBars ; # diagnostics 
+
+rec maDnBars = 
+
+  if ma < ma[1] then 
+
+    maDnBars [1] + 1 
+
+  else if ma == ma[1] then 
+
+    maDnBars[1] 
+
+  else 
+
+    0 
+
+; 
+
+#plot dn = maDnBars ; # diagnostics 
+
+plot steep = 
+
+ if AbsValue(100 * ((ma / ma[compLength]) - 1)) >= flatPct then 
+
+    ma 
+
+ else if maUpBars >= compLength then 
+
+    ma 
+
+ else if maDnBars >= compLength then 
+
+    ma 
+
+ else 
+
+    double.NaN 
+
+; 
+
+steep.SetDefaultColor( color.RED); 
+
+steep.SetLineWeight(2) ; 
+
+plot flat = 
+
+ if AbsValue(100 * ((ma / ma[compLength]) - 1)) < flatPct then 
+
+    ma 
+
+ else if maUpBars < compLength then 
+
+    ma 
+
+ else if maDnBars < compLength then 
+
+    ma 
+
+ else 
+
+    double.NaN 
+
+; 
+
+flat.SetDefaultColor( color.ORANGE); 
+
+flat.SetLineWeight(2) ; 
+
+ 
+
+#plot pct =100 * ((ma / ma[compLength]) - 1); 
+
+#plot bkma =  ma[compLength] ; 
+
+plot hot = 
+
+ if AbsValue( 100 * ((price / ma) - 1) ) > hotPct then 
+
+    ma 
+
+ else 
+
+    double.NaN 
+
+; 
+
+hot.setDefaultColor( color.MAGENTA); 
+
+hot.setPaintingStrategy(paintingStrategy.LINE_VS_TRIANGLES); 
+
+rec slope = 
+
+  if isnaN(close) and !isnaN(close[1]) then 
+
+    ma[1]-ma[2] 
+
+  else if isnaN(close) and isnaN(close[1]) then 
+
+    slope[1] 
+
+  else 
+
+    double.NaN 
+
+; 
+
+rec extrec = 
+
+  if !isnaN(slope) and isnaN(slope[1]) then 
+
+    ma[1]+slope 
+
+  else if !isnaN(slope) then 
+
+    extrec[1]+ slope 
+
+  else 
+
+    double.NaN 
+
+; 
+
+plot ext = extrec ; 
+
+ext.setDefaultColor(color.RED); 
+
+ext.setStyle( curve.SHORT_DASH); 
+
+#end 

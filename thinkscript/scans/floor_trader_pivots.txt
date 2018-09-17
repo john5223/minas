@@ -1,0 +1,90 @@
+# Floor Traders pivots (can be used in scanner) 
+# Mobius 
+# V01.06.2011 
+  
+def Today = GetDay() == GetLastDay(); 
+def Yesterday = GetDay() == GetLastDay() - 1; 
+def last = if Today and !Today[1] 
+            then close[1] 
+            else last[1]; 
+def prevHigh = if YesterDay and !YesterDay[1] 
+                then high 
+                else if Yesterday and 
+                        high > prevHigh[1]  
+                    then high 
+                else prevHigh[1]; 
+def prevLow = if Yesterday and !Yesterday[1] 
+               then low 
+               else if Yesterday and 
+                       low < prevLow[1] 
+                     then low 
+                else prevLow[1]; 
+def BubbleLocation = !yesterday and yesterday[1]; 
+  
+plot pHigh = prevHigh; 
+pHigh.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, prevHigh, "Prev High", Color.DARK_GRAY, no); 
+
+ 
+plot pLow = prevLow; 
+pLow.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, prevLow, "Prev low", Color.DARK_GRAY, no); 
+
+ 
+plot pivot = (prevHigh + prevLow + last) / 3; 
+pivot.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, pivot, "Pivot", Color.DARK_GRAY, no); 
+
+ 
+plot R1 = Round(((2 * pivot) - prevLow) / TickSize(), 0) * TickSize(); 
+R1.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, R1, "R1", Color.DARK_GRAY, no); 
+
+ 
+plot S1 = Round(((2 * pivot) - prevHigh) / TickSize(), 0) * TickSize(); 
+S1.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, S1, "S1", Color.DARK_GRAY, yes); 
+
+ 
+plot R2 = Round((pivot + (R1 - S1)) / TickSize(), 0) * TickSize(); 
+R2.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, R2, "R2", Color.DARK_GRAY, no); 
+
+ 
+plot S2 = Round((pivot - (R1 - S1)) / TickSize(), 0) * TickSize(); 
+S2.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, S2, "S2", Color.DARK_GRAY, yes); 
+
+ 
+plot R3 = Round((prevHigh + (2 * (pivot - prevLow))) / TickSize(), 0) * TickSize(); 
+R3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, R3, "R3", Color.DARK_GRAY, no); 
+
+ 
+plot S3 = Round((prevLow - (2 * (prevHigh - pivot))) / TickSize(), 0) * TickSize(); 
+S3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, S3, "S3", Color.DARK_GRAY, yes); 
+
+ 
+plot R4 = Round((prevHigh + (3 * (pivot - prevLow))) / TickSize(), 0) * TickSize(); 
+R4.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, R4, "R4", Color.DARK_GRAY, no); 
+
+ 
+plot S4 = Round((prevLow - (3 * (prevHigh - pivot))) / TickSize(), 0) * TickSize(); 
+S4.SetPaintingStrategy(PaintingStrategy.HORIZONTAL); 
+AddChartBubble(BubbleLocation, S4, "S4", Color.DARK_GRAY, yes); 
+
+ 
+AddLabel(1, "Yesterdays Close = " + last); 
+  
+# Scan examples 
+# If you name this study "Floor_Trader_Pivots_Scan" you can reference the study in the scanner and scan for equities crossing above or below any of the plots using the format below. 
+  
+# close crosses above Floor_Trader_Pivots_Scan()."R1" 
+  
+# End Code Floor Trader Pivots 
+
+ 
+
+TSL 021517 

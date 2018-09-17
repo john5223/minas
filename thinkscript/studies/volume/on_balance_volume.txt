@@ -1,0 +1,42 @@
+
+# 
+# TD Ameritrade IP Company, Inc. (c) 2008-2018 
+# on balance volume
+ 
+declare lower; 
+plot OBV = TotalSum(Sign(close - close[1]) * volume);
+OBV.SetDefaultColor(GetColor(8)); 
+
+
+###############
+
+
+#Mr. Script:  
+#OBV wma 
+# On balance volume weighted moving average
+declare lower; 
+ 
+input length = 9; 
+def price = close; 
+def vol = volume; 
+def OBV = TotalSum(if price > price[1] then  + vol else if price < price[1] then - vol else 0); 
+def AvgWtd = wma(obv, length); 
+ 
+plot avg = AvgWtd; 
+plot onbalance = obv; 
+
+ 
+#################
+
+# On balance volume with zero line
+# http://tos.mx/rm51Tx
+
+
+#############################
+
+# OBV ( Stock TD ) VS  OBV TRUE   
+# http://tos.mx/xIweXE  
+# Dilbert: Not sure Syracuse, but I did come across this study that claims to be a better OnBalanceVolume in case you did not see me post it a couple of days ago.  
+#The misleading volume bars in the regular volume indicators also affect the On Balance Volume Indicator. I have also written a script for True Balance Volume Indicator based on the net buyer or seller volume instead of the regular volume which gives a more accurate picture of what's going on:   
+# http://www.researchtrade.com/forum/read.php?7,2258,page=42   
+#TanMan_TrueOnBalanceVolume  

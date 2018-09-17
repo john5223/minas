@@ -1,0 +1,88 @@
+App... 
+AAPL 4 M ID [NASDAQ] 
+Draw i ngs 
+AAPL 
+165.24 
+Share D 
+Style 
+Studies 
+Patterns 
+0: 16883 H: L: C: 16524 R:283 
+Swinglndex (3) 
+-16.7489 0 
+LinearRegrReversaI (14) 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+input limit_move = 3; 
+
+ 
+
+Assert(limit_move > 0, "'limit move' must be positive: " + limit_move); 
+
+ 
+
+def hcPrev = AbsValue(high - close[1]); 
+
+def lcPrev = AbsValue(low - close[1]); 
+
+def range = AbsValue(high - low); 
+
+def bodyPrev = AbsValue(close[1] - open[1]); 
+
+ 
+
+def k; 
+
+def r; 
+
+if (hcPrev >= lcPrev) { 
+
+    k = hcPrev; 
+
+    if (hcPrev >= range) { 
+
+        r = hcPrev - 0.5 * lcPrev + 0.25 * bodyPrev; 
+
+    } else { 
+
+        r = range + 0.25 * bodyPrev; 
+
+    } 
+
+} else { 
+
+    k = lcPrev; 
+
+    if (lcPrev >= range) { 
+
+        r = lcPrev - 0.5 + hcPrev + 0.25 * bodyPrev; 
+
+    } else  { 
+
+        r = range + 0.25 * bodyPrev; 
+
+    } 
+
+} 
+
+ 
+
+plot SwingIndex = 50 * (((close - close[1]) + 0.5 * (close - open) + 0.25 * (close[1] - open[1] )) / r ) * k / limit_move; 
+
+plot ZeroLine = 0; 
+
+ 
+
+SwingIndex.SetDefaultColor(GetColor(1)); 
+
+ZeroLine.SetDefaultColor(GetColor(5)); 

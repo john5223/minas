@@ -1,0 +1,35 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2010-2018 
+# 
+ 
+declare lower; 
+ 
+input length = 5; 
+ 
+def wClose = (high + low + 2 * close) * 0.25; 
+def wCRatio = (wClose - wClose[1]) / Min(wClose, wClose[1]); 
+def closeRatio = 3 * wClose / Average(Highest(High, 2) - Lowest(Low, 2), length) * AbsValue(wCRatio); 
+def volumeRatio = Volume / Average(Volume, length); 
+def volumePerClose = volumeRatio / exp(Min(88, closeRatio)); 
+def buyP; 
+def sellP; 
+if (wCRatio > 0) { 
+    buyP = volumeRatio; 
+    sellP = volumePerClose; 
+} else { 
+    buyP = volumePerClose; 
+    sellP = volumeRatio; 
+} 
+def buyPres = if IsNaN(buyPres[1]) then 0 else ((buyPres[1] * (length - 1)) + buyP) / length; 
+def sellPres = if IsNaN(sellPres[1]) then 0 else ((sellPres[1] * (length - 1)) + sellP) / length; 
+def tempDI; 
+if ((((sellPres[1] * (length - 1)) + sellP) / length - ((buyPres[1] * (length - 1)) + buyP) / length) > 0) { 
+    tempDI = - if (sellPres != 0) then buyPres / sellPres else 1; 
+} else { 
+    tempDI = if (buyPres != 0) then sellPres / buyPres else 1; 
+} 
+plot DMIndx = if IsNaN(close) then Double.NaN else if tempDI < 0 then -1 - tempDI else 1 - tempDI; 
+plot ZeroLine = 0; 
+ 
+DMIndx.setDefaultColor(GetColor(1)); 
+ZeroLine.SetDefaultColor(GetColor(5)); 

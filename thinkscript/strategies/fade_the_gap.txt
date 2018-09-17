@@ -1,0 +1,183 @@
+#hint: <b>Fade The Gap Strategy</b>\nThe Fade the Gap Strategy should be used on a chart without showing the extended session.  This strategy was written with then futures in mind.  If the stop and limit conditions are not met a closing order is submitted at the 4:00 PM Eastern Close. The chart for this strategy must be on an aggregation whose bar by default starts at the 9:30 AM Eastern Open.  Also, the 30 min aggregation force close will be the 4:15 PM Eastern Close. The smaller the aggregation the closer your results will be to what may happen in actual trading due to the limitations of any backtesting program. 
+
+ 
+
+# these lines of code allow you to quickly change time of day, gap size, and ATR length 
+
+ 
+
+input marketOpen = 0930; 
+
+input ordertimemax = 931; 
+
+input closetime = 1600; 
+
+input maxgapsize = 7; 
+
+input mingapsize =1; 
+
+input ATRLength = 5; 
+
+ 
+
+# def allows you to teach ThinkScript new 'words' so that you can use those 'words' later in your code 
+
+# rec allows you to reference historic data (based on what you include in the recursion line) 
+
+ 
+
+def closetoday = secondstilltime (closetime); 
+
+rec openPrice = if(secondsTillTime(marketOpen) == 0, open, openPrice[1]); 
+
+def close1 = close(period=aggregationperiod.day)[1]; 
+
+ 
+
+ 
+
+plot Market_Open = openPrice; 
+
+plot yesterdaysclose = close1; 
+
+ 
+
+def day = GetDay() == GetLastDay(); 
+
+ 
+
+input buylimit = {default previousdayclose}; 
+
+ 
+
+def previousvalue = close(period= aggregationperiod.day)[1]+1; 
+
+ 
+
+ 
+
+input selllimit = {default previousdayclose}; 
+
+ 
+
+def previous = close(period= aggregationperiod.day)[1]-1; 
+
+ 
+
+ 
+
+ 
+
+def gap = absvalue(openprice-close1); 
+
+def sell = openprice>close1 and gap>mingapsize and gap<maxgapsize; 
+
+def buy = openprice<close1 and gap>mingapsize and gap<maxgapsize; 
+
+def timetest = if secondsfromtime(ordertimemax)>0 then 1 else 0; 
+
+def buylmt = low <= previousvalue; 
+
+def selllmt= high>= previous; 
+
+ 
+
+#Daily ATR Value 
+
+def dailyhigh = high(period = AggregationPeriod.Day); 
+
+def dailylow = low(period= aggregationperiod.day); 
+
+def dailyclose = close(period= aggregationPeriod.DAY); 
+
+def DailyATR = average(truerange(dailyhigh, dailyclose, dailylow), ATRlength); 
+
+def stoppoints = rounddown(.4 * DailyATR[1], 0); 
+
+ 
+
+def buystop = high >=(market_Open + stoppoints); 
+
+def sellstop = low<=(market_Open-stoppoints); 
+
+def buystopvalue = market_open + stoppoints; 
+
+def sellstopvalue = market_open - stoppoints; 
+
+plot mybuystop = if sell then market_open + stoppoints else double.nan; 
+
+ 
+
+ 
+
+# chart bubbles can be used to create labels that appear on the price bars 
+
+ 
+
+addChartBubble(if secondsTillTime(marketOpen) == 0 then mybuystop else double.nan, market_open + stoppoints, buystopvalue+"stop"); 
+
+ 
+
+plot mysellstop = if buy then market_Open - stoppoints else double.nan; 
+
+ 
+
+addChartBubble(if secondsTillTime(marketOpen) == 0 then mysellstop else double.nan, market_open - stoppoints, sellstopvalue+"stop", up = No); 
+
+ 
+
+plot myselllimit = if buy then previous else double.nan; 
+
+plot mybuylimit = if sell then previousvalue else double.nan; 
+
+addChartBubble(if secondsTillTime(marketOpen) == 0 then myselllimit else double.nan, previous, previous+"limit", up = yes); 
+
+addChartBubble(if secondsTillTime(marketOpen) == 0 then mybuylimit else double.nan, previousvalue, previousvalue+"limit", up = no); 
+
+ 
+
+def forceclose = if secondstilltime(closetime) ==0 then 1 else 0; 
+
+ 
+
+ 
+
+# AddOrder lines of code generate buy and sell arrows on the chart, and also generate simulated trades to be used in the back testing report 
+
+ 
+
+addorder(OrderType.SELL_TO_OPEN, timetest ==0 and sell, tradeSize = 1, price = open); 
+
+AddOrder(orderType.BUY_TO_CLOSE,condition = buylmt , tradesize = 1, price = low);  
+
+addorder(ordertype.buy_to_close, condition = buystop, tradesize = 1, price= high); 
+
+addorder(ordertype.buy_to_close, forceclose==1, tradesize=1, price=close[1]); 
+
+addorder(orderType.BUY_TO_OPEN, timetest==0 and buy, tradesize=1, price=open); 
+
+addorder(ordertype.sell_to_close, selllmt, tradesize=1, price= high);  
+
+addorder(ordertype.SELL_TO_CLOSE, sellstop, tradesize=1, price = low); 
+
+addorder(ordertype.SELL_TO_CLOSE, forceclose==1, tradesize=1, price=close[1]); 
+
+ 
+
+# labels can be used when developing new ThinkScript code as a visual way of testing formulas throughout your code.  Adding # before each line tells ThinkScript to ignore those lines.  Remove the # before each line to have then labels appear on your chart 
+
+  
+
+#addlabel(yes, market_Open + "Open", color.dark_green); 
+
+#addlabel(yes, yesterdayshigh + "PriordayHigh", color.CYAN); 
+
+#addlabel(yes, yesterdayslow + "PriordayLow", color.orange); 
+
+#addlabel(yes, yesterdaysclose + "PriordayClose", color.red); 
+
+addlabel(yes, "GAP="+ Mingapsize + "Point Minimum" + "-"+ maxgapsize + " Point Maximum"); 
+
+ 
+
+#end 

@@ -1,0 +1,13 @@
+New High w/ vol & price 
+
+
+# usage: scan_newhigh()==1 
+
+
+def newhigh = close>highest(close[1],10); 
+def avg = average(volume,90); 
+
+plot trigger = if newhigh && avg>100000 && close > .01 && close < 3 then 1 else 0; 
+
+
+

@@ -1,0 +1,99 @@
+ Lar?: #RSI with KeltnerChannels  
+
+#LAR In your code, you replaced the normal KC parms(o,h,l,c) with 'RSI' and that gets you a KC format based on the RSI. Is that correct? 
+
+ 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 14; 
+
+input over_Bought = 70; 
+
+input over_Sold = 30; 
+
+input price = close; 
+
+ 
+
+def NetChgAvg = WildersAverage(price - price[1], length); 
+
+def TotChgAvg = WildersAverage(AbsValue(price - price[1]), length); 
+
+def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0; 
+
+ 
+
+plot RSI = 50 * (ChgRatio + 1); 
+
+plot OverSold = over_Sold; 
+
+plot OverBought = over_Bought; 
+
+ 
+
+RSI.DefineColor("OverBought", GetColor(5)); 
+
+RSI.DefineColor("Normal", GetColor(7)); 
+
+RSI.DefineColor("OverSold", GetColor(1)); 
+
+RSI.AssignValueColor(if RSI > over_Bought then RSI.color("OverBought") else if RSI < over_Sold then RSI.color("OverSold") else RSI.color("Normal")); 
+
+OverSold.SetDefaultColor(GetColor(8)); 
+
+OverBought.SetDefaultColor(GetColor(8)); 
+
+ 
+
+input displace = 0; 
+
+input factor = 1.5; 
+
+input lengthkc = 20; 
+
+input AverageType = {default SMA, EMA}; 
+
+ 
+
+def shift = factor * AvgTrueRange(rsi, rsi, rsi, lengthkc); 
+
+ 
+
+def average; 
+
+switch (AverageType) { 
+
+case SMA: 
+
+    average = Average(rsi, lengthkc); 
+
+case EMA: 
+
+    average = ExpAverage(rsi, lengthkc); 
+
+} 
+
+ 
+
+plot Avg = average[-displace]; 
+
+Avg.SetDefaultColor(GetColor(1)); 
+
+ 
+
+plot Upper_Band = average[-displace] + shift[-displace]; 
+
+Upper_Band.SetDefaultColor(GetColor(8)); 
+
+ 
+
+plot Lower_Band = average[-displace] - shift[-displace]; 
+
+Lower_Band.SetDefaultColor(GetColor(5)); 
+
+#end 

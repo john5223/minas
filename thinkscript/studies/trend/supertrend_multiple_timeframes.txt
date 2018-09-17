@@ -1,0 +1,290 @@
+272.98 
+EXTO Eligible 
+027255 H:27292 L:27255 c: 27292 
+5m 
+style 
+T 
+Drawi ngs 
+Studies 
+spy Today 5m 
+R: 0.37 
+Patterns 
+274.2 
+273.6 
+273.4 
+2728 
+272.6 
+272.4 
+TEN_MIN, FIFTEEN_MIN, THIRTY_MIN, HOUR, 0.7, 4, HULL) 1 
+2345 E 
+ 
+
+## OneNote Archive Name: SuperTrend Multiple Time Frames 
+
+## Archive Section: Trend 
+
+## Suggested Tos Name: SuperTrendMultipleTimeFrames_Mobius 
+
+## Archive Date: 5.14.2018 
+
+## Archive Notes:  
+
+ 
+
+## "##" indicates an addition or adjustment by the OneNote Archivist 
+
+ 
+
+## Original Code Follows 
+
+ 
+
+ 
+
+ 
+
+# SuperTrend Multiple Time Frames 
+
+# Mobius 
+
+# V03.01.2016 
+
+ 
+
+# I pulled this study down from MyTrade for a reason. It wasn't  
+
+# plotting correctly with the multiple aggregations. And like  
+
+# all studies with secondary aggregations it tends to replot the  
+
+# higher ones. I decided to think about it some more and this is  
+
+# where I am with the ST MTF study now. 
+
+# 
+
+# It's still squirrely and blinks a lot. Using declare Once_Per_Bar  
+
+# does some bad things to it. I was considering making intra 
+
+# aggregation higher time frames. A pain to do but it gives more  
+
+# control over how it plots. 
+
+# 
+
+# Row 6 is supposed to be the output for all aggregations and the  
+
+# signal line. After hours when data isn't moving it's steady and  
+
+# has good signals. But since it's after hours, totally useless  
+
+# for any intraday trading. 
+
+ 
+
+declare lower; 
+
+ 
+
+input agg1 = AggregationPeriod.Five_Min; 
+
+input agg2 = AggregationPeriod.Ten_Min; 
+
+input agg3 = AggregationPeriod.Fifteen_Min; 
+
+input agg4 = AggregationPeriod.Thirty_Min; 
+
+input agg5 = AggregationPeriod.Hour; 
+
+input AtrMult = .70; 
+
+input nATR = 4; 
+
+input AvgType = AverageType.HULL; 
+
+ 
+
+script ST{ 
+
+input agg = AggregationPeriod.Five_Min; 
+
+input AtrMult = .70; 
+
+input nATR = 4; 
+
+input AvgType = AverageType.HULL; 
+
+def Fh = FundamentalType.High; 
+
+def Fl = FundamentalType.Low; 
+
+def Fc = FundamentalType.Close; 
+
+def Fhl2 = FundamentalType.HL2; 
+
+def h = Fundamental(Fh, period = agg); 
+
+def l = Fundamental(Fl, period = agg); 
+
+def c = Fundamental(Fc, period = agg); 
+
+def hl = Fundamental(Fhl2, period = agg); 
+
+def ATR = MovingAverage(AvgType, TrueRange(h, c, l), nATR); 
+
+def UP = hl + (AtrMult * ATR); 
+
+def DN = hl + (-AtrMult * ATR); 
+
+def S = if c < S[1]  
+
+        then Round(UP / tickSize(), 0) * tickSize() 
+
+        else Round(DN / tickSize(), 0) * tickSize(); 
+
+plot ST = if c > S then 1 else 0; 
+
+} 
+
+def cl = close; 
+
+def x = isNaN(cl[2]) and !isNaN(cl[3]); 
+
+def FirstAgg = ST(agg = agg1, AtrMult = AtrMult, nATR = nATR, AvgType = AvgType); 
+
+plot FirstAggPlot = if isNaN(cl)  
+
+                    then double.nan  
+
+                    else 1; 
+
+FirstAggPlot.SetStyle(Curve.Points); 
+
+FirstAggPlot.SetLineWeight(3); 
+
+FirstAggPlot.AssignValueColor(if FirstAgg == 1 
+
+                              then color.green  
+
+                              else color.red); 
+
+AddChartBubble(x, 1, (agg1/1000/60) + " min", color.white, yes); 
+
+def SecondAgg = ST(agg = agg2, AtrMult = AtrMult, nATR = nATR, AvgType = AvgType); 
+
+plot SecondAggPlot = if isNaN(cl)  
+
+                     then double.nan  
+
+                     else 2; 
+
+SecondAggPlot.SetStyle(Curve.Points); 
+
+SecondAggPlot.SetLineWeight(3); 
+
+SecondAggPlot.AssignValueColor(if SecondAgg == 1 
+
+                               then color.green  
+
+                               else color.red); 
+
+AddChartBubble(x, 2, (agg2/1000/60) + " min", color.white, yes); 
+
+def ThirdAgg = ST(agg = agg3, AtrMult = AtrMult, nATR = nATR, AvgType = AvgType); 
+
+plot ThirdAggPlot = if isNaN(cl)  
+
+                    then double.nan  
+
+                    else 3; 
+
+ThirdAggPlot.SetStyle(Curve.Points); 
+
+ThirdAggPlot.SetLineWeight(3); 
+
+ThirdAggPlot.AssignValueColor(if ThirdAgg == 1 
+
+                              then color.green  
+
+                              else color.red); 
+
+AddChartBubble(x, 3, (agg3/1000/60) + " min", color.white, yes); 
+
+def FourthAgg = ST(agg = agg4, AtrMult = AtrMult, nATR = nATR, AvgType = AvgType); 
+
+plot FourthAggPlot = if isNaN(cl)  
+
+                     then double.nan  
+
+                     else 4; 
+
+FourthAggPlot.SetStyle(Curve.Points); 
+
+FourthAggPlot.SetLineWeight(3); 
+
+FourthAggPlot.AssignValueColor(if FourthAgg == 1 
+
+                               then color.green  
+
+                               else color.red); 
+
+AddChartBubble(x, 4, (agg4/1000/60) + " min", color.white, yes); 
+
+def FifthAgg = ST(agg = agg5, AtrMult = AtrMult, nATR = nATR, AvgType = AvgType); 
+
+plot FifthAggPlot = if isNaN(cl)  
+
+                    then double.nan  
+
+                    else 5; 
+
+FifthAggPlot.SetStyle(Curve.Points); 
+
+FifthAggPlot.SetLineWeight(3); 
+
+FifthAggPlot.AssignValueColor(if FifthAgg == 1 
+
+                              then color.green  
+
+                              else color.red); 
+
+AddChartBubble(x, 5, (agg5/1000/60)+ " min", color.white, yes); 
+
+plot Six = if isNaN(cl)  
+
+           then double.nan  
+
+           else 6; 
+
+Six.SetStyle(Curve.Points); 
+
+Six.SetLineWeight(3); 
+
+Six.AssignValueColor(if FirstAgg and 
+
+                        SecondAgg and 
+
+                        ThirdAgg and 
+
+                        FourthAgg and 
+
+                        FifthAgg 
+
+                     then color.green 
+
+                     else if !FirstAgg and 
+
+                             !SecondAgg and 
+
+                             !ThirdAgg and 
+
+                             !FourthAgg and 
+
+                             !FifthAgg 
+
+                          then color.red 
+
+                     else color.black); 
+
+# End Code ST MTF 

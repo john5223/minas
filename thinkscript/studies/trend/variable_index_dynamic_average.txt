@@ -1,0 +1,41 @@
+Variable Index Dynamic Average (VIDYA) 
+
+Posted on March 15, 2009 by ThinkScripter 
+
+ 
+
+Here’s a variable moving average, the VIDYA, as described in The 
+
+New Technical Trader by Tushar Chande and Stanley Kroll. 
+
+ 
+
+ 
+
+# VIDYA 
+
+# http://www.thinkscripter.com 
+
+# thinkscripter@gmail.com 
+
+# Last Update 15 MAR 2009 
+
+ 
+
+input sigmaperiod = 10; 
+
+input length = 20; 
+
+ 
+
+def sigmaConstant = 2/(sigmaperiod+1); 
+
+def absCMO = absValue(ChandeMomentumOscillator(length))/100; 
+
+rec cV = compoundValue(1, (sigmaConstant*absCMO*close)+(1-(sigmaConstant*absCMO))*cV[1],close); 
+
+ 
+
+plot VIDYA =cV; 
+
+#---------------- End Of Code -------------------- 

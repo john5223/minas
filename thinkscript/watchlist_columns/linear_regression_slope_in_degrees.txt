@@ -1,0 +1,9 @@
+ 
+
+####### start ######## 
+
+input LR_length = 20;# The number of bars used to calculate the LR line. 
+
+Plot LRS = Round(Atan(LinearRegressionSlope("length" = LR_length)."LRS")  * 180 / Double.Pi, 1); 
+
+####### end ######## 

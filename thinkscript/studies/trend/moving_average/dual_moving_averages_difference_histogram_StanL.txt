@@ -1,0 +1,75 @@
+#hint:<b>Dual moving averages difference in a  histogram format</b> 
+
+declare lower; 
+
+input price = close;#hint price: The basis for both moving averages 
+
+input fastLength = 9;#hint fastLength:Length of the fast MA 
+
+input fastType = {default SMA, EMA};#hint fastType:Select the type of the fast MA 
+
+input slowLength = 18;#hint slowLength:Length of the slow MA 
+
+input slowType = {default SMA, EMA};#hint slowType:Select the type of the slow MA 
+
+input displace = 0;#hint displace:Displacement applied to both MAs 
+
+ 
+
+def fastAvg = if fastType == fastType.SMA Then Average(price[-displace], fastLength) else ExpAverage(price[-displace], fastLength); 
+
+ 
+
+def slowAvg = if  slowType == slowType.SMA Then Average(price[-displace], slowLength) else ExpAverage(price[-displace], slowLength); 
+
+ 
+
+#======== histogram =========== 
+
+Plot Diff = fastAvg - slowAvg; 
+
+plot ZeroLine = 0; 
+
+ZeroLine.SetDefaultColor(GetColor(0)); 
+
+ 
+
+Diff.SetDefaultColor(GetColor(5)); 
+
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Diff.SetLineWeight(3); 
+
+Diff.DefineColor("Positive and Up", Color.GREEN); 
+
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN); 
+
+#Diff.DefineColor("Positive and Down", Color.GREEN); 
+
+Diff.DefineColor("Negative and Down", Color.RED); 
+
+Diff.DefineColor("Negative and Up", Color.DARK_RED); 
+
+#Diff.DefineColor("Negative and Up", Color.RED); 
+
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then Diff.color("Positive and Up") else Diff.color("Positive and Down") else if Diff < Diff[1] then Diff.color("Negative and Down") else Diff.color("Negative and Up")); 
+
+ 
+
+Plot Diff_line = fastAvg - slowAvg; 
+
+Diff_line. setdefaultcolor(color.white); 
+
+Diff_line.SetLineWeight(1); 
+
+ 
+
+#======= labels ======== 
+
+AddLabel(yes,"FastMA = " +fastType + "(" + fastLength + ")",GetColor(1)); 
+
+AddLabel(yes,"SlowMA = " +slowType + "(" + slowLength + ")",GetColor(0)); 
+
+#AddLabel(1, "fastAvg = " + fastAvg,color.white); 
+
+#AddLabel(1, "slowAvg = " + slowAvg,color.white); 

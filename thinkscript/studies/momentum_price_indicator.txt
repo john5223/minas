@@ -1,0 +1,67 @@
+ 
+
+C E-mini Index FuturăET... 2668.75 
+'ES 10 D Sm 
+0:26Eg H:26Eg R:os 
+Share 
+Style 
+Studies 
+Patterns 
+2674 
+MomentumPriceOsc Mobius 0.144E43 
+-0.0225 
+ 
+
+# ToS Name: MomentumPriceOsc_Mobius 
+
+# Archive Name: Momentum Price Oscillator 
+
+# Mobius 
+
+# V.01 
+
+# If momentum (clouded green and red oscillator is increasing price will increase in momentum with the oscillators direction. If momentum is decresing price movement is not sustainable and any trend will shortly end. 
+
+ 
+
+# ThinkScript Lounge 4.27.2018 
+
+ 
+
+declare lower; 
+
+ 
+
+def a = Average(close, 10); 
+
+def b = Average(close, 20); 
+
+def c = Average(TrueRange(high,close, low), 8); 
+
+def d = Average(TrueRange(high, close, low), 14); 
+
+plot m = Average(c-d, 5); 
+
+m.AssignValueColor(if m > 0 then color.green else color.red); 
+
+addcloud(0, m, color.red, color.green); 
+
+plot data = Average(a - b, 5); 
+
+data.SetPaintingStrategy(paintingStrategy.Histogram); 
+
+data.AssignValueColor(if data > 0 and data > data[1] 
+
+                      then color.green 
+
+                      else if data > 0 and data < data[1] 
+
+                           then color.blue 
+
+                           else if data < 0 and data < data[1] 
+
+                                then color.red 
+
+                                else color.yellow); 
+
+# End Code Momentum Price Oscillator 

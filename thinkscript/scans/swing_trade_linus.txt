@@ -1,0 +1,59 @@
+Scan swing trades 
+
+ tnt: scan on a DMI cross study 
+
+tnt: daily is too slow and 4 hr is too fast 
+
+ linus: try changing the period length? 
+
+ tnt: Yes.  It will produce crosses for that period, or multiple periods as determined by the period length.  But, for example, two 4 hr periods doen't equal 8 hrs, it's simply two separate 4 hr periods.  Make sense? 
+
+linus: yeah 
+
+tnt: I thought it might be a common question. 
+
+tnt: For swing trades. 
+
+tnt: short term swing trades 
+
+tnt: TOS scan guy said it might be possible in ThinkScript, but I'm not that bright 
+
+linus:  
+
+input length = 14; 
+
+input atrLength = 14; 
+
+ def hiDiff = highest(high, 2) - highest(high[2], 2); 
+
+def loDiff = lowest(low[2], 2) - lowest(low, 2); 
+
+ 
+
+def plusDM = if hiDiff > loDiff and hiDiff > 0 then hiDiff else 0; 
+
+def minusDM =  if loDiff > hiDiff and loDiff > 0 then loDiff else 0; 
+
+ 
+
+def ATR = WildersAverage(TrueRange(highest(high, 2), close, lowest(low, 2)), atrLength); 
+
+def "DI+" = 100 * WildersAverage(plusDM, length) / ATR; 
+
+def "DI-" = 100 * WildersAverage(minusDM, length) / ATR; 
+
+ 
+
+plot crossUp = "DI+" crosses above "DI-"; 
+
+#plot crossDn = "DI+" crosses below "DI-"; 
+
+linus: compare that to an 8h chart and see how close the results are. 
+
+linus: what it does is use the highest high over two bars for the current period, and the highest high over the previous two bars for the previous period.  The lows are handled similarily. 
+
+linus: i seperatated length and atrLength so you can tweak the length independently of the atr, to try and get the results closer to an 8 hour chart. 
+
+linus: so the agg period of the scanner should be set to 4h 
+
+linus: that scan is looking for cross ups. comment out crossUp and uncomment crossDn to do DI+ crossing below DI-. 

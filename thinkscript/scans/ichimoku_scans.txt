@@ -1,0 +1,142 @@
+Download Custom Scans & Scanners for ThinkOrSwim 
+
+    http://tos.mx/wq9kYL – Ichimoku Break Above the Cloud – 5 Minute Chart 
+
+    http://tos.mx/d7340d – Ichimoku Break Below the Cloud – 5 Minute Chart 
+
+    http://tos.mx/30fZt5 – Ichimoku Chikou Line Crosses Above The Cloud 
+
+    http://tos.mx/uOwZmL – Ichimoku Chiko Line Crosses Below The Cloud 
+
+    http://tos.mx/GSfZab – Ichimoku 3 candles above the cloud 
+
+    http://tos.mx/HnAeox – Ichimoku 3 candles above the cloud 
+
+    http://tos.mx/0WReVp – Ichimoku 2 candles below the cloud 
+
+    http://tos.mx/yGwahs – Ichimoku 3 candles below the cloud – click for the thinkorswim downloads 
+
+    http://tos.mx/QZU8Rn – Ichimoku inside the cloud daily 
+
+    http://tos.mx/iFlKxM – Ichimoku inside the cloud houry 
+
+    http://tos.mx/CP91iY – Ichimoku inside the cloud 10 min 
+
+    http://tos.mx/WZBbqo – Ichimoku T crossabove K Daily 
+
+    http://tos.mx/PlVCiY – Ichimoku – Ichimoku T crossabove K 10 min 
+
+    http://tos.mx/rkGFAn – Ichimoku T crossabove K 1 hour 
+
+    http://tos.mx/7SJroO – RSI in Laguerre Time with Fractal Energy SHORT 
+
+    http://tos.mx/wyFdHT – RSI in Laguerre Time with Fractal Energy LONG 
+
+
+
+##########################################################
+
+
+
+# Scan - Comment out (#) the one you don't want 
+
+Ichimoku()."Kijun" crosses above MAX(Ichimoku()."Span A", Ichimoku()."Span B") 
+
+
+# Ichimoku()."Kijun" crosses below Min(Ichimoku()."Span A", Ichimoku()."Span B") 
+ 
+
+# IchiMoku Scan 
+
+# Chat Room Request 04.17.2017 
+
+# Mobius 
+
+input tenkan_period = 9; 
+input kijun_period = 26; 
+input Share_Qty = 1; 
+
+def Tenkan = (Highest(high, tenkan_period) + Lowest(low, tenkan_period)) / 2; 
+def Kijun = (Highest(high, kijun_period) + Lowest(low, kijun_period)) / 2; 
+def "Span A" = (Tenkan[kijun_period] + Kijun[kijun_period]) / 2; 
+def "Span B" = (Highest(high[kijun_period], 2 * kijun_period) + Lowest(low[kijun_period], 2 * kijun_period)) / 2; 
+def Chikou = close[-kijun_period]; 
+def Long = close > "Span B" and "Span A" > "Span B"; 
+def Short = close < "Span A" and "Span A" < "Span B"; 
+def crossUpper = (close crosses above Kijun) or (Tenkan crosses above Kijun); 
+def crossLower = (close crosses below Kijun) or (Tenkan crosses below Kijun); 
+ 
+# Comment out the signal not wanted 
+plot Bull_trading_signal = Long is true and crossUpper is true; 
+ 
+#plot Bear_trading_signal = Short is true and crossLower is true; 
+
+
+
+
+
+
+
+##########################################################
+
+
+
+
+# linus 
+# Ichimoku cloud scan 
+
+input nTe = 9;  # Tenkan length 
+input nKi = 26; # Kijun length 
+input nSp = 52; # SpanB length 
+def Tenkan = (Highest(high, nTe) + Lowest(low, nTe)) / 2; 
+def Kijun = (Highest(high, nKi) + Lowest(low, nKi)) / 2; 
+def SpanA = (Tenkan[nKi] + Kijun[nKi]) / 2; 
+def SpanB = (Highest(high[nKi], nSp) + Lowest(low[nKi], nSp)) / 2; 
+ 
+# The cloud is made up of SpanA and SpanB, so use Max and Min to scan above and below the cloud.  Only one plot can be active in the scan, so comment out the plot not being used with #. 
+
+#plot IsAboveCloud = low > Max(SpanA, SpanB); 
+plot IsBelowCloud = high < Min(SpanA, SpanB); 
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################
+
+
+
+SFL master Ichi scan 
+
+
+#SFL master Ichi scan 
+
+#first study 
+Ichimoku()."Tenkan" crosses above Ichimoku()."Span A" within 3 bars and Ichimoku()."Span A" is greater than Ichimoku()."Span B" and Ichimoku()."Tenkan" is greater than Ichimoku()."Kijun" and close is greater than or equal to Ichimoku()."Span A" and PolarizedFractalEfficiency()."PFE" is greater than 75 within 3 bars  
+
+#Second study used as a 'AND' 
+Three_X_Oscillator()."stochD" is greater than Three_X_Oscillator()."Mid" within 3 bars 
+
+
+
+
+
+
+
+
+##############################################################################
+
+
+
+
+ 
+
+ 
+

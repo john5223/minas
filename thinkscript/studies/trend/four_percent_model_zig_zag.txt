@@ -1,0 +1,8 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2011-2018 
+# 
+
+input price = close; 
+plot "4%Model" = reference ZigZagPercent(price, 4)."ZZ%"; 
+"4%Model".SetDefaultColor(GetColor(8)); 
+"4%Model".EnableApproximation(); 

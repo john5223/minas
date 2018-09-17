@@ -1,0 +1,28 @@
+ 
+
+bullish divergence by Bulld 
+
+#By Bulld 
+#Scan for bullish divergence 
+def m28 = close-close[28]; 
+
+plot output = low == lowest (low , 60) 
+			  && lowest(m28,6) > lowest (m28, 60); 
+
+ 
+
+ 
+
+ 
+
+bearish divergance by Bulld 
+scans bearish diverganceby Bulld 
+
+
+def m28 = close-close[28]; 
+
+plot output = high == Highest (high , 60) 
+	&& highest(m28,6) < Highest (m28, 60) 
+	&& close > 1 
+	&& Average(volume, 10) > 1000000; 
+

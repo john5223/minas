@@ -1,0 +1,23 @@
+# 
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+# 
+
+declare lower; 
+input length = 14; 
+input over_Sold = 20; 
+input over_Bought = 80; 
+
+def highest = Highest(high, length); 
+def divisor = highest - Lowest(low, length); 
+
+plot "%R" = if divisor equals 0 then 0 else 100 - 100 * (highest - close) / divisor; 
+plot OverBought = over_Bought; 
+plot OverSold = over_Sold; 
+
+"%R".DefineColor("OverBought", GetColor(5)); 
+"%R".DefineColor("Normal", GetColor(7)); 
+"%R".DefineColor("OverSold", GetColor(1)); 
+"%R".AssignValueColor(if "%R" > over_Bought then "%R".color("OverBought") else if "%R" < over_Sold then "%R".color("OverSold") else "%R".color("Normal")); 
+
+OverBought.SetDefaultColor(GetColor(8)); 
+OverSold.SetDefaultColor(GetColor(8)); 

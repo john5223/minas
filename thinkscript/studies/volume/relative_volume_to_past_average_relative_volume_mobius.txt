@@ -1,0 +1,89 @@
+RelativeVoIume PastAveraae (5) 19.9955 
+Displays as a Relative % of Avg Volume 
+Jun 
+Jul 
+Sep 
+Oct 
+Nov 
+Dec 
+17 
+Feb 
+Mar 
+Apr
+  
+
+# Relative Volume to past days Average Relative Volume  
+
+# Mobius  
+
+# Chat Room Request 01.23.2017  
+
+  
+
+declare lower;  
+
+  
+
+input length = 5;  
+
+  
+
+def v = volume(period = AggregationPeriod.Day);  
+
+def Bars = Ceil((RegularTradingEnd(20160104) - RegularTradingStart(20160104))  
+
+/ GetAggregationPeriod());  
+
+def newDay = GetDay() != GetDay()[1];  
+
+def DayVol = if newDay   
+
+                       then v  
+
+                       else DayVol[1] + v;  
+
+def avgVolume = (fold day = 0 to length   
+
+                               with s   
+
+                               do s + GetValue(DayVol, day * Bars, (length - 1) * Bars)) / length;  
+
+  
+
+plot R = DayVol / avgVolume * 100;  
+
+        R.SetPaintingStrategy(PaintingStrategy.Histogram);  
+
+        R.AssignValueColor(if R > 100  
+
+                                            then color.green  
+
+                                           else color.red);  
+
+plot Average = 100;  
+
+        Average.SetDefaultColor(Color.yellow);  
+
+        Average.HideTitle();  
+
+  
+
+AddLabel(1, "Displays as a Relative % of Avg Volume", color.white);  
+
+# End Code  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 

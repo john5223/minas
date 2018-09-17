@@ -1,0 +1,127 @@
+# SFL inquiry about Copyright notice #17833 
+
+# RH_LinearRegressionForecastSTUDY.ts 
+
+# Code by rhouser 
+
+# copyright Richard Houser 11/10/2013 All rights reserved. 
+
+# Permission granted to use, copy, modify to members of the Yahoo TOS_thinkscript Group for personal use only 
+
+ 
+
+#hint:<b>LinearRegressionForecast</b>\nLinear Regression Forecast - based on Investor/RT discussion at http://www.linnsoft.com/tour/techind/linRegForecast.htm 
+
+declare upper; 
+
+ 
+
+#hint price: the price used for all calculations 
+
+input price           = close; 
+
+#hint maPeriod: moving average period 
+
+input maPeriod        = 10; 
+
+#hint avgType: the type of moving average to be applied for smoothing 
+
+input avgType         = AverageType.SIMPLE; 
+
+#hint regPeriod: regression period 
+
+input regPeriod       = 20; 
+
+#hint forecastPeriod: forecast period 
+
+input forecastPeriod  = 2; 
+
+#hint numStdDevs: number of standard deviations for band seperation 
+
+input numStdDevs      = 1.5; 
+
+#hint smoothing: turn on or off smoothing, when ON uses the moving average, when OFF uses price 
+
+input smoothing       = yes; 
+
+ 
+
+def smoothPrice       = if smoothing  
+
+                          then MovingAverage( avgType, price, maPeriod ) 
+
+                          else price; 
+
+ 
+
+def regression        = Inertia( smoothPrice, regPeriod ); 
+
+def slope             = ( regression - regression[regPeriod] ) / regPeriod; 
+
+plot regressionBand    = regression + ( slope * forecastPeriod ); 
+
+ 
+
+def stdDev            = StDev( smoothPrice, regPeriod ); 
+
+ 
+
+plot UpperBand        = regressionBand + ( stdDev * numStdDevs ); 
+
+ 
+
+plot LowerBand        = regressionBand - ( stdDev * numStdDevs ); 
+
+ 
+
+plot LRO              = ( price - regressionBand ) / stdDev; 
+
+LRO.Hide(); 
+
+ 
+
+#========== an alternate ================== 
+
+There is a predefined TimeSeriesForecast study, which can be easily improved. I've done it for you and my version has correct regression slope calculation comparing with the RH's code in this topic. Feel free to improve it and/or use it everywhere you want. 
+
+ 
+
+ 
+
+input price = close; 
+
+input avgType = AverageType.SIMPLE; 
+
+input avgLength = 1; 
+
+input regLength = 9; 
+
+input barPlus = 0; 
+
+input numDevUp = 2.0; 
+
+input numDevDn = -2.0; 
+
+ 
+
+def smoothPrice = MovingAverage(avgType, price, avgLength); 
+
+def std = StDev(smoothPrice, regLength); 
+
+ 
+
+plot RegressionBand = reference TimeSeriesForecast(smoothPrice, regLength, barPlus); 
+
+plot UpperBand = RegressionBand + std * numDevUp; 
+
+plot LowerBand = RegressionBand + std * numDevDn; 
+
+# end 
+
+##### notes from the reference link ######### 
+
+Forecast Period - The middle regression band can optionally be forecast into the future by a user specified number of bars.  If the forecast period is 0, no forecasting will occur.  If the forecast period is greater than 0, then the linear regression line (computed using the regression line) is projected forward to determine the regression value for that bar. 
+
+ 
+
+The Linear Regression Oscillator (LRO) represents the number of standard deviations of current price from the linear regression line. A value of 2 means that price is currently 2 standard deviations above the linear regression line (using the regression period specified...ending on that bar). A value of -1.5 means price is currently 1 1/2 standard deviations below the regression line. This options has been added as a "Linear Regression Oscillator" checkbox to the LRF indicator. When drawn, reference lines are automatically drawn at -2, -1, 0, 1, and 2 standard deviations.  It is recommended that the Linear Regression Oscillator be drawn in a separate window pane from price data.  The Linear Regression Oscillator tells how far the current price has deviated from the regression trendline, in units of standard deviations, or how far the price has deviated from the general trend established by the regression analysis (using period specified). 

@@ -1,0 +1,50 @@
+ 
+
+267.28 
+spy 4 M ID 
+D: 0: 28773 H: 28798 L: 28692 C: 28728 
+O Chart Aggregation is Daily I Chart Length is 82 Daily Bars 
+Style Drawings Studies 
+1.06 Ehlerssupersmoother;ilter (CLOSE, 10) 267.86 
+Patterns 
+ 
+
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2013-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input cutoffLength = 10; 
+
+ 
+
+assert(cutoffLength > 0, "cutoffLength must be positive: " + cutoffLength); 
+
+ 
+
+def a1 = Exp(-Double.Pi * Sqrt(2) / cutoffLength); 
+
+def coeff2 = 2 * a1 * Cos(Sqrt(2) * Double.Pi / cutoffLength); 
+
+def coeff3 = - Sqr(a1); 
+
+def coeff1 = 1 - coeff2 - coeff3; 
+
+def filt = if IsNaN(price + price[1]) then filt[1] else coeff1 * (price + price[1]) / 2 + coeff2 * filt[1] + coeff3 * filt[2]; 
+
+ 
+
+plot SuperSmootherFilter = if !IsNaN(price) then filt else Double.NaN; 
+
+SuperSmootherFilter.SetDefaultColor(GetColor(5)); 
+
+Isn't it 
+
+# Notes: The thinkorswim coding of the Ehlers Super Smoother Filter paints an unwanted line far below the candles until the calculation reaches equilibrium.  The DMonkey fix eliminates this unpleasant "tail" 

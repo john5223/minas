@@ -1,0 +1,8 @@
+#Scan for earning "input" days out.  Input days is modifiable 
+
+input days = 10; 
+plot scan = sum(HasEarnings(EarningTime.AFTER_MARKET),days)[1-days]  
+            or sum(HasEarnings(EarningTime.BEFORE_MARKET),days)[0-days]; 
+
+AssignBackgroundColor(if scan then color.red else color.white); 
+

@@ -1,0 +1,81 @@
+ATR 
+
+Description 
+
+The Average True Range (ATR) study calculates the average of true price ranges over a time period. The True Price Range is defined as the greatest of distances between today's high to today's low, yesterday's close to today's high, and yesterday's close to today's low. The Average True Range is a moving average of the True Range over a specified period of time. 
+
+From <http://tlc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/A-B/ATR.html>  
+
+$ Scans
+
+# ATR %  
+# Mr Script:  
+# beginning of code ------------------------------  
+def atr = ATRWilder(); 
+def pect = atr/close *100; 
+plot scan = pect < 5; 
+# end of code ----------------------------------- 
+
+ 
+
+
+##############################
+
+  
+
+# ATR (10 days ) greater than say $1.50. 
+#scan for ATR (10 days ) to be greater than say $1.50. 
+AvgTrueRange(high, close, low, 10) > 1.5 
+
+
+
+
+###############################
+
+
+ 
+
+Avg tr for ? days > 1.10 
+
+
+By Mobius 
+scan for range (high - low) of greater than 1.10 per day, over several days 
+ scan below in a Daily scan for the range to be greater than $1.10 for 4 days.  
+You can adjust the days by changing the 4 to whatever you'd like 
+
+Input For_days = 4;# Set aggregation = day 
+Average(TrueRange(high, close, low), For_days ) > 1.10 
+
+#================================ 
+
+stocks with "High - Low" = 1.1 * Close for the last 5 days 
+input for_Days = 5; 
+ Sum((High - Low) == 1.1 * Close, 5) == 5 
+That says the condition must be true for all of the last 5 bars. 
+
+
+
+
+
+
+
+
+
+
+##########################################
+
+ # Scan for ATRWilder(14) is less than 5%  of the close 
+def atr = ATRWilder(); # default length = 14 bars 
+def pct = atr/close *100; 
+plot scan = pct < 5; 
+
+
+
+
+
+
+#########################################
+
+
+
+

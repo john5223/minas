@@ -1,0 +1,52 @@
+# linus:  
+## START STRATEGY 
+## SuperTrend  
+## linus, 2014-07-17, v0.1 
+ 
+#hint: Strategy version of SuperTrend. /n The speed of the trend changes are controlled by adjusting the ATR input parameters. 
+ 
+#hint atrMult: Multiple to scale the Average True Range (ATR) value. (Smaller numbers will produce faster trend changes.) 
+
+input atrMult = 2.8; 
+#hint atrLength: ATR moving average period length. 
+input atrLength = 3; 
+
+#hint atrType: ATR moving average type. 
+input atrType = AverageType.WILDERS; 
+
+#hint pivot: Bar pivot used for trend points. (Default is hl2) 
+input pivot = hl2; 
+
+def atr = MovingAverage(atrType, TrueRange(high, close, low), atrLength) * atrMult; 
+def prUp = pivot + atr; 
+def prDn = pivot - atr; 
+
+# rTrend stores the current trend value and direction. (The direction is currently up if rTrend[1] is positive and down if rTrend[1] is negative, therefore AbsValue is used to compare rTrend values when the trend is down.) 
+
+def rTrend = compoundValue(1,  
+    if rTrend[1] > 0 then  
+        if close < Max(prDn[1], rTrend[1]) then -prUp  
+        else Max(prDn, rTrend[1])  
+    else if rTrend[1] < 0 then  
+        if close > Min(prUp[1], AbsValue(rTrend[1])) then prDn  
+        else -Min(prUp, AbsValue(rTrend[1]))  
+    else rTrend[1] 
+, pivot); 
+ 
+plot Trend = if Sign(rTrend) == Sign(rTrend[1]) then absValue(rTrend) else Double.NaN; 
+Trend.DefineColor("Up", Color.CYAN); 
+Trend.DefineColor("Dn", Color.MAGENTA); 
+Trend.AssignValueColor(if rTrend > 0 then Trend.Color("Up") else Trend.Color("Dn")); 
+Trend.HideBubble(); 
+Trend.SetLineWeight(2); 
+ 
+#hint tradeSize: Number of shares/contract to trade. 
+input tradeSize = 1; 
+def BA = rTrend crosses above 0; 
+def SA = rTrend crosses below 0; 
+ 
+AddOrder(OrderType.BUY_AUTO, BA, open[-1], tradeSize, Color.GREEN, Color.GREEN, "BUY_AUTO"); 
+ 
+AddOrder(OrderType.SELL_AUTO, SA, open[-1], tradeSize, Color.RED, Color.RED, "SELL_AUTO"); 
+ 
+## END STRATEGY 

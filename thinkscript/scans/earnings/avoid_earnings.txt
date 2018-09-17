@@ -1,0 +1,12 @@
+# avoid earnings in your scans 
+#Mr. Script ... to avoid earnings in your scans 
+
+input length = 25; 
+plot scan == !sum(hasearnings(),length([-length+1] > 0; 
+
+ 
+
+
+
+ 
+

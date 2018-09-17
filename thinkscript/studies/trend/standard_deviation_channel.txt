@@ -1,0 +1,75 @@
+AAPL 
+S a APPLE INC 
+164.22 
+O: 164.12 H: 16573 
+2.112 
+Share 
+L: 163.37 C: 164.22 
+3,'12 
+Style 
+Drawi ngs 
+Studies Patterns 
+AAPL 4 M ID [NASDAQ] 
+LinearRegrReversaI (14) I 
+1,'15 
+R: 236 
+3,'19 
+standardDevChannel (CLOSE, 2.0, yes, 21) 18287 1712 J' 
+1,122 
+4/16 
+4/30 
+5/14 5121 
+Drawing set: Default 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2009-2018 
+
+# 
+
+ 
+
+input price = close; 
+
+input deviations = 2.0; 
+
+input fullRange = Yes; 
+
+input length = 21; 
+
+ 
+
+def regression; 
+
+def stdDeviation; 
+
+if (fullRange) { 
+
+    regression = InertiaAll(price); 
+
+    stdDeviation = stdevAll(price); 
+
+} else { 
+
+    regression = InertiaAll(price, length); 
+
+    stdDeviation = stdevAll(price, length); 
+
+} 
+
+ 
+
+plot UpperLine = regression + deviations * stdDeviation; 
+
+plot MiddleLine = regression; 
+
+plot LowerLine = regression - deviations * stdDeviation; 
+
+ 
+
+UpperLine.SetDefaultColor(GetColor(8)); 
+
+MiddleLine.SetDefaultColor(GetColor(8)); 
+
+LowerLine.SetDefaultColor(GetColor(8)); 

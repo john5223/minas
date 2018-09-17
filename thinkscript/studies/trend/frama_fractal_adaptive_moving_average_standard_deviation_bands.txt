@@ -1,0 +1,80 @@
+# Mobius©: here is Ehlers FRAMA I've added Stnadard Deviation Bands to make it a bit more productive  
+
+# FRAMA Fractal Adaptive Moving Average with Standard Deviation Bands  
+# Mobius 
+# Mobius on MyTrade 
+# V01.07.2013 
+
+input n = 20; 
+input price = close; 
+input SDmult = 2; 
+input ATRmult = 1.5; 
+input DisplayBands = yes; 
+Assert(n % 2 == 0, "n must be a number divisible by 2"); 
+
+def o = open; 
+def h = high; 
+def l = low; 
+def c = close; 
+def n1 = (h - l) / (N/2); 
+def n2; 
+def n3 = (Highest(h, N) - Lowest(l, N)) / N; 
+def dimen; 
+def alpha; 
+def filt; 
+def count = fold i = 0 to (n/2) 
+            with p 
+            do if GetValue(h, GetMaxValueOffset(h, n/2), n) > h  
+               then GetValue(h, GetMaxValueOffset(h, n/2), n) 
+            else if GetValue(l, GetMinValueOffset(l, n/2), n) < l 
+                 then GetValue(l, GetMinValueOffset(l, n/2), n) 
+            else count[1]; 
+
+def HH1 = h[n/2]; 
+def LL1 = l[n/2]; 
+def count2 = fold j = n/2 to n 
+             with q 
+             do if GetValue(HH1, GetMaxValueOffset(HH1, n/2), n) > HH1 
+                then GetValue(HH1, GetMaxValueOffset(HH1, n/2), n) 
+             else if GetValue(LL1, GetMinValueOffset(LL1, n/2), n) < LL1 
+                  then GetValue(LL1, GetMinValueOffset(LL1, n/2), n) 
+             else count[1]; 
+
+N2 = (count - count2) / (N / 2); 
+dimen = if N1 > 0 and N2 > 0 and N3 > 0 then (Log(N1 + N2) - Log(N3)) / Log(2) else 0; 
+alpha = if Dimen == .7  
+        then .02  
+        else if Dimen == .05  
+        then .33  
+        else if Exp(-4.6*(Dimen - 1)) < .01  
+        then .01 
+        else if Exp(-4.6* (Dimen - 1)) > 1 then 1 
+        else 0; 
+Filt = alpha * Price + (1 - alpha) * Filt[1]; 
+ 
+plot FRAMA = Inertia(filt, n); 
+     FRAMA.SetDefaultColor(Color.Yellow); 
+ 
+def SD = StDev(c, n); 
+def ATR = Average(TrueRange(h, c, l), n); 
+
+plot upperSD = FRAMA + (SDmult * SD); 
+     upperSD.SetHiding(!DisplayBands); 
+     upperSD.SetDefaultColor(CreateColor(50,50,50)); 
+
+plot lowerSD = FRAMA + (-SDmult * SD); 
+     lowerSD.SetHiding(!DisplayBands); 
+     lowerSD.SetDefaultColor(CreateColor(50,50,50)); 
+
+plot upperATR = FRAMA + (ATRmult * ATR); 
+     upperATR.SetHiding(!DisplayBands); 
+     upperATR.SetDefaultColor(Color.White); 
+
+plot lowerATR = FRAMA + (-ATRmult * ATR); 
+     lowerATR.SetHiding(!DisplayBands); 
+     lowerATR.SetDefaultColor(Color.White); 
+
+AddCloud(lowerATR, lowerSD, Color.Current, Color.White); 
+AddCloud(upperSD, upperATR, Color.Current, Color.White); 
+
+#end 

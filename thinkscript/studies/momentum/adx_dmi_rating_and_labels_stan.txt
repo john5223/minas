@@ -1,0 +1,555 @@
+#hint:Plots the ADX and/or DMI sibject to input settings. Labels, showing both the ADX and DMI values and ratings strengths (1 to 6)show all the time.\n <b>For intraday, a length of 7 is suggested else 14.</b>.\n This is for all aggregations as determined by the chart's settings. 
+
+#USAGE...The plots are strongest when both the ADX & DMI are the same i.e. bull or bear and at high ratings. 
+
+# TOS title = ADX_DMI_Rating_LabelPlots.  
+
+#Rev date = 8/13/12 
+
+# revised 8/17/12 to implement 1.5, 2.5, 3.5 and 4.5 rating values 
+
+# revised 8/22/12 Improved labels for ADX & DMI plots 
+
+# revised 3/4/13 Revised ADX & DMI plots and labels to show 
+
+# smooth strength values (rounded to 2 decimal places) in #lieu of stepped values of 1.0, 1.5, 2.0, 2.5, etc. 
+
+#Revised 3/6/13 Deleted the option of 'show labels' 
+
+#Revised 3/7/13 Made ADX & DMI labels to persistently show their values and ratings regardless of what plots are showing. 
+
+#Revised 8/12/13 Fixed DMI & ADX clouds. Added the option to plot the DMI_Oscillator in lieu of the ADX/DMI Rating plots. 
+
+#author = Stan L 
+
+ 
+
+# Usage notes: This study is similar to, and consistent with, custom columns for ADX and DMI ratings except that those settings could not be made smooth (TS limitation) for the Custom Column. Seeing desireable strengths/weaknesses can lead to further probing into a stock. Trend indication is easily observed with the plots. 
+
+ 
+
+#Both the ADX and DMI plots must be set to 'No' to plot the DMI_Oscillator. 
+
+ 
+
+declare lower; 
+
+ 
+
+input length = 7;#Hint length:Suggest 7 for intraday else 14 
+
+#input Display_Labels = yes;#Hint Display_Labels:Show or not-show labels 
+
+input ADX_Plot = yes;#Hint ADX_Plot:Plot or not-plot ADX. Labels will always show. 
+
+input DMI_Plot = no;#Hint DMI_Plot:Plot or not-plot DMI. Labels will always show. 
+
+input DMI_OSC_Plot = no;#Hint DMI_OSC_PLOT: Yes plots the DMI_Oscillator only when DMI_Plot and ADX_Plot = "no". 
+
+#========== ADX & DMI Calcs ============= 
+
+def hiDiff = high - high[1]; 
+
+def loDiff = low[1] - low; 
+
+ 
+
+def plusDM = if hiDiff > loDiff and hiDiff > 0 then hiDiff else 0; 
+
+def minusDM =  if loDiff > hiDiff and loDiff > 0 then loDiff else 0; 
+
+ 
+
+def ATR = WildersAverage(TrueRange(high, close, low), length); 
+
+def "DI+" = 100 * WildersAverage(plusDM, length) / ATR; 
+
+def "DI-" = 100 * WildersAverage(minusDM, length) / ATR; 
+
+def DX = if ("DI+" + "DI-" > 0) then 100 * AbsValue("DI+" - "DI-") / ("DI+" + "DI-") else 0; 
+
+def ADX = WildersAverage(DX, length); 
+
+def DMI_Diff = AbsValue("DI+" - "DI-"); 
+
+ 
+
+# ******* ADX Trend Strength Criteria *********** 
+
+# ADX <= 13 A weak strength,rating = 0 to 1.0 
+
+# ADX > 13 && ADX <= 25 A weak strength,rating = 1.0 to 1.5 
+
+# ADX > 25 && ADX <= 32 A moderate strength,rating = 1.5 to 2.0 
+
+# ADX > 32 && ADX <= 40 A moderate strength,rating = 2.0 to 2.5 
+
+#ADX > 40 && ADX <= 45 A strong strength,rating = 2.5 to 3.0 
+
+#ADX > 45 && ADX <= 50 A strong strength,rating = 3.0 to 3.5 
+
+#ADX > 50 && ADX <= 55 An very strong strength,rating = 3.5 to 4.0 
+
+ 
+
+#ADX > 55 && ADX <= 60 An very strong strength,rating = 4.0 to 4.5 
+
+#ADX > 60 && ADX <= 70 An extremely strong strength,rating = 4.5 to 5.0 
+
+# ADX > 70 && ADX <= 90 An extremely strong strength,rating = 5.0 to 6.0 
+
+# **************** DMI Trend Strength Criteria ************ 
+
+# DMI_Diff <= 5  A absent or very weak strength, rating 0 to 1.0 
+
+# DMI_Diff > 5 && DMI_Diff <= 10 A weak strength, rating 1.0 & 1.5 
+
+# DMI_Diff > 10 && DMI_Diff <= 15 A weak strength, rating 1.5 to 2.0 
+
+# DMI_Diff > 15 && DMI_Diff <= 20 A weak strength, rating 2.0 to 2.5 
+
+# DMI_Diff > 20 && DMI_Diff <= 25 A moderate strength, rating 2.5 to 3.0 
+
+ 
+
+# DMI_Diff > 25 && DMI_Diff <= 30 A moderate strength, rating 3.0 to 3.5 
+
+# DMI_Diff > 30 && DMI_Diff <= 35 A strong strength, rating 3.5 to 4.0 
+
+# DMI_Diff > 35 && DMI_Diff <= 40 A strong strength, rating 4.0 to 4.5 
+
+# DMI_Diff > 40 && DMI_Diff <= 50 A Extremely Strong strength, rating 4.5 to 5.0 
+
+# DMI_Diff > 50 && DMI_Diff <= 70 A Extremely Strong strength, rating 5.0 to 5.5 
+
+ 
+
+# ========== Bullish/Bearish trend criteria ============ 
+
+#Bullish when "DI+" > "DI-"  
+
+#Bearish when "DI-" > "DI+" 
+
+################# ADX value plot ########################## 
+
+plot ADX_Rating = if ADX <= 13 && "DI+" > "DI-" then Round((0 + (ADX / 13)), 2)# values 0 to 1.0 
+
+else if ADX > 13 && ADX <= 25 && ("DI+" > "DI-") then Round((1 + ((ADX - 13) / 12) * .5), 2) # values 1 to 1.5 
+
+else if ADX > 25 && ADX <= 32 && ("DI+" > "DI-") then Round(( 1.5 + ((ADX - 25) / 7) * .5), 2) # values 1.5 to 2.0 
+
+else if ADX > 32 && ADX <= 40 && ("DI+" > "DI-") then Round((2.0 + ((ADX - 32) / 8) * .5), 2) # values 2 to 2.5 
+
+else if ADX > 40 && ADX <= 45 && ("DI+" > "DI-") then Round((2.5 + ((ADX - 40) / 5) * .5), 2) # values 2.5 to 3.0 
+
+else if ADX > 45 && ADX <= 50 && ("DI+" > "DI-") then Round((3.0 + ((ADX - 45) / 5) * .5), 2) # values 3.0 to 3.5 
+
+else if ADX > 50 && ADX <= 55 && ("DI+" > "DI-") then Round((3.5 + ((ADX - 50) / 5) * .5), 2) # values 3.5 to 4.0 
+
+else if ADX > 55 && ADX <= 60 && ("DI+" > "DI-") then Round((4.0 + ((ADX - 50) / 5) * .5), 2) # values 4.0 to 4.5 
+
+else if ADX > 60 && ADX <= 70 && ("DI+" > "DI-") then Round((4.5 + ((ADX - 60) / 10) * .5), 2) # values 4.5 to 5.0 
+
+else if ADX > 70 && ADX <= 100 && ("DI+" > "DI-") then Round((5.0 + ((ADX - 70) / 20) * 1.0), 2) # values 5.0 to 6.0 
+
+else if ("DI-" > "DI+") && (ADX <= 13) then Round((0 + (ADX / 13)), 2)# values 0 to 1.0 
+
+else if ("DI-" > "DI+") && ADX > 13 && ADX <= 25 then Round((1 + ((ADX - 13) / 12) * .5), 2) # values 1 to 1.5 
+
+else if ("DI-" > "DI+") && ADX > 25 && ADX <= 32 then Round((1.5 + ((ADX - 25) / 7) * .5), 2) # values 1.5 to 2.0 
+
+else if ("DI-" > "DI+") && ADX > 32 && ADX <= 40 then Round((2.0 + ((ADX - 32) / 8) * .5), 2) # values 2 to 2.5 
+
+else if ("DI-" > "DI+") && ADX > 40 && ADX <= 45 then Round((2.5 + ((ADX - 40) / 5) * .5), 2) # values 2.5 to 3.0 
+
+else if ("DI-" > "DI+") && ADX > 45 && ADX <= 50 then Round((3.0 + ((ADX - 45) / 5) * .5), 2) # values 3.0 to 3.5 
+
+else if ("DI-" > "DI+") && ADX > 50 && ADX <= 55 then Round((3.5 + ((ADX - 50) / 5) * .5), 2) # values 3.5 to 4.0 
+
+else if ("DI-" > "DI+") && ADX > 55 && ADX <= 60 then Round((4.0 + ((ADX - 50) / 5) * .5), 2) # values 4.0 to 4.5 
+
+else if ("DI-" > "DI+") && ADX > 60 && ADX <= 70 then Round((4.5 + ((ADX - 60) / 10) * .5), 2) # values 4.5 to 5.0 
+
+else if ("DI-" > "DI+") && ADX > 70 && ADX <= 100  then Round((5.0 + ((ADX - 70) / 30) * 1.0), 2) #values 5.0 to 6.0 
+
+else Double.NaN; 
+
+ 
+
+ADX_Rating.AssignValueColor(if ("DI+" > "DI-") then Color.UPTICK else Color.DOWNTICK); 
+
+ADX_Rating.SetHiding(ADX_Plot == no); 
+
+ADX_Rating.SetLineWeight(3); 
+
+################# DMI value plot ########################## 
+
+plot DMI_Rating =  
+
+if "DI+" > "DI-" && DMI_Diff <= 5 then AbsValue(Round((0 + (DMI_Diff / 5)), 2))# values 0 to 1.0 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 5 && DMI_Diff <= 10 then  AbsValue(Round((1 + ((DMI_Diff - 5) / 5) * .5), 2)) # values 1.0 to 1.5 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 10 && DMI_Diff <= 15 then  Round((1.5 + ((DMI_Diff - 10) / 5) * .5), 2) # values 1.5 to 2.0 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 15 && DMI_Diff <= 20 then  Round((2.0 + ((DMI_Diff - 15) / 5) * .5), 2) # values 2.0 to 2.5 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 20 && DMI_Diff <= 25 then Round((2.5 + ((DMI_Diff - 20) / 5) * .5), 2) # values 2.5 to 3.0 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 25 && DMI_Diff <= 30 then Round((3.0 + ((DMI_Diff - 25) / 5) * .5), 2) # values 3.0 to 3.5 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 30 && DMI_Diff <= 35 then Round((3.5  + ((DMI_Diff - 30) / 5) * .5), 2) # values 3.5 to 4.0  
+
+else if "DI+" > "DI-" &&  DMI_Diff > 35 && DMI_Diff <= 40 then Round((4.0  + ((DMI_Diff - 35) / 5) * .5), 2) # values 4.0 to 4.5  
+
+else if "DI+" > "DI-" &&  DMI_Diff > 40 && DMI_Diff <= 50 then Round((4.5 + ((DMI_Diff - 40) / 10) * .5), 2) # values 4.5 to 5.0  
+
+else if "DI+" > "DI-" &&  DMI_Diff > 50 && DMI_Diff <= 70 then Round((5.0 + ((DMI_Diff - 50) / 20) * 1.0), 2) # values 5.0 to 5.5 
+
+else if "DI-" > "DI+" && DMI_Diff <= 5 then  Round((0 + (DMI_Diff / 5)), 2)# values 0 to 1.0 
+
+else if "DI-" > "DI+" && DMI_Diff > 5 && DMI_Diff <= 10 then  Round((1 + ((DMI_Diff - 5) / 5) * .5), 2) # values 1 to 1.5 
+
+else if "DI-" > "DI+" && DMI_Diff > 10 && DMI_Diff <= 15 then  Round((1.5 + ((DMI_Diff - 10) / 5) * .5), 2) # values 1.5 to 2.0 
+
+else if "DI-" > "DI+" && DMI_Diff > 15 && DMI_Diff <= 20 then Round((2.0 + ((DMI_Diff - 15) / 5) * .5), 2) # values 2.0 to 2.5  
+
+else if "DI-" > "DI+" &&  DMI_Diff > 20 && DMI_Diff <= 25 then Round((2.5 + ((DMI_Diff - 20) / 5) * .5), 2) # values 2.5 to 3.0 
+
+else if "DI-" > "DI+" &&  DMI_Diff > 25 && DMI_Diff <= 30 then Round((3.0 + ((DMI_Diff - 25) / 5) * .5), 2) # values 3.0 to 3.5 
+
+else if "DI-" > "DI+" &&  DMI_Diff > 30 && DMI_Diff <= 35 then Round((3.5  + ((DMI_Diff - 30) / 5) * .5), 2) # values 3.5 to 4.0 
+
+else if "DI-" > "DI+" &&  DMI_Diff > 35 && DMI_Diff <= 40 then 4.0  + ((DMI_Diff - 35) / 5) * .5 # values 4.0 to 4.5  
+
+else if "DI-" > "DI+" &&  DMI_Diff > 40 && DMI_Diff <= 50 then Round((4.5 + ((DMI_Diff - 40) / 10) * .5), 2) # values 4.5 to 5.0 
+
+else if "DI-" > "DI+" &&  DMI_Diff > 50 && DMI_Diff <= 70 then Round((5.0 + ((DMI_Diff - 50) / 20) * 1.0), 2) # values 5.0 to 5.5 
+
+else Double.NaN; 
+
+ 
+
+DMI_Rating.AssignValueColor(if "DI+" > "DI-" then Color.PINK else Color.CYAN); 
+
+DMI_Rating.SetHiding(DMI_Plot == no); 
+
+DMI_Rating.SetLineWeight(3); 
+
+########################################### 
+
+# addChartLabel(visible, value, textLabel, color) 
+
+plot line = 7;#Moves labels up to avoid labels overlaping a plot 
+
+line.SetDefaultColor(Color.BLACK); 
+
+############### ADX label Printing ############### 
+
+AddLabel(yes, Concat("ADX(", Concat(length, Concat(") = ", Round(ADX, 2)))), if "DI+" > "DI-" then Color.GREEN else   
+
+if "DI-" > "DI+" then  Color.RED else   
+
+Color.WHITE); 
+
+ 
+
+AddLabel(yes , 
+
+if ADX <= 12 && "DI+" > "DI-" then ("Weak bullish (rating " + ADX_Rating + ")") #value 0 to 1.0 
+
+else if  
+
+ADX > 12 && ADX <= 25 && ("DI+" > "DI-") then ("Weak bullish (rating " + ADX_Rating + ")")  #value 1 to 1.5 
+
+else if  
+
+ADX > 25 && ADX <= 32 && ("DI+" > "DI-") then ("Moderate bullish (rating " + ADX_Rating + ")") # values 1.5 to 2.0 
+
+ else if 
+
+ADX > 32 && ADX <= 40 && ("DI+" > "DI-") then ("= Moderate bullish (rating " + ADX_Rating + ")") # values 2 to 2.5 
+
+ else if 
+
+ADX > 40 && ADX <= 45 && ("DI+" > "DI-") then ("=" + "Strong bullish (rating " + ADX_Rating + ")" )# values 2.5 to 3.0 
+
+else if  
+
+ADX > 45 && ADX <= 50 && ("DI+" > "DI-") then ("Strong bullish (rating " + ADX_Rating + ")")# values 3.0 to 3.5 
+
+else if  
+
+ADX > 50 && ADX <= 55 && ("DI+" > "DI-") then  ("Very strong bullish (rating " + ADX_Rating + ")") # values 3.5 to 4.0 
+
+else if 
+
+ADX > 55 && ADX <= 60 && ("DI+" > "DI-") then ("Very strong bullish (rating " + ADX_Rating + ")") # values 4.0 to 4.5  
+
+else if  
+
+ADX > 60 && ADX <= 70 && "DI+" > "DI-" then ("Extremely strong Bullish (rating " + ADX_Rating + ")") # values 4.5 to 5.0 
+
+else if  
+
+ADX > 70 && ADX <= 90 && "DI+" > "DI-" then ("Extremely strong Bullish (rating " + ADX_Rating + ")") # values 5.0 to 6.0 
+
+ 
+
+ 
+
+else if  
+
+ADX <= 12 && "DI-" > "DI+" then ("Weak bearish (rating " + ADX_Rating + ")") #values 0 to 1.0 
+
+else if  
+
+ADX > 12 && ADX <= 25 && "DI-" > "DI+" then ("Weak bearish (rating " + ADX_Rating + ")") # values 1.5 to 2.0 
+
+else if  
+
+ADX > 25 && ADX <= 32 && "DI-" > "DI+" then ("Moderate bearish (rating " + ADX_Rating + ")") # values 2.0 to 2.5 
+
+else if  
+
+ADX > 32 && ADX <= 40 && "DI-" > "DI+" then ("Moderate bearish (rating " + ADX_Rating + ")") # values 2.5 to 3.0 
+
+else if  
+
+ADX > 40 && ADX <= 45 && "DI-" > "DI+" then ("Strong bearish (rating " + ADX_Rating + ")") # values 3.0 to 3.5 
+
+else if  
+
+ADX > 45 && ADX <= 50 && "DI-" > "DI+" then ("Strong bearish (rating " + ADX_Rating + ")") # values 3.5 to 4.0 
+
+else if  
+
+ADX > 50 && ADX <= 55 && "DI-" > "DI+" then ("Very strong bearish (rating " + ADX_Rating + ")") # values 4.0 to 4.5 
+
+else if  
+
+ADX > 55 && ADX <= 60 && "DI-" > "DI+" then ("Very strong bearish (rating " + ADX_Rating + ")")  # values 4.0 to 4.5  
+
+else if 
+
+ADX > 60 && ADX <= 70 && "DI-" > "DI+" then ("Extremely strong bearish (rating " + ADX_Rating + ")")  # values 4.5 to 5.0 
+
+else if 
+
+ADX > 70 && ADX <= 90 && "DI-" > "DI+" then ("Extremely strong Bearish (rating " + ADX_Rating + ")") # values 5.0 to 6.0 
+
+else   
+
+"Ranging Market",   
+
+if "DI+" > "DI-" then Color.GREEN else   
+
+if "DI-" > "DI+" then  Color.RED else   
+
+Color.WHITE); 
+
+###################### 
+
+AddLabel(yes , "", Color.BLACK);# added just for creating spacing between labels. 
+
+############# DMI Label printing ############## 
+
+AddLabel(yes, Concat("DMI(", Concat(length, Concat(") = ", Round("DI+" - "DI-", 1)))), if "DI+" > "DI-" then Color.GREEN  
+
+else if  
+
+"DI-" > "DI+" then  Color.RED else   
+
+Color.WHITE); 
+
+ 
+
+###### below for development testing ############ 
+
+#AddLabel(yes, "DMI =Value= " + AbsValue(Round("DI+" - "DI-", 1)), color.yellow);  
+
+#AddLabel(Display_Labels, "DMI_Rating = " + DMI_Rating, color.yellow);  
+
+##################################### 
+
+AddLabel(yes ,   
+
+if  
+
+"DI+" > "DI-" && DMI_Diff <= 5 then ("Weak bullish (rating  " + DMI_Rating + ")") 
+
+else if  
+
+"DI+" > "DI-" &&  DMI_Diff > 5 && DMI_Diff <= 10 then ("Weak bullish (rating " + DMI_Rating + ")")  
+
+else if  
+
+"DI+" > "DI-" &&  DMI_Diff > 10 && DMI_Diff <= 15 then ("Weak bullish (rating " + DMI_Rating + ")")  
+
+else if 
+
+"DI+" > "DI-" &&  DMI_Diff > 15 && DMI_Diff <= 20 then ("Weak bullish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI+" > "DI-" &&  DMI_Diff > 20 && DMI_Diff <= 25 then ("Moderate bullish (rating " + DMI_Rating + ")")  
+
+else if  
+
+"DI+" > "DI-" &&  DMI_Diff > 25 && DMI_Diff <= 30 then ("Moderate bullish (rating " + DMI_Rating + ")") 
+
+else if 
+
+"DI+" > "DI-" &&  DMI_Diff > 30 && DMI_Diff <= 35 then ("Strong bullish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI+" > "DI-" &&  DMI_Diff > 35 && DMI_Diff <= 40 then ("Strong bullish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI+" > "DI-" &&  DMI_Diff > 40 && DMI_Diff <= 50 then ("Extremely Strong bullish (rating " + DMI_Rating + ")") 
+
+ 
+
+else if "DI+" > "DI-" &&  DMI_Diff > 50 && DMI_Diff <= 70 then ("Extremely Strong bullish (rating " + DMI_Rating + ")") 
+
+ 
+
+ 
+
+else if 
+
+"DI-" > "DI+" && DMI_Diff <= 10 then ("Very weak bearish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI-" > "DI+" && DMI_Diff > 10 && DMI_Diff <= 15 then ("Weak bearish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI-" > "DI+" && DMI_Diff > 15 && DMI_Diff <= 20 then ("Weak bearish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI-" > "DI+" &&  DMI_Diff > 20 && DMI_Diff <= 25 then ("Moderate bearish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI-" > "DI+" &&  DMI_Diff > 25 && DMI_Diff <= 30 then ("Moderate bearish (rating " + DMI_Rating + ")") 
+
+else if 
+
+"DI-" > "DI+" &&  DMI_Diff > 30 && DMI_Diff <= 35 then ("Strong bearish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI-" > "DI+" &&  DMI_Diff > 35 && DMI_Diff <= 40 then ("Strong bearish (rating " + DMI_Rating + ")") 
+
+else if  
+
+"DI-" > "DI+" &&  DMI_Diff > 40 then ("Very strong bearish (rating " + DMI_Rating + ")") 
+
+ 
+
+else if  
+
+"DI-" > "DI+" &&  DMI_Diff > 40 && DMI_Diff <= 50 then ("Extremely Strong bearish (rating " + DMI_Rating + ")") 
+
+ 
+
+else if "DI-" > "DI+" &&  DMI_Diff > 50 && DMI_Diff <= 70 then ("Extremely Strong bearish (rating " + DMI_Rating + ")") 
+
+else   
+
+"Trend Is Absent",   
+
+if "DI+" > "DI-" then Color.GREEN else   
+
+if "DI-" > "DI+" then  Color.RED else   
+
+Color.WHITE); 
+
+AddLabel(ADX_Plot or DMI_Plot , " ", Color.BLACK); 
+
+AddLabel(ADX_Plot, "ADX plot (0 to 6) = ", Color.WHITE); 
+
+AddLabel(ADX_Plot, "bull", Color.UPTICK); 
+
+AddLabel(ADX_Plot, "bear", Color.DOWNTICK); 
+
+AddLabel(ADX_Plot or DMI_Plot , " ", Color.BLACK); 
+
+AddLabel(DMI_Plot, "DMI plot (0 to 5.5) = ", Color.WHITE); 
+
+AddLabel(DMI_Plot, "bull", Color.PINK); 
+
+AddLabel(DMI_Plot, "bear", Color.CYAN); 
+
+plot ZeroLine = 0; 
+
+ 
+
+###### add ADX and DMI clouds ####### 
+
+addcloud(if ADX_Plot and "DI+" >= "DI-" then ADX_Rating else double.NaN, Zeroline,color.green); 
+
+addcloud(if ADX_Plot and "DI+" <= "DI-" then ADX_Rating else double.NaN, Zeroline, color.red); 
+
+ 
+
+#### to change the ADX cloud to a solid red or green, run next two addcloud statements #### 
+
+#addcloud(if ADX_Plot and "DI+" >= "DI-" then ADX_Rating else double.NaN, Zeroline,color.green); 
+
+#addcloud(if ADX_Plot and "DI+" <= "DI-" then ADX_Rating else double.NaN, Zeroline, color.red); 
+
+ 
+
+ 
+
+addcloud(if DMI_Plot and "DI-" < "DI+" then DMI_rating else double.NaN, Zeroline, color.green); 
+
+ 
+
+addcloud(if DMI_Plot and "DI-" > "DI+" then DMI_rating else double.NaN, Zeroline, color.red); 
+
+ 
+
+#### to change the DMI cloud to a solid red or green, run next two addcloud statements #### 
+
+#addcloud(if DMI_Plot and "DI-" < "DI+" then DMI_rating else double.NaN, Zeroline, color.green); 
+
+ 
+
+#addcloud(if DMI_Plot and "DI-" > "DI+" then DMI_rating else double.NaN, Zeroline, color.red); 
+
+ 
+
+#### Plot DMI Oscillator in lieu of DMI Rating plot ##### 
+
+plot Ref_DMI_OSC = If DMI_OSC_Plot and !ADX_Plot and !DMI_Plot then DMI_Oscillator(length = length, "paint bars" = No).Osc else double.nan; 
+
+Plot Ref_DMI_Hist = If DMI_OSC_Plot and !ADX_Plot  and !DMI_Plot then DMI_Oscillator(length = length, "paint bars" = No).Hist else double.nan; 
+
+#Plot Ref_DMI_ZeroLine = If DMI_OSC_Plot and !ADX_Plot and !DMI_Plot then DMI_Oscillator(length = length, "paint bars" = No).ZeroLine else double.nan; 
+
+Ref_DMI_OSC.SetDefaultColor(GetColor(1)); 
+
+Ref_DMI_Hist.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+Ref_DMI_Hist.SetLineWeight(3); 
+
+Ref_DMI_Hist.DefineColor("Positive", Color.UPTICK); 
+
+Ref_DMI_Hist.DefineColor("Negative", Color.DOWNTICK); 
+
+Ref_DMI_Hist.AssignValueColor(if Ref_DMI_Hist > 0 then Ref_DMI_Hist.Color("Positive") else Ref_DMI_Hist.Color("Negative")); 
+
+Ref_DMI_Hist.HideTitle(); 
+
+#ZeroLine.SetDefaultColor(Color.GRAY); 
+
+AddLabel(DMI_OSC_Plot and !ADX_Plot  and !DMI_Plot, "The DMI_Oscillator(" + Length + ") is plotted",color.white); 
+
+########### EOC ############# 

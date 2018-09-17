@@ -1,0 +1,27 @@
+http://stockcharts.com/articles/scanning/2014/02/scanning-to-find-stocks-with-selling-climaxes.html 
+
+ 
+
+The scan criteria below are designed to find stocks that became oversold on high volume and are still trading near their lows.  
+
+ 
+
+SimpleMovingAvg("length" = 20) is greater than or equal to 10 
+  
+SimpleMovingAvg("price" = VOLUME, "length" = 20) is greater than or equal to 40000 
+  
+SimpleMovingAvg("price" = VOLUME, "length" = 2) is greater than SimpleMovingAvg("price" =   
+VOLUME, "length" = 250)*2 
+  
+BollingerBandwidth("length" = 10)."Bandwidth" is greater than  
+simpleMovingAvg("price" = bollingerBandwidth ("length" = 10)."bandwidth", "length" = 250)*2 
+  
+Lowest(RSIWilder( 14 )."RSI", 5) is less than 25 
+
+ 
+StochasticFast("k period" = 14)."FastK" is less than 10 
+  
+
+ 
+
+From <https://beta.groups.yahoo.com/neo/groups/TOS_thinkscript/conversations/topics/19164>  

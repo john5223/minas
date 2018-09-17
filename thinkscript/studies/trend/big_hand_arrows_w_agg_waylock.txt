@@ -1,0 +1,154 @@
+ 
+
+ 
+
+266.02 
+Draw i ngs 
+spy 3 Y W 
+D: 0: 26726 
+H: 26789 
+L:25Y05 c: 26602 
+style 
+Wk 
+R: &84 Volume 
+470,288, 190 
+Studies 
+Patterns 
+Big Hand 4.99 Big Hand should be run on SPY WEEKLY Chart 
+ 
+
+# Archive Name: Big Hand Arrows On Study with Weekly Aggregation_Waylock_AlphaInvestor 
+
+# Archive Section: Trend 
+
+# Suggested Tos Name: Big_Hand_Arrows_On_Study_w_Agg_WaylockAI 
+
+# Archive Date: 5.05.2018 
+
+# Archive Notes:  
+
+ 
+
+#  Big_Hand_Arrows_On_Study_w_Agg 
+
+#  Use on Weekly Chart 
+
+#  Script by Waylock 
+
+ 
+
+# AlphaInvestor - 05/12/2017 - force to weekly aggregation 
+
+ 
+
+declare lower; 
+
+ 
+
+input agg = AggregationPeriod.WEEK; 
+
+ 
+
+# Hide Study Name and Inputs 
+
+# Add this to hide the text on the title bar 
+
+plot Scriptlabel = Double.NaN; 
+
+Scriptlabel.SetDefaultColor(CreateColor ( 6, 0, 48 )); 
+
+ 
+
+input fastLength = 19; 
+
+input slowLength = 39; 
+
+ 
+
+def c = close(period = agg); 
+
+ 
+
+plot Value = ExpAverage(c, fastLength) - ExpAverage(c, slowLength); 
+
+ 
+
+def Value_color = if Value > 0 then yes else no; 
+
+ 
+
+Value.DefineColor( "ValueUp", Color.GREEN ); 
+
+Value.DefineColor( "ValueDn", Color.RED ); 
+
+Value.AssignValueColor( if Value_color then Value.Color( "ValueUp" ) else Value.Color( "ValueDn" ) ); 
+
+ 
+
+plot ZeroLine = 0; 
+
+ 
+
+Value.SetDefaultColor(Color.CYAN); 
+
+ZeroLine.SetDefaultColor(Color.YELLOW); 
+
+ZeroLine.HideTitle(); 
+
+ZeroLine.HideBubble(); 
+
+ 
+
+def xUndr = Value[1] < 0 and Value > 0; 
+
+ 
+
+def xOver = Value[1] > 0 and Value < 0; 
+
+ 
+
+plot ArrowUp = if xUndr then xOver else Double.NaN; 
+
+ArrowUp.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+ArrowUp.SetDefaultColor(Color.YELLOW); 
+
+ArrowUp.SetLineWeight(5); 
+
+ArrowUp.HideTitle(); 
+
+ArrowUp.HideBubble(); 
+
+ 
+
+ 
+
+ 
+
+plot ArrowDn = if xOver then xUndr else Double.NaN; 
+
+ArrowDn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+ArrowDn.SetDefaultColor(Color.YELLOW); 
+
+ArrowDn.SetLineWeight(5); 
+
+ArrowDn.HideTitle(); 
+
+ArrowDn.HideBubble(); 
+
+ 
+
+# Make Label on Study panel to show the value of the Big Hand 
+
+def data = Value; 
+
+AddLabel(yes, "Big Hand   " + Round(data, 2), if data > 0 then Color.GREEN else Color.RED); 
+
+ 
+
+AddLabel(yes, "Big Hand should be run on SPY WEEKLY Chart", Color.GRAY); 
+
+ 
+
+# End Study 

@@ -1,0 +1,70 @@
+## Volatility Trailing Stop
+## Version 1.1
+## By Steve Coombs
+## This ATR Trailing Stop is calculated using the Highest Close in an uptrend or
+## the Lowest Close in a downtrend, rather than just the Close that is used
+## in the standard TOS ATRTrailing Stop
+
+#input StopLabel = yes; #ATRStop Label is Stop value from yesterdays ATR calculation
+input ATRPeriod = 10;
+input ATRFactor = 1.5;
+input firstTrade = {default long, short};
+input averageType = AverageType.SIMPLE;
+
+Assert(ATRFactor > 0, "'atr factor' must be positive: " + ATRFactor);
+def trueRange = TrueRange(high, close, low);
+def loss = ATRFactor * MovingAverage(averageType, trueRange, ATRPeriod);
+
+def state = {default init, long, short};
+def trail;
+def mclose;
+switch (state[1]) {
+case init:
+    if (!IsNaN(loss)) {
+        switch (firstTrade) {
+        case long:
+            state = state.long;
+            mclose = close;
+            trail =  close - loss;
+        case short:
+            state = state.short;
+            mclose = close;
+            trail = close + loss;
+    }
+    } else {
+        state = state.init;
+        trail = Double.NaN;
+        mclose = Double.NaN;
+    }
+case long:
+    if (close > trail[1]) {
+        state = state.long;
+        mclose = Max(mclose[1], close);
+        trail = Max (trail[1], mclose - loss);
+    } else {
+        state = state.short;
+        mclose = close;
+        trail = mclose + loss;
+    }
+case short:
+    if (close < trail[1]) {
+        state = state.short;
+        mclose = Min(mclose[1], close);
+        trail = Min(trail[1], mclose + loss);
+    } else {
+        state = state.long;
+        mclose = close + 0;
+        trail =  mclose - loss;
+    }
+}
+
+#AddLabel(StopLabel, "ATR Stop =" + Round(trail[1], 2), color = Color.BLUE);
+plot TrailingStop = trail;
+
+TrailingStop.SetPaintingStrategy(PaintingStrategy.POINTS);
+TrailingStop.SetLineWeight(lineWeight = 3);
+TrailingStop.DefineColor("Buy", GetColor(5));
+TrailingStop.DefineColor("Sell", GetColor(1));
+TrailingStop.AssignValueColor(if state == state.long
+    then TrailingStop.Color("Sell")
+    else TrailingStop.Color("Buy"));

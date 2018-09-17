@@ -1,0 +1,73 @@
+ 
+
+266.56 
+Style 
+Draw i ngs 
+spy 3 M ID 
+D: 0: 267 H: 26734 L: 2658 C: 26858 R: 184 
+Chart Aggregation is Daily Chart Length is 63 Daily Bars 
+PriceVoIumeRank 2 
+VolumeAvg{501 
+Studies 
+4/30 
+Patterns 
+2.112 
+2,'1g 
+3,119 
+4/16 
+4/23 
+ 
+
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+ 
+
+plot PVR = if close > close[1] then  
+
+              if volume > volume[1] then  
+
+                 1  
+
+              else  
+
+                 if volume < volume[1] then  
+
+                    2  
+
+                 else  
+
+                    0  
+
+           else  
+
+              0 + if close < close[1] then  
+
+              if volume < volume[1] then  
+
+                 3  
+
+              else  
+
+                 if volume > volume[1] then  
+
+                    4  
+
+                 else  
+
+                    0  
+
+           else  
+
+              0 
+
+; 
+
+PVR.SetDefaultColor(GetColor(1)); 

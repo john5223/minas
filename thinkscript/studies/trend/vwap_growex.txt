@@ -1,0 +1,59 @@
+# growex: Recently I've read a book about Midas (modified VWAP) method by A.Coles and David G. Hawkins...so i've wrote a simple script that allows to start a VWAP line from any bar on the chart... 
+
+ 
+
+#TOS title = VWAP_growex 
+
+# growex:  
+
+#VM_VWAP_Custom_Bar 
+
+#To use it you'll need the barnumber() function applied so you know the numbers of start bars. If you want to measure uptrend pullbacks then use "LOW" as RefSR input, instead if you are measuring downtrends, use High. 
+
+#You Can plot upper to three S/R lines starting from referense swingIndex lows/highs 
+
+ 
+
+script cvwap { 
+
+def Data = barnumber(); 
+
+input Number_Of_Bar = 1; 
+
+input price = close; 
+
+def bar =  data >= Number_Of_Bar; 
+
+def pv = if bar then pv[1]+price*volume else 0; 
+
+def cumvolume = if bar then cumvolume[1]+volume else 0; 
+
+plot vwap = pv/cumvolume; 
+
+} 
+
+input SR1bar = 1; 
+
+input SR2bar = 1; 
+
+input SR3bar = 1; 
+
+input RefSR = close; 
+
+plot "SR_1" = cvwap(SR1bar,refSR); 
+
+plot "SR_2" = cvwap(SR2bar,refSR); 
+
+plot "SR_3" = cvwap(SR3bar,refSR); 
+
+"SR_1".SetLineWeight(3);  
+
+"SR_2".SetLineWeight(3); 
+
+"SR_3".SetLineWeight(3); 
+
+#end 
+
+ 
+
+# lar?:  I believe growex's VM_VWAP code is plotting lines based upon the bar number you enter for each of the three inputs. These need to be different bar numbers to get multiple lines. He describes in the intro to the script possible scenarios. 

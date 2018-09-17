@@ -1,0 +1,57 @@
+http://tos.mx/S1mO58  
+
+  
+
+  
+
+10.99 
+50. OS 
+A B WaveSqueez_M0bius (21, 2, 1.5) N/A 3.09857 
+2.71381
+ 
+
+From <https://onenote.officeapps.live.com/o/onenoteframe.aspx?edit=0&ui=en-US&rs=en-US&hid=d17ca5d2-e546-4d54-bf9a-77ab2fa84214&WOPISrc=https%3A%2F%2Fwopi.onedrive.com%2Fwopi%2Ffolders%2FA385A7091FD6BA4%21107&wdo=2&sc=host%3D%26qt%3DFolders&mscc=1&wdp=7>  
+
+ 
+
+ 
+
+ 
+
+  
+
+  
+
+  
+
+  
+
+# New Adaptive Average  
+
+# Mobius  
+
+# an interesting use of enumeration   
+
+# attempting to build an array of switches that can be used in conditonal statements  
+
+# hh = highest high  
+
+# rangeL = lowest low  
+
+# wave = close  
+
+# zero = linear regression of close  
+
+#Fractal Adaptive Moving Averages by John F. Ehlers  
+
+  
+
+  
+
+#We all want to eliminate bad whipsaw trades. Here's a weapon you can add to your arsenal of technical indicators for just that purpose.The objective of using filters is to separate the desirable signals from the undesirable ones. The practical application of moving averages often involves a tradeoff between the amount of smoothness required and the amount of lag that can be tolerated. Moving averages have this problem because the price data is not stationary and may have different bandwidths over different time intervals.Various momentum-adaptive filtering techniques have been developed to take advantage of the nonstationary structure of prices. Adaptive filters have also been developed based on price statistics and the cyclic content of the price data. In this article, I will describe a different class of filters that monitors a measure of temporal nonstationarity and alters their bandwidth in response to this measure.  
+
+#ARE MARKETS FRACTAL?  
+
+#There is no argument that market prices are fractal. Fractal shapes are self-similar -- that is, a particular fractal has the same roughness and sparseness no matter how closely you view them. For example, if you remove the labels from a five-minute chart, a daily chart, and a weekly chart, you would have difficulty telling them apart. This is the characteristic that makes them fractal. The fractal dimension that describes the sparseness at all magnification levels defines the self-similarity.    
+
+#...Continued in the October issue of Technical Analysis of STOCKS & COMMODITIES  

@@ -1,0 +1,19 @@
+Price-OBV_Divergence 
+
+# Price-OBV_Divergence (also see the study version of this) 
+# On Balance Volume Divergence 
+ 
+declare lower; 
+Input length = 50; 
+plot OBV = TotalSum(Sign(close - close[1]) * volume); 
+ 
+OBV.SetDefaultColor(GetColor(1)); 
+ 
+def trendprice = IsAscending(close, length ); 
+def trendOBV = IsDescending(OBV, length ); 
+ 
+plot true = if trendprice and trendOBV then OBV else Double.NaN; 
+ #       true.SetPaintingStrategy(PaintingStrategy.Points); 
+ #       true.SetLineWeight(4); 
+ #       true.SetDefaultColor(Color.Green); 
+ 

@@ -1,0 +1,161 @@
+APPLE INCCOM 171.61 
+AAPL 10 D 30m [NASDAQ] 
+D: IO:OOAM O: 174E4 H: 17487 
+0 58arSMA 10BarSMA 20BarSMA 508arSMA 200BarSM 
+174." 
+Draw i ngs 
+AAPL 
+L: 17318 C: 1738 R: 181 
+1.4685% current Yield 
+17319 jhf 
+:Dividend 
+_ Flag_Retain (10, 
+CLOSE) 
+WA 
+30m 
+Style 
+174." 
+Lc: 
+Studies 
+Patterns 
+ 
+
+# RSI in Laguerre Time Scaled to Price 
+
+# Mobius 
+
+# V01.08.2016 
+
+ 
+
+script Scale { 
+
+ input c = close; 
+
+ input Min = 0; 
+
+ input Max = 1; 
+
+ def hh = HighestAll(c); 
+
+ def ll = LowestAll(c); 
+
+ plot Range = (((Max - Min) * (c - ll)) /  (hh - ll)) + Min; 
+
+} 
+
+#Inputs:  
+
+input gamma = .5; 
+
+ 
+
+# Variables: 
+
+def c; 
+
+def CU1; 
+
+def CU2; 
+
+def CU; 
+
+def CD1; 
+
+def CD2; 
+
+def CD; 
+
+def L0; 
+
+def L1; 
+
+def L2; 
+
+def L3; 
+
+def RSI; 
+
+def min; 
+
+def max; 
+
+# Calculations 
+
+c = close; 
+
+L0 = (1 – gamma) * c + gamma * L0[1]; 
+
+L1 = -gamma * L0 + L0[1] + gamma * L1[1]; 
+
+L2 = -gamma * L1 + L1[1] + gamma * L2[1]; 
+
+L3 = -gamma * L2 + L2[1] + gamma * L3[1]; 
+
+if L0 >= L1 
+
+then { 
+
+    CU1 = L0 - L1; 
+
+    CD1 = 0; 
+
+} else { 
+
+    CD1 = L1 - L0; 
+
+    CU1 = 0; 
+
+} 
+
+if L1 >= L2 
+
+then { 
+
+    CU2 = CU1 + L1 - L2; 
+
+    CD2 = CD1; 
+
+} else { 
+
+    CD2 = CD1 + L2 - L1; 
+
+    CU2 = CU1; 
+
+} 
+
+if L2 >= L3 
+
+then { 
+
+    CU = CU2 + L2 - L3; 
+
+    CD = CD2; 
+
+} else { 
+
+    CU = CU2; 
+
+    CD = CD2 + L3 - L2; 
+
+} 
+
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0; 
+
+min = lowest(c); 
+
+max = highest(c); 
+
+Plot RescaledRSI = Scale(c = RSI, min = min, max = max); 
+
+     RescaledRSI.SetStyle(Curve.Firm); 
+
+     RescaledRSI.SetLineWeight(2); 
+
+     RescaledRSI.AssignValueColor(if ReScaledRSI > RescaledRSI[1]  
+
+                                  then color.cyan 
+
+                                  else color.yellow); 
+
+# End Code RSI Laguerre Scaled to Price 

@@ -1,0 +1,165 @@
+ 
+
+SFL scan for % diff of 3 EMAs 
+
+ 
+
+#Scan for % difference between three EMA's. 
+
+#Request is to "scan for stocks where percentage difference 
+
+# between 50EMA,100EMA and 200 EMA is less than 1%." 
+
+# The request has many unknowns about specifics, so a completely flexible  
+
+# approach has been coded for one to fit what you want, The 1% stated gets a large number of hits and may need refining to reduce the number of hits. 
+
+ 
+
+declare lower; 
+
+input slo_Len = 200;#hint slo_Len: The slow length 
+
+input med_Len = 100;#hint med_Len: The medium length 
+
+input fast_Len = 50;#hint fast_Len:The fast length 
+
+input pct_diff = 1;#hint pct_diff: The percent difference may be positive or negative 
+
+ 
+
+def slo_EMA = expAverage(close,slo_Len); 
+
+def med_EMA = expAverage(close,med_Len); 
+
+def fast_EMA = expAverage(close,fast_Len); 
+
+ 
+
+#======= Define scan conditions ======= 
+
+def cond_slo_med = slo_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+def cond_slo_fast = slo_EMA < (1 + (pct_diff/100)) * fast_EMA; 
+
+def cond_med_slo = med_EMA < (1 + (pct_diff/100)) * slo_EMA; 
+
+def cond_med_fast = med_EMA < (1 + (pct_diff/100)) * fast_EMA; 
+
+def cond_fast_slo = fast_EMA < (1 + (pct_diff/100)) * slo_EMA; 
+
+def cond_fast_med = fast_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+ 
+
+#======= Scan Usage ======== 
+
+# Use the above conditions in composing your single 'Plot Scan - " line. For example, 
+
+# to scan for the Fast_EMA related to the slo_MA and the med_MA, your scan statement would be 
+
+#plot  Scan =  cond_fast_slo + cond_fast_med; 
+
+# to scan for the Med_EMA related to the slo_MA only, your scan statement would be: 
+
+plot Scan = cond_slo_fast; 
+
+#end 
+
+########################################### 
+
+14:23 LongShort: StanL - I love the flexibility of the percent difference scan. I took the liberty of making it a little more specific to my needs. Others might also find it useful. This modification looks specifically for one EMA being within xx% of another EMA. Thanks, Longshort aka AlphaInvestor (or AI). 
+
+ 
+
+#Scan for % difference between three EMA's. 
+
+#Request is to "scan for stocks where percentage difference 
+
+# between 50EMA,100EMA and 200 EMA is less than 1%." 
+
+# The request has many unknowns about specifics, so a completely flexible  
+
+# approach has been coded for one to fit what you want, The 1% stated gets a large number of hits and may need refining to reduce the number of hits. 
+
+ 
+
+declare lower; 
+
+input slo_Len = 200;#hint slo_Len: The slow length 
+
+input med_Len = 100;#hint med_Len: The medium length 
+
+input fast_Len = 50;#hint fast_Len:The fast length 
+
+input pct_diff = 1.0;#hint pct_diff: The percent difference may be positive or negative 
+
+ 
+
+def slo_EMA = expAverage(close,slo_Len); 
+
+def med_EMA = expAverage(close,med_Len); 
+
+def fast_EMA = expAverage(close,fast_Len); 
+
+ 
+
+#======= Define scan conditions ======= 
+
+def cond_slo_med = slo_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+def cond_slo_fast = slo_EMA < (1 + (pct_diff/100)) * fast_EMA; 
+
+def cond_med_slo = med_EMA < (1 + (pct_diff/100)) * slo_EMA; 
+
+def cond_med_fast = med_EMA < (1 + (pct_diff/100)) * fast_EMA; 
+
+def cond_fast_slo = fast_EMA < (1 + (pct_diff/100)) * slo_EMA; 
+
+def cond_fast_med = fast_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+ 
+
+# AImod 
+
+def condWithin_slo_med = slo_EMA > (1 - (pct_diff/100)) * med_EMA and  slo_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+def condWithin_slo_fast =  slo_EMA > (1 - (pct_diff/100)) * med_EMA and  slo_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+def condWithin_med_slo = med_EMA > (1 - (pct_diff/100)) * slo_EMA and  med_EMA < (1 + (pct_diff/100)) * slo_EMA; 
+
+def condWithin_med_fast = med_EMA > (1 - (pct_diff/100)) * fast_EMA and  med_EMA < (1 + (pct_diff/100)) * fast_EMA; 
+
+def condWithin_fast_slo = fast_EMA > (1 - (pct_diff/100)) * slo_EMA and fast_EMA < (1 + (pct_diff/100)) * slo_EMA; 
+
+def condWithin_fast_med = fast_EMA > (1 - (pct_diff/100)) * med_EMA and fast_EMA < (1 + (pct_diff/100)) * med_EMA; 
+
+ 
+
+#======= Scan Usage ======== 
+
+# Use the above conditions in composing your single 'Plot Scan - " line. For example, 
+
+# to scan for the Fast_EMA related to the slo_EMA and the med_MA, your scan statement would be 
+
+#plot  Scan =  cond_fast_slo + cond_fast_med; 
+
+# to scan for the Med_EMA related to the slo_EMA only, your scan statement would be: 
+
+#plot Scan = cond_slo_med; 
+
+ 
+
+# AImod 
+
+# to scan for the slow_EMA within xx% of the fast_EMA only, your scan statement would be: 
+
+#plot Scan = condWithin_slo_fast; 
+
+# to scan for thh slow_EMA within xx% of both fast_EMA and the med_EMA, your scan statement would be: 
+
+plot Scan = condWithin_slo_fast + condWithin_slo_med; 
+
+ 
+
+# End Scan 

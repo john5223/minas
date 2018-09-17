@@ -1,0 +1,187 @@
+
+# Mr. Script:
+# PPO in MACD method of calculation 
+#
+#
+
+declare Lower; 
+Plot PPO = ((expAverage(close, 12) - expAverage(close, 26)) / expAverage(close, 26)) * 100 ; 
+Plot signal_line = expAverage(PPO, 9); 
+Plot PPO_Histogram = PPO - Signal_line; 
+PPO_Histogram.SetPaintingStrategy(paintingStrategy.HISTOGRAM); 
+
+PPO_Histogram.SetDefaultColor(GetColor(5)); 
+PPO_Histogram.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+PPO_Histogram.SetLineWeight(3); 
+PPO_Histogram.DefineColor("Positive and Up", Color.GREEN); 
+PPO_Histogram.DefineColor("Positive and Down", Color.DARK_GREEN); 
+PPO_Histogram.DefineColor("Negative and Down", Color.RED); 
+PPO_Histogram.DefineColor("Negative and Up", Color.DARK_RED); 
+PPO_Histogram.AssignValueColor(if PPO_Histogram >= 0 then if PPO_Histogram > PPO_Histogram[1] then PPO_Histogram.color("Positive and Up") else PPO_Histogram.color("Positive and Down") else if PPO_Histogram < PPO_Histogram[1] then PPO_Histogram.color("Negative and Down") else PPO_Histogram.color("Negative and Up")); 
+
+
+
+
+
+
+
+
+
+############################################################
+
+
+
+
+
+
+
+
+
+
+
+#
+#
+# Mobius©: # Percentage Price Oscillator (PPO):  
+#
+
+
+declare lower; 
+def PPO = (ExpAverage(close, 12) - ExpAverage(close, 26) / ExpAverage(close, 26)) * 100; 
+def SignalLine = ExpAverage(PPO, 9); 
+
+plot PPOline = PPO - SignalLine; 
+     PPOLine.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     PPOLine.SetLineWeight(4); 
+     PPOLine.AssignValueColor(if PPOLine > 0 and 
+                                 PPOLine > PPOLine[1] 
+                              then Color.Green 
+                              else if PPOLine > 0 and 
+                                      PPOLine < PPOLine[1] 
+                              then Color.Yellow 
+                              else if PPOLine < 0 and 
+                                      PPOLine < PPOLine[1] 
+                              then Color.Red 
+                              else Color.Blue); 
+plot zero = if isNan(close) then Double.NaN else 0; 
+     zero.SetDefaultColor(Color.Gray); 
+
+
+
+
+
+
+
+
+############################################################
+
+
+
+
+
+
+
+
+
+# Percentage Price Oscillator (PPO): with comparitor 
+# Mobius 
+# Chat Room request 03.28.2014 
+
+
+declare lower; 
+input Sym2 = "SPY"; 
+
+def c2 = close(symbol = Sym2); 
+def PPO = ((ExpAverage(close, 12) - ExpAverage(close, 26)) / ExpAverage(close, 26)) * 100; 
+def SignalLine = ExpAverage(PPO, 9); 
+def PPO2 = ((ExpAverage(c2, 12) - ExpAverage(c2, 26)) / ExpAverage(c2, 26)) * 100; 
+def SignalLine2 = ExpAverage(PPO2, 9); 
+plot PPOline = PPO - SignalLine; 
+     PPOLine.SetPaintingStrategy(PaintingStrategy.Histogram); 
+     PPOLine.SetLineWeight(4); 
+     PPOLine.AssignValueColor(if PPOLine > 0 and 
+                                 PPOLine > PPOLine[1] 
+                              then Color.Green 
+                              else if PPOLine > 0 and 
+                                      PPOLine < PPOLine[1] 
+                              then Color.Yellow 
+                              else if PPOLine < 0 and 
+                                      PPOLine < PPOLine[1] 
+                              then Color.Red 
+                              else Color.Blue); 
+plot PPOline2 = PPO2 - SignalLine2; 
+plot zero = if isNan(close) then Double.NaN else 0; 
+     zero.SetDefaultColor(Color.Gray); 
+
+
+
+
+
+
+
+
+############################################################
+
+
+
+
+## START STUDY 
+## PPO 
+## linus, 2014-02-02, v0.2 
+  
+declare lower; 
+  
+input paintBars = No; 
+input nFast = 12; 
+input nSlow = 26; 
+input nSmooth = 9; 
+input nSum = 1; 
+input type = AverageType.EXPONENTIAL; 
+input price = close; 
+  
+def MA = MovingAverage(type, price, nSlow); 
+plot Value = ((MovingAverage(type, price, nFast) - MA) / MA) * 100; 
+plot Avg = MovingAverage(type, Value, nSmooth); 
+  
+Value.AssignValueColor(if Value > 0 then Color.DARK_GREEN else Color.DARK_RED ); 
+  
+Avg.AssignValueColor(if Avg > 0 then if Avg > Avg[1] then Color.CYAN else Color.BLUE else if Avg < Avg[1] then Color.MAGENTA else Color.PINK); 
+Avg.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+rec dir = compoundValue(1, if sum(Value > Value[1] and Avg > Avg[1], nSum) then 2 else if sum(Value < Value[1] and Avg < Avg[1], nSum) then -2 else if dir[1] == 2 then -1 else if dir[1] == -2 then 1 else dir[1], 0); 
+
+plot Mid = if !isNaN(close) then 0 else Double.NaN; 
+Mid.AssignValueColor(if dir == 2 then Color.GREEN else if dir == -2 then Color.RED else if dir == 1 then Color.YELLOW else Color.DARK_ORANGE); 
+
+Mid.SetPaintingStrategy(PaintingStrategy.POINTS); 
+
+AssignPriceColor(if !paintBars then Color.CURRENT else if dir == 2 then Color.GREEN else if dir == -2 then Color.RED else if dir == 1 then Color.YELLOW else Color.DARK_ORANGE); 
+
+
+## END STUDY 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################################################
+
+
+
+
+
+
+
+
+
+

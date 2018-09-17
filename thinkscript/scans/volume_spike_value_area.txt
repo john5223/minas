@@ -1,0 +1,25 @@
+ 
+
+# Scan for Price in value area and volume spike 
+
+# Mobius 
+
+# Chat Room Request 04.05.2018 
+
+def yyyymmdd = GetYYYYMMDD(); 
+
+def day_number = DaysFromDate(First(yyyymmdd)) + GetDayOfWeek(First(yyyymmdd)); 
+
+def period = Floor(day_number / 7); 
+
+def cond = 0 < period - period[1]; 
+
+profile vol = VolumeProfile("startNewProfile" = cond, "onExpansion" = no); 
+
+vol.Show("va color" = Color.YELLOW); 
+
+def b = vol.GetHighestValueArea(); 
+
+def a = vol.GetLowestValueArea(); 
+
+plot condition = between(close, a, b) and volume > Average(volume, 21); 

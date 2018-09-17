@@ -1,0 +1,384 @@
+Draw i ngs 
+spy 4 M ID 
+266.57 
+0:267.26 H:267.89 
+L: 265.35 C: 266.57 
+style 
+R: 2.54 
+WA 
+Studies 
+Patterns 
+WA 
+WoodiesCCl(S, 1430.0, 100.0, no) 24.8141 
+60.24 Normal 
+LinearRegrReversaI (14) 
+-83.9359 
+# 
+
+# TD Ameritrade IP Company, Inc. (c) 2007-2018 
+
+# 
+
+ 
+
+declare lower; 
+
+input shortLength = 6; 
+
+input longLength = 14; 
+
+input lowerSideWinderLimit = 30.0; 
+
+input upperSideWinderLimit = 100.0; 
+
+input hideSideWinder = No; 
+
+ 
+
+def LinearReg = Inertia(close, 25); 
+
+def expAvg = ExpAverage(close, 34); 
+
+def diff = close - expAvg; 
+
+def yyyyMmDd = getYyyyMmDd(); 
+
+def session_duration_minutes = (regularTradingEnd(yyyyMmDd) - regularTradingStart(yyyyMmDd)) / AggregationPeriod.MIN; 
+
+def interval_size_raw; 
+
+def aggregation = getAggregationPeriod(); 
+
+if (aggregation == AggregationPeriod.DAY) { 
+
+    interval_size_raw = session_duration_minutes * 60; 
+
+} else if (aggregation == AggregationPeriod.TWO_DAYS) { 
+
+    interval_size_raw = session_duration_minutes * 60 * 2; 
+
+} else if (aggregation == AggregationPeriod.THREE_DAYS) { 
+
+    interval_size_raw = session_duration_minutes * 60 * 3; 
+
+} else if (aggregation == AggregationPeriod.FOUR_DAYS) { 
+
+    interval_size_raw = session_duration_minutes * 60 * 4; 
+
+} else if (aggregation == AggregationPeriod.WEEK) { 
+
+    interval_size_raw = session_duration_minutes * 60 * 5; 
+
+} else if (aggregation == AggregationPeriod.MONTH or aggregation == AggregationPeriod.OPT_EXP) { 
+
+    interval_size_raw = session_duration_minutes * 60 * 22; 
+
+} else if (aggregation >= AggregationPeriod.MIN) { 
+
+    interval_size_raw = aggregation / AggregationPeriod.MIN; 
+
+} else { 
+
+    interval_size_raw = aggregation; 
+
+} 
+
+ 
+
+def ema_angle_factor = Sqrt(interval_size_raw / 180); 
+
+def avg_ema = (expAvg[2] + expAvg[1]) / 2; 
+
+def avg_lsma = (LinearReg[2] + LinearReg[1]) / 2; 
+
+def lsma_slope = (LinearReg - avg_lsma) / tickSize(); 
+
+def lsma_angle = ATan(lsma_slope / ema_angle_factor) / Double.Pi * 180; 
+
+def ema_slope = (expAvg - avg_ema) / tickSize(); 
+
+def ema_angle = ATan(ema_slope / ema_angle_factor) / Double.Pi * 180; 
+
+def sw = lsma_angle + ema_angle; 
+
+def swabs = AbsValue(sw); 
+
+ 
+
+plot CCI = cci(length = longLength); 
+
+plot TCCI = cci(length = shortLength); 
+
+plot "CCI Hist" = CCI; 
+
+plot "CZ +100" = if IsNaN(close) then Double.NaN else 100; 
+
+plot "CZ -100" = if IsNaN(close) then Double.NaN else -100; 
+
+plot "SW +200" = if IsNaN(close) then Double.NaN else 200; 
+
+plot "SW -200" = if IsNaN(close) then Double.NaN else -200; 
+
+plot ZeroLine = if IsNaN(close) then Double.NaN else 0; 
+
+ 
+
+CCI.SetDefaultColor(GetColor(0)); 
+
+CCI.SetLineWeight(3); 
+
+ 
+
+TCCI.SetDefaultColor(Color.YELLOW); 
+
+ 
+
+def colorState; 
+
+if Crosses(0, CCI, CrossingDirection.Below) { 
+
+colorState = 1; 
+
+} else if Crosses(0, CCI, CrossingDirection.Above) { 
+
+colorState = -1; 
+
+} else if (cci[1] > 0) { 
+
+colorState = ColorState[1] + 1; 
+
+} else if (cci[1] < 0) { 
+
+colorState = ColorState[1] - 1; 
+
+} else { 
+
+colorState = 0; 
+
+} 
+
+def histColor = {default "Neutral", "Negative", "Positive", "Last neutral"}; 
+
+if AbsValue(colorState) == 1 { 
+
+if  colorState[1] == 0 or histColor[1] == histColor."Positive" or histColor[1] == histColor."Negative" { 
+
+histColor = histColor."Neutral"; 
+
+} else { 
+
+histColor = if colorState > 0 then histColor."Positive" else histColor."Negative"; 
+
+} 
+
+} else if AbsValue(colorState) > 1 and AbsValue(colorState) < 5 { 
+
+histColor = histColor[1]; 
+
+} else if AbsValue(colorState) == 5 { 
+
+if histColor[1] == histColor."Neutral" { 
+
+histColor = histColor."Last neutral"; 
+
+} else { 
+
+histColor = histColor[1]; 
+
+} 
+
+} else if AbsValue(colorState) > 5 { 
+
+histColor = if colorState > 0 then histColor."Positive" else histColor."Negative"; 
+
+} else { 
+
+histColor = histColor."Neutral"; 
+
+} 
+
+ 
+
+"CCI Hist".DefineColor("Neutral", Color.GRAY); 
+
+"CCI Hist".DefineColor("Last Neutral", Color.YELLOW); 
+
+"CCI Hist".DefineColor("Positive", Color.GREEN); 
+
+"CCI Hist".DefineColor("Negative", Color.RED); 
+
+"CCI Hist".SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+
+"CCI Hist".SetLineWeight(3); 
+
+"CCI Hist".HideTitle(); 
+
+"CCI Hist".AssignValueColor( 
+
+    if histColor == HistColor."Neutral" then "CCI Hist".color("Neutral") 
+
+    else if histColor == HistColor."Negative" then "CCI Hist".color("Negative") 
+
+    else if histColor == HistColor."Positive" then "CCI Hist".color("Positive") 
+
+    else "CCI Hist".color("Last Neutral")); 
+
+ 
+
+"CZ +100".DefineColor("Dark Red", Color.DARK_RED); 
+
+"CZ +100".DefineColor("Light Red", Color.LIGHT_RED); 
+
+"CZ +100".DefineColor("Dark Orange", Color.DARK_ORANGE); 
+
+"CZ +100".DefineColor("Light Orange", Color.LIGHT_ORANGE); 
+
+"CZ +100".DefineColor("Yellow", Color.YELLOW); 
+
+"CZ +100".DefineColor("Lime", Color.LIME); 
+
+"CZ +100".DefineColor("Light Green", Color.LIGHT_GREEN); 
+
+"CZ +100".DefineColor("Dark Green", Color.DARK_GREEN); 
+
+"CZ +100".DefineColor("Cyan", Color.CYAN); 
+
+"CZ +100".SetDefaultColor(GetColor(1)); 
+
+"CZ +100".SetLineWeight(2); 
+
+"CZ +100".SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+"CZ +100".HideTitle(); 
+
+"CZ +100".HideBubble(); 
+
+"CZ +100".AssignValueColor( 
+
+    if (AbsValue(diff) < tickSize()) then 
+
+      "CZ +100".color("Yellow") 
+
+    else if (tickSize() < diff && diff <= 2 * tickSize()) then 
+
+      "CZ +100".color("Lime") 
+
+    else if (2 * tickSize() < diff && diff <= 3 * tickSize()) then 
+
+      "CZ +100".color("Light Green") 
+
+    else if (3 * tickSize() < diff && diff <= 4 * tickSize()) then 
+
+      "CZ +100".color("Dark Green") 
+
+    else if (4 * tickSize() < diff) then 
+
+      "CZ +100".color("Cyan") 
+
+    else if (-tickSize() > diff && diff >= -2 * tickSize()) then 
+
+      "CZ +100".color("Light Orange") 
+
+    else if (-2 * tickSize() > diff && diff >= -3 * tickSize()) then 
+
+      "CZ +100".color("Dark Orange") 
+
+    else if (-3 * tickSize() > diff && diff >= -4 * tickSize()) then 
+
+      "CZ +100".color("Light Red") 
+
+    else 
+
+      "CZ +100".color("Dark Red")); 
+
+ 
+
+"CZ -100".AssignValueColor("CZ +100".TakeValueColor()); 
+
+"CZ -100".SetDefaultColor(GetColor(1)); 
+
+"CZ -100".SetLineWeight(2); 
+
+"CZ -100".SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+"CZ -100".HideTitle(); 
+
+"CZ -100".HideBubble(); 
+
+ 
+
+"SW +200".SetDefaultColor(GetColor(1)); 
+
+"SW +200".SetLineWeight(2); 
+
+"SW +200".SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+"SW +200".HideTitle(); 
+
+"SW +200".HideBubble(); 
+
+"SW +200".DefineColor("Trending", Color.GREEN); 
+
+"SW +200".DefineColor("Normal", Color.YELLOW); 
+
+"SW +200".DefineColor("Flat", Color.RED); 
+
+"SW +200".AssignValueColor( 
+
+    if swabs >= upperSideWinderLimit then "SW +200".color("Trending") 
+
+    else if swabs >  lowerSideWinderLimit then "SW +200".color("Normal") 
+
+    else "SW +200".color("Flat")); 
+
+ 
+
+"SW -200".AssignValueColor("SW +200".TakeValueColor()); 
+
+"SW -200".SetDefaultColor(GetColor(1)); 
+
+"SW -200".SetLineWeight(2); 
+
+"SW -200".SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+"SW -200".HideTitle(); 
+
+"SW -200".HideBubble(); 
+
+ 
+
+ZeroLine.DefineColor("Above LSMA", Color.GREEN); 
+
+ZeroLine.DefineColor("Equal to LSMA", Color.WHITE); 
+
+ZeroLine.DefineColor("Below LSMA", Color.RED); 
+
+ZeroLine.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+ZeroLine.SetLineWeight(2); 
+
+ZeroLine.HideTitle(); 
+
+ZeroLine.AssignValueColor( 
+
+    if close < LinearReg then ZeroLine.color("Below LSMA") 
+
+    else if close > LinearReg then ZeroLine.color("Above LSMA") 
+
+    else ZeroLine.color("Equal to LSMA")); 
+
+ 
+
+AddLabel(!hideSideWinder and !isNaN(sw), round(sw, 2) + 
+
+  if swabs >= upperSideWinderLimit then 
+
+    " Trending" 
+
+  else if swabs > lowerSideWinderLimit then 
+
+    " Normal" 
+
+  else 
+
+    " Flat", "SW -200".takeValueColor()); 

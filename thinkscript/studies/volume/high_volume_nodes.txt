@@ -1,0 +1,50 @@
+# High Volume Nodes h
+# Mobius 
+# V01.02.2018 
+# Looks for the highest volume candle in "n" periods and plots the candle range.  
+# As Volatility increases this study has two values. Plotting a current high volume node as a channel which price will be drawn back to and test since a very high volume node will move price quickly, and price will retest that area. And, with the legacy plots a way to quickly see if larger traders, those that can generate a high volume node, are accumulating or distributing inventory.  
+# JQ..added study label 4.29.2018 
+# JQ.. changed variable "n" to nBarLookback 4.29.2018 
+ 
+input displayStudyName = Yes; 
+input nBarLookback = 20; #hint nBarLookback: default 20 
+input LegacyPoints = yes; 
+ 
+def h = high; 
+def l = low; 
+def c = close; 
+def v = volume; 
+def x = barNumber(); 
+def HighVolume = if ((v - Lowest(v, nBarLookback)) / (Highest(v, nBarLookback) - Lowest(v, nBarLookback))) >= 1 
+                 then x 
+                 else Double.NaN; 
+
+def hh = if !IsNaN(HighVolume) 
+         then h 
+         else hh[1]; 
+def ll = if !IsNaN(HighVolume) 
+         then l 
+         else ll[1]; 
+plot hhLine = if x >= HighestAll(HighVolume) 
+              then HighestAll(if IsNaN(c) 
+                              then hh 
+                              else Double.NaN) 
+              else Double.NaN; 
+hhLine.SetDefaultColor(Color.GRAY); 
+plot llLine = if x >= HighestAll(HighVolume) 
+              then HighestAll(if IsNaN(c) 
+                              then ll 
+                              else Double.NaN) 
+              else Double.NaN; 
+llLine.SetDefaultColor(Color.GRAY); 
+plot legacy = if LegacyPoints and !IsNaN(HighVolume) 
+              then l - (2*TickSize()) 
+              else Double.NaN; 
+legacy.SetStyle(Curve.POINTS); 
+legacy.SetLineWeight(3); 
+legacy.SetDefaultColor(Color.Gray); 
+AddCloud(llLine, hhLine, Color.GRAY, Color.GRAY); 
+
+addlabel (displayStudyName, "High Volume Nodes (" + nBarLookback + " Bar Lookback)", color.white);  
+
+# End Code High Volume Nodes 

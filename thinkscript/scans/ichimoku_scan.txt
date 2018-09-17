@@ -1,0 +1,74 @@
+declare lower;
+
+input tenkan_period = 9;
+input kijun_period = 26;
+input lookBack = 5;
+input breakOutBars = 3;
+
+def Tenkan = (Highest(high, tenkan_period) + Lowest(low, tenkan_period)) / 2;
+def Kijun = (Highest(high, kijun_period) + Lowest(low, kijun_period)) / 2;
+def "Span A" = (Tenkan[kijun_period] + Kijun[kijun_period]) / 2;
+def "Span B" = (Highest(high[kijun_period], 2 * kijun_period) + Lowest(low[kijun_period], 2 * kijun_period)) / 2;
+def Chikou = close[-kijun_period];
+
+
+def bullishCloud = "Span A" >= "Span B";
+def bearishCloud = "Span B" > "Span A";
+
+def closeCloudDiff = close - "Span B";
+def closeCloudDiffLong = if bullishCloud then close - "Span A" else close - "Span B";
+def closeCloudDiffShort = if bearishCloud then close - "Span A" else close - "Span B";
+
+def slowDiff = MovingAverage(AverageType.SIMPLE, closeCloudDiff, lookBack);
+
+def underCloud = highest(slowDiff[1], lookBack) < 0;
+def overCloud = lowest(slowDiff[1], lookBack) > 0;
+
+def cloudBreakOutLong = lowest(closeCloudDiffLong, breakOutBars) > 0;
+def cloudBreakOutShort = highest(closeCloudDiffShort, breakOutBars) < 0;
+
+def laggingLineOverCloud = (Chikou > "Span A" and bullishCloud) or (Chikou > "Span B" and bearishCloud);
+def laggingLineUnderCloud = (Chikou < "Span A" and bearishCloud) or (Chikou < "Span B" and bullishCloud);
+
+# this signal finds the long side break outs of price action above the cloud
+def signalBreakAboveCloud = (close > "Span A" and bullishCloud and underCloud[breakOutBars] and cloudBreakOutLong and cloudBreakOutLong[1] == 0) or (close > "Span B" and bearishCloud and underCloud[breakOutBars] and cloudBreakOutLong and cloudBreakOutLong[1] == 0);
+
+# this signal finds the short side break downs of price action below the cloud
+def signalBreakBelowCloud = (close < "Span A" and bearishCloud and overCloud[breakOutBars] and cloudBreakOutShort and cloudBreakOutShort[1] == 0) or (close < "Span B" and bullishCloud and overCloud[breakOutBars] and cloudBreakOutShort and cloudBreakOutShort[1] == 0);
+
+# this signal tells if the Lagging line (Chikou) is above the cloud
+def signalBullishConfirmation = laggingLineOverCloud[kijun_period];
+
+# this signal tells if the Lagging line (Chikou) is below the cloud
+def signalBearishConfirmation = laggingLineUnderCloud[kijun_period];
+
+# this signal finds the bullish crossovers of the turning line back above the standard line
+def trendContinuationLong = bullishCloud and close > "Span B" and (Tenkan > Kijun and Tenkan[1] < Kijun[1]);
+
+# this signal finds the bearish crossover of the turning line back below the standard line
+def trendContinuationShort = bearishCloud and close < "Span B" and (Tenkan < Kijun and Tenkan[1] > Kijun[1]);
+
+# use this scan plot to find bullish break out signals without confirmation
+#plot scan = signalBreakAboveCloud;
+
+# use this scan plot to find bullish break out signals with confirmation
+#plot scan = signalBreakAboveCloud and signalBullishConfirmation;
+
+# use this scan plot to find bearish break down signals without confirmation
+#plot scan = signalBreakBelowCloud;
+
+#use this scan plot to find bearish break down signals with confirmation
+#plot scan = signalBreakBelowCloud and signalBearishConfirmation;
+
+# use this scan plot to find bullish trend continuation signals without confirmation
+#plot scan = trendContinuationLong;
+
+# use this scan plot to find bullish trend continuation signals with confirmation
+#plot scan = trendContinuationLong and signalBullishConfirmation;
+
+# use this scan plot to find bearish trend continuation signals without confirmation
+#plot scan = trendContinuationShort;
+
+# use this scan plot to find bearish trend continuation signals with confirmation
+plot scan = trendContinuationShort and signalBearishConfirmation;
+

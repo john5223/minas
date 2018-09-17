@@ -1,0 +1,89 @@
+ 
+
+ 
+
+# linus:  
+
+## START STUDY 
+
+## SuperTrend2 
+
+## linus, 2014-07-11, v0.1 
+
+ 
+
+#hint: Alternative SuperTrend algorithm. 
+
+ 
+
+input price = hl2; 
+
+input period = 13; 
+
+input atrMult = 3.00; 
+
+input atrLength = 10; 
+
+input atrType = AverageType.SIMPLE; 
+
+ 
+
+def ATR = MovingAverage(atrType, TrueRange(high,close,low), atrLength); 
+
+def HiPr = price + atrMult * ATR; 
+
+def LoPr = price - atrMult * ATR; 
+
+ 
+
+def rTrend = compoundValue(1, if close crosses above Lowest(HiPr, period) then 1 else if close crosses below Highest(LoPr, period) then -1 else rTrend[1], 0); 
+
+ 
+
+def rLoPr = compoundValue(1, if rTrend crosses 0 then LoPr else if LoPr > rLoPr[1] then LoPr else rLoPr[1], LoPr); 
+
+ 
+
+def rHiPr = compoundValue(1, if rTrend crosses 0 then HiPr else if HiPr < rHiPr[1] then HiPr else rHiPr[1], HiPr); 
+
+ 
+
+plot ST = if rTrend crosses 0 or rTrend == 0 then Double.NaN else if rTrend > 0 then rLoPr else rHiPr; 
+
+ 
+
+ST.DefineColor("Up", Color.CYAN); 
+
+ST.DefineColor("Dn", Color.MAGENTA); 
+
+ST.AssignValueColor(if rTrend > 0 then ST.Color("Up") else ST.Color("Dn")); 
+
+ST.HideBubble(); 
+
+ 
+
+plot Up = if rTrend crosses above 0 then rLoPr else Double.NaN; 
+
+Up.SetDefaultColor(ST.Color("Up")); 
+
+Up.SetPaintingStrategy(PaintingStrategy.ARROW_UP); 
+
+Up.SetLineWeight(2); 
+
+Up.HideBubble(); 
+
+ 
+
+plot Dn = if rTrend crosses below 0 then rHiPr else Double.NaN; 
+
+Dn.SetDefaultColor(ST.Color("Dn")); 
+
+Dn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); 
+
+Dn.SetLineWeight(2); 
+
+Dn.HideBubble(); 
+
+ 
+
+## END STUDY 

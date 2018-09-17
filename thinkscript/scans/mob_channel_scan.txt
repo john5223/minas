@@ -1,0 +1,17 @@
+ 
+#Mobius  channel scan 
+# LRC Variable Scan 
+input price = hl2; 
+input n = 252; 
+input widthOfChannel = 69; 
+
+def MidLine = InertiaAll(price, n); 
+def dist = HighestAll(AbsValue(MidLine - price)) * (widthOfChannel / 100.0); 
+
+# Scan only allows one plot. Set plot to Upper or Lower and def to the other 
+def "Upper Band Cross"  = close crosses MidLine + dist; 
+plot "Lower Band Cross" = close crosses MidLine - dist; 
+
+
+
+ 

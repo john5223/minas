@@ -1,0 +1,75 @@
+# Adaptation of Ichimoku Strategy 
+
+# Mobius 
+
+# Revised Tenkan and Kijun 
+
+# V01.12.2013 
+
+ 
+
+input nA = 8; 
+
+input nB = 21; 
+
+ 
+
+#math 
+
+def Tenkan = (Highest(high, nA) + Lowest(low, nA)) / 2; 
+
+def Kijun = (Highest(high, nB) + Lowest(low, nB)) / 2; 
+
+def "Span A" = (Tenkan[nA] + Kijun[nA]) / 2; 
+
+def "Span B" = (Highest(high[nA], nB) + Lowest(low[nA], nB)) / 2; 
+
+ 
+
+plot Chikou = Inertia(close[-nA], nB); 
+
+ 
+
+# Color Config 
+
+#"Span A".SetDefaultColor(Color.PLUM); 
+
+#"Span B".SetDefaultColor(Color.YELLOW); 
+
+        Chikou.SetDefaultColor(Color.WHITE); 
+
+DefineGlobalColor("Bullish", Color.YELLOW); 
+
+DefineGlobalColor("Bearish", Color.RED); 
+
+ 
+
+#AddCloud("Span A", "Span B", GlobalColor("Bullish"), GlobalColor("Bearish")); 
+
+ 
+
+##Arrows on Chikou Crossover 
+
+# changed from crosses above to > 
+
+plot ArrowUp = Chikou crosses above Max("Span A", "Span B"); 
+
+        ArrowUp.SetPaintingStrategy(PaintingStrategy.BOOLE AN_ARROW_UP); 
+
+        ArrowUp.SetLineWeight(1); 
+
+        ArrowUp.SetDefaultColor(Color.WHITE); 
+
+# changed from crosses below to < 
+
+plot ArrowDn = Chikou crosses below Min("Span A", "Span B"); 
+
+        ArrowDn.SetPaintingStrategy(PaintingStrategy.BOOLE AN_ARROW_DOWN); 
+
+        ArrowDn.SetLineWeight(1); 
+
+        ArrowDn.SetDefaultColor(Color.YELLOW);  
+
+ 
+
+From <http://ninjatrader.com/support/forum/showthread.php?t=69437>  

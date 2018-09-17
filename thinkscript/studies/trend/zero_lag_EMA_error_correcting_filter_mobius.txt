@@ -1,0 +1,50 @@
+Uses an error term, price - EMA[1], amplifies the error and adjustes  the EMA to an EC (Error Corrected) EMA. 
+http://tos.mx/ET6hvs 
+
+From <https://mytrade.com/profile/Mobius/statuses/5726158>  
+# Zero Lag EMA (Using an Error Correcting Filter) 
+# Mobius 
+# Ported to TOS 08.31.2016 from Article by John Ehlers 
+# Using an EMA error term, the current price – EMA[1], the amplitude of the error term is altered by multiplying the error by a gain term. The new filter is an EC or Error Corrected EMA. 
+
+# Inputs: 
+input Length = 20; 
+input GainLimit = 50; 
+input LabelsOn = yes; 
+
+# Vars: 
+def alpha; 
+def BestGain; 
+def EC1; 
+def Gain; 
+def EC; 
+def Error; 
+def LeastError; 
+def EMA; 
+
+alpha = 2 / (Length + 1); 
+EMA = alpha * close + (1 - alpha) * EMA[1]; 
+plot EMAdata = EMA; 
+
+EMAdata.SetDefaultColor(Color.Yellow); 
+Gain = fold g = -GainLimit to GainLimit 
+       do getValue(g / 10, g); 
+EC1 = fold V = -GainLimit to GainLimit 
+      do alpha * (EMA + (fold i = -GainLimit to GainLimit 
+                         do i / 10) * (Close - EC1[1])) + (1 - alpha) * EC1[1]; 
+Error = AbsValue(Close - EC1); 
+If Error < 1000000 
+Then { 
+LeastError = Error; 
+BestGain = Gain; 
+} else { 
+LeastError = LeastError[1]; 
+BestGain = 0; 
+} 
+EC = alpha * (EMA + BestGain * (Close - EC1)) + (1 - alpha) * EC1; 
+Plot ECdata = EC; 
+ECdata.SetDefaultColor(Color.Cyan); 
+AddLabel(LabelsOn, "Standard EMA", color.yellow); 
+AddLabel(LabelsOn, "Error Corrected EMA", color.cyan); 
+
+#End Code Error Corrected EMA 
