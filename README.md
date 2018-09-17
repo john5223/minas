@@ -110,6 +110,18 @@ Links:
   - Mobius 
       - Squarespace: http://rr-corner.squarespace.com/mobius-cave/2012/9/27/mobius-wave-squeeze.html
 
+  Github:
+      - https://github.com/themechanicalbear/ThinkScript
+      - https://github.com/buckyinsfo/thinkscript
+      - https://github.com/anupambagchi/denken
+      - https://github.com/ranrotx/thinkscript
+      - https://github.com/sheldonth/thinkscripts
+      - https://github.com/Gerst20051/ThinkScripts
+      - https://github.com/philipbred/tos-thinkscript
+      - https://github.com/drewgriffith15/ThinkOrSwim
+      - https://github.com/Nicholas-Picini/Thinkscript-Strategies
+
+
 
 # Hall of Fame
 
