@@ -1,0 +1,45 @@
+# Fractal Pivot Scan
+# Mobius
+def upRightSide = fold i1 = 1 to 15 + 1 
+                  with count1 
+                  while count1 != 5 and count1 != -1 
+                  do if GetValue(high, -i1) > high 
+                     or 
+                        (GetValue(high, -i1) == high and count1 == 0) 
+                     then -1
+                     else if GetValue(high, -i1) < high 
+                          then count1 + 1 
+                          else count1;
+def upLeftSide = fold i2 = 1 to 15 + 1 
+                 with count2 
+                 while count2 != 5 and count2 != -1 
+                 do if GetValue(high, i2) > high 
+                    or 
+                      (GetValue(high, i2) == high and count2 >= 1) 
+                    then -1
+                    else if GetValue(high, i2) < high 
+                         then count2 + 1 
+                         else count2;
+def downRightSide = fold i3 = 1 to 15 + 1 
+                    with count3 
+                    while count3 != 5 and count3 != -1 
+                    do if GetValue(low, -i3) < low 
+                       or 
+                         (GetValue(low, -i3) == low and count3 == 0)
+                       then -1
+                       else if GetValue(low, -i3) > low 
+                            then count3 + 1 
+                            else count3;
+def downLeftSide = fold i4 = 1 to 15 + 1 
+                   with count4 
+                   while count4 != 5 and count4 != -1 
+                   do if GetValue(low, i4) < low 
+                      or 
+                        (GetValue(low, i4) == low and count4 >= 1) 
+                      then -1
+                      else if GetValue(low, i4) > low 
+                           then count4 + 1 
+                           else count4;
+# Comment out the Plot you DON'T wand
+plot UpFractal = if upRightSide == 5 and upLeftSide == 5 then 1 else Double.NaN;
+#plot DownFractal = if downRightSide == 5 and downLeftSide == 5 then 1 else Double.NaN;

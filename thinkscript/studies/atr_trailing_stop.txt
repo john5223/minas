@@ -1,0 +1,434 @@
+#ATRTrailingStop_ATR_Method_Only_MTF Script (referred to as ATR hereafter)
+#Volume Profile option will display a new volume profile at each change of state in the ATRTrailingStop indicator
+input showvolumeprofile  = yes;
+input stopmethod         = {default atr, custom};
+input usehigheraggperiod = {default "Current", "Higher"};
+input agg                = AggregationPeriod.TWO_MIN;
+input atraveragetype     = averageType.WILDERS;
+input outputformat       = {default Rounded, "Not Rounded"};#Hint outputformat: 'Not Rounded' is used for notes, bonds (eg: 109'110), forex, etc type format. 
+input usealerts  = no;
+input target1    = 1.5;#Hint target1: number times entry - stop
+input target2    = 3.0;#Hint target2: number times entry - stop
+input trailType  = {default modified, unmodified};
+input ATRPeriod  = 5;
+input ATRFactor  = 1.618;
+input firstTrade = {default long, short};
+def   c;
+def   l;
+def   h;
+def   o;
+
+def error = usehigheraggperiod == usehigheraggperiod."Higher" and GetAggregationPeriod() > agg;
+switch (usehigheraggperiod) {
+case Current:
+    c          = close;
+    l          = low;
+    h          = high;
+    o          = open;
+
+case Higher:
+    if error {
+        o          = Double.NaN;
+        h          = Double.NaN;
+        l          = Double.NaN;
+        c          = Double.NaN;
+
+    } else {
+        c          = close(period = agg);
+        l          = low(period = agg);
+        h          = high(period = agg);
+        o          = open(period = agg);
+
+    }
+}
+
+def HiLo = Min(h - l, 1.5 * Average(h - l, ATRPeriod));
+def HRef = if l <= h[1]
+    then h - c[1]
+    else (h - c[1]) - 0.5 * (l - h[1]);
+def LRef = if h >= l[1]
+    then c[1] - l
+    else (c[1] - l) - 0.5 * (l[1] - h);
+def ATRMod = ExpAverage(Max(HiLo, Max(HRef, LRef)), 2 * ATRPeriod - 1);
+
+def trueRange;
+switch (trailType) {
+case modified:
+    trueRange = Max(HiLo, Max(HRef, LRef));
+case unmodified:
+    trueRange = TrueRange(h, c, l);
+}
+def loss = ATRFactor * MovingAverage(atraverageType, trueRange, ATRPeriod);
+
+def state = {default init, long, short};
+def trail;
+switch (state[1]) {
+case init:
+    if (!IsNaN(loss)) {
+        switch (firstTrade) {
+        case long:
+            state = state.long;
+            trail =  c - loss;
+        case short:
+            state = state.short;
+            trail = c + loss;
+        }
+    } else {
+        state = state.init;
+        trail = Double.NaN;
+    }
+case long:
+    if (c > trail[1]) {
+        state = state.long;
+        trail = Max(trail[1], c - loss);
+    } else {
+        state = state.short;
+        trail = c + loss;
+    }
+case short:
+    if (c < trail[1]) {
+        state = state.short;
+        trail = Min(trail[1], c + loss);
+    } else {
+        state = state.long;
+        trail =  c - loss;
+    }
+}
+
+
+plot TrailingStop = trail;
+TrailingStop.SetPaintingStrategy(PaintingStrategy.LINE_VS_TRIANGLES);
+TrailingStop.DefineColor("Buy", GetColor(0));
+TrailingStop.DefineColor("Sell", GetColor(1));
+TrailingStop.AssignValueColor(if state == state.long
+then TrailingStop.Color("Sell")
+else TrailingStop.Color("Buy"));
+TrailingStop.HideBubble();
+
+#Horizontals are used to determine color of price bars
+input showhorizontals = no;
+def HAclose         = (o + h + l + c) /4;
+def HAopen          = CompoundValue( 1, ( HAopen[1] + HAclose[1] ) / 2, HAclose );
+def HAhigh          = Max( h, Max( HAopen, HAclose ) );
+def HAlow           = Min( l, Min( HAopen, HAclose ) );
+def hamid           = (haHigh + haLow) / 2;
+def  horizontall    = if state != state[1] and state == state.long
+                      then hamid
+                      else horizontall[1];
+plot horizontallow  = horizontall;
+horizontallow.SetPaintingStrategy(PaintingStrategy.DASHES);
+horizontallow.SetDefaultColor(Color.GREEN);
+horizontallow.SetHiding(!showhorizontals);
+def  horizontalh    = if state != state[1] and state == state.short
+                      then hamid
+                      else horizontalh[1];
+plot horizontalhigh = horizontalh;
+horizontalhigh.SetPaintingStrategy(PaintingStrategy.DASHES);
+horizontalhigh.SetDefaultColor(Color.RED);
+horizontalhigh.SetHiding(!showhorizontals);
+
+#Price Bar Coloring - Green=Up; Red=Down; White=Warning, no direction determined by horizontals. Look for green/red bars above/below entry for better signal. White bars pulling back to trailing stop followed by a colored bar(s) in direction of ATR may be a good entry
+input pricecolor = yes;
+AssignPriceColor(if pricecolor 
+                 then if state == state.long and c > horizontall and l > trail
+                      then Color.GREEN
+                      else if state == state.short and c < horizontalh and h < trail
+                      then Color.RED
+                      else Color.WHITE
+                 else Color.CURRENT);
+
+#Counter - Displays a bubble at last bar printed of the number of bars at a particular color
+def greencount = if state == state.long and c > horizontall
+                 then (greencount[1] + 1) 
+                 else 0;
+def redcount   = if state == state.short and c < horizontalh
+                 then (redcount[1] + 1) 
+                 else 0;
+def whitecount = if greencount == 0 and redcount == 0
+                 then (whitecount[1] + 1) 
+                 else 0;
+input showcolor_counting_bubble = yes;
+AddChartBubble(showcolor_counting_bubble and IsNaN(close[-1]) and !IsNaN(close) and greencount > 0,
+               low, greencount, Color.GREEN , no);
+AddChartBubble(showcolor_counting_bubble and IsNaN(close[-1]) and !IsNaN(close) and redcount > 0, 
+               low, redcount  , Color.RED   , no);
+AddChartBubble(showcolor_counting_bubble and IsNaN(close[-1]) and !IsNaN(close) and greencount == 0 and redcount == 0,
+               low, whitecount, Color.WHITE, no);
+
+def BuySignal   = if Crosses(state == state.long,  0, CrossingDirection.ABOVE) 
+                  then 1 
+                  else Double.NaN;
+def SellSignal  = if Crosses(state == state.short, 0, CrossingDirection.ABOVE) 
+                  then 1
+                  else Double.NaN;
+
+def condup = !IsNaN(BuySignal);
+def conddn = !IsNaN(SellSignal);
+
+def condu  = if !IsNaN(c) and condup == 1
+             then BarNumber()
+             else condu[1];
+def condd  = if !IsNaN(c) and conddn == 1
+             then BarNumber()
+             else condd[1];
+#Entry plot is based upon the high/low of the signal bar or the prior bar (use input entrybars as "0" for just the signal bar or "1" for high/low of the signal or next bar)after the buysignal or sellsignal was met. The entry bubble will change from white to green/red when the high/low breaks the entry value. You will need to change the code if you want to use another basis. 
+plot entry = if BarNumber() >= Max(HighestAll(condu), HighestAll(condd))
+             then if condu > condd 
+             then HighestAll(if BarNumber() == HighestAll(condu)
+                             then Max(h, h[1])
+                             else Double.NaN)
+             else HighestAll(if BarNumber() == HighestAll(condd)
+                             then Min(l, l[1])
+                             else Double.NaN)
+             else Double.NaN;
+#Initial Stop
+#Choose the initial stop method, either the change of the ATR or a custom method of your choosing. The custom initial stop is based upon a lookback from when the buysignal or sellsignal is met. Since these buysignals or sellsignals can change based on the 2nd condition while the atrtrailingStop method does not, then custom initial stop may provide better targets. The lookback length can be changed at the input screen.
+input stoplookback = 3;
+def atrinitialstop = if state != state[1]
+                     then trail
+                     else atrinitialstop[1];
+def atrintstopext  = if IsNaN(c) then atrintstopext[1] else atrinitialstop;
+
+plot stop  = if IsNaN(entry)
+             then Double.NaN
+             else if stopmethod == stopmethod.atr
+             then if BarNumber() >= Max(HighestAll(condu), HighestAll(condd))
+                  then atrintstopext  
+                  else Double.NaN         
+             else if BarNumber() >= Max(HighestAll(condu), HighestAll(condd))
+             then if condu > condd 
+             then HighestAll(if BarNumber() == HighestAll(condu)
+                             then Lowest(l, stoplookback) 
+                              else Double.NaN)
+             else HighestAll(if BarNumber() == HighestAll(condd)
+                             then Highest(h, stoplookback) 
+                              else Double.NaN)
+             else Double.NaN;
+
+#Trailing Stop uses the current position of the ATR's "trail" variable
+plot atrstop = if IsNaN(entry)
+               then Double.NaN
+               else if BarNumber() < Max(HighestAll(condu), HighestAll(condd))
+               then Double.NaN 
+               else HighestAll(if IsNaN(c[-1]) and !IsNaN(c) 
+                               then trail
+                               else Double.NaN);
+
+#Alerts - The alerts can be turned on/off at the input screen.
+Alert(usealerts and c crosses entry, "Entry " + c, Alert.BAR, Sound.Chimes);
+
+
+#Targets - These are based upon the difference between the entry price and the initial stop of your choice, multiplied by then variables that you input below. The targets will be displayed in lines and bubbles, which will change from a light color to green when the target is met.
+plot t1    = if IsNaN(entry) then Double.NaN
+             else if condu > condd
+             then (entry + (entry - stop) * target1) 
+             else (entry - (stop - entry) * target1);
+plot t2    = if IsNaN(entry) then Double.NaN
+             else if condu > condd
+             then (entry + (entry - stop) * target2) 
+             else (entry - (stop - entry) * target2);
+
+#Plot Look and Feel
+
+entry.SetDefaultColor(Color.WHITE);
+stop.SetDefaultColor(Color.RED);
+t1.SetDefaultColor(Color.WHITE);
+t2.SetDefaultColor(Color.WHITE);
+entry.HideBubble();
+stop.HideBubble();
+t1.HideBubble();
+t2.HideBubble();
+atrstop.HideBubble();
+atrstop.SetLineWeight(1);
+atrstop.AssignValueColor(if HighestAll(if IsNaN(c[-1]) and !IsNaN(c) and c > atrstop
+                                   then 1 
+                                   else 0) == 1 
+                        then Color.GREEN 
+                        else Color.RED);
+
+#ATR Trailing Stop Long/Short (shown as Green/Red) Bubble in expansion denotes current status of ATRTrailingStop indicator
+input showbubble_indicator  = no;
+input bubblemover_indicator = 20;#Hint bubblemover_indicator: = number of spaces to move atrtrailingstop indicator bubble sideways
+def  z  = bubblemover_indicator;
+def  z1 = z + 1;
+input bubblealign = .00;
+AddChartBubble(showbubble_indicator and IsNaN(c[z]) and !IsNaN(c[z1]), 
+               c[z1] - bubblealign,
+               "A", 
+               if state[z1] == state.long
+               then Color.GREEN 
+               else Color.RED);
+
+#Trailing Stop Bubble
+input bubblemover_trailingstop = 2;#Hint bubblemover_trailingstop: = number of spaces to move trail stop bubble sideways
+def  s  = bubblemover_trailingstop;
+def  s1 = s + 1;
+AddChartBubble(IsNaN(c[s]) and !IsNaN(c[s1]), 
+               atrstop[s1], 
+              "Trail \n" + (if outputformat == outputformat."Not Rounded"
+                           then AsPrice(trail[s1])
+                           else AsText(Round(trail[s1], 2))),
+               if HighestAll(if IsNaN(c[s]) and !IsNaN(c[s1]) and c[s1] > atrstop[s1]
+                             then 1 
+                             else 0) == 1 
+               then Color.GREEN 
+               else Color.RED,
+               if condu[s1] > condd[s1]
+               then no    
+               else yes); 
+
+#Entry Bubble - Will turn green or red if entry is exceeded
+input bubblemover_entry_stop_targets = 8;#Hint bubblemover_entry_stop_targets: = number of spaces to move entry, initial stop and target bubbles sideways
+def  n  = bubblemover_entry_stop_targets;
+def  n1 = n + 1;
+def eup = if condu > condd and h > entry 
+          then 1
+          else if eup[1] == 1 and condu > condd
+          then 1
+          else 0;
+def edn = if condu < condd and l < entry 
+          then 1
+          else if edn[1] == 1 and condu < condd
+          then 1
+          else 0;
+AddChartBubble(IsNaN(c[n]) and !IsNaN(c[n1]),
+               entry[n1],
+               "Entry: " + (if outputformat == outputformat."Not Rounded"
+                           then AsPrice(entry[n1])
+                           else AsText(Round(entry[n1], 2))),
+               if !IsNaN(eup[n1]) == 1 
+               then Color.GREEN    
+               else if !IsNaN(edn[n1]) == 1
+               then Color.RED
+               else Color.WHITE);
+
+#Stop Bubble
+AddChartBubble(IsNaN(c[n]) and !IsNaN(c[n1]),
+               stop[n1],
+               "Stop: " + (if outputformat == outputformat."Not Rounded"
+                           then AsPrice(stop[n1])
+                           else AsText(Round(stop[n1], 2))),
+               Color.RED);
+
+#Targets
+#Defining when targets are met
+def t1ru = if condu > condd and 
+              h > t1 
+           then 1
+           else if t1ru[1] == 1 and condu > condd
+           then 1
+           else 0;
+def t2ru = if condu > condd and 
+              h > t2 
+           then 1
+           else if t2ru[1] == 1 and condu > condd
+           then 1
+           else 0;
+def t1rd = if condu < condd and 
+              l < t1 
+           then 1
+           else if t1rd[1] == 1 and condu < condd
+           then 1
+           else 0;
+def t2rd = if condu < condd and 
+              l < t2 
+           then 1
+           else if t2rd[1] == 1 and condu < condd
+           then 1
+           else 0;
+
+#Target Bubbles - Green if Target Hit, Light_Gray otherwise
+AddChartBubble(IsNaN(c[n]) and !IsNaN(c[n1]),
+               t1[n1],
+               "T1 " + 
+               ": " + (if outputformat == outputformat."Not Rounded"
+                       then AsPrice(t1[n1])
+                       else AsText(Round(t1[n1], 2))) +
+               "  " + (if outputformat == outputformat."Not Rounded"
+                       then AsPrice(AbsValue(t1[n1] - entry[n1]))
+                       else AsText(AbsValue(Round(t1[n1], 2) - Round(entry[n1], 2)))),
+               if !IsNaN(t1ru[n1]) == 1 or !IsNaN(t1rd[n1]) == 1 
+               then Color.GREEN 
+               else Color.LIGHT_GRAY);
+AddChartBubble(IsNaN(c[n]) and !IsNaN(c[n1]),
+               t2[n1],
+               "T2 " + 
+               ": " + (if outputformat == outputformat."Not Rounded"
+                       then AsPrice(t1[n1])
+                       else AsText(Round(t2[n1], 2))) +
+               "  " + (if outputformat == outputformat."Not Rounded"
+                       then AsPrice(AbsValue(t2[n1] - entry[n1]))
+                       else AsText(AbsValue(Round(t2[n1], 2) - Round(entry[n1], 2)))),
+               if !IsNaN(t2ru[n1]) == 1 or !IsNaN(t2rd[n1]) == 1
+               then Color.GREEN
+               else Color.LIGHT_GRAY);
+               
+
+#
+# TD Ameritrade IP Company, Inc. (c) 2010-2016
+#
+
+input pricePerRowHeightMode = {AUTOMATIC, default TICKSIZE, CUSTOM};
+input customRowHeight = 1.0;
+input onExpansion = no;
+input profiles = 1000;
+input showPointOfControl = yes;
+input showValueArea = yes;
+input valueAreaPercent = 70;
+input opacity = 50;
+
+def cond =  state[1]!= state;
+def height;
+switch (pricePerRowHeightMode) {
+case AUTOMATIC:
+    height = PricePerRow.AUTOMATIC;
+case TICKSIZE:
+    height = PricePerRow.TICKSIZE;
+case CUSTOM:
+    height = customRowHeight;
+}
+
+profile vol = volumeProfile("startNewProfile" = if showvolumeprofile then cond else double.nan, "onExpansion" = onExpansion, "numberOfProfiles" = profiles, "pricePerRow" = height, "value area percent" = if showvolumeprofile then valueAreaPercent else double.nan);
+def con = compoundValue(1, onExpansion, no);
+def pc = if IsNaN(vol.getPointOfControl()) and con then pc[1] else vol.getPointOfControl();
+def hVA = if IsNaN(vol.getHighestValueArea()) and con then hVA[1] else vol.getHighestValueArea();
+def lVA = if IsNaN(vol.getLowestValueArea()) and con then lVA[1] else vol.getLowestValueArea();
+
+def hProfile = if IsNaN(vol.getHighest()) and con then hProfile[1] else vol.getHighest();
+def lProfile = if IsNaN(vol.getLowest()) and con then lProfile[1] else vol.getLowest();
+def plotsDomain = IsNaN(close) == onExpansion;
+
+plot POC = if plotsDomain then pc else Double.NaN;
+plot ProfileHigh = if plotsDomain then hProfile else Double.NaN;
+plot ProfileLow = if plotsDomain then lProfile else Double.NaN;
+plot VAHigh = if plotsDomain then hVA else Double.NaN;
+plot VALow = if plotsDomain then lVA else Double.NaN;
+
+DefineGlobalColor("Profile", GetColor(1));
+DefineGlobalColor("Point Of Control", GetColor(5));
+DefineGlobalColor("Value Area", GetColor(8));
+
+vol.Show(Color.CURRENT, if showPointOfControl then GlobalColor("Point Of Control") else Color.CURRENT, if showValueArea then GlobalColor("Value Area") else Color.CURRENT, opacity);
+POC.SetDefaultColor(globalColor("Point Of Control"));
+POC.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+VAHigh.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+VALow.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+VAHigh.SetDefaultColor(globalColor("Value Area"));
+VALow.SetDefaultColor(globalColor("Value Area"));
+ProfileHigh.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+ProfileLow.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+ProfileHigh.SetDefaultColor(GetColor(3));
+ProfileLow.SetDefaultColor(GetColor(3));
+ProfileHigh.hide();
+ProfileLow.hide();
+
+input showbubbleperperiod = no;
+input bubblemoverperperiodhorizontal = 3;
+input bubblemoverperperiodvertical  = 2;
+def bubble = if state[1] != state
+             then BarNumber() + bubblemoverperperiodhorizontal
+             else bubble[1];
+AddChartBubble(showbubbleperperiod and BarNumber() == (bubble), 
+               profilehigh + bubblemoverperperiodvertical * TickSize(),
+              (VAHigh - VALow), 
+               Color.GRAY, yes);

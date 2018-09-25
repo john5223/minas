@@ -1,0 +1,19 @@
+# Above Stomach Candle
+# Mobius
+# From Thomas Bullkowski's Candle Stick Patterns
+# 10.12.2017  TheoTrade Chat Discussion
+# Look for two candles in a downward price trend. The first one is black and the second is white. The body of the second should be at or above the middle of the first candle’s body. In other words, the opening and closing prices of the second day must be above the mid point of the first candle’s body.
+
+input BubbleOn = yes;
+
+def downTrend = isDescending(high[1], 3) and isDescending(low[1], 3);
+def AboveStomach = open > close[1] and close > high[1] and close > open;
+plot isTrue = if downtrend and
+                 AboveStomach
+              then low
+              else double.nan;
+     isTrue.SetPaintingStrategy(PaintingStrategy.Arrow_UP);
+     isTrue.SetLineWeight(3);
+     isTrue.SetDefaultColor(Color.CYAN);
+AddChartBubble(BubbleOn and isTrue, isTrue, "Above Stomach", color.cyan, yes);
+# End Code Above Stomach Candle

@@ -1,0 +1,99 @@
+# Dilbert_RsiDivergence_with_HiddenDivergence
+# V1.4  - 091615  - Dilbert  -  Add hidden divergence
+# V1.3  - 082715  - Dilbert  -  Add LastHighAtRsiPivotHigh and LastLowAtRsiPivotLow
+# V1.2  - 082615  - zzz      -  Limit plots to == count
+# V1.1  - 082615  - Original author unknown, posted to chat by Jr2146
+input count = 6;#Hint count: number of plots to display
+#hint: recognizes and signals divergences between rsi and price.
+input n=3;
+#hint n: controls how the slow pivot level is recognized. n=3 means that a slow pivot level is recognized when a high/low is preceded by 3 equal or lesser/greater (resp.) high's/low's and followed by 3 lesser/greater high's/low's. 
+
+input length = 14;
+input ob  = 70;
+input ob2 = 78;
+input os = 29;
+input os2 = 10;
+
+def highPrice = StDev(high, 10);
+def lowPrice = StDev(low, 10);
+
+def highAvgUp = ExpAverage(if high > high[1] then highPrice else 0, length);
+def highAvgDown = ExpAverage(if high < high[1] then highPrice else 0, length);
+
+def lowAvgUp = ExpAverage(if low > low[1] then lowPrice else 0, length);
+def lowAvgDown = ExpAverage(if low < low[1] then lowPrice else 0, length);
+
+def highRVI = 100 - 100 / (1 + highAvgUp / highAvgDown);
+def lowRVI = 100 - 100 / (1 + lowAvgUp / lowAvgDown);
+
+def r = (highRVI + lowRVI) / 2;
+
+
+def isRsiHigh = CompoundValue(n,
+    r[n] == Highest(r, n * 2 + 1) && r[n] > r && fold i = 1 to n with x = 1 while x == 1 do 
+        r[n] > GetValue(r, i) 
+    , 0
+);
+
+def isRsiLow = CompoundValue(n,
+    r[n] == Lowest(r, n * 2 + 1) && r[n] < r && fold j = 1 to n with y=1 while y == 1 do 
+        r[n] < GetValue(r, j) 
+    , 0
+);
+
+def rsiPivotHigh = CompoundValue(n,
+    if isRsiHigh then r[n] else rsiPivotHigh[1],
+    0
+);
+def highAtRsiPivotHigh = CompoundValue(n,
+    if isRsiHigh then Max(high[n], high[n - 1]) else highAtRsiPivotHigh[1],
+    0
+);
+def rsiPivotLow = CompoundValue(n,
+    if isRsiLow then r[n] else rsiPivotLow[1],
+    0
+);
+def lowAtRsiPivotLow = CompoundValue(n,
+    if isRsiLow then Min(low[n], low[n - 1]) else lowAtRsiPivotLow[1],
+    0
+);
+def TheBar = BarNumber();
+
+plot divergenceColors = Double.NaN;
+divergenceColors.DefineColor( "high divergence", Color.CYAN);
+divergenceColors.DefineColor( "low divergence", Color.MAGENTA);
+divergenceColors.HideTitle();
+
+def isFastRsiHigh = r[1] > r && r[2] <= r[1] && r[3] <= r[1];
+def isFastRsiLow = r[1] < r  && r[2] >= r[1] && r[3] >= r[1];
+def fastPriceHigh = Max(high, high[1]);
+def fastPriceLow = Min(low, low[1]);
+
+def isHigherFastRsiHigh = isFastRsiHigh && r[1] < rsiPivotHigh[1];
+def isLowerFastRsiLow = isFastRsiLow && r[1] > rsiPivotLow[1];
+def highDivergence = (isHigherFastRsiHigh && fastPriceHigh >= highAtRsiPivotHigh[1]);
+def lowDivergence = (isLowerFastRsiLow && fastPriceLow <= lowAtRsiPivotLow[1]);
+
+############################################################################################
+AssignPriceColor( 
+    if highDivergence then divergenceColors.Color("high divergence")
+    else if lowDivergence then divergenceColors.Color("low divergence")
+       else Color.CURRENT);
+#####
+input crosscount = 2;
+def cond2 = highDivergence;
+rec dataCount2 = CompoundValue(1, if (cond2) == 1 then dataCount2[1] + 1 else dataCount2[1], 0);
+plot CrossDn = if HighestAll(dataCount2) - dataCount2 <= crosscount - 1 and highDivergence then 1 else Double.NaN;
+def cond3 = lowDivergence;
+rec dataCount3 = CompoundValue(1, if (cond3) == 1 then dataCount3[1] + 1 else dataCount3[1], 0);
+plot CrossUp = if HighestAll(dataCount3) - dataCount3 <= crosscount - 1 and lowDivergence then 1 else Double.NaN;
+CrossUp.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+CrossDn.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
+CrossUp.SetDefaultColor(Color.MAGENTA);
+CrossDn.SetDefaultColor(Color.CYAN);
+
+
+input pricecolor = yes;
+AssignPriceColor(if pricecolor then if Between(r, 87, 95) then color.Blue
+else if r > 95 then color.WHITE else if Between(r, 5, 13) then Color.Blue
+else if r < 5 then color.WHITE else Color.CURRENT else Color.CURRENT);

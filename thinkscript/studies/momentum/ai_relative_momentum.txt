@@ -1,0 +1,79 @@
+# AI_Relative_Momentum_v2
+# AlphaInvestor - v1 - 02/16/2017 - original coding
+  # - idea from "Risk Premia Harvesting Through Dual Momentum" -- Gary Antonacci
+# AlphaInvestor - v2 - 02/20/2017 - added holdout period (most analysis holds out one month of data to avoid short term momentum effects)
+
+declare lower;
+
+input USAsym = {"EUSA", default "W5000", "SPX", "SPY"}; #hint: Antonacci used MSCI US
+input EAFEsym = {"EAFEQ", default "EFA"}; #hint: Antonacci used MSCI EAFE
+input ACWIsym = {"ACWIQ", default "ACWX", "HAWX"}; #hint: Antonacci used  MSCI ACWI ex US 
+input Lookbak = 252;#hint: Lookback in days (Antonacci found 12 month lookback performed best
+input holdout = 21;#hint: normal holdout would be 1 month (21 days)
+input showLabels = yes;
+
+def USA;
+def EAFE;
+def ACWI;
+def lookback = lookbak + holdout;
+
+switch (USAsym){
+case "EUSA":
+    USA = close(symbol = USAsym);
+case "W5000":
+    USA = close(symbol = USAsym);
+case "SPX":
+    USA = close(symbol = USAsym);
+case "SPY":
+    USA = close(symbol = USAsym);
+}
+
+switch (EAFEsym){
+case "EAFEQ":
+    EAFE = close(symbol = EAFEsym);
+case "EFA":  # 30-day Fed Funds Futures
+    EAFE = close(symbol = EAFEsym);
+}
+switch (ACWIsym){
+case "ACWIQ":
+    ACWI = close(symbol = ACWIsym);
+case "ACWX":
+    ACWI = close(symbol = ACWIsym);
+case "HAWX":
+    ACWI = close(symbol = ACWIsym);
+}
+
+def AbsPerformanceUS = (USA - USA[Lookbak]) / USA[Lookbak];
+def AbsPerformanceEAFE = (EAFE - EAFE[Lookbak]) / EAFE[Lookbak];
+def AbsPerformanceACWI = (ACWI - ACWI[Lookbak]) / ACWI[Lookbak];
+plot AbsPerformanceUS_W_holdout = (USA[holdout] - USA[Lookback]) / USA[Lookback];
+plot AbsPerformanceEAFE_W_holdout = (EAFE[holdout] - EAFE[Lookback]) / EAFE[Lookback];
+plot AbsPerformanceACWI_W_holdout = (ACWI[holdout] - ACWI[Lookback]) / ACWI[Lookback];
+AbsPerformanceUS_W_holdout.SetDefaultColor(Color.CYAN);
+AbsPerformanceEAFE_W_holdout.SetDefaultColor(Color.ORANGE);
+AbsPerformanceACWI_W_holdout.SetDefaultColor(Color.MAGENTA);
+AddLabel(showLabels, "US Perf: " + AbsPerformanceUS, Color.CYAN);
+AddLabel(showLabels, "EAFE Perf: " + AbsPerformanceEAFE, Color.ORANGE);
+AddLabel(showLabels, "ACWI Perf: " + AbsPerformanceACWI, Color.MAGENTA);
+AddLabel(showLabels, "US Perf w holdout: " + AbsPerformanceUS_W_holdout, Color.CYAN);
+AddLabel(showLabels, "EAFE Perf w holdout: " + AbsPerformanceEAFE_W_holdout, Color.ORANGE);
+AddLabel(showLabels, "ACWI Perf w holdout: " + AbsPerformanceACWI_W_holdout, Color.MAGENTA);
+
+
+plot LongSignalEAFE = if (AbsPerformanceEAFE_W_holdout crosses above AbsPerformanceUS_W_holdout) then AbsPerformanceUS_W_holdout else Double.NaN;
+LongSignalEAFE.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+LongSignalEAFE.SetDefaultColor(Color.GREEN);
+
+plot LongSignalACWI = if (AbsPerformanceACWI_W_holdout crosses above AbsPerformanceUS_W_holdout) then AbsPerformanceUS_W_holdout else Double.NaN;
+LongSignalACWI.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+LongSignalACWI.SetDefaultColor(Color.DARK_GREEN);
+
+plot ShortSignalEAFE = if (AbsPerformanceEAFE_W_holdout crosses below AbsPerformanceUS_W_holdout) then AbsPerformanceUS_W_holdout else Double.NaN;
+ShortSignalEAFE.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+ShortSignalEAFE.SetDefaultColor(Color.RED);
+
+plot ShortSignalACWI = if (AbsPerformanceACWI_W_holdout crosses below AbsPerformanceUS_W_holdout) then AbsPerformanceUS_W_holdout else Double.NaN;
+ShortSignalACWI.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+ShortSignalACWI.SetDefaultColor(Color.DARK_RED);
+
+# End Study

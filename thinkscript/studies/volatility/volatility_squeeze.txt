@@ -1,0 +1,79 @@
+
+# Volatility Squeeze: Standard Deviation
+# Mobius
+# Chat Room Discussion 12.19.2016
+# V02.06.16.2018
+# Add UI for Higher Aggregation. Added Channel Plot. Added UI controls for Channel Plot, Heritage Points and Label.
+Addlabel(1, "Vol Squeeze", color.white);
+
+input n = 13; #hint n: Length for Standard Deviation calculations
+input agg = AggregationPeriod.Fifteen_Min; #hint agg: 2 to 10 times higher than chart agg.
+input DisplayChannel = yes;
+input HeritagePoints = yes;
+input Label = yes;
+
+def h = high(period = agg);
+def l = low(period = agg);
+def c = close(period = agg);
+def x = barNumber();
+def nan = double.nan;
+def m = Average(c, n);
+def SD = stDev(c, n);
+def u = m + SD;
+def d = m - SD;
+def W = (u - d) / m;
+def hW = highest(w, n);
+def lW = lowest(w, n);
+def R = (w - lW) / (hW - lW);
+def sq1 = if R crosses below .001
+          then hl2
+          else sq1[1];
+def sqh = if R crosses below .001
+          then h
+          else sqh[1];
+def sql = if R crosses below .001
+          then l
+          else sql[1];
+def sqx = if R crosses below .001
+          then x
+          else nan;
+plot sq = if HeritagePoints and R <= 0
+          then sq1
+          else double.nan;
+     sq.SetStyle(Curve.Points);
+     sq.SetLineWeight(3);
+     sq.SetDefaultColor(Color.Yellow);
+     sq.HideBubble();
+     sq.HideTitle();
+plot upper = if DisplayChannel and x >= HighestAll(sqx)
+             then HighestAll(if isNaN(c[-1])
+                             then sqh
+                             else nan)
+             else nan;
+     upper.SetStyle(Curve.Long_Dash);
+     upper.SetLineWeight(2);
+     upper.SetDefaultColor(Color.Green);
+     upper.HideBubble();
+     upper.HideTitle();
+plot lower = if DisplayChannel and x >= HighestAll(sqx)
+             then HighestAll(if isNaN(c[-1])
+                             then sql
+                             else nan)
+             else nan;
+     lower.SetStyle(Curve.Long_Dash);
+     lower.SetLineWeight(2);
+     lower.SetDefaultColor(Color.Red);
+     lower.HideBubble();
+     lower.HideTitle();
+addCloud(lower, upper, color.light_orange, color.light_orange);
+addLabel(Label, if R > .9
+            then "Vol Expanding: " + R
+            else if R < .01
+                 then "Squeeze: " + R
+            else "Drift: " + R,
+            if R < .01
+            then color.red
+            else if R > .9
+                 then color.green
+                 else color.white);
+# End Code

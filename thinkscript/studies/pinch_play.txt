@@ -1,0 +1,91 @@
+
+# Pinch Play
+# Dilbert
+# 9.5.2015
+
+# V1.2 - 9.05.2015  - Dilbert  -  Removed short logic, so that this can be scanned for long pinch
+# V1.1 - 8.31.2015  - Dilbert  -  Add short logic
+# V1   - 8.27.2015  - Dilbert  -  1st code code cut
+
+# A pinch play is essentially a PPO (or MACD) with an ADX that is 
+# squeezing together. This would be when the PPO drops and bottoms 
+# out while at the same time the ADX rises and tops out. If you 
+# configure the PPO above the ADX in lower subgraph the plots appear 
+# to pinch together when a long signal occurs. It is a wonderful play 
+# with good results of moves back to the 20 DMA. It displays arrows 
+# on the price plot when conditions are met.
+#
+# This study was written using the logic in the RSI divergence study 
+# posted recently. The logic for the short version is works in 
+# progress.
+#
+# 08.31.2015 - Dilbert - add short logic
+#
+# The logic for the long pinch play is fine. However I had trouble 
+# getting the logic for the short pinch to work. 
+#
+# 09.05.2015 - Dilbert - Removed short logic, so that this can be scanned for long pinch
+#
+# When the short logic was added it made the study too complex to run 
+# scan queries. In order to run a scan query for a long trade, reference 
+# this study in the scanner.
+#
+#     PinchPlay()."PinchUp" is true
+#
+# Note that the name of this study is "PinchPlay".
+
+Input ADXLength = 14;
+# Start PPO code
+input nShort = 8;
+input nLong = 13;
+
+Input PPOShortEMA = 9;
+Input PPOLongEMA = 26;
+
+def C = close;
+#def PPO = (MovAvgExponential(C,PPOShortEMA) - MovAvgExponential(C,PPOLongEMA))/MovAvgExponential(C,PPOLongEMA);
+
+def PPO = 100 * ((ExpAverage(c, nShort) - ExpAverage(c, nLong)) / ExpAverage(c, nLong));
+def ADX = ADX(ADXlength);
+
+#hint: recognizes and signals divergences between PPO and price.
+input n = 1;
+input n2 = 2;
+#hint n: controls how the slow pivot level is recognized. n=3 means that a slow pivot level is recognized when a high/low is preceded by 3 equal or lesser/greater (resp.) high's/low's and followed by 3 lesser/greater high's/low's. 
+###############################################################################################
+#  Long logic
+def isADXHigh = CompoundValue(n,
+    ADX[n] == Highest(ADX, n * 2 + 1) && ADX[n] > ADX && fold i = 1 to n with x=1 while x == 1 do 
+        ADX[n] > GetValue(ADX, i) 
+    , 0
+);
+
+def isPPOLow = CompoundValue(n,
+    PPO[n] == Lowest(PPO, n * 2 + 1) && PPO[n] < PPO && fold j = 1 to n with y=1 while y == 1 do 
+        PPO[n] < GetValue(PPO, j) 
+    , 0
+);
+
+def ADXPivotHigh = CompoundValue(n,
+    if isADXHigh then ADX[n] else ADXPivotHigh[1],
+    0
+);
+def highAtADXPivotHigh = CompoundValue(n,
+    if isADXHigh then Max(ADX[n], ADX[n - 1]) else Double.NaN,
+    0
+);
+def PPOPivotLow = CompoundValue(n,
+    if isPPOLow then PPO[n] else PPOPivotLow[1],
+    0
+);
+def lowAtPPOPivotLow = CompoundValue(n,
+    if isPPOLow then Min(PPO[n], PPO[n - 1]) else Double.NaN,
+    0
+);
+
+plot PinchUp = if ADX > ADX[10] and ADX > 20 and highAtADXPivotHigh and lowAtPPOPivotLow then 1 else Double.NaN;
+PinchUp.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+PinchUp.SetDefaultColor(Color.Green);
+Alert(PinchUp, "Pinch Up", sound = Sound.Ring, "alert type" = Alert.BAR);
+
+# End Study

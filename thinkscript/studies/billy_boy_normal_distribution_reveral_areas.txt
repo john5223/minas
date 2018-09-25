@@ -1,0 +1,148 @@
+# Study name:  Billyboy_ Normal Distribution Reversal Areas
+# Version 1.0
+
+# Billyboy_ attempting to normally distribute given data (Mobius Market Forecast Study)
+
+# Billyboy_ using probabability theory, the Central Limit Theorem (CLT) which states that given certain conditions, the arithmetic mean (Linear Regression Line) of a sufficiently large number of iterate of independent random variables (FullK_N and FullK_I) each with a well defined expected value and well defined variance (Standard Error) ... will be approximatey Normal Distributed 
+
+# Minimum number of iterates (data points) should be > 30 minimum, the more data points the more accurate and precise 
+
+# Looking for revesals in the colored cloud filled upperbands and colored cloud filled lowerbands areas
+
+# Can be used on upper chart by changing Linear Regression  from "FullK_N" to "close"
+
+
+#1.  dotted line is the short term traders (green and red)
+
+#2.  thicker line is longer term traders (yellow and red)
+
+#3. reversal areas are the clouded areas
+
+#4. if longer term is going up (yellow) and short term going down (red), when short term turns green then a bull pullback entry (good for breakouts up)
+
+#5. if longer term is going down (red)  and short term going up(green), when short term turns red then a bear pullback entry  (good for breakouts down)
+
+#6. if both are same color, then a strong move expected
+
+#7. when both converge on each other, then expect a sideways move, (then look for either 4 or 5 to happen)
+
+# Using multiple time frames charts can offer a more precise entry
+
+
+
+# Mobius Market Forecast
+
+declare lower;
+
+input close = hl2;
+
+def c1I = close - Lowest(low, 31);
+
+def c2I = Highest(high, 31) - Lowest(low, 31);
+
+def FastK_I = c1I / c2I * 100;
+
+def c1N = close - Lowest(low, 3);
+
+def c2N = Highest(high, 3) - Lowest(low, 3);
+
+def FastK_N = c1N / c2N * 100;
+
+
+
+plot FullK_I;
+
+plot FullK_N;
+
+
+FullK_I = Average(FastK_I, 5);
+
+FullK_N = Average(FastK_N, 3);
+
+
+FullK_N.DefineColor("Up", Color.GREEN);
+
+FullK_N.DefineColor("Down", Color.RED);
+
+FullK_I.DefineColor("Up", Color.yellow);
+
+FullK_I.DefineColor("Down", Color.RED);
+
+FullK_N.SetLineWeight(2);
+FullK_N.SetPaintingStrategy(PaintingStrategy.LINE_VS_POINTS);
+FullK_I.SetLineWeight(4);
+ 
+
+# TOS Standard Error Channels
+# Inputs by Billyboy_ based upon Zscore
+# I find standard error more precise than standard deviation in reflecting actual trading range and I use Zscore as the stdev component in calculating the standard error
+
+input Zscore = 1.96;
+input Zscore1 = 2.58;
+input Zscore3 = 1.00;
+input fullRange = yes;
+input length2 = 64;
+input crossingType = {default above, below};
+
+def regression;
+
+def stdError;
+if (fullRange) {
+    regression = Inertia(FullK_N, 252);
+    stdError = StErr(FullK_N, 252);
+} else {
+    regression = Inertia(FullK_N, length2);
+    stdError = StErr(FullK_N, length2);
+}
+
+plot UpperBand = regression + Zscore * stdError;
+plot LowerBand = regression - Zscore * stdError;
+plot middleline = regression;
+
+UpperBand.AssignValueColor(Color.CYAN);
+UpperBand.SetLineWeight(2);
+
+middleline.AssignValueColor(Color.CYAN);
+middleline.SetStyle(Curve.LONG_DASH);
+middleline.SetLineWeight(2);
+
+LowerBand.AssignValueColor(Color.CYAN);
+LowerBand.SetLineWeight(2);
+
+plot UpperBand1 = regression + Zscore1 * stdError;
+plot LowerBand1 = regression - Zscore1 * stdError;
+plot middleline1 = regression;
+
+UpperBand1.AssignValueColor(Color.CYAN);
+UpperBand1.SetLineWeight(2);
+
+
+middleline1.SetStyle(Curve.LONG_DASH);
+middleline1.SetLineWeight(2);
+
+LowerBand1.AssignValueColor(Color.CYAN);
+LowerBand1.SetLineWeight(2);
+
+plot UpperBand2 = regression + Zscore3 * stdError;
+plot LowerBand2 = regression - Zscore3 * stdError;
+
+UpperBand2.AssignValueColor(Color.CYAN);
+UpperBand2.SetLineWeight(1);
+UpperBand2.SetStyle(Curve.LONG_DASH);
+
+LowerBand2.AssignValueColor(Color.CYAN);
+LowerBand2.SetLineWeight(1);
+LowerBand2.SetStyle(Curve.LONG_DASH);
+
+FullK_N.AssignValueColor(if FullK_N > FullK_N[1] then FullK_N.Color("Up") else FullK_N.Color("Down"));
+
+FullK_I.AssignValueColor(if FullK_I > FullK_I[1] then FullK_I.Color("Up") else FullK_I.Color("Down"));
+
+AddCloud(UpperBand, UpperBand1, Color.YELLOW, Color.YELLOW);
+AddCloud(LowerBand, LowerBand1, Color.YELLOW, Color.YELLOW);
+
+
+AddLabel(yes, if close < open and FullK_I < FullK_I[1] and FullK_N < FullK_N[1] then "  Sync Down  " else "", if close < open and FullK_I < FullK_I[1] and FullK_N < FullK_N[1] then Color.RED else Color.BLACK);
+
+AddLabel(yes, if close > open and FullK_I > FullK_I[1] and FullK_N > FullK_N[1] then "  Sync Up  " else "", if close > open and FullK_I > FullK_I[1] and FullK_N > FullK_N[1] then Color.green else Color.BLACK);
+

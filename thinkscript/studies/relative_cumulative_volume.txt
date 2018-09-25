@@ -1,0 +1,127 @@
+#
+# Relative Cumulative Volume - Both Session
+# Nube 
+# 9.6.18
+# Green / Red points across top are bars where volume was 50 percent or more above / below the 5 day average
+# White line in expansion area is 5 day average 
+# note extended session is included in RTH
+
+declare lower;
+declare zerobase;
+
+# Inputs
+input session = {default RTH, Globex};
+input symbol  = "/ES";
+input plots   = yes;
+input vert    = yes;
+input cloud   = yes;
+
+    # Universals
+def bn = BarNumber();
+def na = Double.NaN;
+    # Variables
+def v    = volume;
+def time = GetTime();
+def rts  = RegularTradingStart(GetYYYYMMDD());
+def rtsBar = CompoundValue(1,
+             if   time crosses above rts
+             then bn else rtsBar[1], 0);
+def rteBar = if   time crosses below rts
+             then bn else rteBar[1];
+def EstartBar = if   GetValue(rtsBar, -1) != rtsBar
+                then bn else EstartBar[1];
+def Eendbar = if   GetValue(rteBar, -1) != rteBar
+              then bn else Eendbar[1];
+
+def PrevRTEbar1 = if   rteBar != rteBar[1] 
+                  then rteBar[1] 
+                  else PrevRTEbar1[1];
+def PrevRTEbar2 = if   PrevRTEbar1 != PrevRTEbar1[1] 
+                  then PrevRTEbar1[1] 
+                  else PrevRTEbar2[1];
+def PrevRTEbar3 = if   PrevRTEbar2 != PrevRTEbar2[1] 
+                  then PrevRTEbar2[1] 
+                  else PrevRTEbar3[1];
+def PrevRTEbar4 = if   PrevRTEbar3 != PrevRTEbar3[1] 
+                  then PrevRTEbar3[1] 
+                  else PrevRTEbar4[1];
+def PrevRTEbar5 = if   PrevRTEbar4 != PrevRTEbar4[1] 
+                  then PrevRTEbar4[1] 
+                  else PrevRTEbar5[1];
+
+def pV1 = GetValue(v, rteBar - PrevRTEbar1);
+def pV2 = GetValue(v, rteBar - PrevRTEbar2);
+def pV3 = GetValue(v, rteBar - PrevRTEbar3);
+def pV4 = GetValue(v, rteBar - PrevRTEbar4);
+def pV5 = GetValue(v, rteBar - PrevRTEbar5);
+def AvgPrevVol = (pV1 + pV2 + pV3 + pV4 + pV5 ) / 5;
+
+def endBar;
+def startBar;
+switch (session) {
+    case RTH:
+startBar = EstartBar;
+endBar   = Eendbar;
+    case Globex:
+startBar = Eendbar;
+endBar   = EstartBar;
+}
+
+def Ev = if   bn crosses above endbar 
+           then na else if   bn crosses above startBar
+                        then v else Ev[1] + v;
+def EprevAvgV = if   bn crosses above endBar 
+                then na 
+                else if   bn crosses above startBar 
+                     then AvgPrevVol 
+                     else EprevAvgV[1] + AvgPrevVol;
+def topLine = HighestAll(Max(Ev, EprevAvgV));
+
+plot 
+RTHVolume = if plots then Ev else na;
+RTHVolume.  SetDefaultColor(Color.GRAY);
+RTHVolume.  AssignValueColor(if   Ev < EprevAvgV
+                             then Color.RED
+                             else Color.GREEN);
+
+plot 
+AvgRTHVolume = if plots then EprevAvgV else na;
+AvgRTHVolume.  SetDefaultColor(Color.WHITE);
+AvgRTHVolume.  AssignValueColor(if   Ev < EprevAvgV
+                                then Color.RED
+                                else Color.GREEN);
+
+plot
+FiftyPlus;
+FiftyPlus.  SetDefaultColor(Color.GREEN);
+FiftyPlus.  SetStyle(Curve.POINTS);
+FiftyPlus = if   Ev > EprevAvgV * 1.5
+            then topLine else na;
+
+plot
+FiftyMinus;
+FiftyMinus.  SetDefaultColor(Color.RED);
+FiftyMinus.  SetStyle(Curve.POINTS);
+FiftyMinus = if   Ev * 1.5 < EprevAvgV
+             then topLine else na;
+
+AddVerticalLine(
+vert &&
+bn crosses above endBar, 
+if   Ev[1] < EprevAvgV[1] 
+then "Below" 
+else if Ev[1] == EprevAvgV[1] 
+     then "Average" 
+     else "Above", 
+if   Ev[1] < EprevAvgV[1] 
+then Color.ORANGE 
+else if   Ev[1] == EprevAvgV[1] 
+     then Color.WHITE 
+     else CreateColor(75, 200, 200),
+Curve.FIRM
+);
+
+AddCloud(If(cloud, Min(RTHVolume,AvgRTHVolume),na),0, Color.GRAY);
+AddCloud(If(cloud,RTHVolume,na),AvgRTHVolume,Color.GREEN);
+
+# f/ Relative Cumulative Volume - Both Session.

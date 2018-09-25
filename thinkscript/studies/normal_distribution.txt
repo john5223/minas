@@ -1,0 +1,60 @@
+# Trying to achieve Normal Distribution
+# Mobius
+# V01.09.2015
+#Hint: Plots a Gaussian Mean with Standard deviation Envelope. If Normal Distribution is met, then at minimum, 68.2% of the close values should be inside a One Standard Deviation Envelope and 95.4% of the close values should be inside a 2 Standard Deviation Envelope.
+ 
+input length  = 21;
+input betaDev = 7.0; #hint betaDev: adjust this value till the label indicates a minimum of 68.2% of closes inside the 1 St Dev bands.
+input n = 21;
+input SDmult1 = 1;
+input SDmult2 = 2;
+ 
+def c;
+def w;
+def beta;
+def alpha;
+def G; 
+def SD;
+def bars;
+def NormDist;
+def mean;
+plot Upper;
+plot OuterUp;
+plot Lower;
+plot OuterDn;   
+ 
+c = OHLC4;
+w = (2 * Double.Pi / length);
+beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betaDev) - 1 );
+alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+G = power(alpha, 4) * c + 
+                 4 * (1 – alpha) * G[1] – 6 * power( 1 - alpha, 2 ) * G[2] + 
+                 4 * power( 1 - alpha, 3 ) * G[3] - power( 1 - alpha, 4 ) * G[4];
+SD = StDev(G, n);
+mean = G;
+Upper = mean + (SDmult1 * SD);
+Upper.SetDefaultColor(Color.Green);
+OuterUp = mean + (SDmult2 * SD);
+OuterUp.SetDefaultColor(Color.Green);
+Lower = mean + (-SDmult1 * SD);
+Lower.SetDefaultColor(Color.Red);
+OuterDn = mean + (-Sdmult2 * SD);
+OuterDn.SetDefaultColor(Color.Red);
+AddCloud(Upper, OuterUp, color.light_green, color.light_green);
+AddCloud(lower, outerDn, color.light_red, color.light_red);
+bars = BarNumber();
+NormDist = if between(close, Lower, Upper)
+           then NormDist[1] + 1
+           else NormDist[1];
+addLabel(1, "Bars = " + bars + "  Bars inside " + SDmult1 + " St Dev = " + NormDist + "  Norm Dist = " + AsPercent(Round(NormDist / bars, 3)), color.white);
+#AssignPriceColor(if close > mean then color.green else color.red);
+# End Code
+ 
+def ATR = Average(TrueRange(high, close, low), n);
+plot upperATR = mean + (1.5 * ATR);
+upperATR.SetDefaultColor(Color.yellow);
+plot lowerATR = mean + (-1.5 * ATR);
+lowerATR.SetDefaultColor(Color.yellow);
+AddLabel(OuterUp < upperATR, "Squeeze", color.yellow);
+ 
+# End Code Gaussian Bands

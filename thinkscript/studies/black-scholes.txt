@@ -1,0 +1,56 @@
+# Black Scholes Merton
+# Translated from other languages at espenhaug
+# Nube
+# v.01 8.3.18
+# v.02 8.4.18 This is better, v.01 should be crumpled up and thrown in the trash.
+
+
+declare lower;
+
+input Strike = 100;
+input DaysToExpiration = 30;
+
+def c = close;
+def t = DaysToExpiration/365;
+def v = if   !IsNaN(imp_volatility())
+        then imp_volatility()
+        else v[1];
+def getAp  = GetAggregationPeriod();
+def day    = AggregationPeriod.Day;              
+def period = if       getAp < day
+                      then day
+                      else getAp;
+def r  = (if   !IsNaN(close("DGS1MO:FRED", period = period))
+          then close("DGS1MO:FRED", period = period)
+          else r[1])/100;
+def d1 = (Log(c/Strike) + (r+v*v/2)*t) / (v*Sqrt(t));
+def d2 = d1 - v * Sqrt(t);
+
+Script cnd {
+    input data  = close;
+    def a1 =  .31938153;
+    def a2 = -.356563782;
+    def a3 = 1.781477937;
+    def a4 = -1.821255978;
+    def a5 = 1.330274429;
+    def d = AbsValue(data);
+    def k = 1 / (1 + 0.2316419 * d);
+    def l = 1 - 1 / Sqrt(2 * Double.Pi) * 
+            Exp(-Power(d,2)/2) 
+            *(a1 * k + a2 * k * k + a3 * Power(k,3) + a4
+            * Power(k,4) + a5 * power(k,5));
+    def w = if   data < 0
+            then 1 - l
+            else l;
+    plot 
+    CND = w;
+}
+
+plot
+Call = c * cnd(d1) - Strike * Exp(-r*t) * cnd(d2);
+Call.  SetDefaultColor(Color.UpTick);
+plot 
+Put = Strike * Exp(-r*t) * cnd(-d2) - c * cnd(-d1);
+Put.  SetDefaultColor(Color.DownTick);
+
+# f/ Black Sholes Merton

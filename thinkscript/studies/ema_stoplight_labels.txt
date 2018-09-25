@@ -1,0 +1,45 @@
+# Multiple Aggregation EMA Stop Lights
+# Mobius
+# V01.05.23.2018
+# This Study may be freely distributed. 
+
+# deepakg: JC announced a new indicator that displays MTF labels 
+# (1min, 2 min, 5 mins, 10 min, 15 mins, 30 mins, 1 hr, 2 hrs, 
+# 4 hrs, day, 2 day, 4 days, week). As soon as the 5 EMA crosses 
+# 21 EMA on 1 min time frame, it turns the 1 min label from green 
+# to red. Similarly if 2 mins 5 EMA crosses 21 EMA it changes 
+# that color to red, etc. The idea is to see if a stock gains 
+# momentum and to go long.
+
+input n1 = 5;
+input n2 = 21;
+input t1 = aggregationPeriod.Two_Min;
+input t2 = aggregationPeriod.Five_Min;
+input t3 = aggregationPeriod.Ten_Min;
+input t4 = aggregationPeriod.Fifteen_Min;
+input t5 = aggregationPeriod.Thirty_Min;
+input t6 = aggregationPeriod.Hour;
+input t7 = aggregationPeriod.Two_Hours;
+input t8 = aggregationPeriod.Four_Hours;
+input t9 = aggregationPeriod.Day;
+script EMAx 
+    {
+     input t = AggregationPeriod.Two_Min;
+     input n1 = 5;
+     input n2 = 21;
+     def EMA1 = ExpAverage(close(period = t), n1);
+     def EMA2 = ExpAverage(close(period = t), n2);
+     plot x = EMA1 > EMA2;
+    }
+Addlabel(1, "2min",  if EMAx(t1,n1,n2) then color.green else color.red);
+Addlabel(1, "5min",  if EMAx(t2,n1,n2) then color.green else color.red);
+Addlabel(1, "10min", if EMAx(t3,n1,n2) then color.green else color.red);
+Addlabel(1, "15min", if EMAx(t4,n1,n2) then color.green else color.red);
+Addlabel(1, "30min", if EMAx(t5,n1,n2) then color.green else color.red);
+Addlabel(1, "60min", if EMAx(t6,n1,n2) then color.green else color.red);
+AddLabel(1, "2Hr",   if EMAx(t7,n1,n2) then color.green else color.red);
+Addlabel(1, "4Hr",   if EMAx(t8,n1,n2) then color.green else color.red);
+Addlabel(1, "Day",   if EMAx(t9,n1,n2) then color.green else color.red);
+
+plot c = EMAx(t9,n1,n2);
+# End Code Multiple Aggregation EMA Stop Lights

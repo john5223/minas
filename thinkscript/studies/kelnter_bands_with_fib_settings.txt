@@ -1,0 +1,71 @@
+
+#(KeltnerChannels) with FIB BANDS settings by S DUDDELLA 's
+#zzz added extreme clouds and alerts
+declare weak_volume_dependency;
+ 
+input factor1  = 1.618;
+input factor2  = 2.618;
+input factor3  = 4.618;
+input lengthma   = 34;
+input price    = close;
+input lengthtr = 34;
+ 
+input Avgtype_ma = AverageType.SIMPLE;
+input Avgtype_tr = AverageType.EXPONENTIAL;
+def tr = MovingAverage(Avgtype_tr, TrueRange(high, close, low), lengthtr);
+ 
+plot Average = MovingAverage(Avgtype_ma, price, lengthma);
+Average.setstyle(curve.SHORT_DASH);
+Average.SetDefaultColor(color.cyan);
+Average.HideBubble();
+ 
+plot Upper_Band = Average + tr * factor1;
+Upper_Band.setstyle(curve.SHORT_DASH);
+Upper_Band.SetDefaultColor(GetColor(8));
+Upper_Band.HideBubble();
+Upper_Band.hide();
+ 
+plot Lower_Band = Average - tr * factor1;
+Lower_Band.setstyle(curve.SHORT_DASH);
+Lower_Band.SetDefaultColor(GetColor(5));
+Lower_Band.HideBubble();
+Lower_Band.hide();
+ 
+plot Upper_Band2 = Average + tr * factor2;
+Upper_Band2.setstyle(curve.SHORT_DASH);
+Upper_Band2.SetDefaultColor(color.black);
+Upper_Band2.HideBubble();
+ 
+plot Lower_Band2 = Average - tr * factor2;
+Lower_Band2.setstyle(curve.SHORT_DASH);
+Lower_Band2.SetDefaultColor(color.black);
+Lower_Band2.HideBubble();
+ 
+plot Upper_Band3 = Average + tr * factor3;
+Upper_Band3.setstyle(curve.SHORT_DASH);
+Upper_Band3.SetDefaultColor(color.black);
+Upper_Band3.HideBubble();
+ 
+plot Lower_Band3 = Average - tr * factor3;
+Lower_Band3.setstyle(curve.SHORT_DASH);
+Lower_Band3.SetDefaultColor(color.black);
+Lower_Band3.HideBubble();
+#Clouds
+input showclouds = yes;
+AddCloud(if showclouds and low <= Lower_Band2 then Lower_Band2 else Double.NaN, Lower_Band3, Color.MAGENTA, color2 = Color.MAGENTA);
+AddCloud(if showclouds and high >= Upper_Band2 then Upper_Band2 else Double.NaN, Upper_Band3, Color.MAGENTA, color2 = Color.MAGENTA);
+#Clouds - also arrows if only one bar exceeds as cloud will not print, but arrow will
+input arrowmover = 3.0;
+plot x = if showclouds and low[1] >= Lower_Band2[1] and low[0] <= Lower_Band2[0] and low[-1] > Lower_Band2[-1] then low - TickSize() * arrowmover else Double.NaN;
+x.SetDefaultColor(Color.MAGENTA);
+x.SetPaintingStrategy(PaintingStrategy.ARROW_down);
+x.HideBubble();
+plot y = if showclouds and high[1] <= Upper_Band2[1] and high >= Upper_Band2 and high[-1] < Upper_Band2[-1] then high + TickSize() * arrowmover else Double.NaN;
+y.SetDefaultColor(Color.MAGENTA);
+y.SetPaintingStrategy(PaintingStrategy.ARROW_up);
+y.HideBubble();
+ 
+#Alerts
+input usealerts = yes;
+Alert(usealerts and close crosses below Upper_Band2, "Close below UB", Alert.BAR, Sound.Ring);
+Alert(usealerts and close crosses above Lower_Band2, "Close above LB", Alert.BAR, Sound.Ring);

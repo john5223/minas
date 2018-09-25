@@ -1,0 +1,269 @@
+ # Hurst Exponent
+# Mobius
+# V03.10.2015
+# To estimate the Hurst exponent a Root time series is rescaled into shorter ranges. The ranges are mean centered and the Hurst exponent is derived from the exponent of this power law.
+# The commented out plots are to check the Average rescaled segments for continuity.
+#hint: Hurst Exponent responds best to large data fields. 
+ 
+declare lower;
+ 
+input n = 252; #hint n: Length for the Hurst Exponent calculations.
+ 
+def bar = barNumber();
+def Lbar = HighestAll(if !isNaN(close[-1]) then bar else double.nan);
+def coef1 = Floor(n / 2);
+def coef2 = Floor(n / 4);
+def coef3 = Floor(n / 8);
+def coef4 = Floor(n / 16);
+addLabel(1, "Bars On Chart = " + bar + "  coef n = " + n + "  coef 1 = " + coef1 + "  coef2 = " + coef2 + "  coef3 = " + coef3 + "  coef4 = " + coef4, color.white);
+def c = close;
+def LD = LinDev(c, n);
+def Root = (highest(LD, n) - lowest(LD, n)) / StDev(LD, n);
+# =====================================================
+def baseSet = if bar >= Lbar - n
+              then (fold a = 0 to n
+                    with r
+                    while bar < Lbar
+                    do r + Root) / n
+              else baseSet[1];
+#plot data = if baseSet then baseSet else double.nan;
+# =====================================================
+def Set1 = if bar >= Lbar - n
+               then (fold i = 0 to coef1
+                     with s
+                     while bar < Lbar - n + coef1
+                     do s + Root) / coef1
+               else Set1[1];
+#plot data1 = if Set1 then Set1 else double.nan;
+def Set2 = if bar >= Lbar - n + coef1
+               then (fold i2 = 0 to coef1
+                     with s2
+                     while bar <= Lbar
+                     do s2 + Root) / coef1
+               else Set2[1];
+#plot data2 = if Set2 then Set2 else double.nan;
+# ============================================================
+def Set3 = if bar >= Lbar - n
+               then (fold i3 = 0 to coef2
+                     with s3
+                     while bar < Lbar - n + coef2
+                     do s3 + Root) / coef2
+               else Set3[1];
+#plot data3 = if Set3 then Set3 else double.nan;
+def Set4 = if bar >= Lbar - n + coef2
+               then (fold i4 = 0 to coef2
+                     with s4
+                     while bar < Lbar - n + (coef2 * 2)
+                     do s4 + Root) / coef2
+               else Set4[1];
+#plot data4 = if Set4 then Set4 else double.nan;
+def Set5 = if bar >= Lbar - n + (coef2 * 2)
+               then (fold i5 = 0 to coef2
+                     with s5
+                     while bar < Lbar - n + (coef2 * 3)
+                     do s5 + Root) / coef2
+               else Set5[1];
+#plot data5 = if Set5 then Set5 else double.nan;
+def Set6 = if bar >= Lbar - n + (coef2 * 3)
+               then (fold i6 = 0 to coef2
+                     with s6
+                     while bar < Lbar
+                     do s6 + Root) / coef2
+               else Set6[1];
+#plot Data6 = if Set6 then Set6 else double.nan;
+#===========================================================
+def Set7 = if bar >= Lbar - n
+               then (fold i7 = 0 to coef3
+                     with s7
+                     while barNumber() < Lbar - n + coef3
+                     do s7 + Root) / coef3
+               else Set7[1];
+#plot Data7 = if Set7 then Set7 else double.nan;
+def Set8 = if bar >= Lbar - n + coef3
+               then (fold i8 = 0 to coef3
+                     with s8
+                     while bar < Lbar - n + (coef3 * 2)
+                     do s8 + Root) / coef3
+               else Set8[1];
+#plot Data8 = if Set8 then Set8 else double.nan;
+def Set9 =if bar >= Lbar - n + (coef3 * 2)
+               then (fold i9 = 0 to coef3
+                     with s9
+                     while bar < Lbar - n + (coef3 * 3)
+                     do s9 + Root) / coef3
+               else Set9[1];
+#plot Data9 = if Set9 then Set9 else double.nan;
+def Set10 = if bar >= Lbar - n + (coef3 * 3)
+               then (fold i10 = 0 to coef3
+                     with s10
+                     while bar < Lbar - n + (coef3 * 4)
+                     do s10 + Root) / coef3
+               else Set10[1];
+#plot Data10 = if Set10 then Set10 else double.nan;
+def Set11 = if bar >= Lbar - n + (coef3 * 4)
+               then (fold i11 = 0 to coef3
+                     with s11
+                     while bar < Lbar - n + (coef3 * 5)
+                     do s11 + Root) / coef3
+               else Set11[1];
+#plot Data11 = if Set11 then Set11 else double.nan;
+def Set12 = if bar >= Lbar - n + (coef3 * 5)
+               then (fold i12 = 0 to coef3
+                     with s12
+                     while bar < Lbar - n + (coef3 * 6)
+                     do s12 + Root) / coef3
+               else Set12[1];
+#plot Data12 = if Set12 then Set12 else double.nan;
+def Set13 = if bar >= Lbar - n + (coef3 * 6)
+               then (fold i13 = 0 to coef3
+                     with s13
+                     while bar < Lbar - n + (coef3 * 7)
+                     do s13 + Root) / coef3
+               else Set13[1];
+#plot Data13 = if Set13 then Set13 else double.nan;
+def Set14 = if bar >= Lbar - n + (coef3 * 7)
+               then (fold i14 = 0 to coef3
+                     with s14
+                     while bar < Lbar
+                     do s14 + Root) / coef3
+               else Set14[1];
+#plot Data14 = if Set14 then Set14 else double.nan;
+#================================================================
+def Set15 = if bar >= Lbar - n
+               then (fold i15 = 0 to coef4
+                     with s15
+                     while bar < Lbar - n + coef4
+                     do s15 + Root) / coef4
+               else Set15[1];
+#plot Data15 = if Set15 then Set15 else double.nan;
+def Set16 = if bar >= Lbar - n + coef4
+               then (fold i16 = 0 to coef4
+                     with s16
+                     while bar < Lbar - n + (coef4 * 2)
+                     do s16 + Root) / coef4
+               else Set16[1];
+#plot Data16 = if Set16 then Set16 else double.nan;
+def Set17 = if bar >= Lbar - n + (coef4 * 2)
+               then (fold i17 = 0 to coef4
+                     with s17
+                     while bar < Lbar - n + (coef4 * 3)
+                     do s17 + Root) / coef4
+               else Set17[1];
+#plot Data17 = if Set17 then Set17 else double.nan;
+def Set18 = if bar >= Lbar - n + (coef4 * 3)
+               then (fold i18 = 0 to coef4
+                     with s18
+                     while bar < Lbar - n + (coef4 * 4)
+                     do s18 + Root) / coef4
+               else Set18[1];
+#plot Data18 = if Set18 then Set18 else double.nan;
+def Set19 = if bar >= Lbar - n + (coef4 * 4)
+               then (fold i19 = 0 to coef4
+                     with s19
+                     while bar < Lbar - n +  (coef4 * 5)
+                     do s19 + Root) / coef4
+               else Set19[1];
+#plot Data19 = if Set19 then Set19 else double.nan;
+def Set20 = if bar >= Lbar - n + (coef4 * 5)
+               then (fold i20 = 0 to coef4
+                     with s20
+                     while bar < Lbar - n + (coef4 * 6)
+                     do s20 + Root) / coef4
+               else Set20[1];
+#plot Data20 = if Set20 then Set20 else double.nan;
+def Set21 = if bar >= Lbar - n + (coef4 * 6)
+               then (fold i21 = 0 to coef4
+                     with s21
+                     while bar < Lbar - n + (coef4 * 7)
+                     do s21 + Root) / coef4
+               else Set21[1];
+#plot Data21 = if Set21 then Set21 else double.nan;
+def Set22 = if bar >= Lbar - n + (coef4 * 7)
+               then (fold i22 = 0 to coef4
+                     with s22
+                     while bar < Lbar - n + (coef4 * 8)
+                     do s22 + Root) / coef4
+               else Set22[1];
+#plot Data22 = if Set22 then Set22 else double.nan;
+def Set23 = if bar >= Lbar - n + (coef4 * 8) 
+               then (fold i23 = 0 to coef4
+                     with s23
+                     while bar < Lbar - n + (coef4 * 9)
+                     do s23 + Root) / coef4
+               else Set23[1];
+#plot Data23 = if Set23 then Set23 else double.nan;
+def Set24 = if bar >=  Lbar - n + (coef4 * 9)
+               then (fold i24 = 0 to coef4
+                     with s24
+                     while bar < Lbar - n + (coef4 * 10)
+                     do s24 + Root) / coef4
+               else Set24[1];
+#plot Data24 = if Set24 then Set24 else double.nan;
+def Set25 = if bar >= Lbar - n + (coef4 * 10)
+               then (fold i25 = 0 to coef4
+                     with s25
+                     while bar < Lbar - n + (coef4 * 11)
+                     do s25 + Root) / coef4
+               else Set25[1];
+#plot Data25 = if Set25 then Set25 else double.nan;
+def Set26 = if bar >= Lbar - n + (coef4 * 11)
+               then (fold i26 = 0 to coef4
+                     with s26
+                     while bar < Lbar - n + (coef4 * 12)
+                     do s26 + Root) / coef4
+               else Set26[1];
+#plot Data26 = if Set26 then Set26 else double.nan;
+def Set27 = if bar >= Lbar - n + (coef4 * 12)
+               then (fold i27 = 0 to coef4
+                     with s27
+                     while bar < Lbar - n + (coef4 * 13)
+                     do s27 + Root) / coef4
+               else Set27[1];
+#plot Data27 = if Set27 then Set27 else double.nan;
+def Set28 = if bar >= Lbar - n + (coef4 * 13)
+               then (fold i28 = 0 to coef4
+                     with s28
+                     while bar < Lbar - n + (coef4 * 14)
+                     do s28 + Root) / coef4
+               else Set28[1];
+#plot Data28 = if Set28 then Set28 else double.nan;
+def Set29 = if bar >= Lbar - n + (coef4 * 14)
+               then (fold i29 = 0 to coef4
+                     with s29
+                     while bar < Lbar - n + (coef4 * 15)
+                     do s29 + Root) / coef4
+               else Set29[1];
+#plot Data29 = if Set29 then Set29 else double.nan;
+def Set30 = if bar >= Lbar - n + (coef4 * 15)
+               then (fold i30 = 0 to coef4
+                     with s30
+                     while bar < Lbar
+                     do s30 + Root) / coef4
+               else Set30[1];
+#plot Data30 = if Set30 then Set30 else double.nan;
+def M = (BaseSet + Set1 + Set2 + Set3 + Set4 + Set5 + Set6 + Set7 + Set8 + Set9 + Set10 + Set11 + Set12 + Set13 + Set14 + Set15 + Set16 + Set17 + Set18 + Set19 + Set20 + Set21 + Set22 + Set23 + Set24 + Set25 + Set26 + Set27 + Set28 + Set29 + Set30) / 31;
+def Hurst = if bar >= Lbar - n
+            then (fold b = 0 to n
+                  with z
+                  while bar < Lbar
+                  do z + M) / n
+            else double.nan;
+Plot HurstE = If Hurst == 0 then double.nan else Hurst;
+#HurstE.SetDefaultColor(Color.Cyan);
+plot zero = if isNaN(c) then double.nan else 0;
+zero.SetDefaultColor(Color.Yellow);
+plot one = if isNaN(c) then double.nan else 1;
+one.SetDefaultColor(Color.Yellow);
+plot LM = if isNaN(c) then double.nan else .45;
+LM.SetDefaultColor(Color.Gray);
+plot HM = if isNaN(c) then double.nan else .55;
+HM.SetDefaultColor(Color.Gray);
+AddCloud(LM , HM, color.white, color.white);
+AddCloud(HM, one, Color.Light_Green, Color.Light_Green);
+AddCloud(zero, LM, Color.Light_Red, Color.Light_Red);
+# End Code Hurst Exponent
+AddChartBubble(!isNaN(c[1]) and isNaN(c), .5, "Brownian", color.white, yes);
+AddChartBubble(!isNaN(c[1]) and isNaN(c), 0, "Mean Reverting", color.white, yes);
+AddChartBubble(!isNaN(c[1]) and isNaN(c), 1, "Trending", color.white, no);
+               
+# End Code Hurst Exponent

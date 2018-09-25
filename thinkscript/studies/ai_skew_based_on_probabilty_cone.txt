@@ -1,0 +1,50 @@
+#AlphaInvestor_Skew_based_on_Probability_of_Expiring_Cone
+
+declare lower;
+
+input probability_1 = 68;
+input probability_2 = 95;
+
+def up1 = ProbabilityOfExpiringCone("prob range" = probability_1);
+def dwn1 = ProbabilityOfExpiringCone("prob range" = probability_1).DownProbExp;
+def up2 = ProbabilityOfExpiringCone("prob range" = probability_2);
+def dwn2 = ProbabilityOfExpiringCone("prob range" = probability_2).DownProbExp;
+def contclose = if IsNaN(close) then contclose[1] else close;
+plot x = contclose;
+x.hide();
+
+#AddCloud(up2, up1, Color.GREEN);
+#AddCloud(up1, x, Color.LIGHT_GREEN);
+#AddCloud(x, dwn1, Color.LIGHT_RED);
+#AddCloud(dwn1, dwn2, Color.RED);
+
+#-----/-----
+
+def length = 0;                         # this needs to stay 0 to get the values right
+input barsFuture = 4;
+input showLabels = yes;
+
+def upValue1 = ProbabilityOfExpiringCone("prob range" = probability_1).upProbExp[-length];
+def dnValue1 = ProbabilityOfExpiringCone("prob range" = probability_1).DownProbExp[-length];
+def upValue2 = ProbabilityOfExpiringCone("prob range" = probability_2).upProbExp[-length];
+def dnValue2 = ProbabilityOfExpiringCone("prob range" = probability_2).DownProbExp[-length];
+
+plot upDiff1 = upValue1 - contclose;
+plot dnDiff1 = contclose - dnvalue1;
+plot aiSkew1 = dnDiff1 - upDiff1;
+def aiSkew1perc = aiSkew1/contclose;
+
+plot upDiff2 = upValue2 - contclose;
+plot dnDiff2 = contclose - dnvalue2;
+plot aiSkew2 = dnDiff2 - upDiff2;
+def aiSkew2perc = aiSkew2/contclose;
+
+addlabel(showLabels,"aiSkew1 "+probability_1+"%: "+aiSkew1[-barsFuture]+" at "+barsFuture+" future bars ",if aiSkew1[-barsFuture] >= 0.0 then color.light_gray else color.gray);
+addlabel(showLabels,"aiSkew2 "+probability_2+"% : "+aiSkew2[-barsFuture]+" at "+barsFuture+" future bars ",if aiSkew2[-barsFuture] >= 0.0 then color.light_gray else color.gray);
+addlabel(showLabels and aiSkew1perc[-barsFuture] >= 0.0,"%aiSkew1 "+probability_1+"% : "+aspercent(aiSkew1perc[-barsFuture])+" at "+barsFuture+" future bars",if aiSkew1perc[-barsFuture] >= 0.02 then color.green else color.light_green);
+addlabel(showLabels and aiSkew1perc[-barsFuture] < 0.0,"%aiSkew1 "+probability_1+"%: "+aspercent(aiSkew1perc[-barsFuture])+" at "+barsFuture+" future bars",if aiSkew1perc[-barsFuture] < -0.02 then color.red else color.light_red);
+
+addlabel(showLabels and aiSkew2perc[-barsFuture] >= 0.0,"%aiSkew2 "+probability_2+"%: "+aspercent(aiSkew2perc[-barsFuture])+" at "+barsFuture+" future bars",if aiSkew2perc[-barsFuture] >= 0.02 then color.green else color.light_green);
+addlabel(showLabels and aiSkew2perc[-barsFuture] < 0.0,"%aiSkew2 "+probability_2+"%: "+aspercent(aiSkew2perc[-barsFuture])+" at "+barsFuture+" future bars",if aiSkew2perc[-barsFuture] <= -0.02 then color.red else color.light_red);
+
+# End Study

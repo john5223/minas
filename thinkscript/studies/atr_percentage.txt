@@ -1,0 +1,194 @@
+## OneNote Archive Name: True Range Percent Histogram _JQv02
+## Archive Section: Volatility
+## Suggested Tos Name: TrueRangePercentHistogram_JQv02
+## Archive Date: 9.08.2018
+## Archive Notes: 
+
+## "##" indicates an addition or adjustment by the OneNote Archivist
+##    altered code to visualise direction of overnightATR_Percent range
+
+declare lower;
+
+
+# inputs and variables
+input lengthATR = 14; #Hint length: Default is 14
+input averageType = AverageType.WILDERS;  #Hint averageType: Default is Wilders
+input displayATRlabels = yes;
+input displayBetaLabels = yes;
+input displayIVlabels = yes;
+input displayEarningsLines = yes;
+input showDebugLabels = no;
+
+
+# ATR Code
+def ATR = MovingAverage(averageType, TrueRange(high, close, low), lengthATR);
+def vATR_DataSetClose = MovingAverage(averageType, close[1], lengthATR);
+plot vATR_Percent = ATR / vATR_DataSetClose * 100;
+vATR_Percent.SetDefaultColor(Color.YELLOW);
+vATR_Percent.SetLineWeight(1);
+#vATR_Percent.HideBubble();
+AddLabel (displayATRlabels, "Wilders " + lengthATR +  " Bar ATR: " +  AsDollars(ATR) + " | " + AsPercent(vATR_Percent / 100) + " ", vATR_Percent.TakeValueColor());
+AddLabel (no, "Wilders " + lengthATR +  " Bar Close[1] " +  vATR_DataSetClose + " ", vATR_Percent.TakeValueColor());
+AddLabel (no , "Wilders " + lengthATR +  " Bar ATR % " +  vATR_Percent + " ", vATR_Percent.TakeValueColor());
+
+# Overnight True Range Code
+def overnightRange = AbsValue(open - close[1]);
+def AvgOvernightRange = MovingAverage(averageType, overnightRange, lengthATR);
+plot vOvernightRangePercent = overnightRange / close[1] * 100 ;
+vOvernightRangePercent.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+vOvernightRangePercent.AssignValueColor(if open > close[1] 
+                              then (Color.CYAN) 
+                            else if open < close[1]
+                              then (Color.YELLOW) 
+                            else (Color.WHITE));
+
+
+
+#vOvernightRangePercent.SetDefaultColor(Color.WHITE); JQ removed in version 2
+vOvernightRangePercent.SetLineWeight(1);
+vOvernightRangePercent.HideBubble();
+
+plot overnightATR_Percent = MovingAverage(averageType, vOvernightRangePercent, lengthATR);
+overnightATR_Percent.SetDefaultColor(Color.YELLOW);
+AddLabel (displayATRlabels, "Overnight: " + AsDollars(AvgOvernightRange) + " | " + AsPercent(overnightATR_Percent / 100) + " ", Color.YELLOW);
+
+# ATR Histogram painting code follows painting of 
+# overnight Bars so the Overnight Bars are painted on top
+# of the ATR Bars
+
+def TrueRange1 = TrueRange(high, close, low);
+plot vTrueRangePercent = (TrueRange1 / close[1]) * 100;
+vTrueRangePercent.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+
+
+vTrueRangePercent.AssignValueColor(if close > close[1] 
+                              then (Color.UPTICK) 
+                            else if close < close[1]
+                              then (Color.DOWNTICK) 
+                            else (Color.YELLOW));
+vTrueRangePercent.SetLineWeight(1);
+vTrueRangePercent.HideBubble();
+
+
+# debug labels
+AddLabel ( showDebugLabels, " Bar High " + high + " Bar Low " + low + " Close[1] " + close[1] + " ", Color.YELLOW);
+AddLabel (showDebugLabels, "Bar High - Close[1]] " + AbsValue(high - close[1]) + " | Bar Low - Close[1] " + AbsValue(low - close[1]) + " | Bar High - Bar Low " + (high - low) + " ", Color. YELLOW);
+
+
+
+
+# ATR Label
+# blt
+# 7.22.2016
+
+# Here are 2 simple atr labels using 2 different methods. The first one 
+# just uses an 'average' of the true range while the second one is TOS's 
+# built-in study that uses wildersaverage
+
+# 2018-04-10 Embellished on Label text to add information
+
+#input atrlength = 14;
+
+#def ATR_D = Average(TrueRange(high(period = AggregationPeriod.DAY), 
+#                              close(period = AggregationPeriod.DAY), 
+#                              low(period = AggregationPeriod.DAY)), length);
+
+#AddLabel(displayATRlabels, "ATR SMA: D " +  ATR_D, Color.YELLOW);
+#AddLabel(displayATRlabels, "ATR WildersMA: D " +  ATR(), Color.WHITE);
+
+#    End ATR Label  BLT Code
+
+
+
+
+
+
+# Earnings Lines code snippet from
+# Historic VS Implied Volatility At Earnings
+# Mobius
+# V01.2015
+
+
+def isBefore = HasEarnings(EarningTime.BEFORE_MARKET);
+def isAfter = HasEarnings(EarningTime.AFTER_MARKET);
+def isUnspecified = HasEarnings() and !isBefore and !isAfter;
+AddVerticalLine(isBefore and displayEarningsLines,
+               "                         Earn Before", 
+                Color.YELLOW, 
+                Curve.LONG_DASH);
+AddVerticalLine(isAfter and displayEarningsLines,
+               "                         Earn After", 
+                Color.YELLOW, 
+                Curve.LONG_DASH);
+AddVerticalLine(isUnspecified and displayEarningsLines,
+               "                         Earnings", 
+                Color.YELLOW, 
+                Curve.LONG_DASH);
+
+
+
+
+# Beta_CorrelationLabel_Mobius
+# Beta with a Correlation label
+# Mobius
+# Chat Room discussion
+# V01.01.11.2015
+
+
+input betaLength = 14; #default 60
+input returnLength = 1;
+input index = {default "SPY", "Nasdaq Composite", NDX, Dow30, "Russell 2000", "/GC", "/CL"};
+input price = FundamentalType.CLOSE;
+Assert(returnLength > 0, "'return length' must be positive: " + returnLength);
+
+def logic;
+switch (index) {
+case SPY:
+    logic = close("SPY");
+case "Nasdaq Composite":
+    logic = close("COMP");
+case NDX:
+    logic = close("NDX");
+case "Dow30":
+    logic = close("$DJI");
+case "Russell 2000":
+    logic = close("RUT");
+case "/GC":
+    logic = close("/GC");
+case "/CL":
+    logic = close("/CL");
+}
+def c1 = close(period = AggregationPeriod.DAY);
+def c2 = close(symbol = index, period = AggregationPeriod.DAY);
+def primary = if c1[returnLength] == 0 then 0 else (c1 - c1[returnLength]) / c1[returnLength] * 100;
+def secondary = if c2[returnLength] == 0 then 0 else (c2 - c2[returnLength]) / c2[returnLength] * 100;
+
+def Beta = Covariance(primary, secondary, betaLength) / Sqr(StDev(secondary, betaLength));
+def corr = Correlation(c1, c2, betaLength);
+
+AddLabel (no, BarNumber() + " Bar Beta " + (Round(Beta(), 2) ),  if corr > .75 then Color.GREEN else if Between(corr, 0, .75) then Color.YELLOW else Color.PINK);  # This is ToS not mobius code
+
+
+AddLabel(displayBetaLabels, " " + betaLength + " Bar Beta: " + Beta + " | Correlation: " + AsPercent(corr),  if corr > .75 then Color.GREEN else if Between(corr, 0, .75) then Color.YELLOW else Color.PINK);
+
+AddLabel(no, "Correlation: " + corr, if corr > .75 then Color.GREEN else if Between(corr, 0, .75) then Color.YELLOW else Color.PINK);
+
+# End Study Beta with a Correlation label
+
+
+# IV and Implied Move Approximation Label
+# Mobius
+
+def IV = if IsNaN(imp_volatility(period = AggregationPeriod.DAY))
+         then IV[1]
+         else imp_volatility(period = AggregationPeriod.DAY);
+def ImpliedMove = (open * IV) / Sqrt(365);
+AddLabel(displayIVlabels, " IV: " + AsPercent(IV) + "  Implied Move: " + AsDollars(ImpliedMove) + " or " + AsPercent(ImpliedMove / close), Color.WHITE);
+
+
+
+AddLabel (yes, "Current Bar: " + AsDollars(TrueRange1) + " | " + AsPercent(vTrueRangePercent / 100) + " ", if close > close[1] 
+                              then (Color.UPTICK) 
+                            else if close < close[1]
+                              then (Color.DOWNTICK) 
+                            else (Color.YELLOW));

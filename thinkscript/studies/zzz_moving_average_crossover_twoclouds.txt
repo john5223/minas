@@ -1,0 +1,215 @@
+#MovingAverageCrossover_TwoColorWithClouds_v3_test_v2
+#Modified by Nick Nick 7/14/15
+#http://tos.mx/Emk3El
+#7/15/15
+#Added inputs for bubble text strings and bubble color
+#Added alert for the cross down that got deleted somewhere
+#10/27/15
+#zzz added average value at cross into buy/sell bubbles and a bubble display limiter
+#zzz added dot/triangle/square for ADX/DMI/MACD.Diff. If adx > threshold then if Buy(Green) if Sell(Red) and if adx < threshold then (yellow). if buy and DI+>DI- or MACD.Diff>0 then Green else Red.
+#zzz added dot/triangel/square display limiter
+#zzz added guppy long term averages/clouds with ability to turn off plots and/or clouds
+#the moving average script is an update of hguru's script he posted yesterday in response to a request from someone else who wanted to have a moving average cross, with adx above 15 and dmi lining up. hguru indicated that he also liked to have the macd line up. so i took hguru's script and added the other items as dots/triangles/squares displayed either above/below (user option) price. one can look at the entry bubble (the moving average cross) and see what the other indicators are displaying. the adx is black for below 15, green when a buy bubble and red when a sell. the dmi is green if DI+>DI- and red otherwise, and macd is colored green if above zero and red if below. one can then determine whether these affect the timing of entry.
+#10/28/15 version 2
+#zzz replaced dot/triangle/square with dots above the Highest(high) of period defined by line_limiter
+#10/29/15 version 3
+#zzz added TTM_Trend and Mobius Supertrend dots
+#10/30/15 version 3
+#zzz added Vertical lines for trend direction agreement amongst indicators - exclude any green/red changes when adx below threshold or in a squeeze (newly added)
+#zzz added an arrow option in addition to vertical lines - the display of these can be limited
+#11/3/15
+#zzz moved cloud for short term moving average cross below long term guppy for better visibility
+#zzz change color of moving average cross bubble to yellow if adx<adxthreshol or in squeeze to indicate caution
+ 
+input usealerts = yes;
+input numberbubbles_displayed = 3;
+input number_verticals_arrows_displayed = 5;
+input use_indicator_line_limiter = yes;
+input indicatordot_line_limiter = 25;
+input showindicator_dots = yes;
+input indicator_dots_updown = 9.0;
+input indicator_dots_spacing = 3.0;
+input price = close;
+input displace = 0;
+input avglength_1 = 8;#hint avglength_1: used to create buy/sell bubbles
+input avglength_2 = 13;#hint avglength_2: used to create buy/sell bubbles
+input avgtype_1 = AverageType.EXPONENTIAL;
+input avgtype_2 = AverageType.EXPONENTIAL;
+input showMAcloud = yes;
+input GuppyLongTerm = yes;
+input showGuppyClouds = yes;
+input showverticals = yes;
+input showarrows = yes;
+input HeikinAshiarrows = yes;
+input arrow_mover_updown = 3;
+input buy_sell_bubble_offset = 3;#hint bubble_offset:Move bubbles above the high and beneath the low this number of ticks.
+input buy_text = "B";#hint buy_text:Text string for the bubble at a positive m.a crossover.
+input sell_text = "S";#hint sell_text:Text string for the bubble at a negative m.a crossover.
+ 
+DefineGlobalColor("Buy Bubble", Color.GREEN);
+DefineGlobalColor("Sell Bubble", Color.RED);
+ 
+#Primary short term averages for determination of buy/sell bubbles
+plot avgexp1 = MovingAverage(avgtype_1, price[-displace], avglength_1);
+plot avgexp2 = MovingAverage(avgtype_2, price[-displace], avglength_2);
+avgexp1.AssignValueColor(if avgexp1 > avgexp2 then Color.DARK_GREEN else Color.DARK_RED);
+avgexp1.HideBubble();
+avgexp2.AssignValueColor(if avgexp1 > avgexp2 then Color.DARK_GREEN else Color.DARK_RED);
+avgexp2.HideBubble();
+ 
+#SuperTrend, TTM, ADX, DMI & MACD.Diff
+# Mobius
+# SuperTrend - "Strategy"
+# Chat Room Request
+# V03.10.2015
+# Written as Strategy: Added alerts and label for cycle counts.
+# Altered default settings for values that made more sense on Intraday Futures. Added Color and ColorBars.
+#Hint:Supertrend Indicator: shows trend direction and gives buy or sell signals according to that. It is based on a combination of the average price rate in the current period along with a volatility indicator. The ATR indicator is most commonly used as volatility indicator. The values are calculated as follows:
+# Up = (HIGH + LOW) / 2 + Multiplier * ATR
+# Down = (HIGH + LOW) / 2 – Multiplier * ATR
+# When the change of trend occurs, the indicator flips
+ 
+input SupertrendAtrMult = .70;
+input SupertrendnATR = 4;
+input SupertrendAvgType = AverageType.HULL;
+ 
+def h = high;
+def l = low;
+def c = close;
+def ATR = MovingAverage(SupertrendAvgType, TrueRange(h, c, l), SupertrendnATR);
+def UPst = HL2 + (SupertrendAtrMult * ATR);
+def DNst = HL2 + (-SupertrendAtrMult * ATR);
+def ST = if c < ST[1]
+         then UPst
+         else DNst;
+def SuperTrend = ST;
+# End Code SuperTrend
+ 
+def ttmtrendup = TTM_Trend().trendup;
+input ADXthreshold = 20;
+input dmilength = 8;
+def adx = DMI(dmilength).ADX;
+def diplus = DMI(dmilength)."DI+";
+def diminus = DMI(dmilength)."DI-";
+input macdfastlength = 8;
+input macdslowlength = 17;
+input macdmacdlength = 9;
+def macd = MACD("fast length" = macdfastlength, "slow length" = macdslowlength, "macd length" = macdmacdlength).Diff;
+def up = if avgexp1 >= avgexp2 and avgexp1[1] < avgexp2[1]  then avgexp1 else Double.NaN;
+def down = if avgexp1<= avgexp2 and avgexp1[1] > avgexp2[1] then avgexp1 else Double.NaN;
+def upmode = if avgexp1 >= avgexp2 then 1 else if up[1] == 1 and IsNaN(down) then 1 else Double.NaN;
+def downmode = if avgexp1 <= avgexp2 then 1 else if down[1] == 1 and IsNaN(up) then 1 else Double.NaN;
+def lastbar = if !IsNaN(close) and IsNaN(close[-1]) then BarNumber() else lastbar[1];
+plot supertrendline = if showindicator_dots == no   then Double.NaN else if IsNaN(close) or use_indicator_line_limiter and BarNumber() <= HighestAll(lastbar) - indicatordot_line_limiter then Double.NaN else HighestAll(if !IsNaN(close) and IsNaN(close[-1]) then Highest(high, indicatordot_line_limiter) + TickSize() * (indicator_dots_updown)  else Double.NaN);
+supertrendline.AssignValueColor(if close > SuperTrend then Color.GREEN else Color.RED);
+supertrendline.SetPaintingStrategy(PaintingStrategy.POINTS);
+supertrendline.SetLineWeight(3);
+supertrendline.HideBubble();
+plot ttmtrendline = if showindicator_dots == no   then Double.NaN else if IsNaN(close) or use_indicator_line_limiter and BarNumber() <= HighestAll(lastbar) - indicatordot_line_limiter then Double.NaN else HighestAll(if !IsNaN(close) and IsNaN(close[-1]) then Highest(high, indicatordot_line_limiter) + TickSize() * (indicator_dots_updown + indicator_dots_spacing) else Double.NaN);
+ttmtrendline.AssignValueColor(if ttmtrendup then Color.GREEN else Color.RED);
+ttmtrendline.SetPaintingStrategy(PaintingStrategy.POINTS);
+ttmtrendline.SetLineWeight(3);
+ttmtrendline.HideBubble();
+plot dmiline = if showindicator_dots == no then Double.NaN else if IsNaN(close) or use_indicator_line_limiter and BarNumber() <= HighestAll(lastbar) - indicatordot_line_limiter then Double.NaN else HighestAll(if !IsNaN(close) and IsNaN(close[-1]) then Highest(high, indicatordot_line_limiter) + TickSize() * (indicator_dots_updown + indicator_dots_spacing + indicator_dots_spacing) else Double.NaN);
+dmiline.AssignValueColor(if diplus > diminus then Color.GREEN else Color.RED);
+dmiline.SetPaintingStrategy(PaintingStrategy.POINTS);
+dmiline.SetLineWeight(3);
+dmiline.HideBubble();
+plot macddiffline = if showindicator_dots == no then Double.NaN else if IsNaN(close) or use_indicator_line_limiter and BarNumber() <= HighestAll(lastbar) - indicatordot_line_limiter then Double.NaN else HighestAll(if !IsNaN(close) and IsNaN(close[-1]) then Highest(high, indicatordot_line_limiter) + TickSize() * (indicator_dots_updown + indicator_dots_spacing + indicator_dots_spacing + indicator_dots_spacing ) else Double.NaN);
+macddiffline.AssignValueColor(if macd > 0 then Color.GREEN else Color.RED);
+macddiffline.SetPaintingStrategy(PaintingStrategy.POINTS);
+macddiffline.SetLineWeight(3);
+macddiffline.HideBubble();
+def bbupper = reference BollingerBands().UpperBand;
+def kcupper = KeltnerChannels().Upper_Band;
+def Squeeze  = bbupper - kcupper < 0;
+plot dmiadxline = if showindicator_dots == no   then Double.NaN else if IsNaN(close) or use_indicator_line_limiter and BarNumber() <= HighestAll(lastbar) - indicatordot_line_limiter then Double.NaN else HighestAll(if !IsNaN(close) and IsNaN(close[-1]) then Highest(high, indicatordot_line_limiter) + TickSize() * (indicator_dots_updown + indicator_dots_spacing + indicator_dots_spacing+ indicator_dots_spacing+ indicator_dots_spacing) else Double.NaN);
+dmiadxline.AssignValueColor(if adx < ADXthreshold  or squeeze then Color.YELLOW else color.light_gray);
+dmiadxline.SetPaintingStrategy(PaintingStrategy.POINTS);
+dmiadxline.SetLineWeight(3);
+dmiadxline.HideBubble();
+ 
+# Moving Average Cross Bubble - Draw "B"for buy Bullish(green) & "S" for sell Bearish(Red)
+def count = numberbubbles_displayed;
+def cond = if !IsNaN(up) or !IsNaN(down) then 1 else Double.NaN;
+rec dataCount = CompoundValue(1, if !IsNaN(cond) then dataCount[1] + 1 else dataCount[1], 0);
+AddChartBubble(if HighestAll(dataCount) - dataCount <= count - 1 then up else Double.NaN, low - (TickSize() * buy_sell_bubble_offset),  buy_text + " " + Round(up, 2) , if adx<adxthreshold or squeeze then color.yellow else GlobalColor("Buy Bubble"), no);
+AddChartBubble(if HighestAll(dataCount) - dataCount <= count - 1 then down else Double.NaN, high + (TickSize() * buy_sell_bubble_offset),  sell_text + " " + Round(down, 2), if adx<adxthreshold or squeeze then color.yellow else GlobalColor("Sell Bubble"), yes);
+ 
+#Dot Description Bubbles
+input x = 3;#Hint x: moves bubbles describing dots sideways
+def x1  = x + 1;
+AddChartBubble(if showindicator_dots == no  then Double.NaN else IsNaN(close[x]) and !IsNaN(close[x1]), supertrendline[x1], "SuperT", if close[x1] > ST[x1] then Color.GREEN else Color.RED);
+AddChartBubble(if showindicator_dots == no  then Double.NaN else IsNaN(close[x]) and !IsNaN(close[x1]), ttmtrendline[x1], "TTM", if ttmtrendup[x1] then Color.GREEN else Color.RED);
+AddChartBubble(if showindicator_dots == no  then Double.NaN else IsNaN(close[x]) and !IsNaN(close[x1]), dmiadxline[x1], "ADX/Squeeze", if adx[x1] < ADXthreshold or squeeze[x1] then Color.YELLOW else color.light_gray);
+AddChartBubble(if showindicator_dots == no then Double.NaN else IsNaN(close[x]) and !IsNaN(close[x1]), dmiline[x1], "DMI", (if diplus[x1] > diminus[x1] then Color.GREEN else Color.RED));
+AddChartBubble(if showindicator_dots == no then Double.NaN else IsNaN(close[x]) and !IsNaN(close[x1]), macddiffline[x1], "MACD", if macd[x1] > 0 then Color.GREEN else Color.RED);
+ 
+#Verticals - exclude any green/red changes when adx below threshold; adx above threshold color not used in green/red trend determination
+def condgreen =  if (close > ST and ttmtrendup and adx > ADXthreshold and !squeeze  and diplus > diminus and
+macd > 0) then 1 else if condgreen[1] == 1 and !(close < ST and !ttmtrendup and adx > ADXthreshold and !squeeze  and diplus < diminus and macd < 0) then 1 else 0;
+def condred   =  if (close < ST and !ttmtrendup  and adx > ADXthreshold and !squeeze and diplus < diminus and macd < 0) then 1 else if condred[1] == 1 and !(close > ST and ttmtrendup and adx > ADXthreshold and !squeeze  and diplus > diminus and macd > 0) then 1 else 0;
+ 
+def count1 = number_verticals_arrows_displayed;
+def cond1 = if ((condgreen[1] == 0 and condgreen) or (condred[1] == 0 and condred == 1)) and adx > ADXthreshold  and !squeeze then 1 else Double.NaN;
+rec dataCount1 = CompoundValue(1, if !IsNaN(cond1) then dataCount1[1] + 1 else dataCount1[1], 0);
+AddVerticalLine(HighestAll(dataCount1) - dataCount1 <= count1 - 1 and showverticals and condgreen[1] == 0 and condgreen and adx > ADXthreshold  and !squeeze , "Trend Green     " + open, Color.GREEN, Curve.FIRM);
+AddVerticalLine(HighestAll(dataCount1) - dataCount1 <= count1 - 1 and showverticals and condred[1] == 0 and condred == 1 and adx > ADXthreshold  and !squeeze , "Trend Red       " + open, Color.RED, Curve.FIRM);
+ 
+#Arrows
+def HAclose   =  ohlc4;
+def HAopen    = CompoundValue( 1, ( HAopen[1] + HAclose[1] ) / 2, HAclose );
+def HAhigh    = Max( high, Max( HAopen, HAclose ) );
+def HAlow     = Min( low, Min( HAopen, HAclose ) );
+plot greenarrow = if HighestAll(dataCount1) - dataCount1 <= count1 - 1 and showarrows and condgreen[1] == 0 and condgreen then (if HeikinAshiarrows then HAlow else low) - tickSize() * arrow_mover_updown else double.nan;
+greenarrow.setpaintingStrategy(paintingStrategy.ARROW_UP);
+greenarrow.setdefaultColor(color.green);
+greenarrow.setlineWeight(3);
+greenarrow.hidebubble();
+plot redarrow = if HighestAll(dataCount1) - dataCount1 <= count1 - 1 and showarrows and condred[1] == 0 and condred then (if HeikinAshiarrows then HAhigh else high) + tickSize() * arrow_mover_updown else double.nan;
+redarrow.setpaintingStrategy(paintingStrategy.ARROW_down);
+redarrow.setdefaultColor(color.red);
+redarrow.setlineWeight(3);
+redarrow.hidebubble();
+ 
+#Trigger alerts
+Alert(usealerts and up, "EMA-Crossup", Alert.BAR, Sound.Ring);
+Alert(usealerts and down, "EMA-Crossdn", Alert.BAR, Sound.Ding);
+ 
+#Guppy Long Term
+input avg1 = AverageType.EXPONENTIAL;
+input len11 = 30;
+input len21 = 35;
+input len31 = 40;
+input len41 = 45;
+input len51 = 50;
+input len61 = 60;
+plot ma11 = if GuppyLongTerm == no then Double.NaN else MovingAverage(averagetype = avg1, price, len11);
+plot ma21 = if GuppyLongTerm == no then Double.NaN else MovingAverage(averagetype = avg1, price, len21);
+plot ma31 = if GuppyLongTerm == no then Double.NaN else MovingAverage(averagetype = avg1, price, len31);
+plot ma41 = if GuppyLongTerm == no then Double.NaN else MovingAverage(averagetype = avg1, price, len41);
+plot ma51 = if GuppyLongTerm == no then Double.NaN else MovingAverage(averagetype = avg1, price, len51);
+plot ma61 = if GuppyLongTerm == no then Double.NaN else MovingAverage(averagetype = avg1, price, len61);
+ma11.AssignValueColor(if ma11 < ma61 then Color.DARK_RED else Color.DARK_GREEN);
+ma21.AssignValueColor(if ma21[1] > ma21 then Color.DARK_RED else Color.DARK_GREEN);
+ma31.AssignValueColor(if ma31[1] > ma31 then Color.DARK_RED else Color.DARK_GREEN);
+ma41.AssignValueColor(if ma41[1] > ma41 then Color.DARK_RED else Color.DARK_GREEN);
+ma51.AssignValueColor(if ma51[1] > ma51 then Color.DARK_RED else Color.DARK_GREEN);
+ma61.AssignValueColor(if ma61 > ma11 then Color.DARK_RED else Color.DARK_GREEN);
+ma11.HideBubble();
+ma21.HideBubble();
+ma31.HideBubble();
+ma41.HideBubble();
+ma51.HideBubble();
+ma61.HideBubble();
+ 
+AddCloud(if showGuppyClouds == no then Double.NaN else ma11, ma61, Color.LIGHT_GREEN, Color.LIGHT_RED);
+AddCloud(if showGuppyClouds == no then Double.NaN else ma21, ma61, Color.LIGHT_GREEN, Color.LIGHT_RED);
+AddCloud(if showGuppyClouds == no then Double.NaN else ma31, ma61, Color.LIGHT_GREEN, Color.LIGHT_RED);
+AddCloud(if showGuppyClouds == no then Double.NaN else ma41, ma61, Color.LIGHT_GREEN, Color.LIGHT_RED);
+AddCloud(if showGuppyClouds == no then Double.NaN else ma51, ma61, Color.LIGHT_GREEN, Color.LIGHT_RED);
+ 
+#Cloud short term moving averages. additional cloud for better resolution
+AddCloud(if showMAcloud then avgexp1 else Double.NaN, if showMAcloud then avgexp2 else Double.NaN, color1 = Color.GREEN, color2 = Color.RED);
+AddCloud(if showMAcloud then avgexp1 else Double.NaN, if showMAcloud then avgexp2 else Double.NaN, color1 = Color.GREEN, color2 = Color.RED);
+#end

@@ -1,0 +1,68 @@
+# Mobius_Fractal_Energy_Stochastic
+# Fractal Energy Stochastic - Easier to read signals
+# Mobius
+# V01.05.15.2018
+# 
+# 5/24/18
+# 12:42 Mobius: Thinking about re-plotting it as an upper signal (would look similar to a zigzag) with the final line as a projection once the signal happens based on the last cycles length.  Combing Cycle analysis with trend analysis.
+
+declare lower;
+
+input length = 13;
+input Trend = .20;
+input Flag = .80;
+input GLength = 5;
+input beta = 8;
+
+script G {
+    input p = close;
+    input n = 5;
+    input b = 8;
+    def w;
+    def beta;
+    def alpha;
+    def G;
+    w = (2 * Double.Pi / n);
+    beta = (1 - Cos(w)) / (Power(1.414, 2.0 / b) - 1 );
+    alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+    G = Power(alpha, 4) * p + 
+        4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] + 
+        4 * Power( 1 - alpha, 3 ) * G[3] - Power( 1 - alpha, 4 ) * G[4];
+    plot data = G;
+}
+# Variables:
+def bar = BarNumber();
+def o;
+def h;
+def l;
+def c;
+o = g(open, GLength, beta);
+h = g(high, GLength, beta);
+l = g(low, GLength, beta);
+c = g(close, GLength, beta);
+def x;
+def FE;
+def hh;
+def ll;
+def R;
+plot D;
+plot T;
+plot F;
+x = barNumber();
+FE = Log(Sum(Max(h, c[1]) - Min(l, c[1]), length) / 
+        (Highest(h, length) - Lowest(l, length))) / 
+         Log(length);
+hh = Highest(FE, length);
+ll = Lowest(FE, length);
+R = (FE - ll) / (hh - ll);
+D = if R >= .5 then .99 else if R < .5 then .01 else 0;
+D.SetDefaultColor(GetColor(1));
+T = Trend;
+T.SetDefaultColor(GetColor(8));
+F = Flag;
+F.SetDefaultColor(GetColor(8));
+AddCloud(Flag, 1, color.yellow, color.yellow);
+AddCloud(0, Trend, color.green, color.green);
+addChartBubble(x == highestAll(x), 1, "Flag", color.yellow, no);
+addChartBubble(x == highestAll(x), 0, "trending", color.green, yes);
+# End Code Fractal Energy Stochastic

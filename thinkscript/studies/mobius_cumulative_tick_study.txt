@@ -1,0 +1,41 @@
+# Cumulative TICK
+# Mobius
+# V01.06.2015
+
+declare lower;
+
+input TSYMBOL = {default "$TICK", "$TICK/Q", "$TICKA", "$TICKAC", "$TICKAR","$TICKARC","$TICKC", "$TICKC/Q","$TIKI", "$TIKIC", "$TIKND", "$TIKNDC", "$TIKRL", "$TIKSP","$TICKSPC","$TIKUS", "$TIKUSC"};
+input openRTH  = 0930;
+input closeRTH = 1600;
+input DisplayLabel = yes;
+input AlertOn = yes;
+
+def Active = if secondsFromTime(openRTH) > 0 and
+                secondsTillTime(closeRTH) >= 0
+             then 1
+             else 0;
+def Tick = close(Symbol = Tsymbol);
+def cumTick = if !Active
+               then double.nan
+               else if Active and !Active[1]
+                    then Tick
+                    else if Active
+                         then cumTick[1] + Tick
+                         else cumTick[1];
+plot cT = cumTick;
+ct.SetLineWeight(3);
+cT.SetPaintingStrategy(PaintingStrategy.Points);
+cT.AssignValueColor(if !isNaN(cT) and isNaN(cT[1])
+                    then color.blue
+                    else if cT > cT[1]
+                         then color.green
+                         else color.red);
+plot zero = if isNaN(close)
+            then double.nan
+            else 0;
+zero.SetDefaultColor(color.gray);
+AddLabel(DisplayLabel, "TICK = " + Tick, 
+      if TICK < 0 
+      then color.red
+      else color.green);
+Alert(AlertOn and ((TICK crosses above 800) or (TICK crosses below 800)), "TICK ALERT", Alert.Bar, Sound.Bell);

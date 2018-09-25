@@ -1,0 +1,170 @@
+declare lower;
+
+input over_bought = 80;
+input over_sold = 20;
+input KPeriod = 10;
+input DPeriod = 3;
+input priceH = high;
+input priceL = low;
+input priceC = close;
+input slowing_period = 3;
+input averageType = AverageType.SIMPLE;
+input showBreakoutSignals = {default "No", "On FullK", "On FullD", "On FullK & FullD"};
+
+def lowest_k = Lowest(priceL, KPeriod);
+def c1 = priceC - lowest_k;
+def c2 = Highest(priceH, KPeriod) - lowest_k;
+def FastK = if c2 != 0 then c1 / c2 * 100 else 0;
+
+plot FullK = MovingAverage(averageType, FastK, slowing_period);
+plot FullD = MovingAverage(averageType, FullK, DPeriod);
+
+plot OverBought = over_bought;
+plot OverSold = over_sold;
+
+def upK = FullK crosses above OverSold;
+def upD = FullD crosses above OverSold;
+def downK = FullK crosses below OverBought;
+def downD = FullD crosses below OverBought;
+
+plot UpSignal;
+plot DownSignal;
+switch (showBreakoutSignals) {
+case "No":
+    UpSignal = Double.NaN;
+    DownSignal = Double.NaN;
+case "On FullK":
+    UpSignal = if upK then OverSold else Double.NaN;
+    DownSignal = if downK then OverBought else Double.NaN;
+case "On FullD":
+    UpSignal = if upD then OverSold else Double.NaN;
+    DownSignal = if downD then OverBought else Double.NaN;
+case "On FullK & FullD":
+    UpSignal = if upK or upD then OverSold else Double.NaN;
+    DownSignal = if downK or downD then OverBought else Double.NaN;
+}
+
+UpSignal.setHiding(showBreakoutSignals == showBreakoutSignals."No");
+DownSignal.setHiding(showBreakoutSignals == showBreakoutSignals."No");
+
+FullK.SetDefaultColor(GetColor(5));
+FullD.SetDefaultColor(GetColor(0));
+OverBought.SetDefaultColor(GetColor(1));
+OverSold.SetDefaultColor(GetColor(1));
+UpSignal.SetDefaultColor(Color.UPTICK);
+UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+DownSignal.SetDefaultColor(Color.DOWNTICK);
+DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+
+# ----- define a valley as any point which is lower than the three preceding lows and the three following lows
+def Valley = low < Lowest(low[1], 3) and low < Lowest(low[-3], 3);
+
+def Peak = high > Highest (high[1], 3) and high > highest(high[-3], 3);
+# ----- mark each valley with an up arrow -----
+# ----- mark each peak with a down arrow -----
+plot ArrowDown =Peak;
+ArrowDown.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+ArrowDown.SetDefaultColor(Color.RED);
+ArrowDown.SetLineWeight(4);
+#---------------------------------------
+plot ArrowUP = Valley;
+ArrowUP.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+ArrowUP.SetDefaultColor(Color.GrEEN);
+ArrowUP.SetLineWeight(4);
+
+# May 27 2012 - FractalTrader 
+# 
+#This script will show support and resistance lines based on either 
+# user-defined price pivots, or automatically based on pivot points 
+# calculated by the script. In the case of automatic determination, only 
+# the last two matching points are used. 
+#hint numBars: For automatic pivot calculation: How many bars to use in calculation of pivotPoints. ie. current high is higher than both prior X bars and following X bars 
+#hint showLines: Show a line extending from high and low price pivots 
+#hint showValues: Show the numeric value of price occurring at the pivot point 
+#hint showBarNumbers: For manually entered pivots: used to determine bar numbers for two price pivot points to connect. It is recommended to temporarily turn off showValues. 
+#hint TrendResistanceStart: Starting point of a resistance trend line (connecting the highs), entered as a bar number. It is recommended to turn on showBarNumbers temporarily to determine the value. 
+#hint TrendResistanceEnd: Ending point of a resistance trend line, entered as a bar number. It is recommended to turn on showBarNumbers temporarily to determine the value. 
+#hint TrendSupportStart: Starting point of a support trend line (connecting the lows), entered as a bar number. It is recommended to turn on showBarNumbers temporarily to determine the value. 
+#hint TrendSupportEnd: Ending Point of a support trend line (connecting the lows), entered as a bar number. It is recommended to turn on showBarNumbers temporarily to determine the value. 
+input numBars = 5; 
+input showLines = yes; 
+input showValues = yes; 
+input showBarNumbers = yes; 
+input TrendResistanceStart = 0; 
+input TrendResistanceEnd = 0; 
+input TrendSupportStart = 0; 
+input TrendSupportEnd = 0; 
+
+def UserSetResistance = TrendResistanceStart > 0 and TrendResistanceEnd > 0; 
+def UserSetSupport = TrendSupportStart > 0 and TrendSupportEnd > 0; 
+def currentHigh = high; 
+def currentLow = low; 
+def currentBar = BarNumber(); 
+def PH; 
+def PL; 
+def isHigherThanNextBars = fold i = 1 to numBars + 1 with p = 1 
+while p do currentHigh > GetValue(high, -i); 
+PH = if UserSetResistance and ( currentBar == TrendResistanceStart or currentBar == TrendResistanceEnd ) then currentHigh else if !UserSetResistance and (currentBar > numBars and currentHigh == Highest(currentHigh, numBars) and isHigherThanNextBars) then currentHigh else Double.NaN; 
+def isLowerThanNextBars = fold j = 1 to numBars + 1 with q = 1 
+while q do currentLow < GetValue(low, -j); 
+PL = if UserSetSupport and ( currentBar == TrendSupportStart or currentBar == TrendSupportEnd ) then currentLow else if !UserSetSupport and (currentBar > numBars and currentLow == Lowest(currentLow, numBars) and isLowerThanNextBars) then currentLow else Double.NaN; 
+rec PHBar = if UserSetResistance then TrendResistanceEnd else if !IsNaN(PH) then currentBar else PHBar[1]; 
+rec PLBar = if UserSetSupport then TrendSupportEnd else if !IsNaN(PL) then currentBar else PLBar[1]; 
+rec PHL = if !IsNaN(PH) then PH else PHL[1]; 
+rec priorPHBar = if UserSetResistance then TrendResistanceStart else if PHL != PHL[1] then PHBar[1] else priorPHBar[1]; 
+rec PLL = if !IsNaN(PL) then PL else PLL[1]; 
+rec priorPLBar = if UserSetSupport then TrendSupportStart else if PLL != PLL[1] then PLBar[1] else priorPLBar[1]; 
+def isFinalTwoHighPivots = currentBar >= HighestAll(priorPHBar); 
+def isFinalTwoLowPivots = currentBar >= HighestAll(priorPLBar); 
+def ResistanceFinishOffset = if isFinalTwoHighPivots then currentBar - PHBar else 0; 
+def ResistanceStartOffset = if isFinalTwoHighPivots then currentBar - priorPHBar else 0; 
+def ResistanceSlope = (GetValue(PH, ResistanceFinishOffset) - GetValue(PH, ResistanceStartOffset)) / (PHBar - priorPHBar); 
+def SupportFinishOffset = if isFinalTwoLowPivots then currentBar - PLBar else 0; 
+def SupportStartOffset = if isFinalTwoLowPivots then currentBar - priorPLBar else 0; 
+def SupportSlope = (GetValue(PL, SupportFinishOffset) - GetValue(PL, SupportStartOffset)) / (PLBar - priorPLBar); 
+rec ResistanceExtend = if currentBar == HighestAll(PHBar) then 1 else ResistanceExtend[1]; 
+rec SupportExtend = if currentBar == HighestAll(PLBar) then 1 else SupportExtend[1]; 
+
+plot pivotHigh = if 
+#isFinalTwoHighPivots 
+ph>0 then PH else Double.NaN; 
+plot pivotHighLine = if PHL > 0 and isFinalTwoHighPivots then PHL else Double.NaN; 
+
+plot ResistanceLine = pivotHigh; 
+plot ResistanceExtension = if ResistanceExtend then (currentBar - PHBar) * ResistanceSlope + PHL else Double.NaN; 
+plot pivotLow = if 
+#isFinalTwoLowPivots 
+pl>0 then PL else Double.NaN; 
+plot pivotLowLine = if PLL > 0 and isFinalTwoLowPivots then PLL else Double.NaN; 
+plot SupportLine = pivotLow; 
+plot SupportExtension = if SupportExtend then (currentBar - PLBar) * SupportSlope + PLL else Double.NaN; 
+plot BN = currentBar; 
+plot PivotDot = if !IsNaN(pivotHigh) then pivotHigh else if !IsNaN(pivotLow) then pivotLow else Double.NaN;
+plot BisectLine = if !isNaN(pivotHigh) then pivotHigh else if !isNaN(pivotLow) then pivotLow else double.NaN; 
+pivotHigh.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE); 
+pivotHigh.SetHiding(!showValues); 
+pivotLow.SetDefaultColor(GetColor(4)); 
+pivotLow.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW); 
+pivotLow.SetHiding(!showValues); 
+ResistanceLine.EnableApproximation(); 
+ResistanceLine.SetDefaultColor(GetColor(7)); 
+ResistanceLine.SetStyle(Curve.SHORT_DASH); 
+ResistanceExtension.SetStyle(Curve.SHORT_DASH); 
+ResistanceExtension.SetDefaultColor(GetColor(7)); 
+SupportLine.EnableApproximation(); 
+SupportLine.SetDefaultColor(GetColor(7)); 
+SupportLine.SetStyle(Curve.SHORT_DASH); 
+SupportExtension.SetDefaultColor(GetColor(7)); 
+SupportExtension.SetStyle(Curve.SHORT_DASH); 
+pivotHighLine.SetPaintingStrategy(PaintingStrategy.DASHES); 
+pivotHighLine.SetHiding(!showLines); 
+pivotLowLine.SetPaintingStrategy(PaintingStrategy.DASHES); 
+pivotLowLine.SetHiding(!showLines); 
+BisectLine.EnableApproximation(); 
+BisectLine.SetLineWeight(2); 
+PivotDot.SetDefaultColor(GetColor(7)); 
+PivotDot.SetPaintingStrategy(PaintingStrategy.POINTS); 
+PivotDot.SetLineWeight(3); 
+BN.SetDefaultColor(GetColor(0)); 
+BN.SetHiding(!showBarNumbers); 
+BN.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW); 

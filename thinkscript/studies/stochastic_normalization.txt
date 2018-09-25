@@ -1,0 +1,62 @@
+#11:06 Mobius: Here's a code that should get the little gray cells working
+# jcseattle added IsNaN to secondary symbol recall and add some arrows.
+
+# Stochastic Normalization
+# Underlying & Secondary Symbol Normalized in Stochastic Range
+# Mobius
+# 11.27.2017
+
+declare lower;
+
+input Debug = YES;
+input secondSym = "PUT";
+input over_bought = .8;
+input over_sold = .2;
+input KPeriod = 55;
+input DPeriod = 55;
+input slowing_period = 3;
+input averageType = AverageType.SIMPLE;
+
+def h = if !IsNaN(high) then high else h[1];
+def l = if !IsNaN(low) then low else l[1];
+def c = if !IsNaN(close) then close else c[1];
+def hSS = If !IsNaN(High(secondSym)) then High(secondSym) else hSS[1];
+addLabel(Debug, "Second H = " + hSS);
+def lSS = if !IsNaN(low(secondSym)) then low(secondSym) else lSS[1];
+addLabel(Debug, "Second L = " + lSS);
+def cSS = if !IsNaN(close(secondSym)) then close(secondSym) else cSS[1];
+addLabel(Debug, "Second C = " + cSS);
+def lowest_k = Lowest(l, KPeriod);
+def lowest_ks = Lowest(lSS, KPeriod);
+def c1 = c - lowest_k;
+def c1s = cSS - lowest_ks;
+def c2 = Highest(h, KPeriod) - lowest_k;
+def c2s = Highest(hSS, KPeriod) - lowest_ks;
+def FastK = if c2 != 0 then c1 / c2 else 0;
+def FastKs = if c2s != 0 then c1s / c2s else 0;
+
+plot FullK = if !IsNaN(Close[-1]) 
+then MovingAverage(averageType, FastK, slowing_period) else Double.NaN;
+plot FullKs = if !IsNaN(Close[-1]) 
+then MovingAverage(averageType, FastKs, slowing_period) else Double.NaN;
+plot OverBought = over_bought;
+plot OverSold = over_sold;
+
+FullK.SetDefaultColor(GetColor(5));
+FullKs.SetDefaultColor(GetColor(1));
+OverBought.SetDefaultColor(GetColor(9));
+OverSold.SetDefaultColor(GetColor(9));
+AddLabel(1, "This color line is " + getSymbol(), GetColor(5));
+AddLabel(1, "This color line is " + secondSym, GetColor(1));
+
+#######################################################################
+input ShowArrows = YES;
+
+plot ArrDn = if ShowArrows and FullKs crosses above OverSold then OverBought else Double.NaN;
+ArrDn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+
+plot ArrUp = if ShowArrows and FullKs crosses below OverBought then OverSold else Double.NaN;
+ArrUp.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+
+
+# End Code Stochastic Normalization

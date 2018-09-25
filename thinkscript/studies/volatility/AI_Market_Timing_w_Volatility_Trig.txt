@@ -1,0 +1,60 @@
+#StudyName:     AI_Market_Timing_w_Volatility_Triggers_v2
+#Version/Date:  v1 - 04-15-2017
+#Type:          Study
+#TOS.mx Link:
+#Description:   Risk-Managed Approach using VIX magnitude and direction  
+#Author:        AlphaInvestor
+#Copyright:     Copyright AlphaInvestor 2017. All rights reserved.
+#Copyleft:      This program is free software: you can redistribute it and/or modify
+#               it under the terms of the GNU General Public License as published by
+#               the Free Software Foundation, either version 3 of the License, or
+#               (at your option) any later version. See <http://www.gnu.org/licenses/>
+#Requested By:  
+#History:       Ver  Date        Auth  Change
+#               v2 - 04-12-2017 - added VIX lookback (default to 1 month (21 days) as per article
+#               v2              - added user defined cutoff (default 20, try 15 too)
+#               v1 - 04-15-2017 - AI - Initial coding
+# Notes:        Based on blog post in EconomicPic
+#                https://econompicdata.blogspot.com/2017/04/buy-when-theres-blood-in-streets-market.html
+# Annotation:   Annotation
+# Trading Notes: "Don't gamble; take all your savings and buy some good stock and hold it till it goes up, then sell it. If it don't go up, don't buy it." - Will Rogers
+
+#    High Volatility Regime (VIX > 20): volatility is more likely to remain elevated
+#    Low Volatility Regime (VIX < 20): volatility is more likely to remain low
+
+#    Low volatility regime (VIX < 20 or declining): 100% S&P 500 Index
+#    High volatility regime (VIX > 20 and increasing): 100% Bloomberg Barclays US Intermediate Treasury Index
+
+declare lower;
+
+input lookback = 21;
+input VOLcutoff = 20.0;
+plot VIX = close(symbol = "VIX");
+def chVIX = VIX - VIX[lookback];
+VIX.setlineweight(3);
+VIX.assignValueColor(if VIX > VOLcutoff and chVIX > 0 then color.red 
+                else if VIX > VOLcutoff and chVIX <= 0 then color.pink
+                else if VIX <= VOLcutoff and chVIX > 0 then color.white 
+                else if VIX <= VOLcutoff and chVIX <= 0 then color.green
+                else color.gray);
+Addlabel(1,if VIX > VOLcutoff and chVIX > 0 then "LONG BONDS - highVol - volRising"
+      else if VIX > VOLcutoff and chVIX <= 0 then "long s&p500 - highVol - volFalling"
+      else if VIX <= VOLcutoff and chVIX > 0 then "long S&P500 - lowVol - volRising"
+      else if VIX <= VOLcutoff and chVIX <= 0 then "LONG S&&P500 - lowVol - volFalling"
+      else "FLAT",
+               if VIX > VOLcutoff and chVIX > 0 then color.red 
+          else if VIX > VOLcutoff and chVIX <= 0 then color.pink
+          else if VIX <= VOLcutoff and chVIX > 0 then color.white
+          else if VIX <= VOLcutoff and chVIX <= 0 then color.green
+          else color.gray);
+
+plot avgVIX = average(VIX,252);
+avgVIX.setlineweight(2);
+avgVIX.setdefaultcolor(color.gray);
+
+# End Study
+
+# AI Debug
+input debug = yes;
+addlabel(debug,"VIX: "+vix,color.gray);
+addlabel(debug,"chVIX: "+chvix,color.gray);

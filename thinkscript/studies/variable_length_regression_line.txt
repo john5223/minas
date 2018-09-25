@@ -1,0 +1,92 @@
+# Pivots with Variable Length Regression Line
+# Mobius
+# V01.01.2018
+
+input n = 20;
+input y = close;
+
+# Variables
+def o = open;
+def h = high;
+def l = low;
+def c = close;
+def x = BarNumber();
+def xx = if isNaN(close[-1]) and !isNaN(close) then x else xx[1];
+def hh = fold i = 1 to n 
+         with p = 1
+         while p 
+         do h > GetValue(h, -i);
+def PivotH = if (x > 2 and 
+                 h == Highest(h, n) and 
+                 hh)
+            then h 
+            else Double.NaN;
+def PHValue = if !IsNaN(PivotH) 
+              then PivotH
+              else PHValue[1];
+def PHBar = if !IsNaN(PivotH) 
+            then x 
+            else double.nan;
+def ll = fold j = 1 to n 
+         with q = 1
+         while q 
+         do l < GetValue(l, -j);
+def PivotL = if (x > n and 
+                 l == Lowest(l, n) and
+                 ll)
+             then l 
+             else Double.NaN;
+def PLValue = if !IsNaN(PivotL) 
+              then PivotL
+              else PLValue[1];
+def PLBar = if !IsNaN(PivotL) 
+                  then x 
+                  else double.nan;
+def nhP = HighestAll(xx) - HighestAll(PHbar);
+script E
+    {
+     input data = close;
+     input n = 20;
+     def t = fold i = 0 to n
+             with s
+             do s + getValue(data, i);
+     plot output = t;
+    }
+def nan = double.nan;
+def x1 = HighestAll(if !IsNaN(y) and IsNaN(y[-1])
+                    then x
+                    else nan);
+def x0 = HighestAll(if GetValue(x, -nhP) == x1
+                    then x
+                    else nan);
+def x_ = if GetValue(x, -nhP) >= x1 
+         then x - x0
+         else x_[1];
+def Ex  = E(x_, nhp);
+def Ey  = E(y, nhp);
+def Exy = E(x_ * y, nhp);
+def Exsq = E(sqr(x_), nhp);
+def b = (nhP * Exy - (Ex * Ey)) / (nhP * Exsq - (Ex * Ex));
+def a = (GetValue(Ey, x - x1) - GetValue(b, x - x1) * GetValue(Ex, x - x1)) / nhP;
+# Plots
+plot R1 = if x >= HighestAll(PHBar)
+          then HighestAll(if isNaN(close[-1])
+                          then PHValue
+                          else double.nan)
+          else double.nan;
+     R1.SetDefaultColor(Color.Green);
+
+plot S1 = if x >= HighestAll(PLBar)
+          then HighestAll(if isNaN(close[-1])
+                          then PLValue
+                          else double.nan)
+          else double.nan;
+     S1.SetDefaultColor(Color.Red);
+
+plot LRL = if x >= x0 
+           then a + (GetValue(b, x - x1) * x_) 
+           else nan;
+    LRL.SetStyle(Curve.Firm);
+    LRL.SetDefaultColor(Color.Cyan);
+
+# Pivots with Variable Length Linear Regression Line

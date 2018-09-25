@@ -1,0 +1,48 @@
+# CCI based on Normalized Price of Mean deviation
+# Mobius
+# V01.06.2018
+
+declare lower;
+
+input length = 14;
+input over_sold = -100;
+input over_bought = 100;
+input showBreakoutSignals = no;
+
+script g {
+    input data = close;
+    input length  = 4;
+    def w = (2 * Double.Pi / length);
+    def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / .6) - 1 );
+    def alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+    def G = Power(alpha, 4) * data + 
+                 4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] + 
+                 4 * Power( 1 - alpha, 3 ) * G[3] - Power( 1 - alpha, 4 ) * G[4];
+    plot Line = G;
+}
+def o = g(data = open);
+def h = g(data = high);
+def l = g(data = low);
+def c = g(data = close);
+
+def price = c+h+l;
+def meanDev = (1/length)*sum(AbsValue(price-g(data=price, length = length)),length);
+;
+plot CCI = if meanDev == 0 then 0 else (price - g(data = price, length = length)) / meanDev/.015;
+plot OverBought = over_bought;
+plot ZeroLine = 0;
+plot OverSold = over_sold;
+plot UpSignal = if CCI crosses above ZeroLine then ZeroLine else Double.Nan;
+plot DownSignal = if CCI crosses below ZeroLine then ZeroLine else Double.Nan;
+
+UpSignal.SetHiding(!showBreakoutSignals);
+DownSignal.SetHiding(!showBreakoutSignals);
+
+CCI.setDefaultColor(GetColor(9));
+OverBought.setDefaultColor(GetColor(5));
+ZeroLine.setDefaultColor(GetColor(5));
+OverSold.setDefaultColor(GetColor(5));
+UpSignal.SetDefaultColor(Color.UPTICK);
+UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+DownSignal.SetDefaultColor(Color.DOWNTICK);
+DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);

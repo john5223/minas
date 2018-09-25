@@ -1,0 +1,26 @@
+   #Part 3 of 5 part: energies of the market:  by Dr. Barry Burns                                                                      
+declare lower;
+input over_bought = 80;
+input over_sold = 20;
+input Kperiod = 5;
+input Dperiod = 3;
+input priceH = high;
+input priceL = low;
+input priceC = close;
+input slowing_period = 2;
+input smoothingType = {default SMA, EMA};
+
+plot FullK = StochasticFull(over_bought, over_sold, Kperiod, Dperiod, priceH, priceL, priceC, slowing_period, smoothingType).FullK;
+plot FullD = StochasticFull(over_bought, over_sold, Kperiod, Dperiod, priceH, priceL, priceC, slowing_period, smoothingType).FullD;
+plot MidLIne = 55;
+plot fortyfive = 45;
+plot OverBought = over_bought;
+plot OverSold = over_sold;
+
+FullK.SetDefaultColor(Color.GREEN);
+FullK.SetLineWeight(2);
+FullD.AssignValueColor(if FullD > FullD[1] then Color.BLUE else Color.RED);
+FullD.SetLineWeight(3);
+OverBought.SetDefaultColor(Color.BLACK);
+OverSold.SetDefaultColor(Color.BLACK);
+MidLIne.SetDefaultColor(Color.BLACK);

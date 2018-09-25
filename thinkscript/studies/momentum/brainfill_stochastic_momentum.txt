@@ -1,0 +1,49 @@
+
+#Stochastic Momentum Index....5-minute
+#GL5 ----October 2016
+declare lower;
+def isLast = IsNaN(close[-1]) and !IsNaN(close);
+
+input showclouds=yes;
+input uBand=50.0;
+input over_bought = 60.0;
+input over_sold = -55.0;
+input percentDLength = 5;
+input percentKLength = 8.1;
+
+def min_low = lowest(low, percentKLength);
+def max_high = highest(high, percentKLength);
+def rel_diff = close - (max_high + min_low)/2;
+def diff = max_high - min_low;
+
+def avgrel = expaverage(expaverage(rel_diff, percentDLength), percentDLength);
+def avgdiff = expaverage(expaverage(diff, percentDLength), percentDLength);
+
+def SMI = if avgdiff != 0 then avgrel / (avgdiff / 2) * 100 else 0;
+
+plot rSMI=Round(SMI,1);
+
+plot AvgSMI = expaverage(smi, percentDLength);
+
+rSmi.SetLineWeight(3);
+rSmi.DefineColor("Positive", Color.cyan);
+rSmi.DefineColor("Negative", Color.magenta);
+
+rSmi.AssignValueColor(if SMI>AvgSMI and SMI>=SMI[1]
+    then if SMI>SMI[1] then rSmi.Color("Positive") 
+    else rSMI.Color("Positive") 
+    else if SMI < SMI[1] then rSmi.Color("Negative") 
+    else rSMI.Color("Negative"));
+
+avgsmi.setDefaultColor(getcolor(5));
+avgsmi.HideBubble();
+
+plot overbought = over_bought;
+overbought.setDefaultColor(getcolor(5));
+overbought.HideBubble();
+
+plot oversold = over_sold;
+oversold.setDefaultColor(getcolor(5));
+oversold.HideBubble();
+
+

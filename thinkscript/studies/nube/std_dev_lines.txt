@@ -1,0 +1,138 @@
+
+# Standard Deviation Lines
+# Mobius
+# V01.05.2013
+# Used to determine Over Sold and Over Bought Areas
+# Nube 11-4-17 converted to histogram "distance from mean thingy" - AI  
+# Nube 11-5-17 added entry signal based on price returning back across mean after extending input deviations. short = no for long side signals
+#hint: Distance from mean study w/ crossing signal when price comes back across mean from an input number of deviations away. Vertical lines are possible early countertrend for those that like to countertrend scalp. Vertical lines will always be counter to direction selected by input.
+# Nube 11-22-17 Changed mean to stochastic mean from Mobius Drift Adjusted CCI
+
+declare lower;
+input price = HLC3;
+input length = 18;  #hint length:For determining mean
+input SdMult = 3.0; #hint SdMult:Deviations away before signaling return back across mean
+input InertiaLength = 5;
+input short  = no;  #hint short:Yes for long cross back across mean
+input ColorCandles = no;
+#def c    = close();
+def h    = high();
+def l    = low();
+def na   = Double.NaN;
+def bn   = BarNumber();
+# StochasticCrossover mean from Mobius Drift Adjusted CCI
+def StochPrice = (Highest(h, length) + Lowest(l, length) + close()) / 3;
+def mean       = Inertia(stochprice, length);
+def rmean      = Round(mean/TickSize(),0)*TickSize();
+def SD       = StDev(price, length);
+def relation = inertia((price-mean),InertiaLength);;
+def LowerSD  = rmean - SdMult * SD-price;
+def UpperSD  = rmean + SDMult * SD-price;
+
+def relvalue = if     relation crosses below LowerSD
+                then  1 else 
+               if     relation crosses above 0
+                then  2 else 
+               if     relation crosses above UpperSD 
+                then  3 else 
+               if     relation crosses below 0
+                then  2
+                 else relvalue[1];
+
+    plot ZeroLine = 0;
+         ZerolIne.SetDefaultColor(Color.Dark_Gray);
+         ZeroLine.SetStyle(Curve.SHORT_DASH);
+         ZeroLine.HideTitle();
+
+    plot Posrelation = if     relation >= 0
+                        then  relation
+                         else na;
+         Posrelation.HideTitle();
+         Posrelation.HideBubble();
+         PosRelation.SetLineWeight(4);
+         Posrelation.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+         PosRelation.DefineColor("Strong Above", Color.Light_Green);
+         PosRelation.DefineColor("Weak Above", Color.Dark_Green);   
+         Posrelation.AssignNormGradientColor( bn,
+         PosRelation.Color("Weak Above"), 
+         PosRelation.Color("Strong Above"));
+
+    plot NegRelation = if     relation < 0
+                        then  relation
+                         else na;
+         Negrelation.HideTitle();
+         Negrelation.HideBubble();
+         NegRelation.SetLineWeight(4);
+         Negrelation.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+         NegRelation.DefineColor("Strong Below", Color.Orange);
+         NegRelation.DefineColor("Weak Below", Color.Red);   
+         Negrelation.AssignNormGradientColor( bn,
+         NegRelation.Color("Weak Below"), 
+         NegRelation.Color("Strong Below"));
+
+    plot Watch = if     !short 
+                   &&   relation < LowerSD 
+                  then  0 
+                   else na;
+         Watch.setdefaultcolor(Color.Yellow);
+         Watch.SetpaintingStrategy(PaintingStrategy.POINTS);
+         Watch.HideBubble();
+         Watch.HideTitle();
+    plot ShortWatch = if     short 
+                        &&   relation > UpperSD 
+                       then  0 
+                        else na;
+         ShortWatch.setdefaultcolor(Color.Yellow);
+         ShortWatch.SetpaintingStrategy(PaintingStrategy.POINTS);
+         ShortWatch.HideBubble();
+         ShortWatch.HideTitle();               
+    plot Entry = if     !short 
+                   &&   relvalue crosses above 1.5
+                  then  0
+                   else na;
+         Entry.SetDefaultColor(GetColor(1));
+         Entry.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+         Entry.HideBubble();
+         Entry.HideTitle();
+    plot ShortEntry = if     short 
+                        &&   relvalue crosses below 2.5
+                       then  0
+                        else na;
+         ShortEntry.SetDefaultColor(Color.Orange);
+         ShortEntry.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+         ShortEntry.HideBubble();
+         ShortEntry.HideTitle();
+
+def longstate = if     bn == 1 
+                 then  0 else
+                if     relation > relation[1]
+                  &&   relation[1] > relation[2] 
+                 then  1 else  
+                if     relation crosses below 0 
+                 then  0 
+                  else longstate[1];
+
+def shortstate = if     bn == 1 
+                  then  0 else
+                 if     relation < relation[1]
+                   &&   relation[1] < relation[2] 
+                  then  1 else  
+                 if     relation crosses above 0 
+                  then  0 
+                   else shortstate[1];
+
+# line when distance from mean COUNTER to direction selected in the input - short yes/no - is closer for 2 consecutive bars. The idea being that in a strong trend, taking this countertrend trade this is more likely than not to blow up in your face quickly, but when it stops blowing up right away, it's a possible sign of a weakening trend
+
+addverticalline(short && relation[1] < 0 &&
+                longstate crosses above .5, "", Color.Dark_Green);
+addverticalline(!short && relation[1] > 0 && 
+                shortstate crosses above .5, "", Color.Dark_Red);
+
+    AssignPriceColor(if     ColorCandles
+                      then
+                     if     relation < 0
+                      then  NegRelation.Color("Weak Below") 
+                       else PosRelation.Color("Strong Above")
+                       else Color.Current);
+
+# /f

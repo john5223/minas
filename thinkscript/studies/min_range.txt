@@ -1,0 +1,519 @@
+#amalia
+## gen1_mod_12182017
+
+#Hint: A study that gather the Average Minimum Value of the Tail Ends of the Daily Candle and uses that as a price-range to use as multiples in Stops/TrailingStops and/or Targets. There's reason for each line. Green/DarkOrange = Entries. Yellow/Red = HOD/LOD. Cyan lines = long targets. Magenta lines = sell targets
+#15:56 AlphaInvestor: One suggestion Amalia - make the colors match between BuyDiff and BuyHere label, make the colors match between SellDiff and SellHere label. You can use TakeColor or some such to ensure they match.
+
+AddVerticalLine(GetTime() crosses above RegularTradingEnd(GetYYYYMMDD()), "                                    RTH End", CreateColor(0, 102, 102));
+AddVerticalLine(GetTime() crosses above RegularTradingStart(GetYYYYMMDD()), "                                    RTH Start", CreateColor(255, 51, 0));
+AddCloud(
+GetTime() > RegularTradingStart(GetYYYYMMDD()), 
+GetTime() > RegularTradingEnd(GetYYYYMMDD()),
+Color.BLACK, Color.BLACK);
+
+declare hide_on_daily;
+def NA = 
+    Double.NaN;
+#NA.SetDefaultColor(Color.BLACK);
+declare hide_on_daily;
+
+script R {
+    input V = 0;
+    plot R = Round(V / TickSize(), 0) * TickSize();
+}
+input alerts = YES;
+input RangeMultiplies = 1.000;
+input RangeMethod = {default Stretch, Min, TR};
+input RangeStart =
+    {default Globex, RTH};
+def First;
+switch (RangeStart) {
+case Globex:
+    First    = if GetTime() crosses above RegularTradingEnd(GetYYYYMMDD()) then 1 else 0;
+case RTH:
+    First    = if GetTime() crosses above RegularTradingStart(GetYYYYMMDD()) then 1 else 0;
+}
+
+def hx = high;
+def lx = low;
+def bar = BarNumber();
+def ORActive = if First == 1
+                 then bar 
+                 else ORActive[1];
+def Whut = if bar == ORActive then bar else Whut[1];
+def Wut = CompoundValue( 
+                         1,
+                         Max(bar, Whut) - Min(bar, Whut),
+                         close);
+def   openhigh = if Wut == 1
+                 then hx
+                 else if hx > openhigh[1]
+                 then hx
+                 else openhigh[1];
+
+plot   ORHigh =    
+                 if Wut >= 0
+                 then openhigh
+                 else Double.NaN;
+ORHigh.SetPaintingStrategy(PaintingStrategy.DASHES);
+ORHigh.SetDefaultColor(Color.YELLOW);
+ORHigh.SetLineWeight(3);
+
+def openlow = if Wut == 1
+              then lx
+              else if lx < openlow[1]
+              then lx
+              else openlow[1];
+
+plot ORLow =     if Wut >= 0
+                 then openlow
+                 else Double.NaN
+                ;
+def Mid = ((ORHigh + ORLow) / 2);
+ORLow.SetPaintingStrategy(PaintingStrategy.DASHES);
+ORLow.SetDefaultColor(Color.MAGENTA);
+ORLow.SetLineWeight(3);
+
+input fibs = YES;
+
+def DayRange = ORHigh - ORLow;
+
+plot twothreesix = if fibs then
+ ORLow + (DayRange * .25) else NA;
+plot threeeighttwo = if fibs then 
+ORLow + (DayRange * .35) else NA;
+plot fifty = if fibs then Mid else NA;
+plot sixoneeight = if fibs then 
+ORLow + (DayRange * .65) else NA;
+plot seveneightsix = if fibs then 
+ORLow + (DayRange * .75) else NA;
+
+input Bubbleloc1 = 1;
+
+def Bubloc = if Bubbleloc1 and 
+IsNaN(close[-1]) then 1 else 0;
+
+AddChartBubble(Bubloc, fifty, ".50 = " + R(Mid), Color.WHITE, if close > Mid then no else yes);
+AddChartBubble(Bubloc, twothreesix, ".236 = " + R(twothreesix), Color.WHITE, if close > twothreesix then no else yes);
+AddChartBubble(Bubloc, threeeighttwo, ".382 = " + R(threeeighttwo), Color.WHITE, if close > threeeighttwo then no else yes);
+AddChartBubble(Bubloc, sixoneeight, ".618 = " + R(sixoneeight), Color.WHITE, if close > sixoneeight then no else yes);
+AddChartBubble(Bubloc, seveneightsix, ".786 = " + R(seveneightsix), Color.WHITE, if close > seveneightsix then no else yes);
+
+def A = 
+    AggregationPeriod.DAY;
+def T = 
+    TickSize();
+def TV =
+    TickValue();
+def N = 
+    Double.NaN;
+def B = 
+    BarNumber();
+
+input showArrows =
+    YES;
+input showLabels = 
+    NO;
+input sLength = 
+    10;
+def C = 
+    close(period = A)[1];
+def O = 
+    open(period = A)[1];
+def L = 
+    low(period = A)[1];
+def H = 
+    high(period = A)[1];
+
+script MinRange {
+    def A = AggregationPeriod.DAY;
+    def sLength = 10;
+    def T = TickSize();
+    def C = 
+    close(period = A)[1];
+    def O = 
+    open(period = A)[1];
+    def L = 
+    low(period = A)[1];
+    def H = 
+    high(period = A)[1];
+
+    def GetAgg = GetAggregationPeriod();
+
+#Minimum average of the tail end
+    plot Min = 
+Round(
+    Average(
+            (if C >= O 
+                 then Min(H - C, O - L) 
+             else Min(H - O, C - L)), 
+            sLength)[1]
+      / T, 0) *
+T;
+}
+
+def sO = open(period = AggregationPeriod.DAY);
+def sH = high(period = AggregationPeriod.DAY);
+def sL = low(period = AggregationPeriod.DAY);
+
+def Stretch = Average(Min(sH - sO, sO - sL), sLength)[1];
+def StretchRange = R(V = Stretch).R;
+
+script TR { 
+input ATRPeriod = 21;
+input O = Open;
+input H = High;
+input L = Low;
+input C = Close;
+def HiLo = Min(h-l, 1.5*Average(h-l, ATRPeriod));
+def HRef = 
+if l<=h[1]
+    then h-c[1]
+else (h-c[1])-0.5*(l-h[1]);
+def LRef = 
+if h>=l[1]
+    then c[1]-l
+else (c[1]-l)-0.5*(l[1]-h);
+def Minimum = Min(HRef, LRef);
+plot AvgMin = Average(Minimum, 10);
+
+def trueRange = Max(HiLo, Max(HRef, LRef));
+def trueRange_ = TrueRange(h,c,l);
+}
+
+
+def Range;
+switch (RangeMethod) {
+case Stretch:
+    Range    = R(StretchRange * RangeMultiplies);
+case Min:
+    Range    = R(MinRange() * RangeMultiplies);
+case TR:
+    Range    = R(TR(sLength, O, H, L, C) * RangeMultiplies);
+}
+
+
+input showMinLabel = YES;
+AddLabel(showMinLabel, 
+         if Range == R(StretchRange * RangeMultiplies) 
+             then "Stretch Range = " + AsPrice(Range) else 
+         if Range == R(MinRange() * RangeMultiplies) 
+             then "Min Range = " + AsPrice(Range) else 
+         if Range == R(TR(sLength, O, H, L, C) * RangeMultiplies)
+             then "TrueRange = " + AsPrice(Range) else "", 
+
+         if Range == R(StretchRange * RangeMultiplies) 
+             then CreateColor(102, 102, 0) else 
+         if Range == R(MinRange() * RangeMultiplies) 
+             then CreateColor(255, 153, 0) else 
+         if Range == R(TR(sLength, O, H, L, C) * RangeMultiplies)
+             then Color.CYAN else
+         Color.GRAY);
+
+
+#-------------------------------------------------------------------------------------------------------------------
+
+def R = 
+    high(period = "DAY") - low(period = "DAY");
+AddLabel(showLabels, 
+         "Today's Range = " + AsPrice(R), 
+         GetColor(1));
+AddLabel(showLabels,
+         "TickSize =  " + AsPrice(T),
+         GetColor(1));
+AddLabel(showLabels,
+         "TickValue = " + TV,
+         GetColor(1));
+
+def One = 
+    R / Range;
+AddLabel(showLabels, 
+         "Range Multiples So Far =  " + R(One) + "    |    Ticks =  " + R(Range * One), 
+         GetColor(15));
+
+def AvgOne = 
+    R(V =
+          Average(
+                  One, 
+                  sLength)
+         );
+AddLabel(showLabels, 
+         "AvRMult = " + R(AvgOne) + "    |    Ticks =  " + R(AvgOne * Range), 
+         GetColor(23));
+
+def Highest = 
+    Round(
+          HighestAll(One)
+    / T, 0) *
+    T;
+AddLabel(showLabels, 
+         "HighestRMult = " + Highest + "    |    Ticks =  " + R(Highest * Range), 
+         GetColor(53));
+
+def Lowest =
+    Round(
+          LowestAll(One)
+    / T, 0) *
+    T;
+AddLabel(showLabels, 
+         "LowestRMult = " + Round(Lowest, 1) + "    |    Ticks =  " + R(Lowest * Range), 
+         GetColor(83));
+
+#-------------------------------------------------------------------------------------------------------------------
+
+
+
+#Ideal Sell entry
+plot RedDiff =   
+#    if Wut>=0 && DayRange<(ORHigh-ORLow) then N else (ORHigh-Range);
+ORHigh-Range;
+#Ideal Buy entry
+plot GreenDiff = 
+#    if Wut>=0 && DayRange<(ORHigh-ORLow) then N else (ORLow+Range);
+ORLow+Range;
+#input showTrailArrows = 1;
+#plot ArrowUp = if showTrailArrows==1 && Low crosses below (ORHigh-Range) then Low else N;
+#plot ArrowDn = if showTrailArrows==1 && High crosses above (ORLow+Range) then High else N;
+#ArrowUp.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+#ArrowDn.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
+#ArrowUp.SetDefaultColor(color = Color.UPTICK);
+#ArrowDn.SetDefaultColor(color = Color.DOWNTICK);
+
+Alert(close crosses RedDiff, "Sell Entry Cross", Alert.ONCE, Sound.Bell);
+Alert(close crosses GreenDiff, "Buy Entry Cross", Alert.ONCE, Sound.Bell);
+
+
+RedDiff.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+RedDiff.SetDefaultColor(Color.DOWNTICK);
+RedDiff.SetLineWeight(3);
+GreenDiff.SetLineWeight(3);
+GreenDiff.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+GreenDiff.SetDefaultColor(Color.UPTICK);
+
+input Clouds = YES;
+def BuyCloudBottom  = if GreenDiff and Clouds then ORLow + Range else Double.NaN;
+def BuyCloudTop     = if GreenDiff and Clouds then ORLow + (Range * 1.618) else Double.NaN;
+def SellCloudTop    = if RedDiff and Clouds then ORHigh - Range else Double.NaN;
+def SellCloudBottom = if RedDiff and Clouds then ORHigh - (Range * 1.618) else Double.NaN;
+plot Color = !IsNaN(close);
+Color.DefineColor("Color One", Color.RED);
+Color.DefineColor("Color Two", Color.GREEN);
+Color.Hide();
+
+AddCloud(SellCloudTop, SellCloudBottom, Color.Color("Color One"), Color.Color("Color Two"));
+AddCloud(BuyCloudBottom, BuyCloudTop, Color.Color("Color One"), Color.Color("Color Two"));
+Alert(if alerts and Between(close, ORLow + Range, ORLow + (Range * 1.618)) then 1 else 0, "Buy Zone", Alert.ONCE, Sound.Chimes);
+Alert(if alerts and Between(close, ORHigh - Range, ORHigh - (Range * 1.618)) then 1 else 0, "Sell Zone", Alert.ONCE, Sound.Chimes);
+
+AddLabel(1,
+         "Sell Here = " + AsPrice(RedDiff),
+          Color.Color("Color One"));
+AddLabel(1,
+         "Buy Here = " + AsPrice(GreenDiff),
+         Color.Color("Color Two"));
+
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+plot Dot  = if Between(GreenDiff, RedDiff + (RedDiff * 1.0001), RedDiff - (RedDiff * 1.0001)) then HL2 else N;
+plot Dot2 = if Between(RedDiff, GreenDiff + (GreenDiff * 1.0001), GreenDiff - (GreenDiff * 1.0001)) then HL2 else N;
+Dot.SetPaintingStrategy(PaintingStrategy.POINTS);
+Dot2.SetPaintingStrategy(PaintingStrategy.POINTS);
+Dot.SetDefaultColor(Color.YELLOW);
+Dot2.SetDefaultColor(Color.YELLOW);
+
+plot ArrUp = 
+    if showArrows and
+    low crosses above GreenDiff 
+        then GreenDiff else
+    if showArrows and
+    low crosses above RedDiff
+        then RedDiff
+    else N;
+
+ArrUp.SetDefaultColor(Color.WHITE);
+ArrUp.SetPaintingStrategy(PaintingStrategy.ARROW_UP);
+
+plot ArrDn = 
+    if showArrows and
+    high crosses below RedDiff 
+        then RedDiff else
+    if showArrows and
+    high crosses below GreenDiff
+        then GreenDiff
+    else N;
+ArrDn.SetDefaultColor(Color.WHITE);
+ArrDn.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+#--------------------------------------------------------------------------------------------
+## gen1_mod_12182017
+# 1, bull, 2 bear
+def direction;
+if showArrows && ArrUp {
+    direction = 1;
+} else 
+if showArrows && ArrDn {
+    direction = 2;
+} else {
+    direction = direction[1];
+}
+# endgen1_mod_12182017
+#--------------------------------------------------------------------------------------------
+input length = 12.00;
+def Divisor = (length);
+
+# gen1_mod_12182017
+# 1, bull, 2 bear
+DefineGlobalColor("BullMins", Color.CYAN);
+DefineGlobalColor("BearMins", Color.MAGENTA);
+plot BullMin1 = if direction == 1 then GreenDiff + Range else N;
+plot BullMin2 = if direction == 1 and ORHigh > BullMin1 then GreenDiff + 2 * Range else N;
+plot BullMin3 = if direction == 1 and Highest(high, Divisor) > BullMin2 then GreenDiff + 3 * Range else N;
+plot BullMin4 = if direction == 1 and Highest(high, Divisor) > BullMin3 then GreenDiff + 4 * Range else N;
+plot BullMin5 = if direction == 1 and Highest(high, Divisor) > BullMin4 then GreenDiff + 5 * Range else N;
+plot BullMin6 = if direction == 1 and Highest(high, Divisor) > BullMin5 then GreenDiff + 6 * Range else N;
+BullMin1.AssignValueColor(GlobalColor("BullMins"));
+BullMin2.AssignValueColor(GlobalColor("BullMins"));
+BullMin3.AssignValueColor(GlobalColor("BullMins"));
+BullMin4.AssignValueColor(GlobalColor("BullMins"));
+BullMin5.AssignValueColor(GlobalColor("BullMins"));
+BullMin6.AssignValueColor(GlobalColor("BullMins"));
+BullMin1.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BullMin2.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BullMin3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BullMin4.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BullMin5.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BullMin6.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+
+plot BearMin1 = if direction == 2 then RedDiff - Range else N;
+plot BearMin2 = if direction == 2 and ORLow < BearMin1 then RedDiff - 2 * Range else N;
+plot BearMin3 = if direction == 2 and Lowest(low, Divisor) < BearMin2 then RedDiff - 3 * Range else N;
+plot BearMin4 = if direction == 2 and Lowest(low, Divisor) < BearMin3 then RedDiff - 4 * Range else N;
+plot BearMin5 = if direction == 2 and Lowest(low, Divisor) < BearMin4 then RedDiff - 5 * Range else N;
+plot BearMin6 = if direction == 2 and Lowest(low, Divisor) < BearMin5 then RedDiff - 6 * Range else N;
+BearMin1.AssignValueColor(GlobalColor("BearMins"));
+BearMin2.AssignValueColor(GlobalColor("BearMins"));
+BearMin3.AssignValueColor(GlobalColor("BearMins"));
+BearMin4.AssignValueColor(GlobalColor("BearMins"));
+BearMin5.AssignValueColor(GlobalColor("BearMins"));
+BearMin6.AssignValueColor(GlobalColor("BearMins"));
+BearMin1.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BearMin2.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BearMin3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BearMin4.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BearMin3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+BearMin6.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+# endgen1_mod_12182017
+
+plot TgtoneU = if high crosses above BullMin1 then 2 else N;
+TgtoneU.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE);
+TgtoneU.AssignValueColor(GlobalColor("BullMins"));
+plot TgttwoU = if high crosses above BullMin2 then 3 else N;
+TgttwoU.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE);
+TgttwoU.AssignValueColor(GlobalColor("BullMins"));
+plot TgtthreeU = if high crosses above BullMin3 then 4 else N;
+TgtthreeU.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE);
+TgtthreeU.AssignValueColor(GlobalColor("BullMins"));
+plot TgtfourU = if high crosses above BullMin4 then 5 else N;
+TgtfourU.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE);
+TgtfourU.AssignValueColor(GlobalColor("BullMins"));
+plot TgtfiveU = if high crosses above BullMin5 then 6 else N;
+TgtfiveU.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE);
+TgtfiveU.AssignValueColor(GlobalColor("BullMins"));
+plot TgtsixU = if high crosses above BullMin6 then 7 else N;
+TgtsixU.SetPaintingStrategy(PaintingStrategy.VALUES_ABOVE);
+TgtsixU.AssignValueColor(GlobalColor("BullMins"));
+TgtoneU.SetLineWeight(3);
+TgttwoU.SetLineWeight(3);
+TgtthreeU.SetLineWeight(3);
+TgtfourU.SetLineWeight(3);
+TgtfiveU.SetLineWeight(3);
+TgtsixU.SetLineWeight(3);
+
+plot TgtoneD = if low crosses below BearMin1 then 2 else N;
+TgtoneD.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW);
+TgtoneD.AssignValueColor(CreateColor(255, 153, 255));
+plot TgttwoD = if low crosses below BearMin2 then 3 else N;
+TgttwoD.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW);
+TgttwoD.AssignValueColor(CreateColor(255, 153, 255));
+plot TgtthreeD = if low crosses below BearMin3 then 4 else N;
+TgtthreeD.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW);
+TgtthreeD.AssignValueColor(CreateColor(255, 153, 255));
+plot TgtfourD = if low crosses below BearMin4 then 5 else N;
+TgtfourD.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW);
+TgtfourD.AssignValueColor(CreateColor(255, 153, 255));
+plot TgtfiveD = if low crosses below BearMin5 then 6 else N;
+TgtfiveD.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW);
+TgtfiveD.AssignValueColor(CreateColor(255, 153, 255));
+plot TgtsixD = if low crosses below BearMin6 then 7 else N;
+TgtsixD.SetPaintingStrategy(PaintingStrategy.VALUES_BELOW);
+TgtsixD.AssignValueColor(CreateColor(255, 153, 255));
+TgtoneD.SetLineWeight(3);
+TgttwoD.SetLineWeight(3);
+TgtthreeD.SetLineWeight(3);
+TgtfourD.SetLineWeight(3);
+TgtfiveD.SetLineWeight(3);
+TgtsixD.SetLineWeight(3);
+
+def Up = if 
+    low crosses above GreenDiff 
+        then 1 else if
+    low crosses above RedDiff
+        then 1
+    else 0;
+def Dn = if high crosses below RedDiff 
+        then 1 else if
+    high crosses below GreenDiff
+        then 1
+    else 0;
+
+def trailLow_ = if Up == 1
+              then lx
+              else if lx < trailLow_[1]
+              then lx
+              else trailLow_[1];
+
+def trailLow =     if Up >= 0
+                 then trailLow_
+                 else Double.NaN
+                ;
+def trailHigh_ = if Dn == 1
+              then hx
+              else if hx > trailHigh_[1]
+              then hx 
+              else trailHigh_[1];
+
+def trailHigh = if Dn >= 0
+                then trailHigh_
+                else Double.NaN
+                ;
+input RangeMultiplier = 0.618;
+plot LongTrail =  (Highest(High,Length)) - (Range*RangeMultiplier);
+plot ShortTrail = (Lowest(Low,Length)) + (Range*RangeMultiplier);
+def Long = if Low crosses above ShortTrail and !IsNaN(ShortTrail) then 1 else 0;
+def Short = if High crosses below LongTrail  and !IsNaN(LongTrail) then 1 else 0;
+
+LongTrail.SetDefaultColor(Color.CYAN);
+ShortTrail.SetDefaultColor(Color.MAGENTA);
+#Long.SetPaintingStrategy(PaintingStrategy.POINTS);
+#Short.SetPaintingStrategy(PaintingStrategy.POINTS);
+
+#Long.SetDefaultColor(Color.CYAN);
+#Short.SetDefaultColor(Color.MAGENTA);
+
+def trendchange = if Long then LongTrail else if Short then ShortTrail else trendchange[1];
+
+def PL = if !IsNaN(trendchange) 
+             then trendchange 
+             else PL[1];
+#addCloud(trailHigh, trailHigh-(Range*.618));
+#addCloud(trailLow, trailLow+(Range*.618));
+input showTrail = 1;
+plot pivotLine = if showTrail==1 && !IsNaN(close) && PL > 0
+                       then PL
+                       else Double.NaN;
+pivotLine.SetDefaultColor(Color.WHITE);
+pivotLine.AssignValueColor(if High<pivotLine then CreateColor(0,153,153) else if Low>pivotLine then 
+CreateColor(255,51,0) 
+else Color.DARK_GRAY
+);
+

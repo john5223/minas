@@ -1,0 +1,170 @@
+# Auto Plotted Fibonacci Study
+# Mobius
+# V01.09.2013  Fib Fold Written as a Script with multilple plots
+# posted in chat room 09/21/2013 at 07:24 PM by Mobius
+
+script Fibs {
+    input C0 = 0.000;
+    def o = open;
+    def h = high;
+    def l = low;
+# Get highest and lowest on chart
+    def a = HighestAll(h);
+    def b = LowestAll(l);
+# Get the bar numbers at the highest and lowest points
+    def barnumber = BarNumber();
+    def c = if h == a 
+          then barnumber 
+          else Double.NaN;
+    def d = if l == b 
+          then barnumber 
+          else Double.NaN;
+    def highnumber = CompoundValue(1, if IsNaN(c) 
+                                    then highnumber[1] 
+                                    else c, c);
+    def highnumberall = HighestAll(highnumber);
+    def lownumber = CompoundValue(1, if IsNaN(d) 
+                                   then lownumber[1] 
+                                   else d, d);
+    def lownumberall = LowestAll(lownumber);
+# Determine Slope Delta
+    def upward = highnumberall > lownumberall;
+    def downward = highnumberall < lownumberall;
+# Define X
+    def x = AbsValue(lownumberall - highnumberall );
+# Get Slope for either direction
+    def slope = (a - b) / x;
+    def slopelow = (b - a) / x;
+# Get Day
+    def day = GetDay();
+    def month = GetMonth();
+    def year = GetYear();
+    def lastDay = GetLastDay();
+    def lastmonth = GetLastMonth();
+    def lastyear = GetLastYear();
+    def isToday = If(day == lastDay and 
+                   month == lastmonth and 
+                   year == lastyear, 1, 0);
+    def istodaybarnumber = HighestAll(if isToday 
+                                    then barnumber 
+                                    else Double.NaN);
+# Calculations for line between extremes
+    def line = b + (slope * (barnumber - lownumber));
+    def linelow = a + (slopelow * (barnumber - highnumber));
+    def currentlinelow = if barnumber <= lownumberall 
+                       then linelow 
+                       else Double.NaN;
+    def currentline = if barnumber <= highnumberall 
+                  then line 
+                  else Double.NaN;
+    def FibFan =  if downward 
+                then currentlinelow 
+                else if upward 
+                then currentline 
+                else Double.NaN;
+# Rise of line between Extremes
+    def range =  a - b;
+  plot Fib1 = fold i = 1 to 10
+              with p = FibFan
+              while (downward and 
+                    barnumber >= highnumberall and 
+                    barnumber <= istodaybarnumber) 
+                    or
+                    (upward and 
+                    barnumber >= lownumberall and 
+                    barnumber <= istodaybarnumber)             
+              do if downward
+                 then HighestAll((b + (range *  C0)))
+                 else if upward
+                 then HighestAll(a - (range * C0))
+                 else Double.NaN;
+}
+# Start Plot Sequence
+input C0 = 0.000;
+input C1 = .236;
+input C2 = .382;
+input C3 = .500;
+input C4 = .618;
+input C5 = .786;
+input C6 = 1.000;
+input BubbleOn = yes;
+
+def bar = barNumber();
+def TotalBars = HighestAll(bar);
+def HHbar = if high == highestAll(high) then bar else HHbar[1];
+def LLbar = if low == lowestAll(low) then bar else LLbar[1];
+def firstBar = if HHbar > LLbar then LLbar else HHbar;
+def BubbleLocation =  if bar - (firstBar + HHbar) == LLBar 
+                      then LLbar
+                      else if bar - (firstBar + LLbar) == HHBar 
+                      then HHbar
+                      else double.nan;
+plot fib1 = fibs(C0 = C0);
+     fib1.SetDefaultColor(Color.Red);
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib1
+              , concat( (c0 * 100), "%"), color.white, yes);
+plot fib2 = fibs(C0 = C1);
+     fib2.SetDefaultColor(Color.Red);
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib2
+              , concat( (c1 * 100), "%"), color.white, yes);
+plot fib3 = fibs(C0 = C2);
+     fib3.SetDefaultColor(Color.Red);
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib3
+              , concat( (c2 * 100), "%"), color.white, yes);
+plot fib4 = fibs(C0 = C3);
+     fib4.SetDefaultColor(Color.Red); 
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib4
+              , concat( (c3 * 100), "%"), color.white, yes);
+plot fib5 = fibs(C0 = C4);
+     fib5.SetDefaultColor(Color.Red);
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib5
+              , concat( (c4 * 100), "%"), color.white, yes);
+plot fib6 = fibs(C0 = C5);
+     fib6.SetDefaultColor(Color.Red);
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib6
+              , concat( (c5 * 100), "%"), color.white, yes);
+plot fib7 = fibs(C0 = C6);
+     fib7.SetDefaultColor(Color.Red);
+AddChartBubble((BubbleOn and bar == fibs().istodaybarnumber), fib7
+              , concat( (c6 * 100), "%"), color.white, yes);
+# End Fib Code
+
+# Fibonacci Time Series  
+    def o = open;
+    def h = high;
+    def l = low;
+# Get highest and lowest on chart
+    def a = HighestAll(h);
+    def b = LowestAll(l);
+    def barnumber = BarNumber();
+    def c = if h == a 
+          then barnumber 
+          else Double.NaN;
+    def d = if l == b 
+          then barnumber 
+          else Double.NaN;
+    def highnumber = CompoundValue(1, if IsNaN(c) 
+                                    then highnumber[1] 
+                                    else c, c);
+    def highnumberall = HighestAll(highnumber);
+    def lownumber = CompoundValue(1, if IsNaN(d) 
+                                   then lownumber[1] 
+                                   else d, d);
+   rec bar1 = if lownumber == barnumber() 
+              then barnumber() 
+              else bar1[1];
+   rec bars = if barnumber()[1] == bar1[1] 
+              then 2 
+              else if barnumber[1] > bar1[1]  
+              then bars[1] + 1 
+              else 0;
+   def coeff = Sqrt(5);
+   def smallest = 5;
+   def n = Floor(log(bars * coeff + 0.5) / log((1 + Sqrt(5)) / 2));
+   def inSeries = n != n[1] and bars >= smallest;
+   def Series = if inSeries 
+                then bars 
+                else Double.NaN;
+   AddVerticalLine(Series, "FTS: ( " + Series + ")", Color.Blue, Curve.Short_Dash);
+
+# End Code Fibonacci Retracement

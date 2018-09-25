@@ -1,0 +1,20 @@
+  #Part 2 of 5 part energies of the market:  by Dr. Barry Burns                                                                    
+declare lower;
+input fastLength = 5;
+input slowLength = 20;
+input MACDLength = 30;
+input AverageType = {SMA, default EMA};
+
+plot Value = MACD(fastLength, slowLength, MACDLength, AverageType).Value;
+Value.DefineColor("Blue",Color.CYAN);
+Value.DefineColor("Red", Color.RED);
+Value.AssignValueColor(if Value >= Value[1] then Value.color("Blue") else Value.color("Red"));
+
+plot Avg = MACD(fastLength, slowLength, MACDLength, AverageType).Avg;
+Avg.DefineColor("Blue", Color.BLUE);
+Avg.DefineColor("Red", Color.RED);
+Avg.AssignValueColor(if Avg >= Avg[1] then Avg.color("Blue") else Avg.color("Red"));
+Avg.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+
+plot ZeroLine = 0;
+ZeroLine.SetDefaultColor(Color.BLACK);

@@ -1,0 +1,122 @@
+#IronRod SMI histogram lower study ver4 
+
+declare lower; 
+
+input audioalarm=yes; 
+input Price = hlc3; 
+input RsqLength = 5; 
+input RsqLimit = .5; 
+input SmiLimit = 30; 
+input chopband2= 70; 
+input smibarbufr = 4; 
+
+def overbought = SmiLimit; 
+def oversold = -SmiLimit; 
+def percentDLength = 4; 
+def percentKLength = 5; 
+
+#Stochastic momentum index (SMI)  
+def min_low = Lowest(low, percentKLength); 
+def max_high = Highest(high, percentKLength); 
+def rel_diff = close - (max_high + min_low) / 2; 
+def diff = max_high - min_low; 
+def avgrel = ExpAverage(ExpAverage(rel_diff, percentDLength), percentDLength); 
+def avgdiff = ExpAverage(ExpAverage(diff, percentDLength), percentDLength); 
+
+
+plot chopband = if IsNaN(close) then Double.NaN else 0; 
+plot SMI = if avgdiff != 0 then avgrel / (avgdiff / 2) * 100 else 0; 
+
+#SMI.SetDefaultColor(Color.BLUE); 
+smi.DefineColor("Up", CreateColor(0, 153, 51)); 
+smi.definecolor("weak", color.light_gray); 
+smi.DefineColor("Down", Color.RED); 
+smi.AssignValueColor
+    (if smi > smi[1] then smi.Color("Up")  
+    else if smi < smi[1]  then smi.color("down")  
+    else smi.Color("weak")
+); 
+
+smi.SetLineWeight(2); 
+
+SMI.SetStyle(Curve.SHORT_DASH); 
+
+SMI.SetLineWeight(3); 
+
+
+PLOT AvgSMI = ExpAverage(SMI, percentDLength); 
+AVGsmi.DefineColor("Up", CreateColor(0, 153, 51)); 
+avgsmi.definecolor("weak", color.light_gray); 
+AVGsmi.DefineColor("Down", Color.RED); 
+avgsmi.AssignValueColor(if avgsmi > avgsmi[1] then avgsmi.Color("Up")  
+else if avgsmi < avgsmi[1] then avgsmi.color("down")  
+else avgsmi.Color("weak")); 
+AVGsmi.SetLineWeight(3); 
+#smi1.SetPaintingStrategy(PaintingStrategy.DASHES); 
+
+plot smiBAR = AvgSMI; 
+smiBAR.SetPaintingStrategy(PaintingStrategy.HISTOGRAM); 
+smiBAR.SetLineWeight(3); 
+smiBAR.DefineColor("upstrong", CreateColor (0, 255, 0)); 
+smiBAR.DefineColor("weak", Color.LIGHT_GRAY); 
+smiBAR.DefineColor("downstrong", CreateColor(255, 51, 51)); 
+
+smiBAR.AssignValueColor (if (smi + smibarbufr) >= smi[1] and smi > -SmiLimit then smiBAR.Color("upstrong") 
+
+       else if (smi - smibarbufr) <= smi[1] and smi < SmiLimit then smiBAR.Color("downstrong")  
+
+    else  smiBAR.Color("weak")); 
+
+#r-Square centerline indicator 
+#def sma = Average(close, RsqLength); 
+#def RSq = Sqr(WMA(close, RsqLength) - sma) / (Average(Sqr(close), RsqLength) - Sqr(sma)) * 3 * (RsqLength + 1) / (RsqLength - 1); 
+
+chopband.HideBubble();
+chopband.SetLineWeight(5);
+chopband.DefineColor("Trade", createColor(0, 150,200));
+chopband.DefineColor("Hold", Color.orange);
+chopband.AssignValueColor(if smi > -smiLimit and smi < smilimit then chopband.Color("hold") else chopband.Color("trade")); 
+
+
+#Chop Cloud 
+
+plot upper= smilimit; 
+
+plot lower= -smilimit; 
+
+upper.setDefaultColor(color.GRAY); 
+
+lower.setDefaultColor(color.gRAY); 
+
+def choplimits = SmiLimit; 
+
+#input choplimits= 1; 
+
+AddCloud(choplimits, -choplimits,createColor(210,210,210)); 
+
+#addcloud(-choplimits,-chopband2,createcolor(175,175,175)); 
+
+#addcloud(chopband2,choplimits,createcolor(175,175,175)); 
+
+
+#Labels 
+
+#AddLabel(yes, "SMI Legend: ", Color.BLACK); 
+
+
+#AddLabel(yes, "BULLISH", Color.UPTICK); 
+
+#AddLabel(yes, "BEARISH", Color.DOWNTICK); 
+
+#AddLabel(yes, "changing", Color.GRAY); 
+
+#AddLabel(yes, "MidLine: ", Color.BLACK); 
+
+#AddLabel(yes, "Trending", createColor(0,150,200)); 
+
+#AddLabel(yes, "in ChopZone", Color.ORANGE); 
+
+#AddLabel(yes, "             SmiLimit= " + SmiLimit, Color.DARK_GRAY); 
+
+
+#alert (audioalarm and smi crosses avgsmi and smi <= -smilimit or SMI CROSSes AVGSMI AND Smi >= smilimit,"SMI CROSS", alert.bar, sound.ring); 

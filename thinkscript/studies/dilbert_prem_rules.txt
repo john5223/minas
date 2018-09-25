@@ -1,0 +1,78 @@
+#StudyName: Dilbert_PremRules_V1
+#Description: FrankB: notes: testing stage, RTM incicator to be used with other filters
+#Author: Dilbert
+#Requested By:  
+# Ver     Date     Auth      Change
+# v1      081317   Dilbert   1st code cut
+# 
+# Trading Notes: 
+input AvgType = AverageType.EXPONENTIAL;
+input PremLength = 8;
+input EsLength = 8;
+input ShortMaLength = 10;
+input LongMaLength = 20;
+
+def na = Double.NaN;
+def H = high;
+def L = low;
+def C = close;
+def ES_Cls = close("/es");
+def SPX_Cls = close("SPX");
+def Prem = ES_Cls - SPX_Cls;
+def AvgPrem = MovingAverage(AvgType, C, ShortMaLength);
+
+#############################################################################################################
+#  Determine the trend
+#############################################################################################################
+def ShortMA = MovingAverage(AvgType, C, ShortMaLength);
+def LongMA = MovingAverage(AvgType, C, LongMaLength);
+
+def TrendUp = if ShortMA > ShortMA[ShortMaLength] and 
+                 LongMA > LongMA[LongMaLength]
+                 then 1 else 0;
+
+def TrendDown = if ShortMA < ShortMA[ShortMaLength] and 
+                 LongMA < LongMA[LongMaLength]
+                 then 1 else 0;
+
+#############################################################################################################
+#  The market is rallying logic
+#############################################################################################################
+
+def HighPrem = if Highest(Prem,PremLength) == Prem then 1 else 0;
+def HighEs = if Highest(H,EsLength) == H then 1 else 0;
+#############################################################################################################
+#  New highs or lows on the spoos should be preceded by new highs or lows on the prem. If they are not, the market is poised to turn.
+#############################################################################################################
+plot HighTurn = if HighEs == 1 and HighPrem == 1 then na
+          else if HighEs == 1 and Highest(HighPrem,4) == 0 and C[-1] < C[0] then H
+          else na;
+HighTurn.SetPaintingStrategy(PaintingStrategy.Points);
+HighTurn.SetDefaultColor(Color.Red);
+HighTurn.SetLineWeight(4);
+
+#############################################################################################################
+#  The market is selling off logic
+#############################################################################################################
+
+def LowPrem = if Lowest(Prem,PremLength) == Prem then 1 else 0;
+def LowEs = if Lowest(L,EsLength) == L then 1 else 0;
+#############################################################################################################
+#  New highs or lows on the spoos should be preceded by new highs or lows on the prem. If they are not, the market is poised to turn.
+#############################################################################################################
+plot LowTurn = if LowEs == 1 
+              and LowPrem == 1
+#              and Prem < AvgPrem
+              then na
+          else if LowEs == 1 
+              and Lowest(LowPrem,4) == 0 
+              and C[-1] > C[0] 
+#              and Prem > AvgPrem
+              then L
+          else na;
+LowTurn.SetPaintingStrategy(PaintingStrategy.Points);
+LowTurn.SetDefaultColor(Color.Green);
+LowTurn.SetLineWeight(4);
+
+#plot VB = H;
+#VB.SetPaintingStrategy(PaintingStrategy.Values_Below);

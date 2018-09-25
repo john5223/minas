@@ -1,0 +1,155 @@
+# Balance Zones V02
+# Mobius
+# 03.05.2015
+#hint: Balance Zones are part of Market Theory. Areas where there is price acceptance with neither accumulation or distribution. Generally price will compress in these areas until either Accumulation or Distribution begins. \n Setup: Adjust the Length input up or down until areas of past balance are identified. (Price moves very little in 4 bars or more.) This can be anywhere from a Length of 3 up to 21. 
+
+input Length   = 4;
+input Balance   = .618;
+input Trending = .381;
+input OnExpansion = yes;
+input DisplayPoints = yes;
+input RTH_open = 0930;
+input RTH_close = 1600;
+
+# Variables
+def RTH;
+def o = (open + close[1]) / 2;
+def h = Max(high, close[1]);
+def l = Min(low, close[1]);
+def c = close;
+def tr = TrueRange(h, c, l);
+def Max;
+def Min;
+def MeanValue = (h + l) / 2;
+def bar = BarNumber();
+def HA;
+def S1;
+def R1;
+def S;
+def R;
+def SBars;
+def StartBar;
+def LastSBar;
+def PP;
+def Mean_Limit;
+def SHigh;
+def SHighBar;
+def SHigh_Limit;
+def SLow;
+def SLowBar;
+def SLow_Limit;
+Max = Max(close, open);
+Min = Min(close, open);
+RTH = if SecondsFromTime(RTH_open) > 0 and
+         SecondsTillTime(RTH_close) >= 0
+           then 1
+           else 0;
+HA = Log(Sum(tr, Length))
+      / (Highest((h+l)/2, Length) - Lowest((h+l)/2, Length))
+      / Log(Length);
+S1 = if HA crosses above Balance 
+     then MeanValue 
+     else S1[1];
+R1 = if HA crosses below Trending
+     then MeanValue
+     else R1[1];
+S = HA > Balance;
+R = (HA < Balance and HA < HA[2]) or (HA < Trending);
+SBars = if HA > Balance
+        then bar
+        else Double.NaN;
+StartBar = if HA crosses above Balance
+           then bar
+           else StartBar[1];
+LastSBar = if HA crosses below Balance
+           then bar
+           else LastSBar[1];
+PP = if HA crosses above Balance
+     then MeanValue
+     else PP[1];
+Mean_Limit = if bar != StartBar
+             then bar - StartBar
+             else if bar == StartBar
+                  then Double.NaN
+                  else Mean_Limit[1];
+SHigh = if HA crosses above Balance
+        then Max
+        else if bar > StartBar and S and
+                Max > SHigh[1]
+             then Max 
+             else SHigh[1];
+SHighBar = if S and
+              Max == SHigh
+           then bar
+           else SHighBar[1];
+SHigh_Limit = if bar == StartBar
+              then Double.NaN
+              else if bar > StartBar
+                   then bar - SHighBar
+                   else SHigh_Limit[1];
+SLow = if HA crosses above Balance
+       then Min
+       else if S and
+               Min < SLow[1]
+            then Min
+            else SLow[1];
+SLowBar = if S and
+             Min == SLow
+          then bar
+          else SLowBar[1];
+SLow_Limit = if bar == StartBar
+             then Double.NaN
+             else if bar > StartBar
+                  then bar - SLowBar
+                  else SLow_Limit[1];
+# Internal Script Reference
+script LinePlot {
+    input LineLimit = 0;
+    input OnExpansion = yes;
+    input data = close;
+    input bar = 0;
+    def ThisBar = HighestAll(bar);
+    def cLine = if bar == ThisBar
+                then data
+                else Double.NaN;
+    def cond1 = CompoundValue(1, if IsNaN(data)
+                                 then cond1[1] 
+                                 else data, data);
+    plot P = if ThisBar - LineLimit <= bar
+             then HighestAll(cLine)
+             else Double.NaN;
+    plot ExpLine = if OnExpansion and 
+                     IsNaN(data[-1]) 
+                   then cond1 
+                   else Double.NaN;
+}
+# Plots
+plot SD_Pivot = LinePlot(data = PP, LineLimit = Mean_Limit, OnExpansion = OnExpansion, bar = StartBar).P;
+plot SD_Pivot_X = LinePlot(data = PP, LineLimit = StartBar).ExpLine;
+     SD_Pivot.SetDefaultColor(Color.CYAN);
+     SD_Pivot_X.SetDefaultColor(Color.CYAN);
+plot SD_R1 = LinePlot(data = SHigh, LineLimit = SHigh_Limit, OnExpansion = OnExpansion, bar = SHighBar).P;
+plot SD_R1_X = LinePlot(data = SHigh, LineLimit = SHigh_Limit).ExpLine;
+     SD_R1.SetDefaultColor(Color.GREEN);
+     SD_R1_X.SetDefaultColor(Color.GREEN);
+plot SD_S1 = LinePlot(data = SLow, LineLimit = SLow_Limit, OnExpansion = OnExpansion, bar = SLowBar).P;
+plot SD_S1_X = LinePlot(data = SLow, LineLimit = SLow_Limit).ExpLine;
+     SD_S1.SetDefaultColor(Color.RED);
+     SD_S1_X.SetDefaultColor(Color.RED);
+plot SPlot = if S
+             then S1
+             else Double.NaN;
+     SPlot.SetHiding(!DisplayPoints);
+     SPlot.SetPaintingStrategy(PaintingStrategy.POINTS);
+     SPlot.SetLineWeight(1);
+     SPlot.SetDefaultColor(Color.Cyan);
+
+addCloud(SD_pivot, SD_R1, CreateColor(50,150,75), CreateColor(50,150,70));
+addCloud(SD_S1, SD_pivot, CreateColor(175,0,50), CreateColor(175,0,50));
+addCloud(SD_pivot_X, SD_R1_X, CreateColor(50,150,75), CreateColor(50,150,70));
+addCloud(SD_S1_X, SD_pivot_X, CreateColor(175,0,50), CreateColor(175,0,50));
+# Audible Alerts
+#Alert(HA crosses below Balance, " Exit", Alert.BAR, Sound.Bell);
+#Alert(HA crosses above Balance, "Balance", Alert.BAR, Sound.Bell);
+
+# End Code Balance Zones

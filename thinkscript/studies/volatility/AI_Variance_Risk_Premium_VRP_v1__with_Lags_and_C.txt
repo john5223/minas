@@ -1,0 +1,76 @@
+# AI_Variance_Risk_Premium_VRP_v1__with_Lags_and_Correlations
+
+#The variance risk premium is the expected payoff of a variance swap. This swap can be used to hedge changes in average voltility over a predefined period of time. The buy side buys a fixed average voltility and the sell side recieves the time-varying realized voltility. In addition the buy side pays the variance risk premium (vrp) for extra compensation. Now, the higher the vrp the higher the extra buy-costs and if the buy side is willing to pay this premium they fear high future vola/market crashes. – Phun Oct 4 '15 at 6:42
+
+# http://public.econ.duke.edu/~boller/Published_Papers/rfs_09.pdf read chapter 2
+
+#Intuitively: empirical research has shown that options on the S&P are priced at a slightly higher implied vol than the actual historical vol of the S&P (on average). Why? Likely this is because holding these options provides insurance against bad states of the economy (volatility increases when the economy is in trouble); this is valuable and raises their price. In any case, the difference between the squared implied vol and the squared historical vol is called the VRP or Variance Risk Premium. The key paper is Bollerslev's in RFS 2009 (cited above by Phun).
+
+
+# 06-09-2018 - AlphaInvestor - V1 - original Coding
+#                using Mobius' Beta with Correrelation as a starting place
+#                added CorrelationSignal based on work of Jonathan Kinlay
+#                  http://jonathankinlay.com/index.php/2015/02/correlation-signal/
+# 06-09-2018 - AI - V2 - created a version that looks at correlation of Historic Volatility 
+#                         with Implied Volatility (with and without lags)
+
+
+declare lower;
+
+input length = 14;
+input returnLength = 1;
+input adjustment = 5.0;
+input lag = 21;
+
+#def IV =  close("VIX");           # AI - paper uses VIX, but IV is the equivalent
+def IV =  ImpVolatility();  
+def HV = HistoricalVolatility();
+def ivNorm =ImpVolatility();
+def ivLag = IV[lag];;
+
+plot ivNormSQ = ivnorm*ivnorm;
+plot ivLagSQ = ivlag*ivlag;
+plot hvSQ = hv*hv;
+ivNormSQ.hide();
+ivLagSQ.hide();
+hvSQ.hide();
+
+Plot VRPnorm = ivNormSQ - hvSQ;
+plot VRPlagged = ivLagSQ - hvSQ;
+
+
+plot zero = 0;
+zero.setdefaultcolor(color.gray);
+
+Assert(returnLength > 0, "'return length' must be positive: " + returnLength);
+
+def c1 = ivLagSQ;                         # Lagged IV Squared
+def c2 = hvSQ;                            # HV Squared
+def c3 = ivNormSQ;                        # unlagged IV Squared
+
+
+def primary = if c1[returnLength] == 0 then 0 else (c1 - c1[returnLength]) / c1[returnLength] * 100;
+def secondary = if c2[returnLength] == 0 then 0 else (c2 - c2[returnLength]) / c2[returnLength] * 100;
+
+#plot Beta = Covariance(primary, secondary, length) / Sqr(StDev(secondary, length));
+#Beta.SetDefaultColor(GetColor(9));
+
+plot corrUnlagged = Correlation(c3, c2, length);
+AddLabel(1, "Correlation: " + corrUnlagged+ "  with no Lag");#, if corr > .75 then color.green else if between(corr, 0, .75) then color.yellow else color.red);
+corrUnlagged.hide();
+
+
+plot corrLagged = Correlation(c1, c2, length);
+AddLabel(1, "Correlation: " + corrLagged+ "  with Lag: "+ Lag);#, if corr > .75 then color.green else if between(corr, 0, .75) then color.yellow else color.red);
+#plot AdjCorr = corr * adjustment;
+corrLagged.hide();
+
+def stddev = StandardDeviation(corrLagged,length);
+plot CorrelationSignal = corrLagged/stddev;
+plot AdjCorrSignal = CorrelationSignal / adjustment;
+CorrelationSignal .hide();
+AdjCorrSignal .hide();
+
+plot CovarLagged = Covariance(primary, secondary, length);
+CovarLagged.hide();
+# End Study

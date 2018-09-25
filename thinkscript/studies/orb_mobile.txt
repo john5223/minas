@@ -1,0 +1,43 @@
+# Next SPY Dividend Date Label)
+# Mobius
+# V01.2016
+
+input series = 1;
+input show_label = yes;
+
+assert(series > 0, "'series' must be positive: " + series);
+def isSPY = getSymbol() == "SPY";
+def CurrentYear = getYear();
+def CurrentMonth = getMonth();
+def CurrentDOM = getDayOfMonth(getYyyyMmDd());
+def Day1DOW1 = getDayOfWeek(CurrentYear * 10000 + CurrentMonth * 100 + 1);
+def FirstFridayDOM1 = if Day1DOW1 < 6
+    then 6 - Day1DOW1
+    else if Day1DOW1 == 6
+        then 7
+        else 6;
+def RollDOM = FirstFridayDOM1 + 14;
+def ExpMonth1 = if RollDOM > CurrentDOM
+    then CurrentMonth + series - 1
+    else CurrentMonth + series;
+def ExpMonth2 = if ExpMonth1 > 12
+    then ExpMonth1 - 12
+    else ExpMonth1;
+def ExpYear = if ExpMonth1 > 12
+    then CurrentYear + 1
+    else CurrentYear;
+def Day1DOW = getDayOfWeek(ExpYear * 10000 + ExpMonth2 * 100 + 1);
+def FirstFridayDOM = if Day1DOW < 6
+    then 6 - Day1DOW
+    else if Day1DOW == 6
+        then 7
+        else 6;
+def ExpDOM = FirstFridayDOM + 14;
+def N3rdF = if IsNaN(close) then Double.NaN else daysTillDate(ExpYear * 10000 + ExpMonth2 * 100 + ExpDOM);
+def NextQtr = getMonth() %3 == 0;
+
+AddLabel(isSPY and NextQtr, N3rdF + 
+       " day(s) left till dividend on " +
+         ExpMonth1 + "/" + ExpDOM + "/" + 
+         AsPrice(CurrentYear), color.white);
+# End Code SPY Dividend

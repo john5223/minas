@@ -1,0 +1,19 @@
+# EhlersSimpleCycle
+# from AFTA2003p21 PPT
+# thinkScript by UpTheCreek
+
+
+input price = hl2;
+input alpha = .07;
+input ShowTriggerline = yes;
+
+def smooth = (price + 2*price[1] + 2*price[2] + price[6])/6;
+def cycle = SQR(1-.5*alpha) * (smooth - 2*smooth[1] + smooth[2]) + 2*(1-alpha)*cycle[1] - SQR(1-alpha)*cycle[2];
+def init = (price + 2*price[1] + price[2])/4;
+
+plot cycle_ = if barnumber() < 7 then init else cycle;
+plot trigger = cycle_[1];
+
+AddVerticalLine(cycle_ crosses trigger, "");
+
+declare lower;

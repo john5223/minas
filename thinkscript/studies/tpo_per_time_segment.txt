@@ -1,0 +1,110 @@
+# TPO Per User Time Segment Starting at RTH
+# Mobius
+# Chat Room Request 03.29.2018
+
+input pricePerRowHeightMode = {AUTOMATIC, TICKSIZE, default CUSTOM};
+input customRowHeight = 1.0;
+input timePerProfile = {CHART, default MINUTE, HOUR, DAY, WEEK, MONTH, "OPT EXP", BAR};
+input multiplier = 1;
+input onExpansion = no;
+input profiles = 10;
+input showPointOfControl = yes;
+input showValueArea = yes;
+input valueAreaPercent = 70;
+input opacity = 7;
+input Minutes = 60;
+
+def period;
+def yyyymmdd = getYyyyMmDd();
+def seconds = secondsFromTime(0);
+def month = getYear() * 12 + getMonth();
+def day_number = daysFromDate(first(yyyymmdd)) + getDayOfWeek(first(yyyymmdd));
+def dom = getDayOfMonth(yyyymmdd);
+def dow = getDayOfWeek(yyyymmdd - dom + 1);
+def expthismonth = (if dow > 5 then 27 else 20) - dow;
+def exp_opt = month + (dom > expthismonth);
+switch (timePerProfile) {
+case CHART:
+    period = 0;
+case MINUTE:
+    period = floor(seconds / 60 + day_number * 24 * 60);
+case HOUR:
+    period = floor(seconds / 3600 + day_number * 24);
+case DAY:
+    period = countTradingDays(Min(first(yyyymmdd), yyyymmdd), yyyymmdd) - 1;
+case WEEK:
+    period = floor(day_number / 7);
+case MONTH:
+    period = floor(month - first(month));
+case "OPT EXP":
+    period = exp_opt - first(exp_opt);
+case BAR:
+    period = barNumber() - 1;
+}
+
+input RthBegin  = 0930;
+input RthEnd    = 1600;
+#input showBubbles = no;
+
+def bar = BarNumber();
+def RTHBar1 = if SecondsFromTime(RthBegin) == 0 and
+                 SecondsTillTime(RthBegin) == 0
+              then bar
+              else RTHBar1[1];
+def RTHBarEnd = if SecondsFromTime(RthEnd) == 0 and
+                   SecondsTillTime(RthEnd) == 0
+                then 1
+                else Double.NaN;
+def RTH = SecondsFromTime(RthBegin) > 0 and
+          SecondsTillTime(RthEnd) > 0;
+def start_t = if RTH and !RTH[1]
+              then getTime()
+              else Start_t[1];
+def t = if start_t == getTime()
+        then 1
+        else getTime() % (Minutes * 60 * 1000) == 0;
+def cond = t;
+def height;
+switch (pricePerRowHeightMode) {
+case AUTOMATIC:
+    height = PricePerRow.AUTOMATIC;
+case TICKSIZE:
+    height = PricePerRow.TICKSIZE;
+case CUSTOM:
+    height = customRowHeight;
+}
+
+profile tpo = timeProfile("startNewProfile" = cond, "onExpansion" = onExpansion, "numberOfProfiles" = profiles, "pricePerRow" = height, "value area percent" = valueAreaPercent);
+def con = compoundValue(1, onExpansion, no);
+def pc = if IsNaN(tpo.getPointOfControl()) and con then pc[1] else tpo.getPointOfControl();
+def hVA = if IsNaN(tpo.getHighestValueArea()) and con then hVA[1] else tpo.getHighestValueArea();
+def lVA = if IsNaN(tpo.getLowestValueArea()) and con then lVA[1] else tpo.getLowestValueArea();
+
+def hProfile = if IsNaN(tpo.getHighest()) and con then hProfile[1] else tpo.getHighest();
+def lProfile = if IsNaN(tpo.getLowest()) and con then lProfile[1] else tpo.getLowest();
+def plotsDomain = IsNaN(close) == onExpansion;
+
+plot POC = if plotsDomain then pc else Double.NaN;
+plot ProfileHigh = if plotsDomain then hProfile else Double.NaN;
+plot ProfileLow = if plotsDomain then lProfile else Double.NaN;
+plot VAHigh = if plotsDomain then hVA else Double.NaN;
+plot VALow = if plotsDomain then lVA else Double.NaN;
+
+DefineGlobalColor("Profile", GetColor(1));
+DefineGlobalColor("Point Of Control", GetColor(5));
+DefineGlobalColor("Value Area", GetColor(8));
+
+tpo.show(globalColor("Profile"), if showPointOfControl then globalColor("Point Of Control") else color.current, if showValueArea then globalColor("Value Area") else color.current, opacity);
+POC.SetDefaultColor(globalColor("Point Of Control"));
+POC.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+VAHigh.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+VALow.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+VAHigh.SetDefaultColor(globalColor("Value Area"));
+VALow.SetDefaultColor(globalColor("Value Area"));
+ProfileHigh.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+ProfileLow.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+ProfileHigh.SetDefaultColor(GetColor(3));
+ProfileLow.SetDefaultColor(GetColor(3));
+ProfileHigh.hide();
+ProfileLow.hide();
+# End Code TPO Per User Time Segment

@@ -1,0 +1,36 @@
+#Velocity of HMA
+declare lower;
+
+input price = close;
+input length = 80;
+input displace = 0;
+input siglength = 15;
+
+def HMA = MovingAverage(AverageType.HULL, price, length)[-displace];
+#plot hmavel = hma-hma[1];
+#an attempt at smoothing:
+plot hmavel = average(average(hma,2)-average(hma[1],2),2);
+#2nd der for acceleration:
+#plot hmaacc = hmavel-hmavel[1];
+
+plot HMAsig = MovingAverage(AverageType.hull, hmavel, siglength);
+
+plot diff = hmavel-hmasig;
+plot zeroline =0;
+
+HMAvel.DefineColor("Up", GetColor(1));
+HMAvel.DefineColor("Down", GetColor(0));
+HMAvel.AssignValueColor(if HMAvel > HMAvel[1] then HMAvel.color("Up") else HMAvel.color("Down"));
+
+HMAsig.DefineColor("Up", GetColor(3));
+HMAsig.DefineColor("Down", GetColor(5));
+HMAsig.AssignValueColor(if HMAsig > HMAsig[1] then HMAsig.color("Up") else HMAsig.color("Down"));
+
+Diff.SetDefaultColor(GetColor(5));
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+Diff.SetLineWeight(3);
+Diff.DefineColor("Positive and Up", Color.GREEN);
+Diff.DefineColor("Positive and Down", Color.DARK_GREEN);
+Diff.DefineColor("Negative and Down", Color.RED);
+Diff.DefineColor("Negative and Up", Color.DARK_RED);
+Diff.AssignValueColor(if Diff >= 0 then if Diff > Diff[1] then Diff.color("Positive and Up") else Diff.color("Positive and Down") else if Diff < Diff[1] then Diff.color("Negative and Down") else Diff.color("Negative and Up"));

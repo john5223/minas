@@ -1,0 +1,43 @@
+# RocketRSI algo by Ehlers TASC  May'18
+# thinkScript by UpTheCreek
+# v1.0 
+
+declare lower;
+input rsi_length = 10;
+input cutoffLength = 10;
+input price = close;
+
+assert(cutoffLength > 0, "cutoffLength must be positive: " + cutoffLength);
+assert(rsi_length > 0, "rsi_length must be positive: " + rsi_length);
+
+def pastprice = GetValue(price, rsi_length-1);
+def pricemom = price - pastprice;
+### Ehlers SuperSmoother Filter
+def a1 = Exp(-Double.Pi * Sqrt(2) / cutoffLength);
+def coeff2 = 2 * a1 * Cos(Sqrt(2) * Double.Pi / cutoffLength);
+def coeff3 = - Sqr(a1);
+def coeff1 = 1 - coeff2 - coeff3;
+def filt = if IsNaN(pricemom + pricemom[1]) then filt[1] else coeff1 * (pricemom + pricemom[1]) / 2 + coeff2 * filt[1] + coeff3 * filt[2];
+
+### RSI
+def c=filt;
+def SumUp = sum(if c>c[1] then c-c[1] else 0, rsi_length);
+def SumDn = sum(if c<c[1] then c[1]-c else 0, rsi_length);
+
+def RSIalt = if SumUp+SumDn == 0 then .50 else (SumUp-SumDn)/(SumUp+SumDn);
+
+def MyRSI = if RSIalt > 0.999 then 0.999
+             else if RSIalt < -0.999 then -0.999
+                  else RSIalt;
+
+### FisherTransform Transform
+plot RocketRSI = if isNaN(close[-1]) then double.NaN else  0.5 * log ((1+MyRSI)/(1-MyRSI));
+RocketRSI.SetDefaultColor(color.LIME);
+
+plot zero = 0;
+zero.SetDefaultColor(color.DARK_GREEN);
+
+
+# RocketRSI algo by Ehlers TASC  May'18
+# thinkScript by UpTheCreek
+# v1.0 

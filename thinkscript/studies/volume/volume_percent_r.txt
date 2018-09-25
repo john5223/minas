@@ -1,0 +1,33 @@
+# Volume Percent R
+# Mobius
+# V01.01.2015
+# Extreme Volume tends to cluster near trend changes. Look for Green and Yellow bars before a trend change.
+
+declare lower;
+#declare weak_volume_dependency;
+
+input length = 20;
+# Variables
+def v = volume;
+def Hv = highest(V, length);
+def Lv = lowest(V, length);
+# Plots
+plot VR = ((V - Lv)  / (Hv - Lv));
+VR.SetPaintingStrategy(PaintingStrategy.Histogram);
+VR.AssignValueColor(if VR >= 1
+                      then Color.Green
+                      else if between(VR, .7, 1)
+                           then Color.Yellow
+                           else if VR <= .1
+                                then Color.Red
+                                else color.Blue);
+plot zeroPercR = if VR <= .01
+                 then 0
+                 else double.nan;
+zeroPercR.SetPaintingStrategy(PaintingStrategy.Points);
+zeroPercR.SetLineWeight(1);
+zeroPercR.SetDefaultColor(Color.Red);
+plot LR = inertiaAll(VR);
+LR.AssignValueColor(if LR < LR[1] then color.red else color.green);
+
+# End Code VPR

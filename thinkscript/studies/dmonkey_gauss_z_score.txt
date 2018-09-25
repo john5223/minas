@@ -1,0 +1,53 @@
+#StudyName: Gauss_Z_Score
+#Description: Same
+#Author: DMonkey
+#Requested By:  BigWorm
+# Ver   1  Date   9.19.2018  
+#Notes : Adjust betadev until you have at least 68.2% inside 1 SD
+
+input length = 21;
+input price = hl2;
+input betadev = 4.0;
+input SdMult = 1.0;
+
+def w = (2 * Double.Pi / length);
+def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betadev) - 1 );
+def alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+def G = Power(alpha, 4) * price + 
+                 4 * (1 – alpha) * G[1] – 6 * Power( 1 - alpha, 2 ) * G[2] + 
+                 4 * Power( 1 - alpha, 3 ) * G[3] - Power( 1 - alpha, 4 ) * G[4];
+def data = G;
+plot Zscore = (data - Average(data, length)) / StDev(data, length);
+Zscore.SetDefaultColor(Color.CYAN);
+plot zero = if IsNaN(close) then Double.NaN else 0;
+zero.SetDefaultColor(Color.WHITE);
+zero.SetLineWeight(2);
+plot PosOne = if IsNaN(close) then Double.NaN else 1;
+PosOne.SetDefaultColor(Color.GREEN);
+plot NegOne = if IsNaN(close) then Double.NaN else -1;
+NegOne.SetDefaultColor(Color.RED);
+plot PosTwo = if IsNaN(close) then Double.NaN else 2;
+PosTwo.SetDefaultColor(Color.GREEN);
+plot NegTwo = if IsNaN(close) then Double.NaN else -2;
+NegTwo.SetDefaultColor(Color.RED);
+AddCloud(zero, PosOne, Color.LIGHT_GREEN, Color.LIGHT_GREEN);
+AddCloud(PosOne, PosTwo, Color.DARK_GREEN, Color.DARK_GREEN);
+AddCloud(NegOne, zero, Color.LIGHT_RED, Color.LIGHT_RED);
+AddCloud(NegTwo, NegOne, Color.DARK_RED, Color.DARK_RED);
+
+def SD = StDev(price, length);
+def mean = Round(data / TickSize(), 0) * TickSize();
+
+def upper = mean + (SdMult * SD);
+
+def lower = mean + (-SdMult * SD);
+
+def count = if price > lower and price < upper
+        then count[1] + 1
+        else count[1];
+def bars = CompoundValue(1, bars[1] + 1, 1);
+def percent = (bars - (bars - count)) / bars;
+
+AddLabel(1, "Inside Bell Curve = " + AsPercent(percent), Color.WHITE);
+declare lower;
+###   End Code   ###

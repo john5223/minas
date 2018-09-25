@@ -1,0 +1,207 @@
+# FEbonacci OverBought / OverSold Zones
+# v.01 8.30.18
+# Nube
+# Zones are (Fractal Energy * Pivot Distance from Mean)
+
+    # Inputs
+input length = 14;# Fractal Energy Length
+input pivotN = 5;# Pivot Confirmation Length
+
+    # Universals
+def c = close;
+def h = high;
+def l = low;
+def bn = BarNumber();
+def na = Double.NaN;
+
+#  variable length regression line subscript
+script Slope {
+    input y = close;
+    input l = 40;
+    def n  = Round(l, 0);
+    def na = Double.NaN;
+    def bn = BarNumber();
+#  start and end bars
+    def developingBar = if   !IsNaN(y) && IsNaN(y[-1])
+                        then bn else developingBar[1];
+    def currentBar = HighestAll(developingBar);
+    def trailingBar = if   GetValue(bn, -n) == currentBar
+                      then bn else trailingBar[1];
+    def startingBar = HighestAll(trailingBar);
+    def x = if   GetValue(bn, -n) > currentBar 
+            then bn - startingBar else x[1];
+#  arithmetic
+    def Ex  = fold ix  = 0 to n with px  do px  + GetValue(x, ix);
+    def Ey  = fold iy  = 0 to n with py  do py  + GetValue(y, iy);
+    def Exy = fold ixy = 0 to n with pxy do pxy + GetValue(x * y, ixy);
+    def Ex2 = fold ix2 = 0 to n with px2 do px2 + GetValue(x * x, ix2);
+#  math
+    def b = (n * Exy - (Ex * Ey)) / 
+            (n * Ex2 - (Ex * Ex));
+    def getB = if   bn > startingBar
+               then GetValue(b, bn - currentBar)
+               else na;
+    def a = (GetValue(Ey, bn - currentBar) - getB *
+             GetValue(Ex, bn - currentBar)) / n;
+
+    plot 
+    line = if   !IsNaN(getB) && !IsNaN(y)
+           then a + (getB * x) else na;
+
+}
+
+
+    # Mobius Fractal Energy Equation
+def FE = Log(Sum(Max(h, c[1]) - Min(l, c[1]), Length) / 
+           (Highest(h, Length) - Lowest(l, Length))) / 
+            Log(Length);
+def feCount = CompoundValue(1, 
+              if   FE crosses below .35
+              then 0 else if   FE >= .35
+                          then feCount[1] + 1
+                          else feCount[1], 1);
+def developingBar;
+def currentFeCount;
+def floatingClose;
+if  !IsNaN(c) && IsNaN(c[-1])
+then{
+    developingBar  = bn;
+    currentFeCount = feCount;
+    floatingClose  = c;
+}else{
+    developingBar  = developingBar[1];
+    currentFeCount = currentFeCount[1];
+    floatingClose  = floatingClose[1];
+}
+
+def currentClose = HighestAll(floatingClose);
+def currentFE    = HighestAll(currentFeCount);
+def currentBar   = HighestAll(developingBar);
+def trailingBar  = if   GetValue(bn, -currentFE) == currentBar
+                   then bn else trailingBar[1];
+
+plot 
+Line = Slope(c, currentFE);
+Line.SetDefaultColor(Color.YELLOW);
+Line.SetStyle(Curve.MEDIUM_DASH);
+Line.SetLineWeight(2);
+Line.HideBubble();
+
+    # Mobius Fractal Pivots
+
+def n = pivotN;
+# R1
+def hh = fold i = 1 to n + 1 
+         with p = 1
+         while p 
+         do h > GetValue(h, -i);
+def PivotH = if (bn > n and 
+                 h == Highest(h, n) and 
+                 hh)
+             then h 
+             else na;
+def PHValue = if !IsNaN(PivotH) 
+              then PivotH 
+              else PHValue[1];
+def PHBarOrigin = if !IsNaN(PivotH) 
+                  then bn 
+                  else PHBarOrigin[1];
+# S1
+def ll = fold j = 1 to n + 1 
+         with q = 1
+         while q 
+         do l < GetValue(l, -j);
+def PivotL = if (bn > n and 
+                 l == Lowest(l, n) and
+                 ll)
+             then l 
+             else na;
+def PLValue = if !IsNaN(PivotL) 
+              then PivotL 
+              else PLValue[1];
+def PLBarOrigin = if !IsNaN(PivotL) 
+                  then bn 
+                  else PLBarOrigin[1];
+
+# End of Mobius Fractal Pivots
+
+def top;
+def topFE;
+def btm;
+def btmFE;
+def overBought;
+def overSold;
+if  bn == PHBarOrigin
+&&  bn > HighestAll(trailingBar)
+then{
+    top   = PHValue;
+    topFE = FE;
+    overBought = top - AbsValue(top - line) *  topFE;
+}else{
+    top   = top[1];
+    topFE = topFE[1];
+    overBought = overBought[1];
+}
+if  bn == PLBarOrigin
+&&  bn > HighestAll(trailingBar)
+then{
+    btm   = PLValue;
+    btmFE = FE;
+    overSold = btm + AbsValue(line - btm) * btmFE;
+}else{
+    btm   = btm[1];
+    btmFE = btmFE[1];
+    overSold = overSold[1];
+}
+
+    # Plots
+plot 
+rLine = if   bn != PHBarOrigin #to break line so plot/clouds stop/restart
+        then top else na;
+plot 
+sLine = if   bn != PLBarOrigin 
+        then btm else na;
+
+plot 
+OB = if   bn != PHBarOrigin 
+     then overBought
+     else na;
+plot 
+OS = if   bn != PLBarOrigin 
+     then overSold     
+     else na;
+
+plot
+price = currentClose;
+
+rLine.SetDefaultColor(Color.Green);
+sLine.SetDefaultColor(Color.Red);
+OB.SetDefaultColor(Color.DownTick);
+OS.SetDefaultColor(Color.UpTick);
+price.SetDefaultColor(Color.Magenta);
+
+AddCloud(rLine,OB,Color.DownTick, Color.DownTick);
+AddCloud(sLine,OS,Color.UpTick, Color.upTick);
+AddChartBubble(IsNaN(c[1]) and !IsNaN(c[2]), OB[2], "OverBought", Color.DownTick, c[2] < OB[2]);
+AddChartBubble(IsNaN(c[1]) and !IsNaN(c[2]), OS[2], "OverSold", Color.UpTick, c[2] < OS[2]);
+
+# FEbonacci OverBought / OverSold Zones
+#05:28 Nube: Still needs a condiition to tell you when it's clearly not a useful tool, but that's
+
+#07:23 Mobius: Nube - Your going to run into a bit of a problem when trying to make your Regression Line truly variable. The TOS Sum() function doesn't allow for anything other than a constant for length. The hint from the other day was to use a fold expression in a sum script to allow a variable length.  
+
+#Example:
+
+#script E
+#    {
+#     input data = close;
+#     input n = 20;
+#     def t = fold i = 0 to n
+#             with s
+#             do s + getValue(data, i);
+#     plot output = t;
+#    }
+#def Ex  = E(x_, n);
+#07:24 Mobius: That example if from the method I used a few years ago to solve the same problem.
+#07:26 Mobius: You'll find it also useful for mathematical optimization of algorithms when you get to that point
+#07:27 Mobius: I use it exentsivly in error correction PDF's

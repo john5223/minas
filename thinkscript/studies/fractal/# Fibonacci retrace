@@ -1,0 +1,73 @@
+# Fibonacci retrace
+# Anchored to Stochastic High and Low 
+# For ST - Blake 02.02.2016
+
+input Fib_Coeff1 = .382;
+input Fib_Coeff2 = .500;
+input Fib_Coeff3 = .618;
+input n = 78;
+input BubbleOn = yes;
+
+def c = close;
+def h = high;
+def l = low;
+def bar = barNumber();
+def BubbleLocation = isNaN(close[4]) and !isNaN(close[5]);
+def hh = highest(h, n);
+def ll = lowest(l, n);
+def K = ((c - ll) / (hh - ll));
+def KH = if K crosses above .8
+         then h
+         else if K < .5
+              then double.nan
+         else if K > .8 and h > KH[1]
+              then h
+              else KH[1];
+def KHbar = if !isNaN(KH) and h == KH
+            then bar 
+            else double.nan;
+def a_KH = if !isNaN(KH)
+           then KH 
+           else a_KH[1];
+plot dataKh = if bar >= HighestAll(KHbar) 
+              then a_KH 
+              else double.nan;
+dataKh.SetStyle(Curve.Short_Dash);
+dataKh.SetDefaultColor(Color.cyan);
+def KL = if K crosses below .2
+         then l
+         else if K > .5
+              then double.nan
+         else if K < .2 and l < KL[1]
+              then l
+              else KL[1];
+def KLbar = if !isNaN(KL) and l == KL
+            then bar 
+            else double.nan;
+def a_KL = if !isNaN(KL) 
+           then KL
+           else a_KL[1];
+plot dataKl = if bar >= HighestAll(KLbar) 
+              then a_KL
+              else double.nan;
+dataKL.SetStyle(Curve.Short_Dash);
+dataKL.SetDefaultColor(Color.cyan);
+plot KH_KL_Line = if bar== HighestAll(KHbar)
+                  then a_KH
+                  else if bar == HighestAll(KLbar)
+                  then a_KL
+                  else double.nan;
+KH_KL_Line.SetStyle(Curve.Short_Dash);
+KH_KL_Line.EnableApproximation();
+KH_KL_Line.SetDefaultColor(color.cyan);
+def S_range = dataKH - dataKL;
+plot fib_1 = dataKh - (s_range * Fib_Coeff1);
+fib_1.SetDefaultColor(Color.dark_gray);
+AddChartBubble(BubbleOn and BubbleLocation, fib_1, Fib_Coeff1, color.gray);
+plot fib_2 = dataKh - (s_range * Fib_Coeff2);
+fib_2.SetDefaultColor(Color.dark_gray);
+AddChartBubble(BubbleOn and BubbleLocation, fib_2, Fib_Coeff2, color.gray);
+plot fib_3 = dataKh - (s_range * Fib_Coeff3);
+fib_3.SetDefaultColor(createColor(200,155,0));
+AddChartBubble(BubbleOn and BubbleLocation, fib_3, Fib_Coeff3, createColor(200,155,0));
+# End Code Stochastic Anchored Fibonacci Retracement Lines

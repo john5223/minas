@@ -1,0 +1,82 @@
+# VWAPALOOZA modified with ZScore
+# Vwapalooza By Prospectus @ http://readtheprospectus.worspress.com
+# zscore modified by chief 8_27_2018
+# This Thinkscript calculates four different types of VWAP:
+# OneDay (standard type), Rolling (N bar lookback), Bar
+# Incremental (discrete N bar periods) and Volume Incremental
+# (discrete N-shares-traded periods).
+#
+
+#
+# Check if we are on the current day:
+#
+def istoday = if getDay() == getLastDay() then 1 else 0;
+#
+# Input Rolling / Incremental period, VWAP type, and
+# Averaging method ( (H+L)/2 or Close):
+#
+input Period = 20;
+def n = Period;
+input VolIncrement=20000;
+def v=VolIncrement;
+input VWAPType = {Rolling, BarIncremental, VolIncremental, default OneDay};
+def type;
+switch (VWAPType){
+case Rolling:
+type = 1;
+case BarIncremental:
+type = 0;
+case OneDay:
+type = 2;
+case VolIncremental:
+type=3;
+}
+input AverageMethod = {CLOSE, default H_L};
+def num;
+switch (AverageMethod){
+case CLOSE:
+num = close;
+case H_L:
+num = (high + low) / 2;
+}
+#
+# Define volume for today only (other days zero):
+#
+def todayvol = if istoday then volume else 0;
+#
+# Calculate the P*V term for VWAP:
+#
+def pv = num * todayvol;
+#
+# Code for BarIncremental counter:
+#
+rec k = if k[1] == n then 1 else k[1] + 1;
+#
+# Code for VolIncremental volume sum:
+#
+rec volsum=if volsum[1]>v then volume else volsum[1]+volume;
+#
+# Code for VolIncremental price*volume:
+#
+rec pvsum =if volsum[1]>v then num*volume else pvsum[1] + num*volume;
+#
+# Now define the VolIncremental to display:
+#
+rec volinc=if volsum[1]==0 then num else if volsum[1]>v then pvsum[1]/volsum[1] else volinc[1];
+#
+# Now the final VWAP calculations:
+#
+rec calcVWAP = if type == 2 then TotalSum(pv) / TotalSum(todayvol) else if type == 1 then sum(num*volume, n) / sum(volume, n) else if type==3 then volinc else if type==0 and k == n then sum(num*volume, n) / sum(volume, n) else calcvwap[1];
+#
+#
+#
+declare lower;
+def Zscore = (calcvwap - Average(calcvwap, 20)) / StDev(calcvwap, 20);
+plot z = zscore;
+plot zed = 0;
+plot highz = 2;
+plot lowz = -2;
+plot oyvey = -1;
+plot oyvey1 = 1;
+
+AddLabel(yes, "ZScore = " + ZScore, if zscore>0 then color.green else color.red);

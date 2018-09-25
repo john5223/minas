@@ -1,0 +1,36 @@
+# Ehlers_COG (Center of Gravity)
+# by growex
+# Posted by: Mobius
+# 12.18.2017
+
+# Mobius: Someone was asking for a COG study with bands. COG is an 
+# unbounded oscillartor as designed by Ehlers. It would need to be 
+# normalized to the price chart to have bands. Otherwise a 1 bar 
+# lag on the oscillator gives very good signals. COG is 1 weighted 
+# average shifted backwards to their center of lag or balance thus 
+# the name. I was picturing the lagged second line or signal line 
+# as the second of two but that's actually the same WAVG just 
+# lagged one bar
+#
+# Mobius: This study is an accurate translation of Ehlers Center 
+# Of Gravity. 
+
+declare lower;
+
+input Price = hl2;
+input Length = 10;
+
+def Num = fold i = 0 to length -1
+          with n
+          do n + (1 + i) * getvalue(price, i , length - 1);
+def Denom = fold j = 0 to length -1
+            with k
+            do k + getvalue(price, j, length - 1);
+def CG = if denom <> 0 then -Num/Denom else double.NaN;
+
+plot cgline = cg;
+cgline.SetDefaultColor(Color.Green);
+plot trigger = cgline[1]; 
+trigger.SetDefaultColor(Color.Red);
+addCloud(cgline, trigger, color.green, color.red);
+# End Code Ehlers Center of Gravity

@@ -1,0 +1,65 @@
+# Yet Another Divergence Script - Trend Momentum Divergence
+# Nube 6.4.18
+# Draws linear regression through RSI and price scaled to RSI
+   
+declare lower;
+
+input Length     = 14;
+input OverBought = 70;
+input OverSold   = 30;
+input Cloud      = yes;
+
+def na = Double.NaN;
+def indicator  = RSI(Length = length);
+
+script scale {
+    input c = 0;
+    input Min = 0;
+    input Max = 1;
+    def hh = HighestAll(c);
+    def ll = LowestAll(c);
+    plot Range = (((Max - Min) * (c - ll)) /  (hh - ll)) + Min;
+}
+
+def sPrice = scale(close, LowestAll(indicator), HighestAll(indicator));
+
+plot 
+OB  = if !IsNaN(close) then OverBought else na;
+OB.SetDefaultColor(Color.Light_Red);
+plot 
+OS  = if !IsNaN(close) then OverSold else na;
+OS.SetDefaultColor(Color.Light_Green);
+
+plot 
+RSI = indicator;
+RSI.DefineColor("Over Bought", Color.Red);
+RSI.DefineColor("Over Sold", Color.Green);
+RSI.DefineColor("Typical", Color.White);
+RSI.AssignValueColor(
+if    RSI > OB 
+then  RSI.color("Over Bought") 
+else  if   RSI < overSold 
+      then RSI.color("Over Sold") 
+      else RSI.color("Typical")
+);
+
+
+plot priceTrend = Average(sPrice, length);
+plot rsiTrend = Average(indicator, length);
+
+priceTrend.DefineColor("Price Trend Down", CreateColor(150,50,50));
+priceTrend.DefineColor("Price Trend Up", CreateColor(50,150,50));
+priceTrend.AssignValueColor(if   priceTrend < priceTrend[1]
+                            then priceTrend.Color("Price Trend Down")
+                            else priceTrend.Color("Price Trend Up"));
+                            
+rsiTrend.DefineColor("RSI Below Price", CreateColor(150,50,50));
+rsiTrend.DefineColor("RSI Above Price", CreateColor(50,150,50));
+rsiTrend.AssignValueColor(if   priceTrend > rsiTrend
+                          then rsiTrend.Color("RSI Below Price")
+                          else rsiTrend.Color("RSI Above Price"));
+
+addCloud(if (cloud,rsiTrend,na), priceTrend, 
+CreateColor(50,150,50), CreateColor(150,50,50));
+
+# f/ Trend Momentum Divergence

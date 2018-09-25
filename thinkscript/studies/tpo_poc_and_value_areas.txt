@@ -1,0 +1,22 @@
+# Average POC and Value Areas
+# Mobius
+# V01.09.2018
+# Chat Room Request
+# Must have a minimum of 2 times the n value in chart data
+
+input n = 10;
+input ValueAreaPercent = 68.4;
+
+def bar = BarNumber();
+def RTHBar1 = if getTime() crosses above RegularTradingStart(getYYYYMMDD())
+              then bar
+              else Double.NaN;
+def cond = bar == (RTHBar1);
+profile vol = VolumeProfile("startNewProfile" = cond, "onExpansion" = no, "numberOfProfiles" = n * 10, "pricePerRow" = PricePerRow.TICKSIZE, "value area percent" = ValueAreaPercent);
+def pc = if IsNaN(vol.GetPointOfControl()) 
+         then pc[1] 
+         else vol.GetPointOfControl();
+plot Avgpc = Average(pc, n);
+plot ProfileHigh = Average(vol.getHighestValueArea(), n);
+plot ProfileLow = Average(vol.getLowestValueArea(), n);
+# End Code

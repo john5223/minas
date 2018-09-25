@@ -1,0 +1,24 @@
+#hint: Developed by E.W. “Bill” Dreiss, the Choppiness Index indicator is a measure something akin to the fractal dimension of the time series during the most recent Period. According to fractals theory, the fractal dimension of two-dimensional objects can be anywhere between one (a straight line) and two (a geometric plane). A “random walk”, has a fractal dimension of 1.5. Choppiness Index varies on the 0-100 scale. When the market is trending the fractal dimension is close to one and the Choppiness Index is around zero. When the market did not trend (the market is “choppy”), the fractal dimension is close to 1.5 and the Choppiness Index is around 100. The Choppiness Indicator can be viewed as an indicator measuring the market‘s trendiness. The indicator does not show the direction of the trend.
+# Ported to TOS by Mobius
+
+declare lower;
+
+input CiLength = 14;
+input AvgLength = 14;
+
+def HMax = Highest(Max(high, close[1]), CiLength);
+def LMax = Lowest(Min(low, close[1]), CiLength);
+def TR = TrueRange(high, close, low);
+
+plot CI = 100.0 * Log(Sum(TR, CiLength) / (HMax - LMax)) / Log(CiLength);
+CI.SetDefaultColor(Color.Cyan);
+plot Avg = Average(CI, AvgLength);
+Avg.SetdefaultColor(Color.Yellow);
+plot choppy = if IsNaN(close) then Double.NaN else 61.8;
+choppy.SetDefaultColor(Color.Light_Red);
+plot trending = if IsNaN(close) then Double.NaN else 38.2;
+trending.SetDefaultColor(Color.Light_Green);
+addCloud(30, trending, color.Light_Green, color.Light_Green);
+addCloud(choppy, 70, color.Light_Red, color.Light_Red);
+AddLabel(1, if CI < Avg then "Trending" else "Choppy",
+         if CI < Avg then color.green else color.red);

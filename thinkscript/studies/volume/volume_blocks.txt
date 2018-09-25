@@ -1,0 +1,107 @@
+# Volumed - Aggregates time segmented volume blocks
+# Farmin
+# 7.16.2018
+
+# Kickstart: DMonkey, UpTheCreek
+# We discussed that daily volume vs summed volume aren't the same for equities
+
+#hint:<b>Volumed</b>\nShows aggregated volume by market time segment - premarket, RTH and afterhours.  Use on a 30m chart or less.  All times are Eastern. N.B. Counts reset at midnight.
+ 
+#Declarations
+declare lower;
+declare hide_on_daily;
+
+#inputs
+input Begin_precount_at = 0400;
+input Stop_precount_before = 0930;
+input Begin_mktcount_at = 0930;
+input Stop_mktcount_before = 1600;
+input Begin_aftrcount_at = 1600;
+input Stop_aftrcount_before = 2000;
+
+input show_labels = yes;
+input debug = no;
+
+#calcs
+def v = if IsNaN(volume) then 0 else volume;
+def na = Double.NaN;
+
+def Count_Pre = SecondsFromTime(Begin_precount_at) >= 0
+              && SecondsTillTime(Stop_precount_before) > 0;
+def Count_Mkt = SecondsFromTime(Begin_mktcount_at) >= 0
+              && SecondsTillTime(Stop_mktcount_before) > 0;
+def Count_Aftr = SecondsFromTime(Begin_aftrcount_at) >= 0
+              && SecondsTillTime(Stop_aftrcount_before) > 0;
+
+def save_prior = GetDay() != GetDay()[1] ;
+
+def Start_Counting_Pre = Count_Pre && !Count_Pre[1];
+
+def Cum_Vol_Pre = 
+              if save_prior && !Start_Counting_Pre 
+              then 0 
+              else if Start_Counting_Pre
+                   then v
+                   else if Count_Pre 
+                        then Cum_Vol_Pre[1] + v
+                        else Cum_Vol_Pre[1];
+
+def prior_pre = if save_prior then cum_Vol_pre[1] else prior_pre[1];
+
+def Start_Counting_Mkt = Count_Mkt && !Count_Mkt[1];
+
+def Cum_Vol_Mkt = 
+              if save_prior && !Start_Counting_Mkt 
+              then 0 
+              else if Start_Counting_Mkt
+                   then v
+                   else if Count_Mkt 
+                        then Cum_Vol_Mkt[1] + v
+                        else Cum_Vol_Mkt[1];
+
+def prior_mkt = if save_prior then cum_Vol_Mkt[1] else prior_mkt[1];
+
+def Start_Counting_Aftr = Count_Aftr && !Count_Aftr[1];
+
+def Cum_Vol_Aftr = 
+              if save_prior && !Start_Counting_Aftr 
+              then 0 
+              else if Start_Counting_Aftr
+                   then v
+                   else if Count_Aftr 
+                        then Cum_Vol_Aftr[1] + v
+                        else Cum_Vol_Aftr[1];
+
+def prior_aftr = if save_prior then cum_Vol_aftr[1] else prior_aftr[1];
+
+#Plots
+plot Cumulative_PreSession_Volume = if Count_Pre
+                                 then Cum_Vol_Pre
+                                 else na;
+Cumulative_PreSession_Volume.setDefaultColor(color.DARK_ORANGE); 
+Cumulative_PreSession_Volume.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+
+plot Cumulative_MktSession_Volume = if Count_Mkt
+                                 then Cum_Vol_Mkt
+                                 else na;
+Cumulative_MktSession_Volume.setDefaultColor(Color.YELLOW); 
+Cumulative_MktSession_Volume.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+
+plot Cumulative_AftrSession_Volume = if Count_Aftr
+                                 then Cum_Vol_Aftr
+                                 else na;
+Cumulative_AftrSession_Volume.setDefaultColor(Color.MAGENTA); 
+Cumulative_AftrSession_Volume.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+
+
+AddChartBubble(SecondsTillTime(Stop_precount_before) == 0, Cum_Vol_Pre, Cum_Vol_Pre, Color.DARK_ORANGE, 1);
+
+AddChartBubble(SecondsTillTime(Stop_mktcount_before) == 0, Cum_Vol_Mkt, Cum_Vol_Mkt, Color.YELLOW, 0);
+
+AddChartBubble(GetDay() != GetDay()[-1], Cum_Vol_Aftr, Cum_Vol_Aftr, Color.MAGENTA, 1);
+
+addlabel(show_labels, "PreVol: " + cum_Vol_Pre + " MktVol: " + cum_Vol_Mkt + " AfterVol: " + cum_Vol_Aftr + " = " + (cum_Vol_Pre + cum_Vol_Mkt + cum_Vol_Aftr) + " | Reported by Daily agg: " + volume(period = AggregationPeriod.Day), Color.LIGHT_GRAY ); 
+
+addlabel(show_labels, "PreVol: " + prior_Pre + " MktVol: " + prior_Mkt + " AfterVol: " + prior_Aftr + " = " + (prior_Pre + prior_Mkt + prior_Aftr) + " | Reported by Daily agg: " + volume(period = AggregationPeriod.Day)[1], Color.GRAY ); 
+
+###   End Code   ###

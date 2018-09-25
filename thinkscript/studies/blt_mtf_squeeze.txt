@@ -1,0 +1,76 @@
+#coded by BLT
+
+declare lower;
+
+input length    = 20;
+input nK        = 1.5;
+input nBB       = 2;
+
+input agg1           = AggregationPeriod.five_MIN;
+input agg2           = AggregationPeriod.fifteen_MIN;
+input agg3           = AggregationPeriod.thirty_MIN;
+input agg4           = AggregationPeriod.hour;
+input agg5           = AggregationPeriod.two_hours;
+input agg6           = AggregationPeriod.four_hours;
+
+
+#agg1
+def sDev1        = StDev(close(period = agg1), length);
+def MidLine1     = Average(close(period = agg1), length);
+def BBUpperBand1 = MidLine1 + nBB * sDev1;
+
+def shift1       = nK * Average(TrueRange(high(period = agg1),  close(period = agg1),  low(period = agg1)),  length);
+def KCUpperBand1 = MidLine1 + shift1;
+
+def isSqueeze1    = BBUpperBand1 < KCUpperBand1;
+def enterSqueeze1 = if isSqueeze1 and !isSqueeze1[1] then 1 else 0;
+def exitSqueeze1  = if isSqueeze1[1] and !isSqueeze1 then 1 else 0;
+
+plot DotsToPlot1  = if IsNaN(close) then Double.NaN else 1;
+DotsToPlot1.SetLineWeight(3);
+DotsToPlot1.SetStyle(Curve.POINTS);
+DotsToPlot1.AssignValueColor(
+    if isSqueeze1 then color.RED
+    else if exitSqueeze1 then color.PINK
+    else color.GREEN);
+
+#agg2
+def sDev2        = StDev(close(period = agg2), length);
+def MidLine2     = Average(close(period = agg2), length);
+def BBUpperBand2 = MidLine2 + nBB * sDev2;
+
+def shift2       = nK * Average(TrueRange(high(period = agg2),  close(period = agg2),  low(period = agg2)),  length);
+def KCUpperBand2 = MidLine2 + shift2;
+
+def isSqueeze2    = BBUpperBand2 < KCUpperBand2;
+def enterSqueeze2 = if isSqueeze2 and !isSqueeze2[1] then 1 else 0;
+def exitSqueeze2  = if isSqueeze2[1] and !isSqueeze2 then 1 else 0;
+
+plot DotsToPlot2  = if IsNaN(close) then Double.NaN else 2;
+DotsToPlot2.SetLineWeight(3);
+DotsToPlot2.SetStyle(Curve.POINTS);
+DotsToPlot2.AssignValueColor(
+    if isSqueeze2 then color.RED
+    else if exitSqueeze2 then color.PINK
+    else color.GREEN);
+
+
+#agg3
+def sDev3        = StDev(close(period = agg3), length);
+def MidLine3     = Average(close(period = agg3), length);
+def BBUpperBand3 = MidLine3 + nBB * sDev3;
+
+def shift3       = nK * Average(TrueRange(high(period = agg3),  close(period = agg3),  low(period = agg3)),  length);
+def KCUpperBand3 = MidLine3 + shift3;
+
+def isSqueeze3    = BBUpperBand3 < KCUpperBand3;
+def enterSqueeze3 = if isSqueeze3 and !isSqueeze3[1] then 1 else 0;
+def exitSqueeze3  = if isSqueeze3[1] and !isSqueeze3 then 1 else 0;
+
+plot DotsToPlot3  = if IsNaN(close) then Double.NaN else 3;
+DotsToPlot3.SetLineWeight(3);
+DotsToPlot3.SetStyle(Curve.POINTS);
+DotsToPlot3.AssignValueColor(
+    if isSqueeze3 then color.RED
+    else if exitSqueeze3 then color.PINK
+    else color.GREEN);

@@ -1,0 +1,38 @@
+
+declare lower;
+
+input openRTH  = 0930;
+input closeRTH = 1600;
+input DisplayLabel = yes;
+input AlertOn = yes;
+input attr = volume;
+
+def Active = if secondsFromTime(openRTH) > 0 and
+                secondsTillTime(closeRTH) >= 0
+             then 1
+             else 0;
+
+def cumulation = if !Active
+                            then Double.NaN
+                       else if Active and !Active[1]
+                            then attr
+                       else if Active
+                            then cumulation[1] + attr
+                       else
+                            cumulation[1];
+
+def yesterdayVolume =  Average(volume(period="DAY"), length=7)[1];
+def percentAvgYesterday = cumulation / yesterdayVolume;
+
+plot plotpercentAvgYesterday = percentAvgYesterday;
+#plot cumul = cumulation;
+#plot std = StandardDeviation(c, length=3);
+#plot v = VolumeAvg(length = 200).Vol;
+
+plot zero = if isNaN(close)
+            then double.nan
+            else 1;
+zero.SetDefaultColor(color.gray);
+
+#Alert(AlertOn and ((TICK crosses above 800) or (TICK crosses below 800)), "TICK ALERT", Alert.Bar, Sound.Bell);
+

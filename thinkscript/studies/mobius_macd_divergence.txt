@@ -1,0 +1,164 @@
+# MACD With Divergence Signals
+# Mobius
+# Mobius at MyTrade
+
+# This study was enhanced for some trader and is just a gimmick. 
+# For actual trading it's worthless as tits on a boar hog
+
+#Hint: Divergence is marked with points, yellow and red. Exit from a squeeze is marked with arrows.
+
+declare lower;
+
+input fastEMA = 5; #13;
+input slowEMA = 13; #21;
+input Smooth  =  5; #8;
+
+   def c = close;
+   def h = high;
+   def l = low;
+
+   def FSignal = (c * .15) +  (.85  * ExpAverage(c, fastEMA)[1]);
+   def SSignal = (c * .075) + (.925 * ExpAverage(c, slowEMA)[1]);
+
+  plot MACD = FSignal - SSignal;
+       MACD.SetPaintingStrategy(PaintingStrategy.Line);
+       MACD.SetLineWeight(4);
+       MACD.AssignValueColor(if MACD < 0 and
+                                MACD < MACD[1]
+                             then Color.Red
+                             else if MACD < 0 and
+                                     MACD > MACD[1]
+                             then Color.Cyan
+                             else if MACD > 0 and
+                                     MACD > MACD[1]
+                             then Color.Green
+                             else Color.Yellow);
+
+  plot MACDSL = ExpAverage(MACD, Smooth);
+       MACDSL.SetPaintingStrategy(PaintingStrategy.Histogram);
+       MACDSL.SetLineWeight(4);
+       MACDSL.AssignValueColor(if MACDSL < 0 and
+                                MACDSL < MACDSL[1]
+                             then Color.Plum
+                             else if MACDSL < 0 and
+                                     MACDSL > MACDSL[1]
+                             then Color.Green
+                             else if MACDSL > 0 and
+                                     MACDSL > MACDSL[1]
+                             then Color.Blue
+                             else Color.Light_Red);
+plot line = MACDSL;
+line.SetDefaultColor(Color.YELLOW);
+line.SetStyle(Curve.SHORT_DASH);  
+
+rec MACDh = CompoundValue(1, if MACD < 0
+            then Double.NaN
+            else if MACD crosses above 0
+            then MACD
+            else if MACD > 0 and 
+                    MACD > MACDh[1]
+            then MACD
+            else MACDh[1], 0);
+
+rec Valueh = CompoundValue(1, if MACD < 0
+             then Double.NaN
+             else if MACD crosses above 0
+             then h
+             else if MACD > 0 and 
+                     h >Valueh[1]
+             then h
+             else Valueh[1], 0);
+
+plot divSignal = if MACD > 0 and
+                    h > Valueh[1] and 
+                    MACD < MACDh[1]
+                 then 0
+                 else Double.NaN;
+divSignal.SetPaintingStrategy(PaintingStrategy.Points);
+divSignal.SetLineWeight(4);
+divSignal.SetDefaultColor(Color.Red);
+
+rec MACDl = CompoundValue(1, if MACD > 0
+                             then Double.NaN
+                             else if MACD crosses below 0
+                             then MACD
+                             else if MACD < 0 and 
+                                     MACD < MACDl[1]
+                             then MACD
+                             else MACDl[1], 0);
+
+rec Valuel = CompoundValue(1, if MACD > 0
+                              then Double.NaN
+                              else if MACD crosses below 0
+                              then l
+                              else if MACD < 0 and
+                                      l < Valuel[1]
+                              then l
+                              else Valuel[1], 0);
+
+plot divSignall = if MACD < 0 and
+                    l < Valuel[1] and
+                    MACD > MACDl[1]
+                 then 0
+                 else Double.NaN;
+divSignall.SetPaintingStrategy(PaintingStrategy.Points);
+divSignall.SetLineWeight(4);
+divSignall.SetDefaultColor(Color.Green);
+
+def SMA = Average(c, 20);
+def SD = StDev(c, 20);
+def ATR = Average(TrueRange(h, c, l), 20);
+def UpperBB = SMA + (SD * 2);
+def UpperKC = SMA + (ATR * 1.5);
+plot SQ = if UpperBB - UpperKC < 0
+          then 0
+          else Double.NaN;
+SQ.SetPaintingStrategy(PaintingStrategy.Points);
+SQ.SetLineWeight(2);
+SQ.SetDefaultColor(Color.Yellow);
+
+plot zeroLine = if isNaN(divSignal) and 
+                   isNaN(divSignall) and 
+                   isNaN(SQ) and 
+                   !isNaN(c)
+                then 0 
+                else Double.NaN;
+zeroLine.SetStyle(Curve.SHORT_DASH);  
+zeroLine.SetLineWeight(1);
+zeroLine.SetDefaultColor(Color.WHITE);
+
+#AddCloud(MACD, MACDSL, Color.LIGHT_GRAY, Color.YELLOW);
+
+plot ArrowUP = if isNaN(SQ) and 
+                  SQ[1] == 0  and 
+                  MACD >= 0 and
+                  MACD > MACD[1]
+               then 0
+               else Double.NaN;
+     ArrowUP.SetPaintingStrategy(PaintingStrategy.Arrow_UP);
+     ArrowUP.SetLineWeight(3);
+     ArrowUP.SetDefaultColor(Color.Green);
+
+def SQbar = CompoundValue(2, if !IsNaN(SQ)
+            then SQbar[1] + 1
+            else if UpperBB > UpperKC
+            then Double.NaN
+            else SQbar[1], 1);
+
+AddLabel(UpperBB < UpperKC, "In Squeeze", Color.Yellow);
+
+def LowTrough = if MACDSL < 0 and
+                   MACDSL[1] < MACDSL[2] and
+                   MACDSL > MACDSL[1]
+                then MACDSL
+                else if MACDSL > 0
+                then Double.NaN
+                else Double.NaN;
+
+plot LowPoint = LowTrough;
+     LowPoint.EnableApproximation();
+     LowPoint.SetPaintingStrategy(PaintingStrategy.Line);
+     LowPoint.SetLineWeight(1);
+     LowPoint.SetDefaultColor(Color.White);
+
+# End Code

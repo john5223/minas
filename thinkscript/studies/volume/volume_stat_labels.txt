@@ -1,0 +1,29 @@
+# Box Volume Stats
+# Version 1.0
+# Created by: Enigma
+# Created: 05/18/17
+ 
+declare upper;
+
+#Inputs 
+input length = 30;
+input UnusualVolumePercent = 10;
+
+input Show30DayAvg = yes;
+input ShowTodayVolume =  yes;
+input ShowPercentOf30DayAvg = yes;
+input Show30BarAvg = yes;
+input ShowCurrentBar = yes;
+
+#Volume Data
+def volLast30DayAvg = Average(volume(period = "DAY"), length=length)[1];
+def today = volume(period = "DAY");
+def percentOf30Day = Round((today / volLast30DayAvg) * 100, 0);
+def avg30Bars = VolumeAvg(length).VolAvg[1];
+
+# Labels
+AddLabel(Show30DayAvg, "Daily Avg: " + Round(volLast30DayAvg, 0), Color.LIGHT_GRAY);
+AddLabel(ShowTodayVolume, "Today: " + today, (if percentOf30Day >= UnusualVolumePercent then Color.GREEN else if percentOf30Day >= 100 then Color.ORANGE else Color.LIGHT_GRAY));
+AddLabel(ShowPercentOf30DayAvg, percentOf30Day + "%", (if percentOf30Day >= UnusualVolumePercent then Color.GREEN else if percentOf30Day >= 100 then Color.ORANGE else Color.WHITE) );
+AddLabel(Show30BarAvg, "Avg 30 Bars: " + Round(avg30Bars, 0), Color.LIGHT_GRAY);
+AddLabel(ShowCurrentBar, "Cur Bar: " + volume, (if volume >= avg30Bars then Color.GREEN else Color.ORANGE));

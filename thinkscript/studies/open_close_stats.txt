@@ -1,0 +1,43 @@
+#amalia - OpenClose stats
+
+def A = AggregationPeriod.DAY;
+def T = TickSize();
+def N = Double.NaN;
+def B = BarNumber();
+
+input showLabels = YES;
+input sLength = 10;
+def C = close(period = A)[1];
+def O = open(period = A)[1];
+def L = low(period = A)[1];
+def H = high(period = A)[1];
+
+
+# Labels only good for Daily aggregation
+def countUp = if C[1] > O[1] and C > O
+              then countUp[1] + 1
+              else countUp[1];
+def Pup = (B - countUp) / B;
+AddLabel(showLabels, "        %PrevC > PrevO and C > O = " + AsPercent(Pup) + "       |   Happenstance = " + AsPercent(countUp / B) + " or " + countUp + " out of     " + B    , 
+           Color.BLUE);
+
+def countDn = if C[1] < O[1] and C < O
+                then countDn[1] + 1
+                else countDn[1];
+def Pdn = (B - countDn) / B;
+AddLabel(showLabels, "        %PrevC < PrevO and C < O = " + AsPercent(Pdn) + "       |    Happenstance = " + AsPercent(countDn / B) + " or " + countDn + " out of " + B    ,
+           Color.DARK_GREEN);
+
+def countR = if C[1] > O[1] and C < O
+            then countR[1] + 1
+            else countR[1];
+def Pr = (B - countR) / B;
+AddLabel(showLabels, "        %PrevC > PrevO and C < O = " + AsPercent(Pr) + "       |     Happenstance = " + AsPercent(countR / B) + " or " + countR + " out of " + B    ,
+            Color.DARK_ORANGE);
+
+def countL = if C[1] < O[1] and C > O
+                then countL[1] + 1
+                else countL[1];
+def Pl = (B - countL) / B;
+AddLabel(showLabels, "        %PrevC < PrevO and C > O = " + AsPercent(Pl) + "       |   Happenstance = " + AsPercent(countL / B) + " or " + countL + " out of " + B    ,
+           Color.GRAY);
