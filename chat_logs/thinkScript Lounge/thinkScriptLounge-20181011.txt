@@ -1047,3 +1047,39 @@ The Grail - a) a set of no more than a dozen carefully selected Technical Analys
 16:14 JohnnyQuotron: The LoungeArchive is current
 16:14 amalia: inov, email support@thinkorswim.com
 16:14 inov: tx amalia
+16:18 MTS1: Ofcourse there can be edge in risking one to make one; the spreads they're talking about when I've seen them can have quite a variance in IV = edge, different delta (lose slower on the one you own than the one you sell) = edge, and they are directional; so the entry signal you use can be statistically based and give you edge? But the RR Should probably be updated: If your rule is to always close out at x profit (not max profit) than it's risking 1 to make x. .
+16:19 FrankB3: thanks MTS
+16:20 MTS1: inov; there are different types of study alerts; helps to be specific when you ask.
+16:20 FrankB3:     I hope I'm wrong about this study:  don't look good:      http://tos.mx/Ejq5He# 
+16:20 AlphaInvestor: MTS - the only way they make sense to me is with a strong directional play
+16:21 MTS1: DK also plays them specifically at extremes; still directional with higher chances / edge for reversal to mean.
+16:22 MTS1: Frank; not sure what you're looking at in that grid or what pecifically is not good to your eyes.
+16:23 FrankB3:   weekly and monthly breaking the moving averages.....  tested over long periods of time
+16:23 MTS1: (PSA; only one shared study in grid ;))
+16:23 AlphaInvestor: thks MTS
+16:23 FrankB3: ahhh
+16:24 FrankB3:   http://tos.mx/AUh1uT# 
+16:26 MTS1: It doesn't tell me much Frank, besides that we're still in a LT upgrend and we're having a regular pullback to MA. But maybe I'm miss-interpreting.
+16:26 MTS1: Is there something different about the secdond share?
+16:28 FrankB3:    Study was done by trader who tries to say when to get out of market for long term holders ???
+16:29 willliam1970: have been attempting  geta a 5min chart ema and sma on a 1 min and 24 tick chart is there a script that i can use that will allow this,  5min  100  50  sma and 20 and 10 ema
+16:31 amalia: Time based studies don’t work with tick charts.
+16:32 willliam1970: can this be done on a one minute chart
+16:32 amalia: It can.
+16:32 MTS1: Which study frank, the top dog stochastic on a monthly? I'm not seeing it though; not even to the prior extremes where they'd turn around. But not my chart so does not 'speak' to me I guess.
+16:34 UpTheCreek: william as an example the dailySMA study can accept other aggs as an input
+16:36 MTS1: William; for an SMA for sure and I believe for an EMA also you can simply multiply the lenght by the factor you're looking for? A 200 SMA on a daily is the same as a 40 SMA weekly; same on your minute charts.
+16:37 FrankB3: MTS:  the full stoch. and DMI was my idea to test out the idea of P3_squeeze would be better on a monthly chart for buying  targets.   You only see a TTM_Squeeze on a monthly chart, about once in 4 years... trying to hack JC's ideas
+16:43 MTS1: OK; that's not on the chart you shared I think so not looking at the same thing. The DMI is too messy to me; tried to understand in the past but does not do it for me yet, and the stoch did not jump out with a message to me.
+16:45 AlphaInvestor: William - well, isnt a 5 minute 20 EMA very similar to a 1 minute 100 EMA?
+16:46 JohnnyQuotron: Alpha... just catching up.  Had some weather today?  Pleased that you and yours are well.
+16:47 AlphaInvestor: Not a lot of effects, but definitely more than I expected being so far from the FL panhandle
+16:47 Vimes: Feels like Michael had a bigger impact than forecasted
+16:52 FrankB3: MTS:  are you a fan of the "p3-Squeeze ?
+16:54 FrankB3:    I don't think too many traders care about it:  work done by an outsider, wendy kirkland
+16:56 UpTheCreek: most of the studies in TOS are the work of outsiders, some directly acknowledged, most not.
+16:57 FrankB3:  by outsider I mean not from wall street,,  same thing ??
+16:57 Nube: MTS, regarding the risk to reward of the 1 to 1. You're correct in that most talk about taking the trade off at x percent of possible profit. As I understand the intent of the strategy is explicitly to not do that and just let it go to expiration
+17:04 FrankB3:   I think this was her orignial idea,,  before I hacked it up for shorter trades.  The idea is buy only targets: when the ADX reaches up and retraces, and the same time when the MACD drops and retraces..  IE on 5/3 and 6/29 would be buy points.  She woud buy otions 3 months out.      http://tos.mx/CCvOqz#
+17:06 FrankB3:   I never thought to test it in a down market
+17:08 FrankB3: one down fall, I'm still working on how to get by double bottoms that are close
