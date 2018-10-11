@@ -1083,3 +1083,71 @@ The Grail - a) a set of no more than a dozen carefully selected Technical Analys
 17:04 FrankB3:   I think this was her orignial idea,,  before I hacked it up for shorter trades.  The idea is buy only targets: when the ADX reaches up and retraces, and the same time when the MACD drops and retraces..  IE on 5/3 and 6/29 would be buy points.  She woud buy otions 3 months out.      http://tos.mx/CCvOqz#
 17:06 FrankB3:   I never thought to test it in a down market
 17:08 FrankB3: one down fall, I'm still working on how to get by double bottoms that are close
+17:20 AlphaInvestor: Vimes - ears on?
+17:22 Vimes: yep, i'm here
+17:24 AlphaInvestor: Vimes a study you recently posted says we should now be 0*TLT and 1*SPY -- how much do you trust that study?
+17:25 Vimes: i don't have any history with it other than i head read the article from grossmann website and was curious about it
+17:25 AlphaInvestor: Gotcha - thanks
+17:26 Vimes: i have a hard time buying tlt right now, so don't disagree with that allocation, however when i go back and look at the allocations in his model i don't get a good match
+17:27 AlphaInvestor: I like the max drawdown reduction, about half
+17:27 barry314: Thank you everyone for your script help Tuesday.  A couple strange things happened after my alerts were hit. Can someone tell me how to fix?  about an hours after the alert and the reverse were hit were hit I was able to get back to my screen and the chart was poltting as a flat line.  I clicked on the alert and the chart returned to normal but that apparently ended the alert. When I checked to see why I didn't get any alerts today, I found that no alerts were active even though I had set to expire in Jan 2019.
+17:28 Vimes: yep, really other software would be better to backtest because it doesn't include dividends, i guess i could try to add a proxy for that
+17:29 Vimes: another thing to consider is its considering prior data, so i don't think its factoring in the current volatility in this month
+17:29 AlphaInvestor: Barry - if it is a MarketWatch Alert .. you need to set it up to do Reverse Crossovers
+17:29 AlphaInvestor: Vimes - likely not.
+17:30 AlphaInvestor: An adaptation could be to use a user selectible mix of historic and implied volatiltiy
+17:30 Vimes: i've always picked stocks outside my 401k but am intriqued by some of these factor models lately so just playing with them
+17:32 Vimes: not sure links will stick:
+https://logical-invest.com/universal-investment-strategy/
+17:32 AlphaInvestor: AQR has a great paper on factor investing
+Liquid Alt Ragnarok?
+17:33 Vimes: yes i've started listening to some of their podcasts
+17:33 Vimes: there is a good book for a novice like me :) by Berkin and Swedroe, called "Your complete guid to factor-based investing..."
+17:34 Vimes: it is a very plain and simple summary of alot of the prior research
+17:35 AlphaInvestor: Cliff Asness at AQR does a lot of that sumarizing too, but it can get kinda deep
+17:35 Vimes: i worry alot on stat research though, because likely there is so much maniuplation of the data and screeneing etc. that you really don't know how they actually implement it in practice.  It seems these things never really play out in reall measured returns versus the backtest
+17:36 AlphaInvestor: Vimes - a couple of my standard fundie screens are now Factor based, with custom Factor Tilts. Been using them for about a year and a half.
+17:40 Vimes: do you use a service for that?
+17:41 Nube: It isn't the fudging of the data that concerns me so much as something that worked well the last 20 years would be expected to not work well over the next 20
+17:42 Vimes: that too, i'm not saying grad students are dishonest but at some point when you are trying to get published and get your phd you can talk yourself into throwing out all sorts of outliiers to make your model work
+17:42 Nube: Sound, foundational factors probably not as bug of a concern, but a lot of the newer ones would concern me
+17:43 Vimes: well the factors in the book i mentioned all pass the logic test for a solid investing plan so i believe the results, but as i've gotten older i'm more about not losing my money so don't want to experiment too much
+17:45 AlphaInvestor: Vimes - I experiment with phantom portolios - my longest running is over 10 years old, I transfer what works to real $$
+17:46 Vimes: i started investing with ibd and the fool nearly two decades ago, and both had a tilt to combination of technical and fundamental factors
+17:46 Vimes: maybe more so ibd on the technical side
+17:46 AlphaInvestor: example, everyone was big on Piotroski a while back. I implemented a phantom portolio that selected all the 8 and 9 rated stocks using Piotroski ... a big loser
+17:47 Vimes: yes i've played with that as well using guru focus
+17:47 AlphaInvestor: ran that succa for almost 5 years before giving it up because it Never outperformed
+17:49 AlphaInvestor: Later Scripters
+17:49 Vimes: later ai
+17:50 JohnnyQuotron: later Alpha
+17:50 MTS1: Not familiar or researched the P3 Squeeze Frank; so don't know what it is based on.
+17:51 Vimes: i was curioius and looked it up on the tube, not sure its worth diverting a lot of time too unless someone is need of a direction
+17:52 Vimes: looked to usee PPO and ADx, if not mistaken to time long entries when they pinch together
+17:53 MTS1: Nube; what I've seen when DK executes it (in-out) he advocates taking profit at certain %, sooner (lower %) if it gets there quicker than expected. As I recall that was also what Mobius suggested the other day when he advocated for the strat.
+17:54 Vimes: you would place the PPO chart above the ADX chart in the lower stack
+17:54 MTS1: Letting it run to expiration applies to the Risk sidel if it does not go your way right away don't close it out.
+17:57 Nube: I should have specified I was thinking specifically that ronco strat. I only ever said 1 to 1 which is not the same thing
+17:59 Vimes: are they tracking the trades they have made - i always am a little skeptical on short dated options, i guess if there is a clear long trigger the premium should be really small so you aren't risking much
+17:59 MTS1: I thought ronco was in-out; but I could have misundersood; was the first time I heard of it this week;)
+18:00 JohnnyQuotron: Nube,, regarding DKs In and Out.  out at 50-55% profit assuming it is going your way.   never buy an in out before earnings that expires in the week or two after earnings.  more if you want it
+18:01 Nube: I think it is an in and out, but I thought the purpose of it was to not manage it. You have ot have a heckuva win percentage to make a 1 to 1 work if you're punching out half the way done
+18:01 MTS1: Not sure imes; I trust Mobius and DK, but don't have proof;)  DK might provide records when you're on his service, but I know he's a stats quant and has a reputation to uphold. 
+18:02 MTS1: Nube; Mobius mentioned 80% as I recall; have to look back in teh archives for his rules.
+18:02 JohnnyQuotron: the in out is a quant strategy.   
+18:02 JohnnyQuotron: take the 55% and run.  
+18:03 Nube: I think that was the ronco he was talking about. All 1 to 1's I dunno
+18:03 JohnnyQuotron: in at no more than 1.03% of the spread between the long and short strikes
+18:03 JohnnyQuotron: pleasedefine 1 to 1
+18:05 JohnnyQuotron: 1 long call 1 short call on the bull side
+18:05 JohnnyQuotron: 1 long put 1 short put on the bear side
+18:05 JohnnyQuotron: prefers debit to credit spreads for in out
+18:05 Nube: At 1 to 1 you would need mid 50s percent win just to break even. I can't imagine talking off a 1 to 1 at 50  based strictly on strike selection and not some other statistic.
+18:07 Nube: 1 to 1 is risk : reward. Yes, an in out spread, most commonly 2 dollars wide at a cost of a buck
+18:07 JohnnyQuotron: the theory is that with tight strikes and decent volatility and a 55% profit target the target will get hit alot.  (alot being a highly educated math term)
+18:08 Nube: But 5 wide at 2.50 is where it will need to be on most stocks with a 3 digit handle
+18:08 JohnnyQuotron: no hard stops EVER
+18:09 Nube: Well, whether ronco only or all 1 to 1's I'm sure they have their numbers chosen for a reason
+18:09 JohnnyQuotron: 10 with google... painful
+18:11 Nube: Yea, but it would be a darned good hedge for a long tech position
+18:12 MTS1: when you lose 50% before expiry you still have chance it goes to BE or profit. when u gain more than 50% and don't take it you have chance to lose it still. I'm not a Quant geak but that's how I understand it may work;) Especially if put on@extremes, reversion to mean trades
