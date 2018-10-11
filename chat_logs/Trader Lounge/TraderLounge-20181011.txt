@@ -311,3 +311,273 @@ btw, is /rty in  a bear market?
 11:50 RandomDan: it's not infinite, you start to have quantum effects, etc. This is why Apple has to shift to subscription and service revenue: upgrade cycles will start to stretch out.
 11:51 JC_chart: im short /NQ  from 7078
 11:52 JC_chart: but its turning so out  at  7058
+11:53 AlphaInvestor: AAPL is smart - by making the battery not user replacable, they get service revenue there too
+11:54 JC_chart: ohh on AMZN ... yesterday it ws $23
+11:55 JC_chart: and its been trading like that for about 3 weeks 2-4 days a week and i would say it averages 4-10 dollars  and it is very reliable i
+11:56 AlphaInvestor: I like the 1600/1590 pcs on AMZN - good support at 1600
+11:57 chenmann: nice
+11:57 chenmann: fib 61.8 amzn 1610ish
+11:57 JC_chart: what timeframe
+11:57 AlphaInvestor: berg/ed for fibbing
+11:57 chenmann: u dont use fib al?
+11:57 DrHouse: Next person to get berg’ed is going to be because they’re using MACD
+11:58 AlphaInvestor: Nov 23 expiration - 3 dolla credit for a 10 dolla wide .29 delta
+11:58 AlphaInvestor: Chen - no fibs
+11:59 VolCrush: dat date brings earnings exposure
+11:59 DrHouse: I am not a fibs guy either
+11:59 AlphaInvestor: I don't even listen when der Fib King posts
+11:59 JC_chart: fibs are amazingly  accurate for es, cl and gc futures
+11:59 VolCrush: huh wat, did someone call 
+11:59 DrHouse: I called you on your cell phone
+11:59 VolCrush: jesus, jesus.......whar u at
+12:00 AlphaInvestor: new fone, who dis
+12:00 DrHouse: Dis meh
+12:03 FrankB3:   AI: My Ronco trade:: just got filled on MSFT @ 106.5 and hopefull lose stock on fri. @ 108
+12:04 AlphaInvestor: Frank - I didn't get any RonCo signals today - but my internet was down until after noon
+12:04 chenmann: another failed rally ....
+12:05 YClan: :49 News Bot: "Bond King" Jeffrey Gundlach says 30-year Treasury could go to 4% 
+12:05 YClan: :48 News Bot: United Technology (UTX) and Rockwell Collins (COL) reportedly file for Chinese ministerial approval approval for merger; according to a MA blog
+12:06 FrankB3: AI::  my Ronco, I mean the trade takes care of itself by the end of the week  for 1% - 3% profit
+12:06 AlphaInvestor: Gundlach is at best der Bond Prince
+12:07 chenmann: der bond kings r near me, gross at newport and gundlach burbank....i m in the middle
+12:08 chenmann: dont fu*k with the bond guys
+12:08 Vimes: good entry frank, hopefuly it holds up for you - skaky times
+12:08 AlphaInvestor: Gross in his prime made money in bonds in bear markets, bull markets, sideways markets -- didn't matter
+12:09 chenmann: he counted cards in college
+12:09 radon224: ...and then he started talking to his cat and talking about it in his newsletters.  So it goes....
+12:09 chenmann: blackjack gross
+12:09 FrankB3:    Vimes: it was a buy write
+12:10 vipin: amazon to test the lows again?
+12:10 chenmann: looks that way...may break it
+12:11 AlphaInvestor: Radon - dats why I said "in his prime"
+12:12 vipin: guys what are your risk free trading stretegies?
+12:12 radon224: It all started downhill when he shaved off is moustache, imo.
+12:12 radon224: /his
+12:12 chenmann: lol
+12:12 radon224: Like Sampson
+12:13 chenmann: nasty divorce
+12:13 slagle: Alpha, who is RonCo?
+12:15 AlphaInvestor: Internet down again
+12:15 FrankB3:    13:12 vipin: that would be a very hard question to answer:  every trade has an opposite side....  try to stack the percentages in your favor
+12:21 slagle: Who  is Ronco?  Is that a trading service?
+12:23 FrankB3:   slagle: Mobius made up that name for a trade that takes care of itself..  set it and forget it...    like ITM covered call..  one day credit spread..
+12:24 slagle: Ohh, thanks.  I get it
+12:24 FrankB3:   I think he made a scan for it,,,  ask AI,, if he gets back
+12:25 FrankB3:   He down in the storm ,,, somewere in S. C.
+12:25 slagle: Ok, I think he said he is having internet trouble
+12:26 FrankB3:   Yep he is always fooling around with them big trees...  I hope they did not fall on his internet
+12:27 slagle: LOL  we are still getting rain bands here in SW Florida
+12:27 FrankB3:   well good luck,,, hope it ends soon
+12:27 slagle: thanks
+12:28 streetglide: I wonder why such a lame day after yesterday
+12:29 blondetrader: prob digesting 
+12:30 Vimes: lame based on what measure?
+12:30 blondetrader: dare I say tho small caps holding up ok
+12:30 streetglide: lame based on es putting me asleep
+12:31 Vimes: gotcha, pretty wide range today, maybe not compared to yesterday but vs history
+12:32 radon224: I don't dare say anything in this market, lest it make me an instant fool
+12:32 FrankB3:   ha
+12:32 chenmann: lol radon....i could care less
+12:33 Vimes: should wake up for you in the next 30 mins
+12:33 radon224: I feel like I'm playing "Toss the Hand Grenade"
+12:34 radon224: here...catch
+12:34 blondetrader: lol
+12:37 FrankB3:   I think you can compare this correction with downturn on 3/13/18 on daily SPX
+12:40 streetglide: I asssume you mean in Feb 2018?.....March was a much smaller dip
+12:41 VolCrush: true dat @Frank, it would have been nice, IMO, had /nq dropped another 100 either ON on on the open, now it's a wait and see on da close
+12:45 fred__w: i see this as more similar to 2014-15  
+12:46 Eedie: Watch the 200 dma or ema... for es
+12:46 Eedie: It’s been gravitating to that line most of the day
+12:46 fred__w: i only watch 11ema and to a lesser extent  the 44ema
+12:47 fred__w: ..and of course  different index
+12:47 Eedie: And according Nuggets wherever you are Nuggets they will try to keep it above that
+12:47 Eedie: We shall see
+12:47 chenmann: yes they waiting around 200 dma to see who s gonna make the first move
+12:48 Eedie: Btw Hello Vol Bt Alpha Fred Chen Street
+12:48 blondetrader: hi
+12:48 Eedie: Had to run my mouth before saying hello I know typical female
+12:48 Eedie: Hahahahha
+12:48 fred__w: eed  yes  we will see  and gm
+12:48 streetglide: ? for the option peeps........when looking at the volume column, say Puts,... is that for both bought and sold Puts?
+12:48 chenmann: eedie hi, bet out of the way of michael
+12:49 blondetrader: yes street
+12:49 chenmann: get out
+12:49 radon224: total traded street, both bot and sold
+12:49 Eedie: We just got the winds and the rain
+12:49 Eedie: I’m on west coast of Florida nowhere near the panhandle
+12:49 streetglide: so you cant look at that and get much info out of that?
+12:49 radon224: ya gotta be good at looking at OI to see how many were written, I never could figure it out
+12:49 chenmann: oh cool eedie
+12:50 radon224: well, total volume is useful for an options strike
+12:50 radon224: liquidity
+12:50 radon224: and interest
+12:50 Eedie: I think there’s another tab on tos which shows you all of the activity for a particular option
+12:51 chenmann: like all price action, if u follow it long enough u can see patterns....crooks like to hide
+12:51 radon224: yes, on All Products you can drill down under "Todays Option Statistics" for more info
+12:52 fred__w: chen  by that logic  we are all crooks
+12:52 chenmann: dont know about u fred but im way too small to be a crook
+12:53 radon224: I could be accused of Petty Theft at worst
+12:53 fred__w: ..everyone knows we sorely needed a real correction  for eons  so  here it is
+12:53 streetglide: I see that Radon, but still doesnt see bought or sold, just total
+12:54 streetglide: see=say
+12:55 fred__w: ..and  everyone knows that leadership has been drying up  again  for a long time
+12:55 fred__w: ..if that is not adequate warning  i dont know what would be
+12:57 chenmann: at the risk of being berged by admin, tos not so good for options trading, i use other options tools
+12:57 chenmann: street
+12:57 streetglide: heck, I thought that is what is was originally built for?
+12:57 blondetrader: ohhhh
+12:57 chenmann: cant list them here , sorry
+12:58 fred__w: chen  folks have been trying to understand opyions  for eons  recalling black-scholes  for example
+12:59 Vimes: i don't have any problem trading options in tos, think its very strong
+12:59 fred__w: ..thats one reason i sticks with price only issues  thats hard enough
+12:59 streetglide: think he was meaning info wise,Vimes
+13:00 chenmann: yes
+13:00 chenmann: but in fast markets , like this morning, tos laggs and freezes,
+13:00 chenmann: sorry s=admin
+13:01 streetglide: thats what I was going to say also
+13:01 Vimes: yeah they need to fix that
+13:01 streetglide: not going to apologize for their bad data servers
+13:01 chenmann: haha
+13:02 streetglide: its been like that for way too long
+13:02 chenmann: i know a few people here dont trade on tos, just here to chat...lol
+13:02 chenmann: not me
+13:02 fred__w: chen  ok  but we accept responsible to trade  taking everything into acct  thats another reason im a position/ swing trader
+13:03 fred__w: -ility*
+13:03 chenmann: o ya, not blaming tos
+13:03 streetglide: I am
+13:03 chenmann: lol
+13:03 chenmann: call trade desk , u may get some free trades
+13:03 streetglide: who else's fault is it....I mean come on
+13:04 fred__w: chen  if we look hard enough  we can always find warts  yet  we still engage  so  its on us if we persevere
+13:05 streetglide: but I do like the charts and how you can set them......they just never address performance it seems
+13:05 streetglide: and maybe its the language its written....I have no idea, not a techy
+13:05 RandomDan: kinda surprised some life in gold.
+13:05 fred__w: street  in such cases  knowing that  it pays to learn to trade off tables  like the old days
+13:06 streetglide: uh no fred....just have more than one broker
+13:07 chenmann: +
+13:07 fred__w: thats another way to address things  of course
+13:08 streetglide: which you would think TOS would address since they are losing some business
+13:09 gerardom: this market is slow now ugh
+13:09 fred__w: street  youre here  thats evidence youre ok with it  and  i am for sure
+13:10 streetglide: 90% of my charts are here, so yes.......execute else where
+13:11 streetglide: plus chat is good :)
+13:11 yoz: what a morning.. was down $600 more after open then was up $600 30 mins later.. options were a bit volitle these past few days.. no thanks!
+13:13 esmal: question
+13:13 fred__w: answer
+13:13 chenmann: we r in trouble
+13:13 Ral: How I logout mobile
+13:14 chenmann: sorry bulls in trouble
+13:14 esmal: where does your money go when theta god takes it?
+13:14 TheOnceAndFuture: to the writer
+13:17 streetglide: Simone underrated, chen
+13:17 chenmann: lol
+13:18 VolCrush: indexes settin up for flush for second day, perhaps...
+13:19 chenmann: one can only hope for a flush, this slow grind lower s not good for bulls or bears
+13:19 fred__w: vol  no  just another test
+13:20 VolCrush: welp path of least resistance and with all the big banks going 2morrow, market doesn't luk pleased, especially the tape on der FINS
+13:21 streetglide: needs to bounce......exuberance is more fun
+13:21 chenmann: i know vol, jpm action s like they gonna warn on er or something....maybe slower loan growth
+13:22 chenmann: seeing slower loan growth
+13:22 RandomDan: fins have been confusing me for many days now
+13:23 chenmann: housing loans down for sure, but i think thats priced in, but if business loan growth is slowing or something....hmmm
+13:23 streetglide: yep, shold be good with rising rates....but that chokes overall business so...
+13:24 RandomDan: if loans are falling that should send a message to the Fed
+13:24 chenmann: true
+13:25 VolCrush: well i would think increased rates would off set some of the slow growth, but rumor has it economy is expanding, yet Marcos clearly stated in here ~ car sales sucked ~ data point
+13:25 chenmann: oops
+13:25 streetglide: I wonder if Fed is builing some cushion for next recession?
+13:25 chenmann: something wrong with my keybroad
+13:25 streetglide: building
+13:26 DrHouse: Did you punch the keyboard
+13:26 tmoney20g: its just all over the place
+13:27 TheOnceAndFuture: street - that's been the idea
+13:27 TheOnceAndFuture: They were way too slow to do it IMO
+13:27 VolCrush: don't think SPX has much of a chance here
+13:27 TheOnceAndFuture: waited until what, 2016?
+13:27 chenmann: nope, its wireless , so maybe signal got mess up
+13:28 chenmann: i m talking about my keybroad
+13:28 TheOnceAndFuture: can anyone please tell me what "spuz" means?
+13:28 streetglide: sounds dirty
+13:28 chenmann: ha
+13:28 TheOnceAndFuture: See it on trad flash all the time
+13:28 vipin: amazon closed below 200 dma. I think it wants to go down more.
+13:28 YClan: chen,  or battery in the keyboard is flake.
+13:29 chenmann: oh nice yclan
+13:29 TheOnceAndFuture: "/ES lots of neg ticks, spuz down 26 now"
+13:29 Vimes: must mean the spx index
+13:29 streetglide: yeah thats what I think
+13:30 TheOnceAndFuture: I thought that myst be it, just never heard it called that
+13:30 TheOnceAndFuture: must*
+13:30 streetglide: kind of likes spoos
+13:30 YClan: street,   Fed has to raise interest rates so they can lower them during next recession.  Also, FED still owns alot of USTreasuries that they printed money to buy and Fed has not sold those, so their balance is still bad because of that.
+13:30 streetglide: yep
+13:31 RandomDan: YClan they have been unwinding QE for a while now.
+13:31 Vimes: do we get a new low or does it hold it in, its so exciting
+13:32 RandomDan: I think rates are fine here till more data comes in. They should pause in december as planned.
+13:32 streetglide: agree
+13:32 blondetrader: 32 would b next es
+13:32 RandomDan: As planned originally
+13:32 TheOnceAndFuture: They should at least not talk about considering any future hikes until more data comes in
+13:33 VolCrush: SPX cracked, luks like der fruit will crack 215 as well
+13:33 YClan: Random,   They still own ALOT of USTreasureis.  At peak they owned $4.2 Tillion,   they sold some... but still own about 3.9 Trillion, so still own 90% of what they bought.
+13:33 dragoon4zulu: any comments from potential margin calls re Ameritrade customer base?
+13:33 VolCrush: spuz = spx
+13:34 RandomDan: I swear, half the problems in the world are due to the fact that people like to talk more than they should
+13:34 TheOnceAndFuture: Indeed
+13:34 Vimes: dragon, not sure what that means - if you have a concern call the desk
+13:35 YClan: later guys and gals... I'm going for a walkie
+13:35 VolCrush: i think he / she is just trying to figure out how big an impact will  be on margin calls
+13:35 chenmann: es broke glx low
+13:35 VolCrush: /nq about to crack here as well, yup dar she goes
+13:35 chenmann: vix
+13:36 dragoon4zulu: Yep always happens during tims of stress- just another data point on the way to searching for a bottom.
+13:37 tmoney20g: esmal, gerar, doing anything ?
+13:38 VolCrush: true dat @dragoon
+13:40 AlphaInvestor: Internet back -- did I miss anything?
+13:41 tmoney20g: more dipping
+13:42 gerardom: waiting
+13:42 gerardom: idk if to hit a call
+13:43 AlphaInvestor: buying calls while VIX and IV are this high. Not recommended
+13:44 gerardom: not even short?
+13:44 gerardom: man i was thinking my puts were done lol
+13:45 tmoney20g: i have one cued up
+13:45 tmoney20g: 1x c1700
+13:45 tmoney20g: not sure either
+13:46 streetglide: gap at 2713 closed
+13:46 AlphaInvestor: DING - filled MSFT pcs
+13:46 VolCrush: welp 6845 on /nq should provide support, if not we goin bear market
+13:47 AlphaInvestor: Gerard - of course short calls ... lots of juicy premium
+13:47 tmoney20g: missed it
+13:48 streetglide: does anyone have anymore gaps on es or spx to fill?
+13:49 chenmann: 2600 ish, april and feb
+13:50 AlphaInvestor: Datsa nasty candle on 5'
+13:50 VolCrush: i'm not a huge beliver in "gap fill theory"
+13:50 streetglide: wasnt covered May 3rd, chen?
+13:52 chenmann: yaaa....kinda....but there times charts and technicals dont matter
+13:52 amalia: O_o
+13:53 VolCrush: oi amalia
+13:53 AlphaInvestor: hows der MinRange working today Amalia?
+13:53 amalia: lots of stop outs
+13:53 AlphaInvestor: I would imagine
+13:53 chenmann: street, look at 3 year charts spy
+13:54 dragoon4zulu: 2B for sale on close
+13:54 DrHouse: Market is showing signs of no return
+13:55 DrHouse: Anyone thinking about buying in now
+13:55 VolCrush: baby went out with the bath water, no idea which baby to pick up off the pavement atm
+13:56 DrHouse: Pick your favorite one
+13:56 AlphaInvestor: The MSFT pcs that I just sold for 39 cents is showing a 15 cent credit to close it - MM had one too many martini's
+13:56 dragoon4zulu: No--too many headwins remaining during Oct
+13:56 amalia: DrHouse, CTAs are doubling in numbers for becoming sellers. This oscillation direction should be telling. 
+13:56 VolCrush: u know Alpha, you may not listen to the Fib King but he did call 7k yesterday mid day on /nq 
+13:57 DrHouse: Vol is the fib king?
+13:57 VolCrush: no
+13:57 Gotham: Opinion on TSLA?
+13:57 Frosty: Hey guys. Did the feds do anything this week?
+13:57 AlphaInvestor: Vol - fake news
+13:57 DrHouse: I been shorting tsla, Gotham
+13:58 VolCrush: ask around
+13:58 Gotham: Thanks Dr
+13:59 Gotham: Any idea is things could look up?
+13:59 VolCrush: did TSLA make their nums on production?
+13:59 DrHouse: Hard to say Gotham.
+13:59 DrHouse: Things may continue south a bit longer
