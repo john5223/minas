@@ -2,9 +2,9 @@
 
 '''
 # crontab
-*/2 * * * * export DISPLAY=:0; /usr/bin/python ~/git/john/minas/scripts/chat_logs.py >> /var/log/john/chat_logger.log 2>&1
-
+*/5 7-20 * * 1-5 export DISPLAY=:0; /usr/bin/python /home/john/git/john/minas/scripts/chat_logs.py >> /var/log/john/chat_logger.log 2>&1
 '''
+
 import pyautogui
 import pyperclip
 import difflib
@@ -31,9 +31,8 @@ home = expanduser("~")
 chat_home_dir = "{}/git/john/minas/chat_logs".format(home)
 chatlog_cmd = partial(subprocess.check_output, cwd=chat_home_dir, shell=True)
 
-
-MIN_IDLE = 5000
-MAX_TRIES = 10
+MIN_IDLE = 20 * 1000 # (10 seconds)
+MAX_TRIES = 3
 MAX_COMMIT_MIN = 60
 
 rooms = [
