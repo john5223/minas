@@ -10,16 +10,12 @@
 # added SP 500 11-9-17
 
 declare lower; 
-
 input length = 20;
 input ReturnSignals = no;
 input TrendSignals = yes;
-
 input Exchange = { NYSE, SP500, Default NASDAQ } ;
-
 def c = close();
 def na = Double.NaN;
-
 def dvolc = if IsNaN(c) then na else 
             if !IsNaN(close("$DVOLC"))
              then close("$DVOLC")
@@ -90,14 +86,11 @@ case SP500:
     advn = advsp;
     decn = declsp;
 }
-
 def New10TRIN =-(sum(dvol,10)/sum(uvol,10))/(sum((advn/decn)/(uvol/dvol),10)/10);
-
 def price  = New10TRIN;
 def linDev = LinDev(price, length);
 def NewTrinCCI = if   linDev == 0 then 0 
                  else (price - Inertia(price, length)) / linDev / 0.015;
-
 def NewTrinCciState = if   NewTrinCCI crosses above -100 
                       then 1 
                       else if   NewTrinCCI crosses below 100 
@@ -110,7 +103,6 @@ def DnTrend = NewTrinCciState == 1
 def UpTrend = NewTrinCciState == 0 
               and NewTrinCCI crosses above iNewCCI 
               and NewTrinCCI > 0;
-
  
 plot TrinCCI   = NewTrinCCI;
 plot OverBought = 100;
@@ -130,7 +122,6 @@ TrendUp.  SetDefaultColor(GetColor(5));
 TrendUp.  SetPaintingStrategy(PaintingStrategy.POINTS);
 TrendUp.  SetLineWeight(3);
 TrendUp.  SetHiding(!TrendSignals);
-plot 
 TrendDn = if DnTrend then -100 else na;
 TrendDn.  SetDefaultColor(GetColor(1));
 TrendDn.  SetPaintingStrategy(PaintingStrategy.POINTS);
@@ -151,7 +142,6 @@ NegTwoHundred.SetDefaultColor(Color.GRAY);
 NegTwoHundred.SetStyle(Curve.SHORT_DASH);
 UpSignal.SetHiding(!ReturnSignals);
 DownSignal.SetHiding(!ReturnSignals);
-
 16:29 woodie: gotta love the cci
 16:30 Nube: How in the blue blazes is he so fast. Is woodie a bot?
 16:30 Nube: testing CCI testing
@@ -165,23 +155,17 @@ DownSignal.SetHiding(!ReturnSignals);
 # Bubbles in Expansion Two Ways
 # TsL Request for I think it was slash
 # Nube
-
 input barsFromNow = 8;
 input desiredTime = 2100;
 input daysFromNow = 0;
-
-def na = Double.NaN;
 def bn = BarNumber();
 def day = GetYYYYMMDD();
 def currentBar = HighestAll(if !IsNaN(close) then bn else na);
 def currentDay = HighestAll(if   bn == currentBar then day else na); 
 def hi = HighestAll(if bn == currentBar then high else na);
 def lo = HighestAll(if bn == currentBar then low else na);
-
 AddChartBubble(bn == CurrentBar + barsFromNow, lo, "Test Bubble\n"+barsFromNow+" Bars Forward", Color.Light_Gray, 0);
-
 AddChartBubble(SecondsFromTime(desiredTime) == 0 && day == currentDay + daysFromNow, hi, "Test Bubble\nDays From Today "+daysFromNow+"\nAt Time "+desiredTime, Color.Gray);
-
 # f/ Bubbles in Expansion Two Ways
 18:10 Nube:  
 18:16 MTS1: We need more cow bell  - uh - bubbles!
@@ -193,7 +177,6 @@ AddChartBubble(SecondsFromTime(desiredTime) == 0 && day == currentDay + daysFrom
 18:34 DMonkey: http://tos.mx/VmmEPS#
 18:37 Nube: 
 #John1a: Buy/Sell Pressure, it is constracted using something like this, but I am no coder: $UVOLSP - $DVOLSP / $UVOLSP + $DVOLSP
-
 declare lower;
 def uvol = close("$UVOLSP");
 def dvol = close("$DVOLSP");
@@ -210,26 +193,16 @@ plot Zero = 0;
 18:46 Nube: Ah, so a histogram
 18:47 John1a: Is that what it is called? Yes, a histogram, sorry, still learning how things are called in TOS
 18:50 Nube: #John1a: Buy/Sell Pressure, it is constracted using something like this, but I am no coder: $UVOLSP - $DVOLSP / $UVOLSP + $DVOLSP
-
-declare lower;
-
 input averageLength = 1;
-
-def uvol = close("$UVOLSP");
-def dvol = close("$DVOLSP");
 def data = (uvol - dvol) / (uvol + dvol);
-
-plot 
 Zero = 0;
 Zero.  SetDefaultColor(Color.Gray);
-
 plot
 BuySellPressure = Average(data, averageLength);
 BuySellPressure.  SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
 BuySellPressure.  AssignValueColor(if   BuySellPressure < Zero
                                    then Color.Red
                                    else Color.Green);
-
 18:55 John1a: Nube: Yes, it is perfect. Thank you SO much, I really appreciate it!
 18:56 slashgw: MTS, I tried the code you put up earlier.  it does display the vertical line, but same parameters for some reason don't work with the bubble.  Also, yours was based only on time.  I need to be able to do this based on Day of month, and time.
 Here is what I tried with the bubble.  and the result.
@@ -238,14 +211,10 @@ https://screencast.com/t/Jx7zoykI
 input Time1 = 1950;
 input Text1 = "Ch2h-JpLH";
 input DebugMode = yes;
-
 def T1 = SecondsTillTime(Time1) ;
-
 AddChartBubble(DisplayTimeVLines and T1 <= 0 and T1[1] > 0, high, Text1, Color.RED);
 AddVerticalLine(DisplayTimeVLines and T1 <= 0 and T1[1] > 0, Text1, Color.RED, Curve.SHORT_DASH);
 AddLabel(DebugMode, T1, color.cyan);
-
-
 18:58 DMonkey: slash....I gave you the answer
 18:58 mr2p_4k: Why the market depth only show the current bid and ask and not the depth any more?
 18:58 Nube: John, I forgot the label, add this to the bottom of that study
@@ -272,29 +241,20 @@ http://tlc.thinkorswim.com/center/howToTos/tutorials.html
 19:12 Wally: John1a, someone shared a timer the other day,  input StartTime = 930;
 input Interval_In_Minutes = 3;
 input displace = 0.2;
-
 def AftrStartTime = SecondsFromTime(StartTime - 1) > 59;
 def StartPoint = !AftrStartTime[1] and AftrStartTime;
-
 def MinutesGoneBy = if AftrStartTime then SecondsFromTime(StartTime) / 60 else 0;
-
 def IntervalPast = if AftrStartTime then
 RoundDown(MinutesGoneBy / Interval_In_Minutes, 0) else 0;
-
 def IntervalPoint = IntervalPast > IntervalPast[1];
-
 rec MinutesPastInterval = if IntervalPoint or StartPoint then 0 else
 MinutesPastInterval[1] + 1;
-
 def OneMinuteLeft = MinutesPastInterval == (Interval_In_Minutes - 1);
-
 plot IntervalGoneBy = if IntervalPoint then high + displace else Double.NaN;
 IntervalGoneBy.SetStyle(Curve.POINTS);
 IntervalGoneBy.SetLineWeight(5);
-
 AddChartBubble(OneMinuteLeft, high, "1");
 AddLabel(OneMinuteLeft, "1 Minute Left");
-
 Alert(OneMinuteLeft, Concat(GetSymbolPart(), " trend line violation"),
 Alert.BAR, Sound.Ring); 
 19:13 UpTheCreek: if you look up my yTrade page, I have them in my Lounge Collection.  Some of those other items you may find interesting as well
@@ -328,15 +288,11 @@ Alert.BAR, Sound.Ring);
 19:35 slashgw: I like the idea of using both the bubble and the vertical line.  that may workout well.  use the line to put emphasis on the exact time, and stack the bubbles higher up, on top of each other.
 19:35 slashgw: you da man!
 19:40 Nube: Alpha hotrodded a dud of a gap study I did a couple weeks back. He said he hadn't any more plans for it so to my knowledge this is the final version of that previous Gap Ribbon
-
 # Gap Ribbon
 # Nube 9.29.18
 # upgrade by AI 10.1.18
 # Now includes a percent threshold
 # Also 10.1.18, that threshold can now also be ticks
-
-declare lower;
-
     # inputs
 input length    = 100;
 input avgLength = 1;
@@ -354,20 +310,14 @@ upGap = l > h[1] * (1 + gapPercentOrTicks/100);
     Case Tick:
 dnGap = h < l[1] + TickSize();
 upGap = l > h[1] + TickSize();
-}
-
 def dn = sum(dnGap,length);
 def up = sum(upGap,length);
     # plots          
-plot 
 GapDown = Average(dn, avgLength);
 GapDown.  SetDefaultColor(Color.DownTick);
-plot 
 GapUp = Average(up, avgLength);
 GapUp.  SetDefaultColor(Color.UpTick);
-
 AddCloud(GapUp, GapDown, Color.Green);
-
 Addlabel(1," "+up+ " gap Ups of at least "+
 (if   tickOrPercent == tickOrPercent."Percent" 
  then aspercent(gapPercentOrTicks/100) 
@@ -376,76 +326,12 @@ Addlabel(1," "+up+ " gap Ups of at least "+
  then " ticks" 
  else " tick"))+
  " in the past "+length+" bars ", Color.Light_Green);
-
 Addlabel(1," "+dn+ " gap Downs of at least "+
-(if   tickOrPercent == tickOrPercent."Percent" 
- then aspercent(gapPercentOrTicks/100) 
- else +gapPercentOrTicks+ 
-(if   gappercentOrTicks > 1 
- then " ticks" 
- else " tick"))+
  " in the past "+length+" bars ", Color.Pink);
-
 # f/ Gap Ribbon
 19:45 Nube: Not even sure why I was messing with that switch, but I ruined it. Here's the unruined one.
-# Gap Ribbon
-# Nube 9.29.18
-# upgrade by AI 10.1.18
-# Now includes a percent threshold
-# Also 10.1.18, that threshold can now also be ticks
-
-declare lower;
-
-    # inputs
-input length    = 100;
-input avgLength = 1;
-input tickOrPercent = {Percent, default Tick};
-input gapPercentOrTicks = 1.0;
-    # variables
-def h = high;
-def l = low;
-def dnGap;
-def upGap;
-switch (tickOrPercent) {
-    Case Percent:
-dnGap = h < l[1] * (1 - gapPercentOrTicks/100);
-upGap = l > h[1] * (1 + gapPercentOrTicks/100);
-    Case Tick:
 dnGap = h < l[1] - TickSize() * gapPercentOrTicks;
 upGap = l > h[1] + TickSize() * gapPercentOrTicks;
-}
-
-def dn = sum(dnGap,length);
-def up = sum(upGap,length);
-    # plots          
-plot 
-GapDown = Average(dn, avgLength);
-GapDown.  SetDefaultColor(Color.DownTick);
-plot 
-GapUp = Average(up, avgLength);
-GapUp.  SetDefaultColor(Color.UpTick);
-
-AddCloud(GapUp, GapDown, Color.Green);
-
-Addlabel(1," "+up+ " gap Ups of at least "+
-(if   tickOrPercent == tickOrPercent."Percent" 
- then aspercent(gapPercentOrTicks/100) 
- else +gapPercentOrTicks+ 
-(if   gappercentOrTicks > 1 
- then " ticks" 
- else " tick"))+
- " in the past "+length+" bars ", Color.Light_Green);
-
-Addlabel(1," "+dn+ " gap Downs of at least "+
-(if   tickOrPercent == tickOrPercent."Percent" 
- then aspercent(gapPercentOrTicks/100) 
- else +gapPercentOrTicks+ 
-(if   gappercentOrTicks > 1 
- then " ticks" 
- else " tick"))+
- " in the past "+length+" bars ", Color.Pink);
-
-# f/ Gap Ribbon
 19:46 admin_tculs: thinkScript Lounge chatroom will be closing soon   Please finish all conversations by 8pm ct   Have a nice evening
 19:46 slashgw: have a goodnight all!  and thanks again for the help & guidance!
 19:50 DMonkey:  declare lower;
@@ -485,11 +371,9 @@ data.assignValueColor(if between(data,0,.5)
 09:50 Vimes: plot dH = high(period= aggregationPeriod.DAY);
 09:50 Vimes: will give yu the continous daily high
 09:50 Paris: inov - you might like to consider something like an intraday high. Here's an example
-
 def today = HighestAll(if !isNaN(close) 
                        then GetYYYYMMDD() 
                        else Double.NaN);
-
 plot h = HighestAll(if GetYYYYMMDD() == today 
                     then high 
                     else Double.NaN);
@@ -500,16 +384,11 @@ plot h = HighestAll(if GetYYYYMMDD() == today
 #Fractal Pivots are plotted to hopefully create a zigzag pattern (pointcount tries to do this)
 #Forming Pivots are plotted when the left side criteria is met and 1 future candle. A bar count is then captured in a label and/chartbubble. Yellow is unconfirmed and Green/Red is confirmed. The next forming fractal will also plot a bubble (P-?) and anchored VWAP lines (these will change if the fractal goes unconfirmed)
 #This studies anchored VWAP dynamically plots the VWAP vs the current version of Linus' original study that does not (only updates when the chart is refreshed, either through changing symbols or aggregations, for example)
-
-def h = high;
-def l = low;
 def c = close;
 def o = open;
 def v = volume;
-
 # Simple Fractal Recon
 input length = 13; # Originally 30
-
 def HH1 = h >= Highest(h, length) and h >= Highest(h, length)[-length];
 def High1 = if HH1 then h else Double.NaN;
 def LL1 = l <= Lowest(l, length) and l <= Lowest(l, length)[-length];
@@ -519,7 +398,6 @@ def PointCount = if BarNumber() == 1 then 0 else
                  if !IsNaN(High1) then Max(1, PointCount[1] + 1) else
                  if !IsNaN(Low1) then Min(-1, PointCount[1] - 1) 
                  else PointCount[1];
-
 input showhorizontals = yes;
 def RangeHI = if !IsNaN(High1) and PointCount == 1 
 then h else RangeHI[1];
@@ -533,9 +411,7 @@ plot Rlo = if !showhorizontals then Double.NaN else RangeLO;
 Rlo.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
 Rlo.SetLineWeight(1);
 Rlo.SetDefaultColor(Color.GREEN);
-
 #ZigZags
-
 input showzigzag= no;
 def zHI;
 def zLO;
@@ -545,13 +421,10 @@ zLO = if !IsNaN(Low1) and PointCount == -1 then l else Double.NaN;
 #hilowline.EnableApproximation();
 plot hilowline = if !showzigzag then Double.NaN else if !IsNaN(zHI) then zHI else zLO;
 hilowline.EnableApproximation();
-
-
 #Potental Pivots Identified using left side full length and a length of one to the right
 input showlabels  = yes;
 input showbubbles = yes;
 input bubblemover_updown = 4;
-
 def  x1  = if h >= Highest(h, length) and h >= Highest(h, 1)[-1] then 1 else x1[1] + 1;
 def xx   = if x1 == 1 then xx[1] + 1 else xx[1];
 AddLabel(showlabels, length + " Bars needed to confirm Last or Potental Pivot .. ", Color.WHITE);
@@ -561,7 +434,6 @@ AddChartBubble(showbubbles and xx == HighestAll(xx)
                            and IsNaN(zHI),
                            h + bubblemover_updown * TickSize(), 
                            "P-?", Color.RED);
-
 def  y  = if l <= Lowest(l, length) and l <= Lowest(l, 1)[-1] then 1 else y[1] + 1;
 AddLabel(showlabels, " Low Pivot: " + GetValue(y, 1), if GetValue(y, 1) > length then Color.GREEN else Color.YELLOW);
 def yy  = if y == 1 then yy[1] + 1 else yy[1];
@@ -569,53 +441,36 @@ AddChartBubble(showbubbles and yy == HighestAll(yy)
                            and yy != yy[1]
                            and IsNaN(zLO), 
                            l -  bubblemover_updown * TickSize(), 
-
                           "P-?", Color.GREEN, no);
-
 input bubblemover_sideways = 6;
 def  w  = bubblemover_sideways;
 def w1  = w + 1;
 AddChartBubble(!IsNaN(c[w1]) and IsNaN(c[w]), c[w1], "H:" + GetValue(x1[w1], 1), if GetValue(x1[w1], 1) > length then Color.RED else Color.YELLOW, no);
 AddChartBubble(!IsNaN(c[w1]) and IsNaN(c[w]), c[w1], "L:" + GetValue(y[w1], 1) , if GetValue(y[w1], 1) > length then Color.GREEN else Color.YELLOW, no);
-
 #Arrows
 input showarrows = no;
 plot Up = showarrows and (!IsNaN(zLO) or ( yy == HighestAll(yy)
-                           and yy != yy[1]
                            and IsNaN(zLO) 
                            and GetMaxValueOffset(!IsNaN(zHI), length = 500) < GetMaxValueOffset(!IsNaN(zLO), length = 500)));
 Up.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
 Up.SetLineWeight(3);
 Up.SetDefaultColor(Color.GREEN);
 Up.SetHiding(showarrows == no);
-
 plot Dn = showarrows and (!IsNaN(zHI) or ( xx == HighestAll(xx)
-                           and xx != xx[1] 
                            and IsNaN(zHI)
                            and GetMaxValueOffset(!IsNaN(zHI), length = 500) > GetMaxValueOffset(!IsNaN(zLO), length = 500)));
 Dn.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
 Dn.SetLineWeight(3);
 Dn.SetDefaultColor(Color.RED);
 Dn.SetHiding(showarrows == no);
-
 Input showcandles = yes;
-
 def UpCandle = showcandles and (!IsNaN(zLO) or ( yy == HighestAll(yy)
-                           and yy != yy[1]
-                           and IsNaN(zLO) 
                            and GetMaxValueOffset(!IsNaN(zHI),
 length = 500) < GetMaxValueOffset(!IsNaN(zLO), length = 500)));
 def DnCandle = showcandles and (!IsNaN(zHI) or ( xx == HighestAll(xx)
-                           and xx != xx[1] 
-                           and IsNaN(zHI)
-                           and GetMaxValueOffset(!IsNaN(zHI), length = 500) > GetMaxValueOffset(!IsNaN(zLO), length = 500)));
-
-
 # Candle retracement off ZigZag Pivots
 # Added 08/18/17
-
 def last = if isnan(close[-1]) and !isnan(close) then barnumber() else last[1];
-
 input show50 = yes;
 plot HalfBack = if show50 and (upCandle or dnCandle) then hl2 else double.nan;
 HalfBack.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
@@ -626,19 +481,16 @@ plot hbextline = hbext;
 hbextline.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
 hbextline.SetDefaultColor(color.Yellow);
 hbextline.SetLineWeight(3);
-
 input show75 = yes;
 plot Back75 = if show75 and (upCandle or dnCandle) then low+(high-low)*.75 else double.nan;
 Back75.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
 Back75.SetDefaultColor(color.white);
 Back75.SetLineWeight(1);
-
 input show25 = yes;
 plot Back25 = if show25 and (upCandle or dnCandle) then low+(high-low)*.25 else double.nan;
 Back25.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
 Back25.SetDefaultColor(color.white);
 Back25.SetLineWeight(1);
-
 input bubblemover = 1;
 def n1 = bubblemover + 1;
 input showbubble_candle    = no;
@@ -658,9 +510,7 @@ plot l1p = if barnumber()>=highestall(last) then l1 else double.nan;
 l1p.setpaintingStrategy(PaintingStrategy.HORIZONTAL);
 l1p.setdefaultColor(color.white);
 l1p.assignvalueColor(if showcolor_light_gray then color.light_gray else color.white);
-
 # plot HalfBack = if show50 and (up or dn) then hl2 else double.nan;
-
 # Plots
 #plot SD_Pivot = LinePlot(data = PP, LineLimit = Mean_Limit, OnExpansion = OnExpansion, bar = StartBar).P;
 #plot SD_Pivot_X = LinePlot(data = PP, LineLimit = StartBar).ExpLine;
@@ -683,11 +533,9 @@ l1p.assignvalueColor(if showcolor_light_gray then color.light_gray else color.wh
 #     SPlot.SetDefaultColor(Color.Yellow);
 addCloud(Halfback, zHi, CreateColor(50,150,75), CreateColor(50,150,70));
 addCloud(zLO, Halfback,  CreateColor(175,0,50), CreateColor(175,0,50));
-
 input debug = yes;
 plot x =   close > halfback and close <zHI;
 x.setpaintingStrategy(paintingStrategy.VALUES_ABOVE);
-
 #addCloud(SD_S1, SD_pivot, CreateColor(175,0,50), CreateColor(175,0,50));
 #addCloud(SD_pivot_X, SD_R1_X, CreateColor(50,150,75), #CreateColor(50,150,70));
 #addCloud(SD_S1_X, SD_pivot_X, CreateColor(175,0,50), CreateColor(175,0,50));
@@ -696,11 +544,9 @@ x.setpaintingStrategy(paintingStrategy.VALUES_ABOVE);
 10:06 and76: thanks a billion Paris
 10:09 Paris: and76 - Found it. The name of the study I saved in my archives is called Fractal Pivot Anchord VWAP.  There are a total of 6 different versions of that study. Version 1 is dated 8.17.2017 and version 6 is dated 1.5.2018.  I don't use that study and hence cannot tell you what the specific differences of those studies are without doing some massive code examination. Assuming you're looking for the last version, I'll be happy to post.
 10:12 Paris: and76 - Here is the very last version of the Fractal Pivot Anchored VWAP that was posted by BLT in January 2018, complete with annotations.
-
 # Fractal Pivot Anchored VWAP
 # BLT
 # 1.5.2018
-
 # Here is a Fractal Pivot study with Linus Anchored VWAP that dynamically 
 # updates the VWAP (Linus' original study does not currently as far as I know)
 #
@@ -710,17 +556,13 @@ x.setpaintingStrategy(paintingStrategy.VALUES_ABOVE);
 # chartbubble. Yellow is unconfirmed and Green/Red is confirmed. The next 
 # forming fractal will also plot a bubble (P-?) and anchored VWAP lines (these 
 # will change if the fractal goes unconfirmed)
-#
 # This studies anchored VWAP dynamically plots the VWAP vs the current version 
 # of Linus' original study that does not (only updates when the chart is 
 # refreshed, either through changing symbols or aggregations, for example)
-
 # 20170817 - BLT using Fractal Pivot study shared in TSL, Linus Anchored VWAP
-#
 # 20171102 - BLT Added Hardog suggested HHLL bubbles and labels.
 #                Added count of up to 5 consecutive HHLL to help show the
 #                strength of their current direction
-#
 # 20171231 - BLT V2, corrected the bars forward requirement from 1 bar to the 
 #                potentialbarsforward value input for potential pivots (eg: if 
 #                fractal length set at 30 and potential bars forward to 4, 
@@ -731,51 +573,19 @@ x.setpaintingStrategy(paintingStrategy.VALUES_ABOVE);
 #                require a high/low zigzag if set to use or allow pivots to be 
 #                made as they are made (eg: low then high then another high 
 #                before a low is met)
-
-def h = high;
-def l = low;
-def c = close;
-def o = open;
-def v = volume;
-
-# Simple Fractal Recon
 input length = 13;
-
-def HH1 = h >= Highest(h, length) and h >= Highest(h, length)[-length];
-def High1 = if HH1 then h else Double.NaN;
-def LL1 = l <= Lowest(l, length) and l <= Lowest(l, length)[-length];
-def Low1 = if LL1 then l else Double.NaN;
-
 input use_highlow_zigzag_pattern = no;
-def PointCount = if BarNumber() == 1 then 0 else
-                 if IsNaN(c) then PointCount[1] else
-                 if !IsNaN(High1) then Max(1, PointCount[1] + 1) else
-                 if !IsNaN(Low1) then Min(-1, PointCount[1] - 1) 
-                 else PointCount[1];
-
-input showhorizontals = yes;
 def RangeHI = if use_highlow_zigzag_pattern==yes 
               and PointCount == 1 and !IsNaN(High1)
               then h
               else if use_highlow_zigzag_pattern==no and !IsNaN(High1)
               then h else RangeHI[1];
-plot Rhi = if !showhorizontals then Double.NaN else RangeHI;
-Rhi.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
-Rhi.SetLineWeight(1);
-Rhi.SetDefaultColor(Color.RED);
 def RangeLO = if use_highlow_zigzag_pattern==yes and PointCount == -1 and !IsNaN(Low1)
               then l
               else if use_highlow_zigzag_pattern==no and !IsNaN(Low1)
-              then l
               else RangeLO[1];
-plot Rlo = if !showhorizontals then Double.NaN else RangeLO;
-Rlo.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
-Rlo.SetLineWeight(1);
-Rlo.SetDefaultColor(Color.GREEN);
-
 #Harndog
 input HHLLlabels = yes;
-
 def rh1 = if rangehi then rangehi else rh1[1];
 def rh2 = if rh1 != rh1[1] then rh1[1] else rh2[1];
 def rh3 = if rh2 != rh2[1] then rh2[1] else rh3[1];
@@ -787,17 +597,14 @@ def rh2c = if rh2>rh3 then 1 else 0;
 def rh3c = if rh3>rh4 then 1 else 0;
 def rh4c = if rh4>rh5 then 1 else 0;
 def rh5c = if rh5>rh6 then 1 else 0;
-
 def rhc  = if (rh1c+rh2c+rh3c+rh4c+rh5c)==5 then 5 else if (rh1c+rh2c+rh3c+rh4c)==4 then 4 else if (rh1c+rh2c+rh3c)==4 then 3 else if (rh1c+rh2c)==2 then 2 else if (rh1c)==1 then 1  else 0;
 def rhc1  = if (rh1c+rh2c+rh3c+rh4c+rh5c)==0 then 5 else if (rh1c+rh2c+rh3c+rh4c)==0 then 4 else if (rh1c+rh2c+rh3c)==0 then 3 else if (rh1c+rh2c)==0 then 2 else if (rh1c)==0 then 1  else 0;
-
 AddLabel(HHLLlabels, if rh1 > rh2
               then rhc + " Higher Highs "
               else rhc1 + " Lower Highs ", 
               if rh1 > rh2
               then Color.GREEN 
               else Color.RED);
-
 def rl1 = if rangelo then rangelo else rl1[1];
 rec rl2 = if rl1 != rl1[1] then rl1[1] else rl2[1];
 def rl3 = if rl2 != rl2[1] then rl2[1] else rl3[1];
@@ -809,29 +616,20 @@ def rl2c = if rl2<rl3 then 1 else 0;
 def rl3c = if rl3<rl4 then 1 else 0;
 def rl4c = if rl4<rl5 then 1 else 0;
 def rl5c = if rl5<rl6 then 1 else 0;
-
 def rlc  = if (rl1c+rl2c+rl3c+rl4c+rl5c)==5 then 5 else if (rl1c+rl2c+rl3c+rl4c)==4 then 4 else if (rl1c+rl2c+rl3c)==4 then 3 else if (rl1c+rl2c)==2 then 2 else if (rl1c)==1 then 1  else 0;
 def rlc1  = if (rl1c+rl2c+rl3c+rl4c+rl5c)==0 then 5 else if (rl1c+rl2c+rl3c+rl4c)==0 then 4 else if (rl1c+rl2c+rl3c)==0 then 3 else if (rl1c+rl2c)==0 then 2 else if (rl1c)==0 then 1  else 0;
-
 addlabel(HHLLlabels, if  rl1 > rl2
               then rlc1 + " Higher Lows " 
               else rlc  + " Lower Lows ", 
               if rl1 > rl2
               then color.green 
               else color.red);
-
 input HHLLBubbles = yes;
 input HHLLbubblemover = 6;
 def  hb  = HHLLbubblemover;
 def hb1  = hb + 1;
-
 AddChartBubble(!IsNaN(c[hb1]) and IsNaN(c[hb]) and HHLLBubbles , c[hb1], if rl1[hb1]>rl2[hb1] then "HL " + rlc1 else "LL " + rlc , if rl1[hb1]>rl2[hb1] then color.green else Color.RED, yes);
-
 AddChartBubble(!IsNaN(c[hb1]) and IsNaN(c[hb]) and HHLLBubbles , c[hb1], if rh1[hb1]>rh2[hb1] then "HH " + rhc else "LH " + rhc1 , if rh1[hb1]>rh2[hb1] then color.green else Color.RED, yes);
-
-#ZigZags
-def zHI;
-def zLO;
 zHI = if !IsNaN(High1) and  (use_highlow_zigzag_pattern==yes and PointCount == 1)
       then h else if use_highlow_zigzag_pattern==no and !isnan(High1) 
       then h else Double.NaN;
@@ -839,69 +637,21 @@ zLO = if !IsNaN(Low1)  and (use_highlow_zigzag_pattern==yes and PointCount == -1
       then l else if use_highlow_zigzag_pattern==no and !isnan(Low1)
       then l else Double.NaN;
 plot hilowline = if !IsNaN(zHI) then zHI else zLO;
-hilowline.EnableApproximation();
-
-
-#Potental Pivots Identified using left side full length and a length of one to the right
-input showlabels  = yes;
-input showbubbles = yes;
 input bubblemover_updown = 7;
 input potentialbarsforward = 1;
-
 def  x1  = if h >= Highest(h, length) and h >= Highest(h,length)[-potentialbarsforward] then 1 else x1[1] + 1;
-def xx   = if x1 == 1 then xx[1] + 1 else xx[1];
-
-AddLabel(showlabels, length + " Bars needed to confirm Last or Potental Pivot .. ", Color.WHITE);
 AddLabel(showlabels, "High Pivot: " + (GetValue(x1[potentialbarsforward], 1) + potentialbarsforward) , if (GetValue(x1[potentialbarsforward], 1)+potentialbarsforward) >= length then Color.RED else Color.YELLOW);
-AddChartBubble(showbubbles and xx == HighestAll(xx)
-                           and xx != xx[1] 
-                           and IsNaN(zHI),
-                           h + bubblemover_updown * TickSize(), 
-                           "P-?", Color.RED);
-
 def  y  = if l <= Lowest(l, length) and l <= Lowest(l,length)[-potentialbarsforward] then 1 else y[1] + 1;
 AddLabel(showlabels, " Low Pivot: " + (GetValue(y[potentialbarsforward], 1)+potentialbarsforward), if (GetValue(y[potentialbarsforward], 1)+potentialbarsforward) >= length then Color.GREEN else Color.YELLOW);
-def yy  = if y == 1 then yy[1] + 1 else yy[1];
-
-AddChartBubble(showbubbles and yy == HighestAll(yy)
-                           and yy != yy[1]
                            and IsNaN(zLO),
-                           l -  bubblemover_updown * TickSize(), 
-                          "P-?", Color.GREEN, no);
-
-input bubblemover_sideways = 6;
-def  w  = bubblemover_sideways;
-def w1  = w + 1;
 AddChartBubble(showbubbles and !IsNaN(c[w1]) and IsNaN(c[w]), c[w1], "H:" + (GetValue(x1[w1+potentialbarsforward], 1)+potentialbarsforward), if (GetValue(x1[w1+potentialbarsforward], 1)+potentialbarsforward) >= length then Color.RED else Color.YELLOW, no);
 AddChartBubble(showbubbles and !IsNaN(c[w1]) and IsNaN(c[w]), c[w1], "L:" + (GetValue(y[w1+potentialbarsforward], 1)+potentialbarsforward) , if (GetValue(y[w1+potentialbarsforward], 1)+potentialbarsforward) >= length then Color.GREEN else Color.YELLOW, no);
-
-#Arrows
 input showarrows = yes;
-plot Up = showarrows and (!IsNaN(zLO) or ( yy == HighestAll(yy)
-                           and yy != yy[1]
-                           and IsNaN(zLO) 
-                           and GetMaxValueOffset(!IsNaN(zHI), length = 500) < GetMaxValueOffset(!IsNaN(zLO), length = 500)));
-Up.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
-Up.SetLineWeight(3);
-Up.SetDefaultColor(Color.GREEN);
-Up.SetHiding(showarrows == no);
-
-plot Dn = showarrows and (!IsNaN(zHI) or ( xx == HighestAll(xx)
-                           and xx != xx[1] 
-                           and IsNaN(zHI)
-                           and GetMaxValueOffset(!IsNaN(zHI), length = 500) > GetMaxValueOffset(!IsNaN(zLO), length = 500)));
-Dn.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
-Dn.SetLineWeight(3);
-Dn.SetDefaultColor(Color.RED);
-Dn.SetHiding(showarrows == no);
-
-
 #Linus Anchored VWAP code
 input ticks = 2.0;
 def LocH = (h + (TickSize() * ticks)) * v;
 def LocL = (l - (TickSize() * ticks)) * v;
 def LocC = c * v;
-
 rec PC;
 rec VC;
 rec PC2;
@@ -914,7 +664,6 @@ rec PH2;
 rec VH2;
 rec PL2;
 rec VL2;
-
 if Dn or Up {
     PC  = LocC;
     VC  = v;
@@ -925,30 +674,24 @@ if Dn or Up {
     VC  = CompoundValue(1, v + VC[1], Double.NaN);
     PC2 = CompoundValue(1, LocC + PC2[1], Double.NaN);
     VC2 = CompoundValue(1, v + VC2[1], Double.NaN);
-}
-
 if Dn {
     PH  = LocH;
     VH  = v;
     PH2 = PH[1];
     VH2 = VH[1];
-} else {
     PH  = CompoundValue(1, LocH + PH[1], Double.NaN);
     VH  = CompoundValue(1, v + VH[1], Double.NaN);
     PH2 = CompoundValue(1, LocH + PH2[1], Double.NaN);
     VH2 = CompoundValue(1, v + VH2[1], Double.NaN);
-}
 if Up  {
     PL  = LocL;
     VL  = v;
     PL2 = PL[1];
     VL2 = VL[1];
-} else {
     PL  = CompoundValue(1, LocL + PL[1], Double.NaN);
     VL  = CompoundValue(1, v + VL[1], Double.NaN);
     PL2 = CompoundValue(1, LocL + PL2[1], Double.NaN);
     VL2 = CompoundValue(1, v + VL2[1], Double.NaN);
-}
 input showvwaps = yes;
 plot VwapC  = if !showvwaps or (Dn or Up) then Double.NaN else PC / VC;
 plot VwapC2 = if !showvwaps or (Dn or Up) then Double.NaN else PC2 / VC2;
@@ -956,30 +699,23 @@ plot VwapH  = if !showvwaps or Dn then Double.NaN else PH / VH;
 plot VwapL  = if !showvwaps or Up then Double.NaN else PL / VL;
 plot VwapH2 = if !showvwaps or Dn then Double.NaN else PH2 / VH2;
 plot VwapL2 = if !showvwaps or Up then Double.NaN else PL2 / VL2;
-
 VwapC.SetDefaultColor(Color.YELLOW);
 VwapC.SetLineWeight(2);
 VwapC.HideBubble();
-
 VwapC2.SetDefaultColor(Color.YELLOW);
 VwapC2.SetLineWeight(2);
 VwapC2.SetStyle(Curve.SHORT_DASH);
 VwapC2.HideBubble();
-
 VwapH.SetDefaultColor(Color.RED);
 VwapH.HideBubble();
-
 VwapL.SetDefaultColor(Color.GREEN);
 VwapL.HideBubble();
-
 VwapH2.SetDefaultColor(Color.RED);
 VwapH2.SetStyle(Curve.SHORT_DASH);
 VwapH2.HideBubble();
-
 VwapL2.SetDefaultColor(Color.GREEN);
 VwapL2.SetStyle(Curve.SHORT_DASH);
 VwapL2.HideBubble();
-
 ## END STUDY
 10:13 Paris: Voila - Have fun. Hope this helps you and76. G'night for now. Anything else you need, you know where to reach me, MyTrade or thereabouts.
 10:15 MTS1: Thanks Paris & GN!
@@ -988,7 +724,8 @@ VwapL2.HideBubble();
 10:33 Mobius: thanks neo ... yep - all is well here.  Just been busy with other things than trading.  
 10:34 neo_theone: so glad. was worried because i think that you are on the barrier island under cat 5
 10:34 JohnnyQuotron: neo +1
-10:39 JohnnyQuotron: The LoungeArchive is current.10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
+10:39 JohnnyQuotron: The LoungeArchive is current.
+10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
 SecondsFromTime(time1) == 0
 SecondsTillTime(time2) == 0
 SecondsFromTime(time1) > 0
@@ -1015,9 +752,6 @@ SecondsTillTime(time2) <= 0
 # Typical price is based on a Stochastic Average
 input n = 10;
 input colorCandles = yes;
-def h = high;
-def l = low;
-def c = close;
 def x = barNumber();
 def nan = double.nan;
 def TYP = (highest(h, n) + lowest(l, n) + c) / 3;
@@ -1044,34 +778,26 @@ plot l_pivot = if x >= highestAll(dn_x)
      l_pivot.SetDefaultColor(color.green);
 plot ArrowUp = if c crosses above l_pivot
                then l
-               else nan;
      ArrowUp.SetPaintingStrategy(PaintingStrategy.Arrow_Up);
      ArrowUp.SetLineWeight(2);
      ArrowUp.SetDefaultColor(color.green);
 def up_rev = if c crosses above TYP
              then h
              else if c < TYP
-                  then nan
                   else if h > up_rev[1]
                        then h
                        else up_rev[1];
 def up_x = if h == up_rev
-           then x-1
-           else nan;
 def l_rev = if !isNaN(up_x)
             then l[1]
             else l_rev[1];
 plot h_pivot = if x >= highestAll(up_x)
-               then highestAll(if isNaN(close[-1])
                                then l_rev
-                               else nan)
-               else nan;
      h_pivot.SetStyle(curve.long_dash);
      h_pivot.SetLineWeight(2);
      h_pivot.SetDefaultColor(color.red);
 plot ArrowDn = if close crosses below h_pivot
                then high
-               else nan;
      ArrowDn.SetPaintingStrategy(PaintingStrategy.Arrow_Down);
      ArrowDn.SetLineWeight(2);
      ArrowDn.SetDefaultColor(color.red);
@@ -1080,17 +806,28 @@ AssignPriceColor(if colorCandles and c < TYP
                  else if colorCandles and c > TYP
                       then color.green
                       else color.current);
-# End Code Typical_Price_Strategy10:39 JohnnyQuotron: The LoungeArchive is current.
-10:39 JohnnyQuotron: The LoungeArchive is current.10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
-10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
+# End Code Typical_Price_Strategy
 10:58 amalia: Ok, admins, any insight into what the missing data is all about?
 11:00 JohnnyQuotron: mobius...http://tos.mx/GT9Srh
-didn't want to fill the buffer.   If youhave an updated or favorite version please let me know.   I am trying to organise the RSI Laguerre section of the onenote as this is such a widely loved study.  10:39 JohnnyQuotron: The LoungeArchive is current.
-10:39 JohnnyQuotron: The LoungeArchive is current.10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
-10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
-# End Code Typical_Price_Strategy
-# End Code Typical_Price_Strategy10:39 JohnnyQuotron: The LoungeArchive is current.
-10:39 JohnnyQuotron: The LoungeArchive is current.10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
-10:45 MyBar: I need to understand interpretation of the comparison operators in relation to and as used in the following examples of time brackets. I could not find explanation in the thinkscript manual for these type of time brackets. I have come across these examples used in various scripts posted here and elsewhere. I am trying to learn and understand so that I can write scripts for my needs Thanks
+didn't want to fill the buffer.   If youhave an updated or favorite version please let me know.   I am trying to organise the RSI Laguerre section of the onenote as this is such a widely loved study.  
 11:06 Vimes: nice one, mobius, looks promising
 11:06 MyBar: Mobiuus: I want to scan on 5 m aggregation for stocks for a condition between a  time bracket, for example between 10:00 am and 1:00 pm . So I am not sure about what operator should be used, Would it be == or >= or > or < as I noted in my query above. Thanks for your courtesy.
+11:17 MTS1: Any of those based on your logic MyBar; but I'd stick with >= and <= to make syntax more robus in case thre is not a bar exactly on x time (like with TICK Charts), unless you need exclusively x time in which case you use ==
+11:18 UpTheCreek: mybar, just write a simple program to test it out.  don't boil the ocean to start with 
+11:18 MTS1: How you track your condition controls your logic; time is part of your condition.
+11:19 MTS1: start with something like def active =,  like the examples you've probably looked at; use the ORB from Mobius would be a good start. 
+11:19 UpTheCreek: PLOT Active2 = if secondsTillTime(1100) > 0 and
+                      secondsFromTime(1000) >= 0 
+                   then 1 
+                   else 0;
+11:20 UpTheCreek: What does that look like on a chart?
+11:20 Mobius: Johnny - In that study gamma data is filtered using a 4 pole gaussian filter and the RSI is adjusted by gamma. The gaussian filter can also be adjusted by length and beta. The gamma can also be adjusted by length.  Making that study one of the more functional studies for any aggregation or equity type. 
+11:20 MTS1: Another way to learn / understand the data; just plot secondsfrom/till time on a lower indicator and see what the values are and when it changes / crosses 0.
+11:23 MyBar: Thank you all for your suggestions. I will start writing my script to see how it works.
+11:31 MTS1: MyBar; that's a good way to debug code or learn a function anyway; plot the values or intermediary def variables to see what they do or if your logic is correct.
+11:32 AlphaInvestor: Mobius - glad to hear you are safe!!
+11:33 UpTheCreek: indeed11:33 MTS1: +111:33 UpTheCreek: indeed11:33 MTS1: +1
+11:33 UpTheCreek: indeed
+11:33 MTS1: +1
+11:33 AlphaInvestor: third strongest hurricane to hit the USA on record
+11:34 Mobius: Thanks guys.. Not much more than thunderstorms here. But the folks in Panama City and Mexico Beach are in a world of hurt
