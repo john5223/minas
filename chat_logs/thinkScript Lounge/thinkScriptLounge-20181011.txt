@@ -966,3 +966,63 @@ plot scan = close<=0.95*open;
 13:58 Nube: hit the market and see how far your fill price is from what the market was is how I find order imbalances
 13:59 John1a: Mobius: What study do you use to see those balance zones?
 13:59 Mobius: John - Study is on MyTrade - Mobius  Balance Zones
+14:00 John1a: Thank you.
+14:00 Mobius: yw
+14:02 AJayKC: thanks mobius and nube.
+14:03 tajtx: Good info
+14:03 AJayKC: nube. when you see hit the market what exactly do you mean. what sould i hit?
+14:04 AJayKC: sorry didn't come out right.  i mean where do i go is there a tab or button on tos?
+14:04 Nube: I was joking, Ajay. Referring to buy or sell at market and see what happens
+14:05 UpTheCreek: or is it just a hit in the stomach?
+14:05 FrankB3: most folks in here hit the JD
+14:06 JohnnyQuotron: Mobius.. BalanceZones v02 ??
+14:06 mthfr_vaxxed: who wants..... automatic chat history!
+14:06 AJayKC: ok i was looking  everywhre  under market watch tab. lol.
+14:07 MTS1: You got it figured out MTH? Yes please;)
+14:07 John1a: I do, MTH
+14:07 Nube: Camera on the chat window 24 / 7 / 365
+14:08 MTS1: JQ would also; both our emls are on MyTrade
+14:08 mthfr_vaxxed: check me profile
+14:08 MTS1: cool Nube; that wo5rks :)
+14:08 mthfr_vaxxed: folder...chat logs
+14:08 mthfr_vaxxed: just started today... so it'll be going forward
+14:08 mthfr_vaxxed: as long as my tos is open
+14:08 MTS1: Will do MTH
+14:10 Vimes: neat nice work, now i got to watch what i say
+14:11 mthfr_vaxxed: lol. i can purge git history ;)
+14:11 John1a: MTH: Thank you very much!
+14:11 JohnnyQuotron: mobius  or are you referring to Trading Zones of Balance v02.07.2014??
+14:11 Vimes: i guess it won'at capture screenshots
+14:11 mthfr_vaxxed: negative. text only
+14:12 Vimes: still very nice, smart work
+14:12 mthfr_vaxxed: im missing a lot of days and wanna get all the good stuff while im gone
+14:13 mthfr_vaxxed: if you know git... feel free to pull request
+14:16 MTS1: MTH; I see you have the PY exe in there also; but not sure how it works, if anything else is needed or how to set it up; if you are up for a how-to doc that'd be great also.
+14:16 mthfr_vaxxed: only works on linux
+14:17 MTS1: Ah. .
+14:17 MTS1: hell of a bounce was it Mo that we needed?
+14:18 mthfr_vaxxed: but you shouldn't need to run it. if you want it locally on your computer... learn git. after repo is cloned you just `git pull` for latest
+14:19 Nube: Yowsers this the best bounce we've had all week. I think that Mobius fellow might know a thing or two.
+14:23 mthfr_vaxxed: rgrep -E 'Mobius|AlphaInvestor|VolCrush' chat_logs/
+14:29 FrankB3: Thanks Mr. Mo: for # Typical Price Reversal Strategy,, works good
+14:29 Vimes: i agree
+14:30 Mobius: yw.. When volatility is over 20 studies like that do well
+14:31 FrankB3:   Trying to work in with any RonCo strategy
+14:33 Mobius: I just use it for intraday futures trading. RonCo is more for options. Guess you could intraday trade futures options with it
+14:34 John1a: What is a RonCo strategy?
+14:34 FrankB3:   No longer looking for homeruns: will settle for 1 -3% for 4-5 days... ha, now that you said IV :  do see a lot of  $1 -$2 moves interday in stocks
+14:38 Mobius: John - an options strategy. Set it an forget it. $1.00 wide In/Out spread.  Risk 1 to make 1 sort of thing. 
+14:40 John1a: Mobius: Thank you, so which zones study do you use, it seems there is more than one version/variety.
+14:41 Mobius: John.  What I use depends on what it is I want to see.  There's no such thing as one study fits all
+14:41 AlphaInvestor: Mobius - I updated the spreadsheet In/Out tool that DK's team built to pull the bid/ask stuff using RTD and sent it back to him
+14:42 Mobius: That by the way IS the Holy Grail. Every Study has it's use and knowing that use it the Grail
+14:43 Mobius: Alpha.. What's the weather over there looking like?
+14:43 AlphaInvestor: The Grail according to AlphaInvestor:
+The Grail - a) a set of no more than a dozen carefully selected Technical Analysis indicators that you know backwards forwards and upside down b) a Trading Plan and the discipline to follow your plan, c) a thorough understanding of fundamentals and Fundamental Analysis, d) a curious mind and a commitment to lifetime learning, e) a capacity for and love of work ... Hard Work, and f) patience when needed, the ability to react quickly when required, and the wisdom to know when each is appropriate.
+14:44 AlphaInvestor: Mobius - TS Michael was much worse than I expected here, lots of rain, high winds, power outages. It has blown thru already into NC.
+14:45 AlphaInvestor: Nothing like Florida tho .. Prayers!
+14:45 UpTheCreek: can't you put that in a pill or something?
+14:45 Mobius: Glad your safe
+14:45 Mobius: It already comes in a bottle UPC
+14:48 UpTheCreek: kinda brownish stuff I imagine...
+14:49 John1a: Mobius: I mean which study shows quaterly balance zones.
