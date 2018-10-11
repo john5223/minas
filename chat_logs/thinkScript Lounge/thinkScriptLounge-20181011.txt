@@ -1026,3 +1026,24 @@ The Grail - a) a set of no more than a dozen carefully selected Technical Analys
 14:45 Mobius: It already comes in a bottle UPC
 14:48 UpTheCreek: kinda brownish stuff I imagine...
 14:49 John1a: Mobius: I mean which study shows quaterly balance zones.
+15:17 teebone: Mobius ive been seeing some of your old stuff all over the internet
+15:19 Vimes: legen....wait for it....dary.  Legendary!
+15:35 Nube: Vimes + 1
+16:00 FrankB3: Mr. Mo> never done a "in-out spread",  did a few 2 day credit spread::  Would it be feasible to do a 1 -2 day in-out spread ?????
+16:02 inov: we're there problems with Study Alerts today after 10:00 a.m
+16:03 FrankB3:   Would be hard to get options fill??   Got my prices on credit spreads or I did not play
+16:04 FrankB3:   I know thats not the way dk teaches
+16:07 Nube: Frank, if I was only going to be in for a day or two, I wouldn't do a spread
+16:09 FrankB3: you are most right
+16:10 FrankB3:   But I like the idea of risking one to make one
+16:10 FrankB3:    sort of like a roullette bet
+16:10 AlphaInvestor: I hate the idea of risk one to make one ... no edge
+16:11 FrankB3: for 1 day ??
+16:11 Nube: I like risking 1 to make a multiple of 1, but if the strategy has an advantage then 1 to 1 is a money maker
+16:12 FrankB3:   AI::  just think you double your IRA ten time in 10 days
+16:13 AlphaInvestor: yeah, right
+16:13 FrankB3:   :(
+16:13 inov: Did anyone have issues with Study Alerts today
+16:14 JohnnyQuotron: The LoungeArchive is current
+16:14 amalia: inov, email support@thinkorswim.com
+16:14 inov: tx amalia
