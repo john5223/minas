@@ -619,3 +619,81 @@ addLabel(NextEarnings < 90 and NextEarnings > 0, "Earnings " + NextEarnings + " 
 08:59 tajtx: I'll try and understand the code.    Thanks for the feedback.
 08:59 MTS1: JQ; don't you see the median/sd lines re-set on the chart?
 09:03 MTS1: On mine they restart when globex overnight starts at 6PM ET on futs
+09:21 Paris: MTS - Just wanted to make sure you received that eml response, I had to send a couple of times due to formatting issues on my end
+09:22 Paris: Signing out for the night, anything else you know where to ping me. Later MTS
+09:52 JohnnyQuotron: I need some help with the addchartbubbles on this script  http://tos.mx/CeMzoE#
+yes this is embarrassing.  i would really like the cyan bubble to paint on the first lower cyan dot and the orange bubble first lower orange dot
+but i can't get the logic correct for the x-axis location  ...  if anyone can find the time later I would really appreciate the assistance
+09:52 JohnnyQuotron: nite Paris
+09:55 JohnnyQuotron: Mts.. looks like the openning of electronic trading at about 5:00 eastern? for \ES
+09:55 RayK: Hi. My buffer is missing from room open to 7:47 EDT. Can someone please PB it to me? Thanks in  advance.
+09:55 AlphaInvestor: The most important part of a bubbleMover script is the      showBubbles = NO input
+09:56 JohnnyQuotron: ray the onenote is current
+09:57 cajun: Ray, there was just a gm
+09:58 JohnnyQuotron: alpha...i am not using that imput for the FE bubbles at the moment.  look down to around line 250.  sorry
+09:59 JohnnyQuotron: mobius .. would you say your balance area held?
+10:02 anees: hello everyone, can someone tell me where i can find the ATR filter in the scanner please
+10:02 beta888: Hi, is there anyway to draw a line across the chart  that will follow current price of a stock?
+10:03 Mobius: Johnny - here's the method to add those bubbles
+addChartBubble(FE crosses below valueFElinear, -.1, "Linear", color.cyan, yes);
+10:04 AlphaInvestor: Here is the way I did it:
+addChartBubble( if pointslinear and isnan(pointslinear[1]) then 1 else 0 , -0.05, "Trend Exhaustion", pointslinear.takevaluecolor());
+10:04 DMonkey: beta....
+plot Data = highestall(if isnan(close[-1]) then close else double.nan);
+10:05 Mobius: anees - Did you try under ATR?
+10:07 Mobius: johnny - It's held so far. The day is young.
+10:08 beta888: Thanks, i will try that
+10:09 anees: hey Mobius, i dont find it, either im blind or im blind, does it even exist?
+10:11 Mobius: Typical Bull Market Ends when there are New Lower Lows and Lower Highs first at the intraday levels then on the higher aggregations. So first indication of this Bull ending would be a price extension to within about 1% of the high and a failure to a new pivot low on the daily aggregation. We just had that. Now we look for another drive toward the high and a failure below the last attempt. Then another new low.
+10:13 JohnnyQuotron: mobius.. regarding the bubbles.  I only want one of the first orange and cyan dot.  not on each cross.  thank you though.  I should have been more clear
+10:13 Mobius: anees.  
+Average(TrueRange(high, close, low), 10)
+10:14 Mobius: First dot for the day, first dot for the chart?
+10:14 JohnnyQuotron: first orange dot on the chart and first cyan dot on the chart
+10:15 Mobius: the do a recursive count and take only the first in the count.
+10:15 JohnnyQuotron: i dont know how to do that yet
+10:16 AlphaInvestor: JQ - the code I posted plots at the first cyan dot of any new set of cyan dots
+10:17 Mobius: def count = if FE crosses below valueFElinear
+                     then count[1] + 1
+                    else count[1];
+addChartBubble(count == 1, ..........................)
+10:18 JohnnyQuotron: mobius thank you.  Alpha sorry i didnt see the second post.  my apologies
+10:24 ramesh2599: Mobis: could you pl post that code- Thanks----- Mobius: Vimes - That particular study is Squeeze Pivots
+10:26 UpTheCreek: Ramesh, where does Mobius generally post his codes?
+10:27 ramesh2599: I could not locate it:(
+10:29 anees: thanks mobius, what im basically trying to do is find or make a filter that finds stocks that overextended 5-6 times their usual Range, can you advise please? thanks
+10:30 mthfr_vaxxed: Johnny: you check the automated logs? now you dont have to worry about missing something! ....hopefully
+10:31 Mobius: Johnny - before you drive yourself crazy - I should have indexed that count. Use this as your template
+def count1 = if barNumber() > 1 and FE < valueFElinear
+             then compoundValue(1, count1[1] + 1, 1)
+             else count1[1];
+addChartBubble(count1 == 1, 0, "Linear", color.cyan, yes);
+10:31 NUG: Hey Mobius, do yo know if TOS is going to restore the drawings for continuous futures contracts any time soon (or at all)?
+10:33 Mobius: anees - simple logic
+TrueRange(high, close, low) > Average(TrueRange(high, close, low), 10) * 5
+10:34 JohnnyQuotron: Mobius... thank you... i was driving myself crazy  But I was too embarassed to admit it.
+10:35 Mobius: NUG - I'm not privy to any other information than what you or anyone else gets
+10:36 ramesh2599: Mobi- I found it, Thanks
+10:37 Mobius: sorry Johnny - One of the problems with codeing in the chat window.
+10:37 JohnnyQuotron: The LoungeArchive is current.  BBL thank you all for the assistance !
+10:37 Mobius: <<< To lazy to open the editor
+10:39 JohnnyQuotron: Mobius.. thank you for setting me on the right path.  You as well alpha.  Maybe my next Padawan's guide should be recursive counting?   Oh my!
+10:42 NUG: Mobius, thanks
+10:43 anees: thank you so much Mobius
+10:44 JohnnyQuotron: Oops.. someone forget to screw in their drain plug before thay put their 25-30 foot center console fishing boat in the water this morning.  Here comes the Coast Guard....
+10:46 AlphaInvestor: JQkpa - I forgot to put mine in once on my 20 foot Yamaha - it has 5 plugs, I missed one. Go back to the boat launch, but not without considerable bailing and panic.
+10:50 Nube: That's why I don't boat.
+10:50 Nube: I'm not a details person
+10:52 Vimes: its' good to have friends with boats
+10:52 Nube: Also, we might be shaping up for interesting Sunday night. We aren't far from the 720 Mobius was watching.
+10:58 MTS1: JQ; thought you were refering to the markets at first when you posted about someone forgetting the drain plug. .
+10:59 MTS1: MTH; prefer logs with pictures; but nice to have an automated backup so that's appreciated!
+11:11 JohnnyQuotron: mth... update me on the automated log thingy again please..
+11:14 UpTheCreek: in his mytrade
+11:17 mthfr_vaxxed: yup. got a script running that sends logs out to github. updates logs locally every 10 min. sends to github every 2 hours during weekdays
+11:18 mthfr_vaxxed: but yea....no pictures... yet
+11:24 JohnnyQuotron: mth... excellent work  how does your app send to github?  can the app email?
+11:27 JohnnyQuotron: Oops the crane barge is going to be too late... the Center Console is beneath the waves
+11:28 JohnnyQuotron: and the SPY is not looking much better
+11:28 Nube: Analogy for Europe's markets today.
+11:29 AlphaInvestor: hopefully not your center console JQkpa

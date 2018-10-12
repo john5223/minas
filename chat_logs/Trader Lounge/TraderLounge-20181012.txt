@@ -559,3 +559,386 @@ who, who has it better than us?
 09:03 JC_chart: crossed  the midpoint target is 1222.8
 09:04 JC_chart: and im out at 1222.7
 09:04 JC_chart: so u never coulda got that move with options on gdx ,, but u can with futures
+09:06 streetglide: gc is sort of like cl...you get these rips and wooshes for no apparent reason at times
+09:07 AlphaInvestor: Street - it isn't "no apparent reason" it is geopolitics
+09:07 JC_chart: its traders they drive the swooshes and that volatility is where the money is
+09:07 streetglide: works both ways JC
+09:08 JC_chart: yeah but the chart shows the moves so the setups are pretty clear
+09:08 streetglide: intraday Al in a 5 min time frame isnt geo
+09:08 JC_chart: for example look at the nounce in GC right now you could see that bounce coming back to the midpoint and continue down by seeing the momentum
+09:10 AlphaInvestor: Street - okay, you are right at 1-min and 5-min ... prices are RANDOM
+09:11 AlphaInvestor: sometimes we randomly get multpile bars in a row in the same direction
+09:11 MyOtherBrotherDarryl: I don't trade options, just buy or sell short
+09:11 JC_chart: sorry guys beg to differ on the whooshes
+09:11 JC_chart: they are pure market manipulation on GC and cl
+09:11 fred__w: alpha  fractal  you mean  :)
+09:12 streetglide: agree JC
+09:12 AlphaInvestor: Fred - no, I mean Random at those timeframes
+09:12 fred__w: ..tho i dont use 1min
+09:12 AlphaInvestor: Fred - but yes, prices are fractal in nature
+09:12 JC_chart: its spoofing and its knowing ahead of time who needs to hedge and trading that news
+09:13 JC_chart: and it is programmed algorithims that move from fib line to fib line during the day
+09:13 AlphaInvestor: is JC off his meds again   ;-)
+09:13 MyOtherBrotherDarryl: My personal opinion is, I receive better candle signals on 5 minute charts
+09:13 blondetrader: haha he is correct
+09:13 streetglide: exactly
+09:13 fred__w: ..bcuz  they arent  as you suggest  as useful for trading decisions
+09:14 JC_chart: i like the 3m on oil and gold
+09:14 streetglide: there is a reason you dont trade them Al
+09:14 fred__w: ..i do you 5 with 15 to get context
+09:14 fred__w: use*
+09:15 chenmann: jpm red
+09:15 chenmann: careful
+09:15 MyOtherBrotherDarryl: does anybody besides me think that ebay could plunge on earnings coming up?  I dunno, but chart looks WEAK
+09:15 AlphaInvestor: order in to close TLRY long call at intrinsic that matches today's intraday high
+09:16 AlphaInvestor: Darryl - EBAY complaining that AMZN stealing customers ... not a good sign
+09:16 esmal:   morninig all
+09:16 MyOtherBrotherDarryl: morning
+09:17 chenmann: out spy
+09:17 MyOtherBrotherDarryl: I could see ebay plunging to a 26 handle
+09:18 esmal: @tmoney, no clue yet
+09:19 MyOtherBrotherDarryl: I hate trading on earnings though, unless wer
+09:19 MyOtherBrotherDarryl: shoot....unless we're in a clear bear market.
+09:20 MyOtherBrotherDarryl: shorting that is.
+09:20 tmoney20g: esmal
+09:20 tmoney20g: i have trailstops now
+09:20 michael9259: charts are fine now but, man, i can't trade here if this thing can't handle the US open! developers need to put in some overtime this weekend.
+09:21 Tanya: GM, holly wow, been busy not dare checking portfolio
+09:21 streetglide: hated seeing the overnight rampage....not good to buy the gap ups and hard to short cause it could have gapped and go'd......is go'd a word?
+09:21 JC_chart: /ES banging on the bottom of its range here, chart says we go down
+09:21 Tanya: Are you all scared yet?
+09:21 JC_chart: to 2775 i bet
+09:21 JC_chart: which is midpoint
+09:22 esmal: good to hear!
+09:23 tmoney20g: i tried 2 trailstoplimit, but got stopped out early
+09:23 tmoney20g: gotta figure this out
+09:23 tmoney20g: think i'll just try trailstop 
+09:24 MyOtherBrotherDarryl: Tanya, me don't trust this bounce at all.  MHO.
+09:25 AlphaInvestor: Tmoney - what multiple of ATR are yoiu setting yoiur trail stop to ?   Hint, Hint
+09:25 MyOtherBrotherDarryl: there is a lot of indecision after the gap
+09:25 JC_chart: 2755 sorry for mistake
+09:26 chenmann: out intc
+09:26 tmoney20g: multiple ?
+09:27 VET tryng to make money: What just happened
+09:27 tmoney20g: i went potty
+09:27 VET tryng to make money: So did the market
+09:28 Tanya: Darryl, I am stuck here and waiting for correction to pass
+09:28 MyOtherBrotherDarryl: If I could count on the Qs trading in a $1 range all day, I think I could make money.
+09:28 VET tryng to make money: This market finishes in the red tonight .
+09:29 StrikeOne: My stock scanner is incredibly slow today. Anyone else?
+09:29 MyOtherBrotherDarryl: It could finish WAY in the red.
+09:29 StrikeOne: Yesterday charts and scanner were useless to me.
+09:29 tajtx: What makes you think so VET?
+09:30 tmoney20g: esmal, on the website tho, doesn't show my filled sold orders
+09:30 MyOtherBrotherDarryl: what's a stock scanner?  chart?
+09:30 tmoney20g: only the buys
+09:30 tmoney20g: any idea why that is ?
+09:30 VET tryng to make money: We are not out of it and I think people will wait until Monday
+09:30 tmoney20g: or anyone else using stops
+09:30 VET tryng to make money: Instead of holding o Er the weekend
+09:30 MyOtherBrotherDarryl: I haven't traded anything
+09:30 VET tryng to make money: Too many headlines
+09:30 tajtx: OK thanks.     
+09:30 esmal: i dont have the answer for that but I think when you enable advanced features it states that on the page
+09:31 AlphaInvestor: Tmoney - you EXPECT the price to move by the ATR, so setting the trailing stop to less than the ATR almost guarantees yoiu will be stopped out
+09:32 VET tryng to make money: Still tempted to by Starbucks
+09:32 loneoak: Any thoughts on JetBlue?
+09:33 nic007: Hi all- anyone use any subcription services they Recommend?? Raging Bull came across my desk--
+09:33 MyOtherBrotherDarryl: Vet, funny you mention SBUX.  I am thinking about shorting it, but want to see more weakness, but might not get it.
+09:33 VET tryng to make money: Investitute
+09:33 AlphaInvestor: Nic - you need to learn to make your own decisions.
+09:33 VET tryng to make money: I’m in for the long I’ll sell against it
+09:33 MyOtherBrotherDarryl: In fact, I have it on my screen right now.
+09:34 VET tryng to make money: It’s up a bit that’s why I’m not in it now
+09:34 nic007: Thanks Alpha. Yes, I agree.
+09:34 AlphaInvestor: Nic - think about it, if they were good at trading ... they would be trading, not selling magic eleixir
+09:34 esmal: lol
+09:35 nic007: But as a newer trader, I paid for some mentorship that HAS helped, but most of those "alert subscriptions"  (couple I tried) were not helpful to me.
+09:35 esmal: what did you exactly learn from your mentorship?
+09:36 AlphaInvestor: Nic - attend Swim Lessons, taught free by TOS every day the market is open. Free eduction, free mentorship in the chat by SLS
+09:36 Vimes: if you are an investor, go to hulbert digest and they rank some of the subscription services, for day trading i wouldn't trust any of the youtube junk
+09:36 MyOtherBrotherDarryl: SBUX:  Ackman said he was buying it over the last 3 months, but then all of a sudden he wants the world to know he's done that.  So is he trying to dump his shares now into his advertisement?   15 million shares.   Either that or he is trying to talk up the price.
+09:37 nic007: Alpha- ok thanks for that.
+09:37 Kev : Sorry I am new to the TOS and trying to put in a trade. I kept getting ‘Illegal -1 Shares’. Can someone explain what that means?
+09:37 JC_chart: I think tos lessons are great on their tools, but their mentorship is teaching you to take things like MACD crosses and well... iI have not seen that as a consistently winning strategy so i  was not impressed with their mentorship
+09:38 Vimes: Kev, call the trade desk, either not appropriate margin approval, or funds available
+09:38 Kev : Ok thanks @Vimes
+09:38 tmoney20g: 3 for 3 today, feels nice
+09:38 admin_tculs: Kev   call trade desk      800-672-2098� 
+09:39 tmoney20g: esmal just filled trailstop
+09:39 tmoney20g: i like that
+09:39 JC_chart: nice .. happy friday
+09:39 esmal: in the green>
+09:39 esmal: ?*
+09:40 MyOtherBrotherDarryl: Qs trading in a $1 range.....still
+09:40 JC_chart: im short GC since 1223.3
+09:40 MyOtherBrotherDarryl: $1.30 actually
+09:40 AlphaInvestor: Dayrrl - large investors like Ackman must disclose their positions quarterly
+09:40 kaotekmonk: anyone in RGSE? your thoughts for the weekend?
+09:41 JC_chart: taregt is 1221 but may not be strong enough to get their
+09:41 tmoney20g: esmal yes
+09:41 tmoney20g: just trading 1 contract
+09:41 esmal: nice
+09:41 tmoney20g: get to learn this
+09:41 MyOtherBrotherDarryl: True Alpha, forgot about that
+09:42 AlphaInvestor: Monk - nobody in here trades worthless penny stocks
+09:42 AlphaInvestor: Ackman is not above the idea of "talking his book" tho
+09:42 JC_chart: the range on the rgse is  0.10 and it is in a flatlined trend, i think there are other places you can make money with less risk if you want to hold over the weekend
+09:43 JC_chart: im out of gc at 1221
+09:44 MyOtherBrotherDarryl: Ackman:  but if a big player wants to unload 15 million shares at a resistance level, he has to get players in to buy so the price doesn't plunge.
+09:44 kaotekmonk: worthless? wow. must be in the wrong chatroom then.
+09:44 AlphaInvestor: yup
+09:45 chenmann: think tlry wants 155 al
+09:45 AlphaInvestor: I will be out long before 155, option expires today
+09:45 kaotekmonk: thanks jc_chart at least someone here has a career for advice.
+09:45 radon224: AI used to say that about pot stocks, but something happened
+09:46 chenmann: o i c
+09:46 MyOtherBrotherDarryl: all I can tell you, is that when I look at a chart of SBUX i see a huge plunge in june, and a rocket back to the top.   That is not a good omen for a breakout to the upside.
+09:46 chenmann: may get close today .... tlry
+09:46 AlphaInvestor: DING - TLRY long call closed
+09:47 AlphaInvestor: now I am only left with Bearish TLRY stuff - I feel much better
+09:47 chenmann: haha nice trade .... even tho it was an accident
+09:48 AlphaInvestor: made thousands on that accident
+09:48 Vimes: a happy accident
+09:48 AlphaInvestor: it was a 105 call, do the math
+09:48 streetglide: happy endings are good
+09:49 Vimes: but you were short stock, did you buy back on the open?
+09:49 chenmann: i d close that bearish tlry stuff too ....al
+09:49 AlphaInvestor: I bot back days ago
+09:49 Vimes: oic, nice job
+09:50 AlphaInvestor: I bot back thousands ago
+09:50 fred__w: chen  on the opening  i was able to escape my longs with minimal damage  lesson learned
+09:50 Vimes: i'm a bit suprised how well the pot stocks are holding in these last few days
+09:50 AlphaInvestor: Chen - what I have left is a 185/190 ccs
+09:50 chenmann: o
+09:51 chenmann: vimes , agreed
+09:51 chenmann: 12th today
+09:51 MyOtherBrotherDarryl: SBUX:  I just drew a trendline from the peak in June 2017 to recent, downsloping,  price broke out on ackman announcement and then reversed below it again.  It could try another breakout, dunno.
+09:51 AlphaInvestor: Chen - GTC order in to close at > 75% profit
+09:51 chenmann: ha nice
+09:51 chenmann: gl
+09:52 AlphaInvestor: SBUIX was trying a Cup&Handle - but der market broke the handle
+09:52 chenmann: chit, spike, looks like i closed my longs too early
+09:52 MyOtherBrotherDarryl: True.
+09:52 chenmann: tlry hod
+09:53 MyOtherBrotherDarryl: What I am saying with SBUX is, I am in wait and see mode.  no action.
+09:54 WYCOWBOY: Vimes, I am also.  Where does this $ come from?
+09:54 fred__w: time for coffee
+09:57 MyOtherBrotherDarryl: money comes from the fed, on their computer :)
+09:58 MyOtherBrotherDarryl: I'm already wired.  Woke up early.
+09:59 MyOtherBrotherDarryl: man, these Qs are stuck in a range.  Interesting to see if which way they break
+10:01 marc: anyone know how to add VIX to plot on chart you're working with
+10:01 fred__w: darryl  i think probability favors south  but we'll see
+10:01 MyOtherBrotherDarryl: my weekly trendline on SBUX crosses over to about 57.70.  That is the price I'm watching for.
+10:02 Mhawk: Anyone had any experience with Charlottes Web? I hear it hit the OTC market yesterday?
+10:02 marc: pot legal oct 17
+10:03 Gmoney: What’s good today ?
+10:03 Mhawk: Mostly CDB oil has less than .003% THC which is legal...
+10:04 marc: nov 2 amrn straddles
+10:05 MyOtherBrotherDarryl: here Qs go down again in range....geez
+10:06 DrHouse: Morning traders
+10:08 Momoney: Exciting times ahead for acbff-can you say make me a millionaire!!
+10:08 tmoney20g: calm down
+10:09 tmoney20g: are you familiar with what happened in oregon ?
+10:09 RandomDan: good morning
+10:09 RandomDan: bt around?
+10:10 blondetrader: yep
+10:10 blondetrader: gm Dan
+10:11 AlphaInvestor: berging all der potsters
+10:12 RandomDan: hey bt, Al
+10:12 RandomDan: what did /es print at the open?
+10:12 RandomDan: I missed it.
+10:12 tmoney20g: esmal, what would you set for a p1775 ?
+10:13 tmoney20g: say you bought at 5.00 and wanted to take it to at least 7.00 ?
+10:13 blondetrader: I wanna say 78
+10:13 esmal: i cant say, amazon is trading sideways atm
+10:14 tmoney20g: i just mean as an initial trail
+10:14 YClan: Dang... I missed out on the Great Rotation.  Looks like it's over!?
+10:14 tmoney20g: being that the two points are only 2.0 apart
+10:15 esmal: best way I can answer that is enough room that the natural fluctations wont execute your order right away but also within your risk tolerance
+10:16 YJH: Odd
+10:16 lawrence5684: : When I read Delta under the Option Chain, it gives a percent and a plus/minus value for each weekly and monthly.  Is the plus/minus value reflective of the estimated point spread based on the volatility assigned to the stock.  In the case of AMZN, the Nov 16 Delta has a "point spread" of 204 points or 45%.  Is that correct?
+10:16 YJH: Why does a stock drop right after I buy something at market price
+10:17 esmal: YJH you have to make a sacrifice to the stock gods prior to buying
+10:17 MyOtherBrotherDarryl: amzn volatility has faded....move coming?
+10:18 YJH: Hmm. U may be right. Because dips always seem to happen right when I bite the bullet
+10:18 AlphaInvestor: Lawrence - google Options Delta, there are lots of good definitions
+10:18 YClan: yjh,   you could use a limit order and see if it also drops.
+10:19 MyOtherBrotherDarryl: AMZN volume fading too
+10:19 RandomDan: 78... the market reads your charts bt
+10:20 MyOtherBrotherDarryl: It never did test its 200 day....amzn
+10:20 YJH: @YClan, will take a look at limit order. I’m still fairly new and just trying to use up my day trades for the week
+10:20 YJH: Damn TLRY hahahaha
+10:20 MyOtherBrotherDarryl: I thot that only happens to me  :)
+10:21 JC_chart: amzn looks in a tight range and as u said zero volume ... trend is up on 5m but flat on my chart with choppy negative and positive values
+10:21 YJH: We must offer our left pinky finger to the bright orange god
+10:21 dragoon4zulu: what is everybody buying for Canada Day next wednesday the 17th ?
+10:21 tmoney20g: maple syrup
+10:22 tmoney20g: cases of it
+10:22 streetglide: Molson
+10:22 tmoney20g: cases of that too
+10:22 RandomDan: pretty amazing bt, you said it needed a close above 76, it didn't, but then it made up for it overnight. Spooky doesn't begin to describe it.
+10:22 tmoney20g: such flatness
+10:22 MyOtherBrotherDarryl: actually Qs volume is fading....something going to finally happen soon!
+10:24 MyOtherBrotherDarryl: does anybody know wha't gonna happen?  
+10:24 tmoney20g: i can let you know at 4pm est
+10:24 JC_chart: qqq ranging around yesterdays high
+10:24 esmal: any love for 1 minute charts?
+10:24 tmoney20g: i'm a 1 minuter
+10:24 tmoney20g: on 3 charts
+10:25 fred__w: darryl  no  but probability gives us clues  and keeps us from jumping the gun  hopefully
+10:25 MyOtherBrotherDarryl: need answer NOW, to profit ;)
+10:25 tmoney20g: guess what, a whole new week starts on monday
+10:26 JC_chart: but negative energy coming in so ... could move below but it has held about for last hour plus
+10:26 tmoney20g: esmal, i think we're done for teh day
+10:26 fred__w: darryl  learn to read price volume  there is your answer  and it unfolds  you have to be patient for it  
+10:26 tmoney20g: the*
+10:26 YClan: Dragon,  for Canada day, I will buy some Schwepps.
+10:26 MyOtherBrotherDarryl: I  need another indicator
+10:27 fred__w: darryl  youre on your own  then
+10:27 MyOtherBrotherDarryl: Canda Dry with gin
+10:27 dragoon4zulu: Oh well no serious views-- Molson and Schwepps are great to drink but they wont 2x your $$
+10:28 AlphaInvestor: Darryl - price will go up, then price will go down ... or vice versa
+10:28 AlphaInvestor: Trade Management is key
+10:28 dragoon4zulu: drag out your fie on TGODF
+10:28 fred__w: alpha  +1
+10:28 YClan: Darryl,  I actually like Canada Dry Gingera Ale with lime and Disaronno.
+10:29 tmoney20g: buy low, sell high
+10:29 MyOtherBrotherDarryl: uh oh,  down move?
+10:30 AlphaInvestor: Canada Dry is da bomb
+10:30 tmoney20g: morgan's so cute
+10:30 tmoney20g: where's chen
+10:30 fred__w: darryl  you should already know  how you will approach any scenario that arises  it should not be a surprise
+10:31 YClan: 30 News Bot: Athenahealth (ATHN) has received bidder interest over USD 135/shr 
+10:32 MyOtherBrotherDarryl: had the barkeep make me this drink last night i found on internet.  Bikini Martini.  Tropical drink.  4 oz coco rum, 2 oz vodka, 1/2 grenadine, pineapple juice,  awsome.
+10:33 radon224: Jack Daniels and a shot glass for me.  I like to keep things simple.
+10:34 YClan: radon,    yes but then you have  glass to wash.
+10:34 radon224: nah, ethanol is a good disinfectant
+10:35 YClan: ol' Ethan
+10:36 YClan: TSLA is down at April/2018 lows.
+10:36 YClan: bankruptcy secured
+10:37 tmoney20g: taking it private, and in debt
+10:37 YClan: I heard Dell wants to take Dell public again.
+10:38 radon224: I have to remember to tune in to the next TSLA Quarterly Conf. Call so I can watch the circus.  I'll put a reminder on my calendar.
+10:40 chenmann: lol yclan
+10:40 YClan: Is 2019 the final year to get an electric car (tesla) tax credit from the govt??  
+10:40 VolCrush: gm admin_tculs
+10:40 VolCrush: gm groovers
+10:41 YClan: volc volc volc     happy sunshine, put on your sunglasses.
+10:41 admin_tculs: gm vol
+10:42 YClan: GM looking good today for the Napolean's in the room.
+10:42 VolCrush: rollin this over a bit atm, he?  /rty still in a world of hurt
+them FINS did ok on E but doesn't luk like the market cares all that much
+10:43 VolCrush: yah, sunshine but it's cold where i am, gots der long johns on....LOL
+10:44 fred__w: vol  i engage if/when the mkt tests the lows and beyond
+10:45 VolCrush: ok, let us knw when dat is
+10:45 YClan: With rising interest rates... it really does not help banks, because bank trend is to sell fewer and fewer mortgages, so income from mortgages is downtrend for them though rates are rising.
+10:45 tmoney20g: i want to see fred engage
+10:45 tmoney20g: sounds like some space sci fi thing
+10:46 tajtx: Market fading?
+10:46 tmoney20g: today's first actual trend
+10:46 tmoney20g: in one direction
+10:46 Chappy: lag sucks
+10:47 fred__w: tmoney  im a position trader  so i slowly work off inventory in either direction  theres a lot of prep for a big move  once inventory and price drops sufficiently  i begin accummulating the other direction
+10:47 YClan: chappy, think of it is Slo-Mo where you soak in all the detail you miss of real-time.
+10:47 tmoney20g: now get NQ back to 7150 and lets do that one again
+10:47 fred__w: ..its a slow process
+10:48 fred__w: ..but i believe higher probability of success  
+10:49 Borat_the_Trader: i have stock you buy $0.25
+That's nice!!
+10:49 tmoney20g: wat
+10:49 tmoney20g: HMNY ?
+10:50 AlphaInvestor: Vol - based on the lackluster performance of der FINS, I have GTC order to close my MA^ at 50% profit
+10:51 fred__w: tmoney  i likely will not engage the swing side  till my index shows signs of strength
+10:51 YClan: GS is near to testing yesterday's 1 year lows again.
+10:51 tmoney20g: i just hope i'm here when you engage
+10:51 fred__w: ..that is  individual issues
+10:51 tmoney20g: i want to see you go to plaid
+10:52 VolCrush: yah well at least they didn't bomb, no idea wat their nums actually are but the tape isn't killing them; ain't great either.......lackluster is a good word to describle it.
+10:52 fred__w: tmoney  im always active  readiong wise  but there are significant periods of waiting for price
+10:55 radon224: News Article:  Sears close to deal to allow it to stay in business over the Holiday Season.  My question is "what's the point?"  It's like the saying in the movie Pet Semetary.....sometimes dead is better.
+10:56 YClan: radon,  +1.   "All Sales Are Final".
+10:56 RandomDan: I like Sears. Even went to one this year, and bought a rare American made wrench.
+10:57 radon224: Get the people you hate a Sears gift card for Christmas.
+10:57 RandomDan: I should get a frequent customer reward.
+10:57 YClan: radon,   lol !
+10:57 tmoney20g: i got a few toys r us ones to give out
+10:58 tmoney20g: amzn should just buy sears
+10:58 tmoney20g: then they can have amzn stores
+10:59 YClan: Later guys... I gotta go put some cash into the credit union, and it's next door to an irish pub,so I might get derailed.
+10:59 tmoney20g: then they can truely become "buy n large" from wall-e
+11:00 radon224: I ordered my daughter a printer from AMZN.  Paid no shipping for "snail mail" shipping service.  Damned thing arrived the next day.  Crazy.
+11:00 YClan: NFLX earnings are next week.
+11:00 chenmann: later yclan
+11:00 YClan: radon,  I know a lot of people who don't have prime, and don't pay for express shipping and get the item 1-2 days later...   I think the express shipping is a bogus upsell on AMZN.
+11:01 radon224: yclan, agreed
+11:01 chenmann: yep
+11:02 radon224: I think if you order an item that's shipped by Amazon and not a third party, and you have a distribution warehouse near you....you are golden.
+11:03 VolCrush: block chain a thing again?  RIOT from the depths of hell today
+11:03 YClan: block chain smokers ?
+11:04 JC_chart: so /es got down to 2755 , retraced and is down below midpointnext stop 2745 not sure if it goes there today as it could hang around midpoint for rest of day
+11:04 VolCrush: yeah prob, perhaps they goin block & weed
+11:04 MyOtherBrotherDarryl: today may not end well
+11:04 JC_chart: however vix is getting bought so .... need to watch
+11:05 YClan: Darryl,   play a short and make it a happy day
+11:05 YClan: bye you all
+11:06 tmoney20g: bye you
+11:08 mthfr_vaxxed: Barry Honig at it again eh?
+11:08 MyOtherBrotherDarryl: Not playing yet.  I got 173 on the Qs as a new watch level   
+11:09 VolCrush: china names holdin bid better than most other names, fwiw
+11:09 tmoney20g: esmal any trades yet ?
+11:10 radon224: Kudlow tryin to talk the market up
+11:10 streetglide: is that a martini in his left hand?
+11:10 chenmann: lol
+11:11 chenmann: if it is its heavy
+11:11 JC_chart: that guy is such a putz
+11:12 MyOtherBrotherDarryl: he actually sounds drunk
+11:12 JC_chart: sorry i should not have said that ... my appologies
+11:12 tmoney20g: you know he's my uncle, right ?
+11:12 tmoney20g: on my dad's side
+11:13 mthfr_vaxxed: so if i start a public company and change my name to the next buzzword .... thats not any kind of SEC violoation ?
+11:13 streetglide: nope
+11:13 mthfr_vaxxed: or i guess he changed the business too.... i bet there never was a business....
+11:14 MyOtherBrotherDarryl: I'm glad he's working with Trump.
+11:14 mthfr_vaxxed: the world of penny stock companies that aren't..... actually companies
+11:14 JC_chart: hasha as i said my appologies
+11:14 VolCrush: UNH p/b prob over done wit E = 10/16
+11:14 streetglide: they might as well take it down to 46 while we are down here
+11:15 MyOtherBrotherDarryl: If Qs can reverse over 173, rally might have legs.
+11:15 VolCrush: this market reminds me of my last relationship, there are some serious TRUST issues running amuck
+11:16 streetglide: yep
+11:16 VolCrush: i don't think it gets legs if der fruit is below 220
+11:16 JC_chart: well that's good you know that, will keep you safer
+11:17 VolCrush: JPM is luking fugly, fur der dump
+11:18 VolCrush: perhaps a Black Monday flush for capitulation
+11:18 VolCrush: /rty she broke
+11:21 VolCrush: yup, china names and some healthcare holdin bid
+why in the hell would china names be bid?
+11:21 RandomDan: I dunno Vol, could be.
+11:22 RandomDan: I mean a black monday
+11:22 AlphaInvestor: Vol - there was some Muchin chatter last night on china trade
+11:22 RandomDan: Also China bid
+11:22 AlphaInvestor: Munchin
+11:22 RandomDan: China is oversold
+11:23 chenmann: rotation??? out of us into china???
+11:23 VolCrush: doubt dat, but could be
+11:23 streetglide: no
+11:24 VolCrush: i just find it interesting that on a relative basis that group is outperforming today
+11:24 MyOtherBrotherDarryl: bear flag forming on Qs?    5m
+11:24 AlphaInvestor: hoist the Beer flag
+11:25 chenmann: rty broke 200dma first and never reclaim it on this up move, if rty is leading, we doom
+11:25 streetglide: seema
+11:25 chenmann: haha
+11:25 VolCrush: max pain on der fruit 220 - 22.5
+11:26 VolCrush: yah /rty is garbage
+11:26 RandomDan: uncle Cramer tweeted yesterday that baba was worth more than it's price on a component basis. But he separately says don't buy China.
+11:26 radon224: I believe China announced a new record trade surplus with the U.S. today, despite all of the sanctions.  May have something to do with it.
+11:26 VolCrush: well chit if Cramer said that, i'm buying China
+11:26 RandomDan: of course he tweeted this like 10 minutes after I sold my BABA
+11:26 chenmann: ha
+11:27 RandomDan: AH
+11:27 chenmann: rty lod
+11:27 RandomDan: so if BABA goes up, he told you it was cheap. if it tanks, he told you not to buy China. Win-win
+11:28 radon224: /es gapfill has bulls rethinking things
+11:28 VolCrush: midcap are broke as well
+11:28 VolCrush: FANGS don't luk healthy either
