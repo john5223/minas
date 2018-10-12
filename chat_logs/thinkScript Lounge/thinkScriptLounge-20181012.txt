@@ -970,3 +970,41 @@ Is that a cell on your spreadsheet ?
 15:55 Davtrader001: In your cell AF9, is the symbol in quotes or simply just the letters ?
 15:56 Vimes: just letters
 15:58 Davtrader001: OK.. I got that to work. for the SPX YTD, but dang, it still doesn't work for SPX PnL Day.... This is bizzare.
+16:01 Vimes: after your position is closed it is going to settle against SPX, but i guess they don't do it that way for open options positions
+16:01 Vimes: you have to do it manually as far as i know
+16:02 Vimes: Mobius, if you come back was this predictino based on the POC from the opening range and the fact that we only breached the one side?
+16:02 Mobius: ORB predicted a close below 2772.75 on /ES. It was a squeeker but it made it below that
+16:03 Davtrader001: OK... I really apprecaite the help... I'll keep playing around and see what I can find.
+16:04 Vimes: np dav, alpha is really the expert on rtd, so if you can't figure it out he might offer help next week
+16:05 Davtrader001: Thank You !!
+16:06 FrankB3:   Mr. Mo in a time warp ???   16:02 ?
+16:08 Vimes: Dav, you may already know this but if you go to the top drop down menu and say export/help on data export it will give you all the possible fields from RTD
+16:11 Davtrader001: Cool, thanks Vimes... I did know that but i appreciate the reminder.
+16:13 amalia: I would appreciate it, since I’m on mobile, if someone can scan under DJI for Beta()>1.2 and share the list.
+16:14 amalia: Pretty easy task for someone TOS savvy
+16:14 amalia: I know there’s 15 w Beta()>1
+16:15 Vimes: AAPL, MSFT, DIS, DWDP, CAT BA, GS, TRV
+16:16 amalia: Thanks. I found a workaround anyways.
+16:16 amalia: Scanned DJI and used Beta column with descending order :)
+16:20 amalia: (CAT+DWDP+BA+AAPL+GS+DIS+MSFT+TRV)/8
+16:20 15MinChart: I  would like to create an alert  as soon as  the price is greater than Upper bowlinger band( lenght9, exponential)  within that bar( not after moving to the next bar)
+16:21 15MinChart: Any help is appreaciated.
+16:21 15MinChart: thank you
+16:21 UpTheCreek: isn't that when events are generated
+16:22 15MinChart: this is for a EUR/USD forex pair on 15 min time frame
+16:23 15MinChart: hi UpTheCreek , if you asking me . I'm new to thinkorswim, sorry not understanding your question
+16:24 DMonkey: Alert("alert type" = Alert.TICK, 
+      condition = high > BollingerBands("average type" = "EXPONENTIAL").UpperBand, 
+     text = ">>>   Words Here   <<<", 
+    sound = Sound.Ring);
+16:34 EAK: hi all.  i would like an alert on parabolicSAR and it's not available.  Can anyone here help me with this?
+16:35 UpTheCreek: 15m, my point was alerts will be generated when they are generated.  your text was interpreted as perhaps otherrwise
+16:41 15MinChart: DMonkey, thank you for your resonse. I think the low and high are calculated for a bar, when that bar is closed. I wanted alert while the price is still with in that bar. I'm newbee but that is my understanding.                        Also I'm not sure, how to run the above script that you mentioned. 
+16:42 UpTheCreek: so all bars are dashes until they close?  have you watched a chart?  just wondering
+16:44 UpTheCreek: HH y'all
+16:50 15MinChart: hi upTheCreek. I understand that a new bar starts with a single dash and as it moves the dashes  are accumulated and become a bar. I woule like to be alerted when that specific dash crosses the upper bowlinger band 
+16:51 admin_tculs: thinkScript Lounge chatroom will be closing soon   Please finish all conversations by 5pm ct    Have a nice evening
+16:53 amalia: Have a good weekend admin_tculs and thinkScript lounge.
+16:53 Vimes: 15min, i'm pretty sure dmonkey's code will do that create a study and copy that code into it on your chart, while the chart is active it will sound upon that conditioni
+16:53 amalia: 15MC, Mark isn’t available as a study alert
+16:54 admin_tculs: gn amalia
