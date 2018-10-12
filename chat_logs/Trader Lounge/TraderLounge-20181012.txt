@@ -1434,3 +1434,532 @@ SELL -2 AMZN 100 (Weeklys) 12 OCT 18 1750 PUT TRSTP BID-.95 (STP 6.90) MARK BOX
 13:39 Anonymous so far: If I exercise a call option and do not have the $in my account when do I have to transfer the $ to you?
 13:39 JC_chart: so AMZN chart looks  awful to me and really could go either way 
 13:39 TheOnceAndFuture: You should read up on options a LOT more before you start asking that
+13:40 JC_chart: there is often a 3k trade in amzn in the morning if the momentum changes direction.
+13:40 Lee: That will get you banned iif you break a trade
+13:40 AlphaInvestor: Anon - call the Trade Desk - you do not need to excercise to collect your profit
+13:40 VolCrush: 30s for .08, guess u didn't see the market reaction on the other FINS today
+13:41 JC_chart: setup is on 5m chart ... i can call it out next week if u want
+13:41 AlphaInvestor: goodby 8 cents, eh Vol
+13:41 VolCrush: yup
+13:41 Lee: Yes. All but PNC up 4% at the open
+13:42 AlphaInvestor: wth, it's only money
+13:42 VolCrush: yah you will need a big gap up cuz volitilty will be way way gone
+13:43 VolCrush: actually in  need to be frank, dat is just not a good trade, but gl
+13:43 tmoney20g: der flatness
+13:43 AlphaInvestor: Vol +1 ... agreed
+13:43 MyOtherBrotherDarryl: anybody stayin g long over weekend?
+13:43 AlphaInvestor: I will be 90+% long over the weekend
+13:44 VolCrush: i will be long and hedged, like i've been for a week or so.......jeeeeez
+13:44 tmoney20g: should probably see a doctor
+13:44 VolCrush: just ain't hedgin' enuff
+13:44 blondetrader: only some stk
+13:45 lilFish: hi bt vol alpha
+13:45 blondetrader: this is not the close I anticpated and quite frankly its looking like we might not have seen lows
+13:45 AlphaInvestor: Fish - how's the water?
+13:45 lilFish: ughh
+13:45 RandomDan: hi lil
+13:45 lilFish: had to go to the airport and pick up my nephew
+13:45 lilFish: Hey dan
+13:45 MyOtherBrotherDarryl: I got some TQQQ but was hoping it moves before close to get out
+13:46 lilFish: where's our big bounce today:)
+13:46 blondetrader: not today ;lol
+13:46 Eedie: The market is mad as hell and is not going to take it any more
+13:46 blondetrader: maybe we try again monday on a gap dn
+13:46 lilFish: was the jpm conference call not good
+13:46 lilFish: wanted to listen in but couldnt get it to work
+13:46 blondetrader: lol
+13:47 VolCrush: oi petit poisson
+13:47 VolCrush: oi juju
+13:47 Eedie: Oi Volcrush
+13:47 lilFish: ee vol - yo!
+13:47 Eedie: F ing Jpm
+13:47 VolCrush: Q's on 50/50
+13:47 Eedie: Yo yo fish
+13:48 MyOtherBrotherDarryl: Fish, you haven't missed much
+13:48 lilFish: what they say ee
+13:48 VolCrush: u shoulda been uot of JPM yesterday
+13:48 lilFish: not in it
+13:48 lilFish: wasnt
+13:48 lilFish: in it
+13:48 lilFish: the fins not nice this yr
+13:48 Eedie: Not in it I’m saying their e report caused more blood on the streets
+13:49 lilFish: ughh
+13:49 lilFish: coz of geopolitical comment?
+13:49 VolCrush: o i heard they did well, but i don't know
+13:50 lilFish: amzn needs to make their ee run that'll get things popin
+13:50 MyOtherBrotherDarryl: I see life
+13:51 VolCrush: 5' charmin on /nq shouldn't be long now
+13:51 DrHouse: Pissed off at AMZN, they took out their seller central phone line
+13:52 VolCrush: der fruit filthy
+13:52 DrHouse: They deserve to have shares negative today. 30% down, I find that a fair punishment.
+13:52 VolCrush: ok Nurse, sounds like your biz blew up as well, tuff week eh?
+13:53 amalia: These kinda drops kick out some traders from coming back and new players come in. lol
+13:54 lilFish: :)
+13:54 lilFish: ticks and vix:)
+13:54 MyOtherBrotherDarryl: soldiers got wouned, bandaged, rested, and may be sent on another mission.
+13:54 amalia: ShortTheVIX
+13:54 VolCrush: and dars goes der fruit
+13:54 lilFish: i must say - I"m good juju
+13:55 MyOtherBrotherDarryl: bam
+13:55 VolCrush: well we need  one gud juju, cuz we already have one bad juju
+13:55 VolCrush: kul charmins bustin' long
+13:55 Eedie: Hey hey hey
+13:55 Eedie: I resemble that remark
+13:55 JC_chart: im short gc  1223.6
+13:56 chenmann: squeeze
+13:56 chenmann: into the close
+13:56 JC_chart: or just the funds rebalancing
+13:56 MyOtherBrotherDarryl: got target of 58 ST on TQQQ.  
+13:57 DrHouse: Nah, vol. trading has been good. I actually have some products incoming that will be sent to Amazon. One product in about 2.5 weeks, the other 4
+13:57 AlphaInvestor: working an order to put a hedge on my hedge via a CCS to reduce hedging costs... how deep can this rabbit hole go?
+13:57 Eedie: Bam kick it up a knotch
+13:57 Eedie: Or is it notch
+13:57 TheOnceAndFuture: notch
+13:57 Eedie: Thanks
+13:57 JC_chart: gc target is 1222.7
+13:57 MyOtherBrotherDarryl: hedge on a hedge.  like it.
+13:57 VolCrush: fruit on der num
+13:58 chenmann: u saw it all day
+13:58 chenmann: nince
+13:58 chenmann: nice
+13:58 JC_chart: but people loaded up and spoofing on 1222.8 so may have to take ,9 oops then they pulled their orders and price dropped
+13:58 JC_chart: im out at my target
+13:59 VolCrush: and dars der pause, on que
+14:00 VolCrush: them cars on der fruit 22o , sizziling
+14:00 chenmann: der fruit s ur pet
+14:01 MyOtherBrotherDarryl: resistance no bueno
+14:02 VolCrush: definety a reliable tell
+14:03 MyOtherBrotherDarryl: 173 resistance right on cue.....Qs
+14:03 chenmann: long spy here, 274.00 looking for squeeze
+14:04 VolCrush: meh, der fruit will settle within a point of 220 in my opinion, just noise between now and close
+a programme would have to hit der tape
+14:05 MyOtherBrotherDarryl: resistance is futile tape
+14:05 chenmann: buy algos coming....
+14:05 VolCrush: der tuff call is gunna be "wat now if the bid hold into der close"?
+dunno
+14:06 lilFish: chen:)
+14:06 MyOtherBrotherDarryl: 2nd stage rocket boost?
+14:06 VolCrush: i'm just lukin fur filthy animals
+14:06 chenmann: yes squeeze into close
+14:06 DrHouse: Vol, do you do any online commerce? Or do you just trade exclusively?
+14:06 tmoney20g: squeeze it
+14:06 tmoney20g: he has a toilet paper store website
+14:07 lilFish: called charmin
+14:07 DrHouse: How charming
+14:07 tmoney20g: dercharmin.com
+14:07 MyOtherBrotherDarryl: bulls and bears battling it out.
+14:07 VolCrush: damn, took the works right out my moth petit
+14:07 VolCrush: dat was my come back, chit
+14:07 lilFish: :)
+14:07 VolCrush: tmoney broke
+14:08 VolCrush: 7120 /nq
+14:08 chenmann: get long traders
+14:08 DrHouse: Guess it is a Freaky Friday
+14:08 MyOtherBrotherDarryl: win ,win ,win
+14:08 lilFish: whoa ticks was at 1044
+14:09 chenmann: there s the buy program
+14:09 Deep: Is this the bottom
+14:09 chenmann: lol
+14:09 MyOtherBrotherDarryl: wooly bully
+14:09 fred__w: 1st 15min green candle completed
+14:09 fred__w: ..in a while
+14:09 chenmann: nice fred
+14:09 lilFish: let's get it started in here
+14:09 lilFish: yo fred!
+14:10 VolCrush: dats a song right
+14:10 Deep: I think they ran out of bad news
+14:11 fred__w: ..but  that happened b4  then led to nothing
+14:11 VolCrush: watch yor arse folks, this could be an overshoot
+14:11 MyOtherBrotherDarryl: wooly bully, song too.
+14:11 chenmann: nice vol
+14:11 VolCrush: wolly bully, gud song
+14:11 chenmann: agreed too
+14:11 VolCrush: dars gunna be short coveren spikes into der close
+14:12 chenmann: and maybe gap up monday
+14:12 tmoney20g: i can't be buyin amzn calls for next week
+14:12 tmoney20g: they're like a million bucks
+14:12 VolCrush: i'd prefer a Black Monday but der tape will tell us on Monday
+14:13 VolCrush: and you broke tmoney
+14:13 VolCrush: fruit on der num
+14:14 AlphaInvestor: Tmoney - spreads man
+14:14 tmoney20g: i'm not well versed in spreads
+14:14 tmoney20g: open to learning tho
+14:14 VolCrush: he broke
+14:14 tmoney20g: and broke
+14:14 tmoney20g: true
+14:15 VolCrush: VRTX gud R:R here if you own ABC pandt s fur der E Run
+14:15 AlphaInvestor: IV Percentile is at 100% on AMZN  -- nobody should be buying options in there
+14:15 fred__w: ..2nd 15min green candle
+14:15 VolCrush: don't listen to Alpha
+14:16 VolCrush: dars der overshoot, watch out fur der 12:20s
+14:16 fred__w: ..again  just info
+14:17 VolCrush: MSFT* FUR E run gud R:R here, only if you won ABC pants from bronx & juju
+14:17 VolCrush: but hedge your chit
+14:18 AlphaInvestor: still good juice on 30 delta or so ADBE puts
+14:18 AbandonedDoji: Option spread newbie here.. does anyone know whether option spread transactions are treated as a single sale, or if each leg is a taxable transaction when selling the spread as a whole?
+14:18 VolCrush: i tink der overshoot may be done @ chen
+14:18 chenmann: it s slow but coming....imo
+14:19 VolCrush: naw ovrshoot done, we settle now
+14:19 fred__w: ..not gonna see a 1hr b4 close
+14:19 VolCrush: AMZN* gap greater than 1800 on Monday is a buy on p/b 
+14:20 Anonymous so far: Thoughts on GE
+14:20 VolCrush: if i were a chick i'd kiss all der AAPL MMs
+14:20 Eedie: Tos freeze I need to kick some butt with their IT people
+14:20 AbandonedDoji: GE hasn't cleared the monthly moving averages to confirm long reversal
+14:21 tmoney20g: GE makes appliances
+14:21 VolCrush: see dats an example of der bad juju
+14:21 lilFish: aapl landing on max pain?
+14:21 VolCrush: we don't discuss GE in this chat, go to the penny chat room
+14:21 Eedie: Hahaha
+14:21 VolCrush: yup petit poisson
+14:22 VolCrush: well within $1
+14:22 lilFish: cool
+14:22 VolCrush: might as well put pencils down
+14:23 VolCrush: oi, pa in MSFT*
+14:24 VolCrush: & VRTX* gave dat shoot out earleir
+14:25 VolCrush: gunna listen to the Grateful Dead and hit a phatty
+14:25 VolCrush: oh, Alpha, they hittin MSFT*
+14:26 chenmann: squeeze em
+14:26 VolCrush: haot dang major Dan
+14:26 fred__w: vol  the close yesterday suggests  pencils ready  just in case
+14:27 VolCrush: meh, i called yesterday's close, you disagreed, i was correct
+14:27 MyOtherBrotherDarryl: may close on high today
+14:28 fred__w: vol  i dont call anything  it aint over till its over
+14:28 VolCrush: 7175 /nq??? i don't think so, i'm fine with dat but low prob
+14:30 MyOtherBrotherDarryl: wooly bully, you see
+14:31 VolCrush: sevral names have tight bid action,
+we want tight bids
+14:32 VolCrush: MA* she's tight
+14:32 fred__w: ..3rd consec green candle in
+14:33 MyOtherBrotherDarryl: TNA not doing much really.
+14:33 chenmann: lol fred
+14:33 VolCrush: one bourbon, one shot and one beer
+14:33 MyOtherBrotherDarryl: im watching 5's
+14:33 radon224: one scotch, not one shot
+14:34 radon224: If you gonna quote George Thorogood, do it right
+14:34 VolCrush: well i've already had 10, give  a bro a break
+14:34 MyOtherBrotherDarryl: wooly bully
+14:34 VolCrush: but true dat radon, dats on me
+14:35 fred__w: chen  im trying to gauge strength  this was better than last time  but  im a bit tentative to pull any trigger yet
+14:35 tmoney20g: sell naked puts
+14:35 radon224: I told the bartender, I said Look Maaaaan, come down here....
+14:35 VolCrush: LOL
+14:35 VolCrush: well played
+14:35 fred__w: ..recalling last times bust
+14:35 fred__w: fool me once  etc etc
+14:36 MyOtherBrotherDarryl: sold
+14:37 VolCrush: har we go fur der fruit pin
+14:38 radon224: Something about this rally seems really weak and tepid.  I'm sort of expecting more pain next week.
+14:38 radon224: Feels more like covering than buying
+14:38 MyOtherBrotherDarryl: that was fun.  gonna go hit golf balls.  have nice weekend everyone.
+14:41 Eedie: Radon because all of the big boys are not trading now. They’re all in the Hamptons drinking bourbon or dining with Muffy Buffy and Biff jr
+14:42 VolCrush: MSFT* gap a gud buy will be 109.5 on E week
+14:42 VolCrush: hmmm der fruit at $1 threshold
+14:43 VolCrush: MSFT* & VRTX* hod
+14:43 fred__w: lil  yo back at ya  btw
+14:44 tmoney20g: lil pips
+14:44 fred__w: this has been a fair to good week  coupled with last weeks good week  maybe things are turning around
+14:45 chenmann: wow fred nice
+14:45 chenmann: most trader lost money this week
+14:45 MyOtherBrotherDarryl: got out a little early.  had to see final push.
+14:45 MyOtherBrotherDarryl: 58 target hit on TQQQ
+14:46 chenmann: nq hod
+14:46 vipin123: Darryl Guppy?
+14:46 Eedie: Holy mackerel is the BT 80 close still on for her tutu outfit?
+14:46 fred__w: the downside is my not caving in would have been stronger  but  i learned a lot  so maybe that was better
+14:47 MyOtherBrotherDarryl: monday morning may be range bound unless bulls get really hungry
+14:47 ameriman: Darryl nice 7175 call earlier
+14:47 fred__w: ..i caved in may to my prior position trading strategy
+14:47 MyOtherBrotherDarryl: thx
+14:48 VolCrush: yes the tutu and red soled shoes will be displayed by bronx at 1:01 PST
+I GOT front row seats and popcorn
+14:48 Eedie: I’m now glad that I stayed in a lot of chittt or hedge and get inverted
+14:48 Eedie: I was going to hedge but then I’d be inverted... I hate when that happens
+14:49 MyOtherBrotherDarryl: those soldiers deserve medals ;)
+14:49 fred__w: ..thats 4 greens  
+14:49 ameriman: I got inverted by standing on head, now realized all I had to do was add “-“ before symbol
+14:49 chenmann: gonna take off half spy 276, and hold the rest for monday gap up
+14:49 lilFish: thx for counting fred - comforting:)
+14:50 fred__w: ..but volume seems to have dried up  we'll see tho
+14:50 lilFish: gone fo the weekend
+14:50 TheOnceAndFuture: lol lil
+14:50 Eedie: The Once and Future King?
+14:50 MyOtherBrotherDarryl: still wooly bully!
+14:50 TheOnceAndFuture: Indeed
+14:50 lilFish: luvs it
+14:50 chenmann: oops early
+14:50 VolCrush: ohoh, nice
+gud call Darryl
+14:51 lilFish: I"m going to chg my handle to the once-and-forever-princesds
+14:51 Eedie: I read that book..
+14:51 lilFish: princess
+14:51 MyOtherBrotherDarryl: thx
+14:51 lilFish: under the sea
+14:51 lilFish: of course
+14:51 VolCrush: i prefer prncesds
+14:51 TheOnceAndFuture: favorite childhood book
+14:51 fred__w: ..the 15min is only about halfway back to the 44ema tho
+14:52 Eedie: I’m going to change mine to Dr Vinnie Boombots even though I’m not a male
+14:52 lilFish: ha ee
+14:52 VolCrush: confirmation of der bottom, maybe
+14:52 MyOtherBrotherDarryl: Trump puttin a thrashing on those bankers ;)
+14:52 lilFish: yea lemme pick a masculine one
+14:52 VolCrush: bronx, go get dressed
+14:52 Eedie: Lol
+14:52 Eedie: Hahahaha take pictures
+14:53 VolCrush: chit everybody wins today
+14:53 tmoney20g: sell naked puts!
+14:53 tmoney20g: 5 more minutes to make all the mula
+14:53 lilFish: already have
+14:53 vipin123: short squeeze  as day winds
+14:54 tmoney20g: new highs as day winds
+14:55 tmoney20g: 7190, j00 can d00 it
+14:55 MyOtherBrotherDarryl: so 4 15 minute greens in a row?  thats impressive.
+14:55 VolCrush: & still going
+14:56 VolCrush: actually der fruit just busted 222.5
+14:56 VolCrush: wouldn't mind mr. softie going 110
+14:59 lilFish: okay vol I have nicknames for the stks too
+14:59 lilFish: /rty guiliani
+14:59 lilFish: nvda the tatooed lady
+15:00 lilFish: pencils down gamers
+15:00 MyOtherBrotherDarryl: overshot it and missed it all but made $$$$$
+15:00 tmoney20g: damnit darryl
+15:00 VolCrush: ok now we wait for bronx
+15:00 AlphaInvestor: That was quite a week Gamblers
+15:00 tmoney20g: sell naked puts!
+15:00 AlphaInvestor: I mean Traders
+15:00 lilFish: bt wit red soled shoes
+15:00 VolCrush: yah, call of the day was Darryl, vary well done....congrats
+15:01 Eedie: Bronx said that it had to close over 80
+15:01 tmoney20g: how'd you make money on nq ?
+15:01 VolCrush: no she didn't she said we'd get there, we did 
+15:01 fred__w: based on a prior years turn  we will likely see a fight for a while  whenever the real bottom is in  so  there should be more low test(s)  nevertheless  we'll see
+15:02 Eedie: Hmmm well I agree with you but she corrected me
+15:02 VolCrush: huh, when?
+15:02 MyOtherBrotherDarryl: Ok, later all
+15:02 blondetrader: well on a weekly basis this is shit for all indices
+15:03 blondetrader: rty still very weak
+15:03 lilFish: agreed
+15:03 tmoney20g: nq have options ?
+15:03 VolCrush: dats true bronx, you still owe der room pics
+15:03 blondetrader: nq decent reversal but not enough 
+15:03 blondetrader: yes tmoney
+15:03 VolCrush: dats true as well
+15:03 tmoney20g: are they like spy ?
+15:03 tmoney20g: i haven't looked
+15:03 blondetrader: I dont thing we seen the last
+15:04 blondetrader: they are on the nq itself
+15:04 tmoney20g: ah
+15:04 fred__w: acc to oneil  there has to be a day of conviction buying after an initial sign of support between 4 and 11 das out
+15:04 fred__w: days*
+15:04 VolCrush: welp i have to do my homework but there shold be some names that are gud fur der E run now, MSFT* IS foh shu one, i'll check and let u know
+15:05 blondetrader: well the thig is
+15:05 tmoney20g: zon on the 25th
+15:05 tmoney20g: wmt after
+15:05 blondetrader: we still have a htf reversal in play but the dly is ovs
+15:05 VolCrush: VRTX* as well
+15:05 blondetrader: so as of now any move higher is a correction w/in the htf bear
+15:05 blondetrader: es would have to break 2805ish
+15:05 RandomFamily: well today was helpful, still down for the week tho.
+15:05 VolCrush: TEAM* is another
+15:06 fred__w: bt  that basically what im saying too
+15:06 blondetrader: if es is to run the whole move lower tg =2650-40
+15:06 RandomFamily: I agree with you both. I would call this a relief rally, no more.
+15:07 blondetrader: and it was poop
+15:07 blondetrader: we may see cont weakness thru oct
+15:07 RandomFamily: it helped me get out of positions I needed to get out of, my risk profile is much better now.
+15:07 blondetrader: rty made ll and lh
+15:08 AlphaInvestor: serious damage on the Weekly and Monthly /ES chart
+15:08 blondetrader: as long as 1595 holds as res 1485 tgt lower
+15:08 blondetrader: yes
+15:09 fred__w: since there was a 5th consec green and trending candles  the mkt is starting to to show a bit more strength
+15:09 fred__w: 15min wise
+15:10 VolCrush: TLRY* HAD a nice move on the close
+15:10 king: hey sell tweeter now
+15:10 RandomFamily: I am also more set to move on Monday if I even think I smell a selloff.
+15:10 fred__w: ..doesnt mean we're done bu any means
+15:11 invertedhammer: Hi bt you think rty brings. Es,nq with it lower?
+15:11 blondetrader: ya this was weak all things concidered
+15:12 VolCrush: now dats it cleard max pain, der fruit keeps moving up
+15:12 blondetrader: yes Hammer
+15:12 fred__w: invert  all mkts are related  
+15:12 blondetrader: today was bad for rty
+15:12 fred__w: bt  bad is relative  :)
+15:13 AlphaInvestor: long a call on ATHN ... not proud of that trade
+15:13 blondetrader: on the bright side for rty
+15:13 blondetrader: next weeks lower weekly
+15:14 blondetrader: will be the 5th week of price testing and or exceeding weekly low range
+15:14 AlphaInvestor: ATHN is a Merger Arb, but only got half the trade filled
+15:14 RandomDan: No idea about next week.
+15:14 blondetrader: fwiw I have never seen it go thru 5
+15:14 fred__w: i for one  will be tpushing back a bit from here  
+15:14 blondetrader: so that said
+15:14 invertedhammer: Ty bt respect your input
+15:14 blondetrader: if for some reason we got that 1485 Id buyit
+15:14 fred__w: ..be that up or down
+15:14 VolCrush: actually i tot the tape on ATHN was purty gud today
+15:15 VolCrush: kinda curious, y don't u like the trade?
+15:15 fred__w: vol  if you are tot down  why trade b4 indices show strength?
+15:16 fred__w: top*
+15:16 VolCrush: top down in terms of macros, global
+15:16 AlphaInvestor: news was that offers would be above 135 ... so I did a long call at 135, while trying to leg in a short call at 140 to partially pay for it (assuming that the 140 wouldn't be hit)
+15:16 RandomDan: I thought the day was good.
+15:17 RandomDan: the dip in the middle was great
+15:17 fred__w: vol  hmmm  i dont see it  but  everyones different
+15:17 Kooldenny: So glad I brought MMNFF last week!
+15:17 AlphaInvestor: Vol - the 140 never got filled, so I paid full price for the 135 long call
+15:17 VolCrush: @fred not sure i understand your question
+15:18 VolCrush: i tink you will like that call, Alpha..... E coming up
+15:18 tmoney20g: kooldenny, this room is for tickers less than or equal to 4
+15:18 RandomDan: Al you should be able to complete it on Monday
+15:18 VolCrush: not sure when u hit but if it was today, it's a gud trade
+15:18 fred__w: vol  my topdown indicator is my index price  and even if that showed something  i have no strong leaders left
+15:19 fred__w: ..above 11ema
+15:19 VolCrush: ah, i luke at currencies, bonds, oil, global markets and then luk at catalyst within individual names
+15:19 fred__w: vol  ok  i c
+15:20 AlphaInvestor: Dan - I sure will try, but I don't like that it is lonely out there for the weekend
+15:20 fred__w: time for weekend crunching  later dudes
+15:21 VolCrush: Alpha the only bad part is the long call is so far OTM, but the chart luks like a pop into E
+15:21 blondetrader: bye fred
+15:21 VolCrush: cheers fred
+15:21 AlphaInvestor: Yeah, lonely out there I wanted it to be a lower cost spread. If I was going to do a lone long call, it would be ATM or ITM
+15:21 RandomDan: Al it will go out for drinks and make new friends, don't worry
+15:21 AlphaInvestor: That is exactly the part I don't like
+15:22 RandomDan: lol
+15:22 AlphaInvestor: Dan - I sure hope so, I hope one of those friends offers to take it back and consumate a Merger of Equals
+15:22 fred__w: i am totally jazzed for the future
+15:23 VolCrush: so bronx, don't u owe us something?
+15:23 RandomDan: I think the market is set to go sideways, newsflow dependent.
+15:24 blondetrader: lol
+15:24 blondetrader: we didnt open 2780 so I only owe it to u
+15:25 AlphaInvestor: So, WFC which missed E is up 1.3% today ... but JPM that beat E is down 1.09% today. What kinda bizarro world do we live in.
+15:26 VolCrush: ok, i'll wait patiently for the "ping" on my phone
+any second now, right?
+15:26 blondetrader: keep watching for it
+15:26 JC_chart: cuirious on rty trade
+15:26 RandomDan: It's my fault Al. Fins going up as soon as I take a loss on my GS.
+15:26 JC_chart: mind sharing your entry and exit and chart timeframe
+15:26 RandomDan: but I don't feel like doing that
+15:26 VolCrush: welp you Alpha, more than anyone here know that funnies don't mean chit with respect to how the market reacts
+ergo, drop funnies
+LOL
+15:27 JC_chart: totally ok if you say no... just interested
+15:27 VolCrush: i figured bronx, never keep your word....typical w
+15:27 blondetrader: lol
+15:27 blondetrader: well its not like i wear a tutu to trade
+15:28 VolCrush: but u trade nekked , no?
+15:28 blondetrader: JC I am flat rn
+15:28 blondetrader: this was not the day I expected
+15:28 blondetrader: haha no
+15:28 JC_chart: did you hold it thru last night?
+15:28 blondetrader: I did
+15:28 blondetrader: and got stopped out this am
+15:28 JC_chart: holy s**
+15:28 JC_chart: that's a big stop LOL
+15:29 blondetrader: no lol I made $$
+15:29 RandomDan: bt, really. This is exactly the day I expected... using your TA!
+15:29 JC_chart: i am sure you did
+15:29 JC_chart: u were short right
+15:29 AlphaInvestor: Vol - with both reporting the same day, they should have reacted in relation to their E results
+15:29 blondetrader: :)
+15:29 JC_chart: as of yesterday afternoon
+15:29 blondetrader: no i was long into this am
+15:29 VolCrush: welp send me a pic wearing red soled only then...........
+15:29 JC_chart: ohhh i thought you were short
+15:29 VolCrush: Alpha, they did
+15:29 JC_chart: it went up 25 points
+15:29 blondetrader: nooo I was on for the rally pffft
+15:29 blondetrader: I was looking for 95 lol
+15:30 RandomDan: she was long, I remember
+15:30 JC_chart: what tiemframe do you use to identify entries
+15:30 blondetrader: 4 hr mostly
+15:30 blondetrader: and dly
+15:30 RandomDan: so what about the day didn't go as you expected?
+15:30 blondetrader: well Dan I thought the pop would have more teeth
+15:30 blondetrader: this was like a little kitten
+15:30 blondetrader: not a lion
+15:31 RandomDan: I thought it was pretty good, considering the wreckage.
+15:31 blondetrader: I would not be surprised to see another wave of selling monday am b4 we get any consecutive days of green
+15:31 blondetrader: dissapointing
+15:32 blondetrader: but i have some scary tgts lower
+15:32 RandomDan: the day was a big cup, also a positive.
+15:32 blondetrader: so to avoid mkt need to do some work
+15:32 VolCrush: not a bad pop actually, only because the close was vary gud on /nq
+so respectfully disagree
+15:32 blondetrader: nq could rally another 100
+15:32 blondetrader: and still look like shit
+15:32 VolCrush: or more
+15:33 blondetrader: btw that would be res for leg 2
+15:33 blondetrader: anything over........we good
+15:33 VolCrush: well we wanna buy chit, who wants to buy gud?
+15:33 blondetrader: lol yes but if nq fails that
+15:33 blondetrader: you can buy it a lot cheaper
+15:33 VolCrush: sell against
+15:34 blondetrader: like to the tune of67s
+15:34 VolCrush: true but we got pick our lines in der sand
+15:34 blondetrader: figure 150 off this weeks low would be next tgt dn
+15:34 blondetrader: well nq needs to hold 7112
+15:34 VolCrush: i gots my names for hunting season and will fall on my sword if necessary
+15:34 JC_chart: we could have some violent upswing no doubt in the indexes but I think insitutions need market to drop more so they can buy it and bid it back up like they do in every cycle
+15:35 blondetrader: yes
+15:35 AlphaInvestor: I think this past couple days was selling der MoMo and a rotation into Quality. MSFT, ADBE and such did very well for me when those trades were put in this week during the downturn
+15:35 blondetrader: as i mentioned we have a htf bear move happening that isnt complete momo wise
+15:35 blondetrader: and we have a dly oversold
+15:35 VolCrush: heck i wanted 6845 on /nq, when i called 7 k /nq i got laffed out of here 
+15:35 blondetrader: so would make sense to get some relif
+15:35 JC_chart: yeah 6800 is the midpoint for nq for a 1Y daily chart
+15:36 VolCrush: ah hah, ty @JC
+15:36 JC_chart: honestly all that matters is AMZN
+15:37 JC_chart: so we should just trade that as it makes up what percent of NQ ... 60 haha
+15:37 VolCrush: emmmm, der fruit is a playa and mr softie is now relevant for some reason
+15:37 blondetrader: 1835 needs to break amzn
+15:37 blondetrader: orr 1621 lol
+15:38 blondetrader: rty closed red today
+15:38 blondetrader: no bueno
+15:38 VolCrush: either way lots of resistance with every pop now
+15:38 JC_chart: RTY is very sick on my chart
+15:38 VolCrush: yah true dat, rty is a big problem atm
+15:39 blondetrader: honesly
+15:39 VolCrush: yes dear
+15:39 blondetrader: if it has to rinse like to get it done this month
+15:39 JC_chart: it trendline has been down since 9/24 and the pitch of that line is steep not much releif soon unless earning are rocking
+15:39 blondetrader: like before last week of oct
+15:39 VolCrush: welp u wanna see a down trend line go see XLF
+15:40 blondetrader: it made a lower low today lol
+15:40 JC_chart: youre right it is sicker
+15:40 blondetrader: and it leads imo
+15:40 blondetrader: this turned 1-2 weeks b4 the others gave it up
+15:41 JC_chart: so any of you ever traded wheat futures or soybeans?
+15:41 blondetrader: yep
+15:42 JC_chart: you know they have nive moves in the morning
+15:42 blondetrader: I do :)
+15:42 Bid_Ask: what's nive
+15:42 JC_chart: and they are super volatile but i was thinking i almost like them better than es
+15:42 blondetrader: for sun night mon am i am really leaning on selling rty
+15:42 JC_chart: you have the same payout
+15:42 blondetrader: they offer minis
+15:43 blondetrader: imo the trend is more true in ags
+15:43 JC_chart: i was sitting in soybeans yesterday and forgot about the monthlyr eport and it ripped about 5 dollars in a nano second
+15:43 blondetrader: yea got to mind those report
+15:44 JC_chart: i was lucky i was long it also whipped back so i did fine but yes that was my thought exactly when i  sold the contracts LOL
+15:44 blondetrader: lol
+15:45 JC_chart: when you speak of trend you are speaking of trend on daily right?
+15:45 blondetrader: genericly yes
+15:45 blondetrader: but I prefer when all time frames are in agreement
+15:46 JC_chart: me too ibut i try to just focus on one chart
+15:46 JC_chart: i look at the daily 30m for trend
+15:46 JC_chart: and then trade the 3 or 1m
+15:46 blondetrader: oh yea thats too small for me
+15:46 JC_chart: i built some indicaotrs that are multitimeframe so that helps just using one chart
+15:46 fred__w: jc  i use 3 charts for context  1yr-mo 3mo-wk 14da-da
+15:47 fred__w: and look for >11ema
+15:47 JC_chart: im happy with a 10 tick move on cl or gc moer is great but i am greatful for that
+15:47 JC_chart: im not an ema fan
+15:47 fred__w: jc  i do that to build probability
+15:48 JC_chart: but i get why you use it so please dont misunderstand my intent
+15:48 fred__w: jc  the particular method is not criotical  i was giving you a variation of bt's stmt
+15:49 blondetrader: :)
+15:49 blondetrader: I have errands......see you guys sund night
+15:49 JC_chart: appreciat that
+15:49 JC_chart: have a good weekend
+15:53 Eedie: Bye all

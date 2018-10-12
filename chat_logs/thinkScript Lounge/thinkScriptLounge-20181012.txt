@@ -840,3 +840,133 @@ How can it sell off like this when it seems that there is a lot more buying volu
 13:34 naservos: Thank you Vimes!!! When I add filters like Ask and Volume....results were reasonable...
 13:34 angeltd: thank you
 13:34 Vimes: np
+13:48 bigworm: i see you typing mobius
+13:48 bigworm: its what i live for
+13:48 Vimes: lol, too funny
+13:49 Mobius: john.. What divergence? One chart is up-dn volume and the other is AD line. They don't represent divergence
+13:49 Mobius: big.. go do your homework  :)
+13:49 amalia: haha
+13:50 Vimes: we all like it when Mobius types something profound
+13:50 bigworm: lol i am about to start
+13:50 Mobius: geez   I'm just an old school teacher. 
+13:51 bigworm: lol
+13:51 John1a: Mobius: It seems to show that there is a lot more buying than selling on volume, yet the price goes in an opposite direction.
+13:53 Vimes: well mobius we are all waiting for you to put on your trading school
+13:54 PBJ: From my earlier post. In all honesty, I'm not good at coding, but would love some assistance. What I've tried is a hideous mess.
+13:55 Vimes: PBJ, % change of the range?
+13:56 Vimes: % is based on what?
+13:56 amalia: Percentage difference I think
+13:57 amalia: Percentage difference from the opening or the close of the previous 5m bar?
+13:58 UpTheCreek: vimes, you're in the wrong color
+13:58 PBJ: I'm typing
+13:59 AlphaInvestor: I wish TOS went back to one background color
+13:59 Vimes: utc, sorry bout that
+14:01 Mobius: John - rethink what your looking at
+14:03 AlphaInvestor: Mobius - that's what I thot, then had to take a second look
+14:03 AlphaInvestor: that is not divergent
+14:08 John1a: Mobius: What is it?
+14:08 bigworm: were you ever very vague when you were instructing mobius? i see some usefullness in figuring things out for yourself but i ask myself why even show up to class if they dont cover the material well or at all and then assign hw or projects that have not been looked at.
+14:09 Mobius: PBJ - 
+# Percent Variance from opening candle to the second candle
+# Chat Room Request 10.12.2018
+def firstBar = if getTime() crosses above RegulartradingStart(getYYYYMMDD())
+               then barNumber()
+               else double.nan;
+def firstClose = if barNumber() == highestAll(firstBar)
+                 then close
+                 else firstClose[1];
+def secondClose = if barNumber() == highestAll(firstBar + 1)
+                  then close
+                  else secondClose[1];
+def p = (secondClose - firstClose) / firstClose;
+AddLabel(1, "Percent Variance = " + AsPercent(p), color.white);
+14:10 Vimes: her's what i came up with likely wrong
+def isfirstbar = gettime() crosses above regularTradingStart(getyYYYMMDD());
+def firstbar_range = if isfirstbar then high-low else if isfirstbar[1] then firstbar_range[1] else 0;
+def second_range_ = if isfirstbar[1] then (high-low)/firstbar_range else second_range_[1];
+addlabel(yes,aspercent(second_range_));
+14:10 PBJ: OMG, you created that faster than I could type up a more detailed description. YOU ARE AMAZING!!!!!!!!!!!!!!!!!!!!!!!!!! Thank you!!!!!!
+14:11 PBJ: Mobius and Vimes :)
+14:11 Mobius: big... class is to teach you how to think for yourself and show you where to find others current thinking.
+14:11 AlphaInvestor: Here's what I came up with:
+How da heck am I gunna make  money wit dat?   Don't know, so no workie
+14:12 Vimes: if the second range is close to a fib number by on the next candle
+14:12 AlphaInvestor: Mobius +1
+14:13 AlphaInvestor: Mobius / Bigworm - I realized early on ... University is to        Learn How To Learn
+14:13 Vimes: PBJ, it would actually be interesting to know what you are doing what that number?
+14:13 Mobius: Mine is not to wonder why - mine is to code or die.. If I only coded what I knew worked I'd have stopped coding years ago.. :)
+14:14 Vimes: well you are very good at it- its good to do what you are good at ;)
+14:14 Mobius: internet and power keep going off here. Generator transfer is switching on and off. Wonder if that's as bad as it seems it is
+14:14 Nube: Same here, Alpha. Post grade school is when I learned that using a textbook properly is a skill that has to be learned
+14:15 Nube: Gather all the whiskey quick before the lights go out for hood.
+14:15 Mobius: ha
+14:16 Mobius: That is never too far from my reach  :)
+14:17 AlphaInvestor: Mobius - I ahave a SOLA Transformer at home to send sine wave power to my computer
+14:17 Nube: On a more serious note, are we shaping up for 50 plus point night Sunday or am I too excitable?
+14:19 Mobius: Nube we're trading an inside day. That's market neutral to me.
+14:21 Vimes: i got a dal ronco long alert
+14:29 Mobius: Fractal charts don't indicate DAL as a trade that I'd take right now. Although daily signal may be ok weekly is just starting in a downward move and monthly is already at the high with energy.  Too conflicting for me
+14:36 Vimes: i see that, thanks
+14:36 AlphaInvestor: I was surprised by DAL's strength yesterday
+14:37 Vimes: yeah, i wasn't aggressive enough yesterday, but me thinkgs we will get another pullback next week
+14:38 Vimes: they had earnings today, and some theories that airlines will show strength into the eoy
+14:41 AlphaInvestor: not if Iran isn't selling oil
+14:44 Nube: TLRYs strength has surprised me also.
+14:45 Nube: Going to be bummed if we got within half a percent of my limit order for VT. I might never be able to retire now.
+14:50 Mobius: Dad used to say "Never trade wives or airlines. You eventually crash and burn with one and go broke doing the other." He'd never explain which was which though.
+14:50 Vimes: lol
+14:53 AlphaInvestor: ha
+14:55 Vimes: nq took a round trip today and looks like we might close hod
+15:02 Mobius: ORB predicted a close below 2772.75 on /ES. It was a squeeker but it made it below that
+15:04 Mobius: Time to go for a walk. It's at least 40ft to the bar. Later folks.
+15:09 Vimes: Learned something recently that i thought was neat, if you form a quote of up to 8 symbols that represent a basket of stocks you want to trade, you can route that trade all at once.  The percentage needs to work out to 100% so there aren't any fractional shares, so for example:  AAPL*.18+GOOGL*.17+MSFT*.15+AMZN*.15+FB*.12+BRK/B*.11+JNJ*.08+V*.06
+15:14 amalia: I know there’s DÍA/DJI/etc but mobile won’t accept all 30 DOW tickers/30
+15:16 Davtrader001: Hey Guys. I could use some help, please.  
+I'm having a problem with this TOS RTD to Excel formula.  
+=RTD("tos.rtd","tos.rtd","P_L_DAY","SPX")   
+I can get all of these to work (note the symbol):  
+=RTD("tos.rtd","tos.rtd","P_L_YTD","SPX")
+=RTD("tos.rtd","tos.rtd","P_L_YTD","SPY")
+=RTD("tos.rtd","tos.rtd","P_L_OPEN","SPY")
+=RTD("tos.rtd","tos.rtd","P_L_DAY","SPY")
+For some reason I can't get the SPX "P_L_OPEN" or "P_L_DAY"
+(they work with SPY, just not SPX)  Can anyone please help tell me what I'm doing wrong ?
+15:16 UpTheCreek: yes, you are using the wrong font
+15:19 AlphaInvestor: SPX doesn't trade ... so how could you have a P&L for it
+15:19 Vimes: options
+15:19 Vimes: ?
+15:19 AlphaInvestor: Well, then he would have to put in the options .OPRA code in for the symbol
+15:19 Vimes: bet that's it
+15:19 Davtrader001: Yes, I'm sorry. SPX Options
+15:21 Davtrader001: I can get SPX P_N_L_YTD to work... just not P_N_L_OPEN and P_N_L_Day
+15:22 Davtrader001: It's weird it world work for one of them and not the other two.
+15:23 AlphaInvestor: what value do you get for SPX P_N_L_YTD?
+15:24 Davtrader001: I get the PnL for all my SPX trades for the YTD. The same total that shows up in the Account Statement Tab in TOS.
+15:25 JohnnyQuotron: The LoungeArchive is current.
+15:26 Vimes: I think alpha is suggesting for your open positions you need to build it differently so if you are short the 2715 try putting in .SPX181116P2715
+15:28 AlphaInvestor: I have my Account Statement broken into Equities and Options ... Options p&l and Equity p&l  don't mix on my sheets
+15:29 Davtrader001: Yes, I understand what he's saying. Thanks.
+I know how to get an indivdual quote like you are saying but I was hoping there was a way to simply get the PnL Day just like I can get PnL YTD.
+I have way too many postions to build it out the other way.
+15:31 Vimes: not sure there is
+15:31 Vimes: maybe call tda support
+15:33 Davtrader001: OK. Thanks for the help. I wasn't sure if I was just doing something wrong that was stupid / simple.
+I'll have to dig into it some more.
+15:33 AlphaInvestor: I have no idea how you accomplish what you do. It doesn't work like that for me
+15:35 Davtrader001: Are you able to get this to work ?
+15:42 Vimes: they don't work for me for any open options positions, spy, or otherwise
+15:45 Davtrader001: Wow... OK... I haven't ever had a problem with any of the other ones that I posted above... Just the SPX Open and Day... That's weird you're having problems.... The RTD can be kind of finicky at times.
+15:45 Davtrader001: The other format that is used is like this. You may want to try that and see.
+=RTD("tos.rtd","P_L_YTD","SPX")
+15:47 Vimes: that doesn't work for me , i use something like this :
+=RTD("tos.rtd",,"P_L_YTD",UPPER(AF9))
+15:49 Davtrader001: I'm sorry, but what does the UPPER(AF9) refer to ?
+Is that a cell on your spreadsheet ?
+15:49 Vimes: yes
+15:50 Vimes: so you don't have to edit a bunch of formulas
+15:50 Davtrader001: Where is that cell pulling the YTD info from . Is it from TOS ?
+15:51 Vimes: AF9 contains teh symbol, lets say MSFT, and wherever you put that formula lets say in AG9 it will return the pNL from tos, yes
+15:51 Davtrader001: OK.. Let me give that a try.
+15:55 Davtrader001: In your cell AF9, is the symbol in quotes or simply just the letters ?
+15:56 Vimes: just letters
+15:58 Davtrader001: OK.. I got that to work. for the SPX YTD, but dang, it still doesn't work for SPX PnL Day.... This is bizzare.
