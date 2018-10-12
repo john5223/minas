@@ -697,3 +697,146 @@ TrueRange(high, close, low) > Average(TrueRange(high, close, low), 10) * 5
 11:28 JohnnyQuotron: and the SPY is not looking much better
 11:28 Nube: Analogy for Europe's markets today.
 11:29 AlphaInvestor: hopefully not your center console JQkpa
+11:31 mthfr_vaxxed: just python script. does a `git add && git push` bash command.
+11:31 mthfr_vaxxed: and you could script up email .... but then your working backwords. revision control is where the cool kids hang out
+11:33 MTS1: JQ in Linux is what MTH is saying also, if you're familiar with that.
+11:33 mthfr_vaxxed: yeah. microsoft just got a bash prompt last year i think so you can be cool too
+11:34 mthfr_vaxxed: and linux got powershell i think? that one confuses me.
+11:35 UpTheCreek: lol
+12:00 JohnnyQuotron: Alpha... no, not my boat.  Divers just arrived and attached bouyancy bags to the stern and gassed the ow to bring her up.  photos aftert the close
+12:01 JohnnyQuotron: mthr.. so can your python script email the logs?  sorry dont know python at all
+12:03 mthfr_vaxxed: that would be a diff script. but yeah.
+12:06 and76: Hi All,How can I make  plot the line on the right extension on this    ########       def avg = Average(close(period = AggPeriod), length);
+def SD = StDev(close(period = AggPeriod), length);
+plot Mean = highestAll(if isNaN(close[-1]) 
+                               then avg
+                               else Double.NaN);
+Mean.SetDefaultColor(Color.white);
+addChartBubble(isNaN(close[3]) and !isNaN(close[4]), 
+               Mean, 
+             " Mean " +
+               AsDollars(Mean), 
+               color.white, yes);                              this belongs to a sd lines by Mobius script and lines are plot on the chart,thanks
+12:06 JohnnyQuotron: if python could email me the logs after theroom loses each day that would provide an excellent backup data source if we humans fail.
+12:07 mthfr_vaxxed: git > email
+12:07 UpTheCreek: JQ, the logs are in git
+12:07 mthfr_vaxxed: also mirrored on gitlab in case microsoft screws up github :)
+12:07 UpTheCreek: +1
+12:08 JohnnyQuotron: ust a thought to make it easier for me to fill gaps from my email rather than git. Im lazy i guess.
+12:09 mthfr_vaxxed: me too :) thats why i built this thing
+12:09 UpTheCreek: probly the same # of mouse clicks once bookmarked, but whatever :)
+12:09 mthfr_vaxxed: but still havent coded my stupid portfolio yet.
+12:10 JohnnyQuotron: up ou are likely correct
+12:10 AlphaInvestor: JQ - RayK keeps a copy, you keep a kopy, now MTH keeps a copy. dats enough backups
+12:11 mthfr_vaxxed: lol
+12:11 JohnnyQuotron: you are correct
+12:11 Vimes: but the onenote has some nice organization
+12:12 mthfr_vaxxed: i loved the organization. i hated the slowness of clicking between tabs
+12:12 JohnnyQuotron: MACD question?  is the sell triggered when the leader or lagggard crosses below the zero line.  I dont use the indicator.  just curious.
+12:12 Vimes: so whatever helps JQ maintain that is really great
+12:12 mthfr_vaxxed: and couldn't mass download everything
+12:13 AlphaInvestor: JQkpa - neither, it is when the Histogram crosses zero
+12:14 JohnnyQuotron: mthr... iswitching tabs is much faster using the desktop version of OneNote.  Which I think is free now. but dont hold me to that.
+12:14 AlphaInvestor: seriously laggy tho! When I uused MACD, I used 3 bars in the same direction, trade on the 4th bar. Ignored zero crosses. Now I no longer even show it on my charts
+12:15 JohnnyQuotron: thanks alpha.  I thought Bierman preached that the macd was still bullish until one or the other of the lines crossed below.  Ill check his archive this weekend.
+12:16 AlphaInvestor: well, uncle Jeffy would know
+12:18 JohnnyQuotron: I will say this.. if I had ligthened up when the daily Self Adjusting RSI Laguerre turned down on 9/24+- I would have saved myselff a great deal if pain.  Pain is the best memory tool i know though.
+12:20 Vimes: almost a perfect gap fill, lets see if we can go back and get the other side of the range, optimistically
+12:22 John1a: Does this need a study to plot? When I enter $ADSPD/$TVOLSP it says it cannot find the symbol. Does anyone have a study that can plot this? Thank you.
+12:23 MTS1: yes john; the ticker entry does not allow divide operator
+12:23 MTS1: just put that in a plot and you can plot a line
+12:23 Biometrizilla: Does anyone have the code behind the InertiaAll function? I am doing some analysis using linear regression trendlines and need to customize the function. Code for Inertia is on the Website, but not InertiaAll. Inertia plots the endpoint of the linear regression (LinearRegressionCurve) - I want to plot the full trendline across the period.
+12:28 Nube: Bio, InertiaAll() allows you to select y and n values, check the manual for deets. Do you need more than that?
+12:35 MTS1: And this is what I found by the famous notsoNube; still going over my head but may help:
+# Nube: In case anyone else would like to do a similar project
+#
+# Reproduction of ToS InertiaAll()
+# Nube
+# v0.01 8.26.18
+# Step 1 toward attempting to make variable length regression slope
+input TosInertia = no;
+input y = close;
+input n = 40;
+def na = Double.NaN;
+def bn = BarNumber();
+# start and end bars
+def developingBar = if !IsNaN(y) and IsNaN(y[-1])
+then bn
+else developingBar[1];
+def currentBar = HighestAll(developingBar);
+def trailingBar = if GetValue(bn, -n) == currentBar
+then bn else trailingBar[1];
+def startingBar = HighestAll(trailingBar);
+def x = if GetValue(bn, -n) = currentBar
+then bn - startingBar else x[1];
+# arithmetic
+def Ex = Sum(x,n);
+def Ey = Sum(y,n);
+def Exy = Sum(x*y,n);
+def Ex2 = Sum(x*x,n);
+# math
+def b = (n * Exy - (Ex * Ey))/
+(n * Ex2 - (Ex * Ex));
+def getB = if bn startingBar # --- brings most recent b value to previous bars
+then GetValue(b, bn - currentBar)
+else na;
+def a = (GetValue(Ey, bn - currentBar) - getB *
+GetValue(Ex, bn - currentBar))/n;
+plot line = if !IsNaN(getB) !IsNaN(y)
+then a + (getB * x)
+line.SetDefaultColor(Color.Yellow);
+line.SetStyle(Curve.Points);
+plot Slope = if TosInertia then InertiaAll(y,n) else na;
+Slope.SetDefaultColor(Color.Cyan);
+12:38 Biometrizilla: Nube, not sure if that's enough or not, but you may have given me an idea. I presume I can make y be anything I want, not just open/close/etc. That may solve my problem.
+12:39 Biometrizilla: MTS1 - Thanks much. I'll take a look.
+12:51 angeltd: anyone knows how to configured a houly simple move average crossover graph for three data points (13,30,200) hour?
+12:51 angeltd: in thinkorswim please
+12:57 MTS1: Just plot the SMA's? Guess I'm missing something...
+12:59 UpTheCreek: there's a MovingAvgCrossover study built in, you can program the variables that you want to use
+13:00 PBJ: I wonder if someone can assist me? I've been searching online, and can't seem to find/modify something that will fit my request.
+I'd like to create a label that will show after the first 5 minute candle has completed. As the second candle is forming, it will show the percentage increase and/or decrease based on the first candles range. After the second candle has completed, it will stop, with no further calculations.
+Thank you.
+13:03 Nube: Bio, exactly. Doesn't have to be close, can be whatever variable you out I. there.
+13:08 UpTheCreek: pbj, assuming you are on a 5m chart, just capture the open and close of whatever bar you care about using GetTime() as the trigger and shove the resulting math into Addlabel()
+13:10 and76: Hi All,How can I make  plot the line on the right extension on this    ########       def avg = Average(close(period = AggPeriod), length);
+               color.white, yes);                              this belongs to a sd lines by Mobius script and lines are plot on the chart,thanks Again
+13:11 PBJ: UTC thanks, I've been trying all morning, and no closer unfortunately...
+13:12 UpTheCreek: what part doesn't work?
+13:12 naservos: Sorry, new to the forum...I have a strategy (kinda) that I'd like to turn into a scan...but I have zero coding skills....anyone recommend help??
+13:16 mthfr_vaxxed: explain it as clearly as possible and if its interesting someone will code it. if its not....they will probably tell you why
+13:18 naservos: Fair enough...would like to scan for stocks with 5 consecutive daily closes at or above Bollinger Bands with a deviation of .382 instead of the usual 2
+13:21 UpTheCreek: do you know how to code your  close above the funky BBand?
+13:22 mthfr_vaxxed: lol...why funky? which band do you like UTC?
+13:22 UpTheCreek: .382 is funky
+13:22 mthfr_vaxxed: and .3 deviation? not percent? why that number
+13:22 Vimes: you are going to get alot of hits: check if this works:
+def uBB = BollingerBands("num dev up" = 0.382).UpperBand;
+def ridn382 = close>=uBB;
+plot scan = sum(ridn382,5)==5;
+13:23 UpTheCreek: it's a fib of course
+13:23 mthfr_vaxxed: ah ok. that guy again (mandlebrot)
+13:23 UpTheCreek: ya
+13:23 LongShort: darn, Vimes beat me to it
+13:23 mthfr_vaxxed: yeah....so too many hits naservos...what other criteria ya got
+13:24 naservos: Thank you...will try it...
+13:24 UpTheCreek: vendors
+13:24 Vimes: it also could be wrong - i didn't check it
+13:24 LongShort: twasn't mandelbrot, it was Fibbonacci
+13:25 LongShort: Vimes took 2 more lines than I did tho:
+plot above5 = sum(close > bollingerbands(close,0,20,-0.382,0.382,"SIMPLE").UpperBand,5) >= 5;
+13:26 mthfr_vaxxed: fibbonacci found it nature. mandlebrot made it popular in the markets. (i think?)
+13:27 Vimes: yep that looks right as well, just like to define things separately
+13:27 mthfr_vaxxed: physics of wall street was interesting read. no strategies. just history.
+13:28 UpTheCreek: geek time
+13:28 AlphaInvestor: who is this LongShort guy?
+13:28 Vimes: lol, do ou have two accounts?
+13:29 AlphaInvestor: 4 actually, but who's counting
+13:29 Vimes: hmm all mine are linked, but i guess now you can have arugments with yourself
+13:31 Vimes: LongShort: that Alpha is the smartest guy in the room
+13:33 AlphaInvestor: one of the top 89, fo shu
+13:33 John1a: Any idea what creates a divergence like this? https://www.screencast.com/t/3cwZOEjirIdW
+How can it sell off like this when it seems that there is a lot more buying volume than selling.
+13:34 naservos: Thank you Vimes!!! When I add filters like Ask and Volume....results were reasonable...
+13:34 angeltd: thank you
+13:34 Vimes: np

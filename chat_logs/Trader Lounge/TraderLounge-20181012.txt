@@ -942,3 +942,495 @@ why in the hell would china names be bid?
 11:28 radon224: /es gapfill has bulls rethinking things
 11:28 VolCrush: midcap are broke as well
 11:28 VolCrush: FANGS don't luk healthy either
+------- Thursday, October 11, 2018 -------
+17:29 AlphaInvestor: Vimes - likely not.
+17:30 AlphaInvestor: An adaptation could be to use a user selectible mix of historic and implied volatiltiy
+17:30 Vimes: i've always picked stocks outside my 401k but am intriqued by some of these factor models lately so just playing with them
+17:32 Vimes: not sure links will stick:
+https://logical-invest.com/universal-investment-strategy/
+17:32 AlphaInvestor: AQR has a great paper on factor investing
+Liquid Alt Ragnarok?
+17:33 Vimes: yes i've started listening to some of their podcasts
+17:33 Vimes: there is a good book for a novice like me :) by Berkin and Swedroe, called "Your complete guid to factor-based investing..."
+17:34 Vimes: it is a very plain and simple summary of alot of the prior research
+17:35 AlphaInvestor: Cliff Asness at AQR does a lot of that sumarizing too, but it can get kinda deep
+17:35 Vimes: i worry alot on stat research though, because likely there is so much maniuplation of the data and screeneing etc. that you really don't know how they actually implement it in practice.  It seems these things never really play out in reall measured returns versus the backtest
+17:36 AlphaInvestor: Vimes - a couple of my standard fundie screens are now Factor based, with custom Factor Tilts. Been using them for about a year and a half.
+17:40 Vimes: do you use a service for that?
+17:41 Nube: It isn't the fudging of the data that concerns me so much as something that worked well the last 20 years would be expected to not work well over the next 20
+17:42 Vimes: that too, i'm not saying grad students are dishonest but at some point when you are trying to get published and get your phd you can talk yourself into throwing out all sorts of outliiers to make your model work
+17:42 Nube: Sound, foundational factors probably not as bug of a concern, but a lot of the newer ones would concern me
+17:43 Vimes: well the factors in the book i mentioned all pass the logic test for a solid investing plan so i believe the results, but as i've gotten older i'm more about not losing my money so don't want to experiment too much
+17:45 AlphaInvestor: Vimes - I experiment with phantom portolios - my longest running is over 10 years old, I transfer what works to real $$
+17:46 Vimes: i started investing with ibd and the fool nearly two decades ago, and both had a tilt to combination of technical and fundamental factors
+17:46 Vimes: maybe more so ibd on the technical side
+17:46 AlphaInvestor: example, everyone was big on Piotroski a while back. I implemented a phantom portolio that selected all the 8 and 9 rated stocks using Piotroski ... a big loser
+17:47 Vimes: yes i've played with that as well using guru focus
+17:47 AlphaInvestor: ran that succa for almost 5 years before giving it up because it Never outperformed
+17:49 AlphaInvestor: Later Scripters
+17:49 Vimes: later ai
+17:50 JohnnyQuotron: later Alpha
+17:50 MTS1: Not familiar or researched the P3 Squeeze Frank; so don't know what it is based on.
+17:51 Vimes: i was curioius and looked it up on the tube, not sure its worth diverting a lot of time too unless someone is need of a direction
+17:52 Vimes: looked to usee PPO and ADx, if not mistaken to time long entries when they pinch together
+17:53 MTS1: Nube; what I've seen when DK executes it (in-out) he advocates taking profit at certain %, sooner (lower %) if it gets there quicker than expected. As I recall that was also what Mobius suggested the other day when he advocated for the strat.
+17:54 Vimes: you would place the PPO chart above the ADX chart in the lower stack
+17:54 MTS1: Letting it run to expiration applies to the Risk sidel if it does not go your way right away don't close it out.
+17:57 Nube: I should have specified I was thinking specifically that ronco strat. I only ever said 1 to 1 which is not the same thing
+17:59 Vimes: are they tracking the trades they have made - i always am a little skeptical on short dated options, i guess if there is a clear long trigger the premium should be really small so you aren't risking much
+17:59 MTS1: I thought ronco was in-out; but I could have misundersood; was the first time I heard of it this week;)
+18:00 JohnnyQuotron: Nube,, regarding DKs In and Out.  out at 50-55% profit assuming it is going your way.   never buy an in out before earnings that expires in the week or two after earnings.  more if you want it
+18:01 Nube: I think it is an in and out, but I thought the purpose of it was to not manage it. You have ot have a heckuva win percentage to make a 1 to 1 work if you're punching out half the way done
+18:01 MTS1: Not sure imes; I trust Mobius and DK, but don't have proof;)  DK might provide records when you're on his service, but I know he's a stats quant and has a reputation to uphold. 
+18:02 MTS1: Nube; Mobius mentioned 80% as I recall; have to look back in teh archives for his rules.
+18:02 JohnnyQuotron: the in out is a quant strategy.   
+18:02 JohnnyQuotron: take the 55% and run.  
+18:03 Nube: I think that was the ronco he was talking about. All 1 to 1's I dunno
+18:03 JohnnyQuotron: in at no more than 1.03% of the spread between the long and short strikes
+18:03 JohnnyQuotron: pleasedefine 1 to 1
+18:05 JohnnyQuotron: 1 long call 1 short call on the bull side
+18:05 JohnnyQuotron: 1 long put 1 short put on the bear side
+18:05 JohnnyQuotron: prefers debit to credit spreads for in out
+18:05 Nube: At 1 to 1 you would need mid 50s percent win just to break even. I can't imagine talking off a 1 to 1 at 50  based strictly on strike selection and not some other statistic.
+18:07 Nube: 1 to 1 is risk : reward. Yes, an in out spread, most commonly 2 dollars wide at a cost of a buck
+18:07 JohnnyQuotron: the theory is that with tight strikes and decent volatility and a 55% profit target the target will get hit alot.  (alot being a highly educated math term)
+18:08 Nube: But 5 wide at 2.50 is where it will need to be on most stocks with a 3 digit handle
+18:08 JohnnyQuotron: no hard stops EVER
+18:09 Nube: Well, whether ronco only or all 1 to 1's I'm sure they have their numbers chosen for a reason
+18:09 JohnnyQuotron: 10 with google... painful
+18:11 Nube: Yea, but it would be a darned good hedge for a long tech position
+18:12 MTS1: when you lose 50% before expiry you still have chance it goes to BE or profit. when u gain more than 50% and don't take it you have chance to lose it still. I'm not a Quant geak but that's how I understand it may work;) Especially if put on@extremes, reversion to mean trades
+18:32 Nube: Sounds pretty quanty to me
+19:04 MTS1: a good quant could explain it better if that is part of the edge; that's just how I wrap my simple brain around it in plain English. . Another side comment I heard DK make is that you won't usually get 100% profit unless both are ITM and you let them get assigned.
+19:23 Nube: Make sure you're seating before you read the following. I'm serious. Sit. Down. Ready? the most stable currency in the world right now is Bitcoin
+19:28 amalia: Boom!Haters
+19:29 UpTheCreek: ummm is that before orafter the 10% it lost yesterday?
+19:33 EvanBStock: DK does say if prob of touch on the long option falls below 45% to exit right then and yes take 55-65% target. Speaking of, if Dons In/Out Strat is 80% and thats assuming 50/50 odds (up or down) if I throw in a backtested strategy (based on TA) thats correct for any given time frame roughly 75%(+-5%) How would that change the probabilities or would it just make you profitable faster? Any ideas?
+19:46 admin_tculs: thinkScript Lounge chatroom will be closing soon  Please finish all conversaions by 8pm ct   Have a nice evening
+19:47 Paris: MTS - noticed some commentary on Ronco, you might like to check your chat log of 10.1.2018 where Mobius discussed that, where he also included some tos.mx links.
+19:54 Nube: Good point, UTC. Yesterday was not smooth but in recent months it's been about as stable as most G7 currency pairs
+------- Friday, October 12, 2018 -------
+06:46 harndog: Good morning
+06:47 Vimes: gm
+06:48 stevie_s: .
+06:56 Nube: Morning all!
+07:00 ZupDog: gm everyone.   have been trying to create a TTM Squeeze Label that will tell me when the squeeze is long, short, or in the squeeze.   The label script I came up should be showing RED now for the 30 min /ZN chart.  But instead is showing green.  Any help here would be appreciated.      http://tos.mx/JhHrlw#
+07:03 Vimes: try this from the source:
+# Squeeze watchlist column - Eric Purdy 2017
+# http://tos.mx/Ruon09#
+def sqz = !TTM_Squeeze().SqueezeAlert;
+def direction = TTM_Squeeze()>TTM_Squeeze()[1];
+def count = if sqz and !sqz[1] then 1 else count[1]+1;
+def fired = if !sqz and sqz[1] then 1 else 0;
+def firedCount = if fired then 1 else firedCount[1]+1;
+def firedDirection = if fired then direction else firedDirection[1];
+addLabel(yes, if sqz then "Squeeze:" + count else if sum(fired,5) then "Fired:" + firedCOunt + if firedDirection then " Long" else " Short" else "-", if sqz then color.red else if sum(fired,5) and firedDirection then color.green else color.orange);
+07:04 ZupDog: Thanks Vimes.  Will give it a try.
+07:16 Paris: upDog - replace the following snippet in your study
+AddLabel( yes, if Hist > Hist[1] then "SqzHist Up "  else "SqzHist Down" ,
+    if Hist > Hist[1] then Color.GREEN
+    else if Hist < Hist[1] then Color.RED
+    else Color.GRAY);
+07:20 ZupDog: Thanks Paris.  Will do.
+07:21 Paris: If that doesn't do it, I'm sure I have another study in my archives that does the label correctly.
+07:26 Vimes: The one i posted seems to show the squeeze on /zn for 6 bars: so could be modiifed to your liking
+ 
+07:26 Paris: ZupDog I have a version that counts the number of bars in consequtice squeezes as well. I've seen many squeeze studies being posted here in the last few years. Many ways to do this.
+07:27 Paris: BBL, heading out for a late dinner
+07:28 ZupDog: Vimes,  the one you provided works for displaying the squeeze, but does not show if the histogram has fired long or short.   I can still use this study though. Thanks for sharing it.
+07:30 ZupDog: Looks like I may have to use two separate  label scripts. One for a long / short squeeze histogram and the one that Vimes provided. 
+07:31 Vimes: once fired the label will be colored based on the direction
+07:31 Vimes: green long orange short
+07:34 ZupDog: Gottch.  Did not read the script close enough to pick up on that.  So the label you provided is just what I was looking for.  Thanks again.  Now let's see if I can modify that script to give a count for how many bars long /short.
+07:35 ZupDog: Paris, thanks for your help also.
+07:37 Vimes: for me the signal is more accurate on larger time frames, shorter time frames i think its pretty poor indicator
+07:55 Mobius: The histogram in that study (TTM Squeeze) is a momentum indicator. The "Squeeze" signal is generated from Bollinger Bands and Keltner Channel. Ther's absolutly no statistacal evidence to show which direction a squeeze will ressolve, whether up or down in a near term. For the longer term the direction is slightly more likey to be a continuation of it's longer term trend.
+07:56 Mobius: This study and the TTM Squeeze are identical
+# Momentum Squeeze
+# Mobius
+# Added Squeeze Label with directional color
+# Label is green when momentum is ascending, red when descending
+declare lower;
+input length = 20; #hint length: Length for average calculation
+input SDmult = 2.0;
+input ATRmult = 1.5;
+   def c = close;
+   def h = high;
+   def l = low;
+   def K = (Highest(h, length) + Lowest(l, length)) / 
+               2 + ExpAverage(c, length);
+  plot Momo = if isNaN(close) 
+              then double.nan
+              else Inertia(c - K / 2, length);
+       Momo.setPaintingStrategy(PaintingStrategy.HISTOGRAM);
+       Momo.setLineWeight(3);
+       Momo.assignValueColor(if Momo > Momo[1] and Momo > 0
+                             then Color.Cyan
+                             else if Momo > 0 and Momo < Momo[1]
+                             then Color.Blue
+                             else if Momo < 0 and Momo < Momo[1]
+                             then Color.Red
+                             else Color.Yellow);
+def SD = StDev(c, length);
+def Avg = Average(c, length);
+def ATR = Average(TrueRange(h, c, l), length);
+def SDup = Avg + (SdMult * Sd);
+def ATRup = Avg + (AtrMult * ATR);
+plot Squeeze = if isNaN(c)
+               then double.nan
+               else if SDup < ATRup 
+               then 0 
+               else Double.NaN;
+     Squeeze.SetPaintingStrategy(PaintingStrategy.Points);
+     Squeeze.SetLineWeight(3);
+     Squeeze.SetDefaultColor(Color.Red);
+plot zero = if IsNaN(c) or !IsNaN(Squeeze) then Double.NaN else 0;
+     zero.SetPaintingStrategy(PaintingStrategy.Points);
+     zero.SetLineWeight(3);
+     zero.SetDefaultColor(Color.Green);
+AddLabel(!isNaN(Squeeze), "Squeeze", if isAscending(Momo)
+                                     then Color.Green
+                                     else Color.Red);
+# End Code - Momentum Squeeze
+07:57 Mobius: And Purdy is not the originator of that study.
+07:59 Vimes: ok - he generated the label
+07:59 Vimes: didn't say the underlying study
+07:59 Mobius: Labels for that study have been around at least 10 years I know of
+08:00 Vimes: he's afilliated with that group of guys is all, just trying to attribute to the source
+08:00 Mobius: John Bollinger is the source not the other guys either
+08:01 ZupDog: Thanks Mobius.    Glad to see you made it thru the storm okay and are doing well.
+08:02 Mobius: yw.. Not much of a storm here. But it sure wacked Panama City and Mexico Beach. I have family there and they're not even able to get back in yet
+08:02 Vimes: Mobius, so you wouldn't attribute the use of keltner channels and bollinger bands to JC? it was in his book where i originaly saw it
+08:03 Mobius: Vimes no!  There's a lot of books in trading where a lot of writers claim a lot of stuff the just isn't true. 
+08:05 Vimes: "isn't true" meaning sobeody else proposed this as a measure, or "isn't true" meaning it just is rubbish and doesn't work?
+08:05 Mobius: Neither Standared Deviation nor an Average Range nor the combination of the two was new in this or the last century.
+08:06 Vimes: gotcha
+08:06 ZupDog: We ate at Toucans in Mexico Beach years ago. Very nice place right on the water.  At least The Gibson Inn is still standing in Appalatchacola. Sorry to hear about your family's loss though.
+08:07 woodie: junk is more like it
+08:07 Vimes: lol
+08:07 Mobius: lol  woodie
+08:07 woodie: gm mobius
+08:07 Mobius: gm.. glad to see your still kickin
+08:08 woodie: thanks, glad your ok from storm too
+08:08 Vimes: i'm not trying to defend it but seems like there are dozens of indicators that are all trying to measure consolidation as a heads up for the next potentail larger move (up or down)
+08:08 Mobius: yeah  Still haven't tested my concrete bunker. But I'm happy to wait to do so  :)
+08:09 woodie: great
+08:10 woodie: if you want to see consolidation better..put heiken asli bars on chart look for group of small body candles..
+08:11 Vimes: thx woodie, will take a look
+08:11 Mobius: Vimes... In mathematics that the measure of linearity. There's already many algorithms that do that quite well. And, that's been an object for those that specialize in higher geometry for centuries. How to measure a series with as little data as possible to predict a future line.
+08:12 Vimes: so if you would what would be the best leading indicator to measure, such a period, and trade its breakout on either side
+08:12 woodie: cci
+08:13 Mobius: You just stated the problem. The "breakout". There's nothing that proves a breakout will go any one direction. Reason - Market movement is random and any smaller aggregation.
+08:14 woodie: mobius has some great stuff on his MYTRADE page
+08:14 Vimes: no i get that, and that' sthe risk i'm comforatble taking in trading, i guess i'm just asking if you had to choose an indiator suite for such a thing what it woudl be
+08:16 Mobius: I use a log price distribution drawn as a range while price compresses and trade after the breakout and retest of the area. I use my typical approach of knowing what I'm willing to risk to test the trade and when I'll make it a risk free trade if it goes my way. And, that study is on MyTrade already
+08:17 Vimes: thx
+08:17 Mobius: yw
+08:20 woodie: a real good one is mobius cci gauassian with linear regression
+08:20 Mobius: FYI - Any price compression study, Bollinger Band Width, ADX, Squeeze, Fractal Energy or any other can be traded the exact same way
+08:21 Vimes: yep, i use risk off quite a bit, i need to be more dynamic about it but i typically just have a standard risk off target and then move to break even
+08:22 AJayKC: #this label will show Earnings in days
+def LastEarningsBar = AbsValue(GetEventOffset(Events.Earnings, 0));
+def NextEarnings = if isNaN(LastEarningsBar) then 0 else LastEarningsBar;
+addLabel(NextEarnings < 90 and NextEarnings > 0, "Earnings " + NextEarnings + " days", if NextEarnings <=3 then Color.light_Red else Color.gray);
+08:23 AJayKC: hi quick question. this code is not properly working. it shows everything in Earnings in 1 days.
+08:23 AJayKC: anything that needed to be adjusted with the code or i'm doing something wrong? help please.
+08:24 Mobius:  Typical Squeeze. Drawn as a range on the price chart rather than just points. You can see the initial breakout was lower. That didn't hold and the channel was retested then there's a breakout up which is now failing. That is typical. Making the Squeeze just another area of Balance.
+08:24 AJayKC: for example MSFT it says today is earnings. HEAR's earnings is november 1st but it says in 1 day.
+08:25 MTS1: AJ; What aggregation are you running it at and how big is your expansion area?
+08:25 AJayKC: i am using on daily chart max.
+08:25 Vimes: thanks for the illustration mobius, very helpful, will try and find the study and look into it
+08:25 UpTheCreek: ya gotta have enough exp area to actually see the earnings date
+08:25 MTS1: No; there is no try. . . ;)
+08:26 AJayKC: creek how i make sure of that?
+08:26 Vimes: :) well there are lot of studies on his mytrade, if that was to me:) so have to find the matching one
+08:26 UpTheCreek: ^^^ lol
+08:26 Mobius: Vimes - That particular study is Squeeze Pivots
+08:27 Vimes: cool, thanks, good discussion
+08:27 mthfr_vaxxed: you can view earnings on the calendar. easier than seeing it on chart if its far out
+08:27 UpTheCreek: chart settings, expansion area = whatever your criteria in the future is
+08:27 AJayKC: ok thank you creek. i changed that and it seemed to work. i appreciate your help.
+08:27 mthfr_vaxxed: marketwatch > calendar
+08:28 AJayKC: also thank you MTS1.
+08:28 UpTheCreek: yw
+08:30 Mobius: And we're off
+08:31 Nube: Where did the volume go the last couple of hours? it seemed fine all night and then it's like people just stopped trsding
+08:31 Vimes: wow lag
+08:32 chief: charts doa again
+08:34 Wally: lag again like yesterday at open
+08:42 mthfr_vaxxed: you make support ticket? sometimes devs dont know there is problem until its reported
+08:45 chief: Yes.. Too many trsders doing too much trsding
+08:49 tajtx: Mobius.   On one of your studies there is a notification of "Target Breached".   What does that mean?
+08:50 JohnnyQuotron: Good Morning thinkScript Lounge...
+08:52 MTS1: Taj; seems self explanatory?
+08:52 MTS1: If you don't understand the target; find it in the script to understand.
+08:53 tajtx: Could mean target to buy or target to sell?    I respect Mobius and want to make sure I understand the notification.    
+08:54 JohnnyQuotron: Just to clarify, regarding the tos VWAP, when chat aggregation is set to 10 min and VWAP is set to daily, does the vwap calculation begin when the chart begins ?  Or does it begin at midnight?  Or does it begin at some other time?
+08:54 JohnnyQuotron: chat = chart sorry
+08:58 MTS1: Taj; yes. Don't think he knows either what indicator you're refering to; but typically I've seen them in a color indicating target buy / sell, and again if you read the code there may be further clues.
+08:59 tajtx: I'll try and understand the code.    Thanks for the feedback.
+08:59 MTS1: JQ; don't you see the median/sd lines re-set on the chart?
+09:03 MTS1: On mine they restart when globex overnight starts at 6PM ET on futs
+09:21 Paris: MTS - Just wanted to make sure you received that eml response, I had to send a couple of times due to formatting issues on my end
+09:22 Paris: Signing out for the night, anything else you know where to ping me. Later MTS
+09:52 JohnnyQuotron: I need some help with the addchartbubbles on this script  http://tos.mx/CeMzoE#
+yes this is embarrassing.  i would really like the cyan bubble to paint on the first lower cyan dot and the orange bubble first lower orange dot
+but i can't get the logic correct for the x-axis location  ...  if anyone can find the time later I would really appreciate the assistance
+09:52 JohnnyQuotron: nite Paris
+09:55 JohnnyQuotron: Mts.. looks like the openning of electronic trading at about 5:00 eastern? for \ES
+09:55 RayK: Hi. My buffer is missing from room open to 7:47 EDT. Can someone please PB it to me? Thanks in  advance.
+09:55 AlphaInvestor: The most important part of a bubbleMover script is the      showBubbles = NO input
+09:56 JohnnyQuotron: ray the onenote is current
+09:57 cajun: Ray, there was just a gm
+09:58 JohnnyQuotron: alpha...i am not using that imput for the FE bubbles at the moment.  look down to around line 250.  sorry
+09:59 JohnnyQuotron: mobius .. would you say your balance area held?
+10:02 anees: hello everyone, can someone tell me where i can find the ATR filter in the scanner please
+10:02 beta888: Hi, is there anyway to draw a line across the chart  that will follow current price of a stock?
+10:03 Mobius: Johnny - here's the method to add those bubbles
+addChartBubble(FE crosses below valueFElinear, -.1, "Linear", color.cyan, yes);
+10:04 AlphaInvestor: Here is the way I did it:
+addChartBubble( if pointslinear and isnan(pointslinear[1]) then 1 else 0 , -0.05, "Trend Exhaustion", pointslinear.takevaluecolor());
+10:04 DMonkey: beta....
+plot Data = highestall(if isnan(close[-1]) then close else double.nan);
+10:05 Mobius: anees - Did you try under ATR?
+10:07 Mobius: johnny - It's held so far. The day is young.
+10:08 beta888: Thanks, i will try that
+10:09 anees: hey Mobius, i dont find it, either im blind or im blind, does it even exist?
+10:11 Mobius: Typical Bull Market Ends when there are New Lower Lows and Lower Highs first at the intraday levels then on the higher aggregations. So first indication of this Bull ending would be a price extension to within about 1% of the high and a failure to a new pivot low on the daily aggregation. We just had that. Now we look for another drive toward the high and a failure below the last attempt. Then another new low.
+10:13 JohnnyQuotron: mobius.. regarding the bubbles.  I only want one of the first orange and cyan dot.  not on each cross.  thank you though.  I should have been more clear
+10:13 Mobius: anees.  
+Average(TrueRange(high, close, low), 10)
+10:14 Mobius: First dot for the day, first dot for the chart?
+10:14 JohnnyQuotron: first orange dot on the chart and first cyan dot on the chart
+10:15 Mobius: the do a recursive count and take only the first in the count.
+10:15 JohnnyQuotron: i dont know how to do that yet
+10:16 AlphaInvestor: JQ - the code I posted plots at the first cyan dot of any new set of cyan dots
+10:17 Mobius: def count = if FE crosses below valueFElinear
+                     then count[1] + 1
+                    else count[1];
+addChartBubble(count == 1, ..........................)
+10:18 JohnnyQuotron: mobius thank you.  Alpha sorry i didnt see the second post.  my apologies
+10:24 ramesh2599: Mobis: could you pl post that code- Thanks----- Mobius: Vimes - That particular study is Squeeze Pivots
+10:26 UpTheCreek: Ramesh, where does Mobius generally post his codes?
+10:27 ramesh2599: I could not locate it:(
+10:29 anees: thanks mobius, what im basically trying to do is find or make a filter that finds stocks that overextended 5-6 times their usual Range, can you advise please? thanks
+10:30 mthfr_vaxxed: Johnny: you check the automated logs? now you dont have to worry about missing something! ....hopefully
+10:31 Mobius: Johnny - before you drive yourself crazy - I should have indexed that count. Use this as your template
+def count1 = if barNumber() > 1 and FE < valueFElinear
+             then compoundValue(1, count1[1] + 1, 1)
+             else count1[1];
+addChartBubble(count1 == 1, 0, "Linear", color.cyan, yes);
+10:31 NUG: Hey Mobius, do yo know if TOS is going to restore the drawings for continuous futures contracts any time soon (or at all)?
+10:33 Mobius: anees - simple logic
+TrueRange(high, close, low) > Average(TrueRange(high, close, low), 10) * 5
+10:34 JohnnyQuotron: Mobius... thank you... i was driving myself crazy  But I was too embarassed to admit it.
+10:35 Mobius: NUG - I'm not privy to any other information than what you or anyone else gets
+10:36 ramesh2599: Mobi- I found it, Thanks
+10:37 Mobius: sorry Johnny - One of the problems with codeing in the chat window.
+10:37 JohnnyQuotron: The LoungeArchive is current.  BBL thank you all for the assistance !
+10:37 Mobius: <<< To lazy to open the editor
+10:39 JohnnyQuotron: Mobius.. thank you for setting me on the right path.  You as well alpha.  Maybe my next Padawan's guide should be recursive counting?   Oh my!
+10:42 NUG: Mobius, thanks
+10:43 anees: thank you so much Mobius
+10:44 JohnnyQuotron: Oops.. someone forget to screw in their drain plug before thay put their 25-30 foot center console fishing boat in the water this morning.  Here comes the Coast Guard....
+10:46 AlphaInvestor: JQkpa - I forgot to put mine in once on my 20 foot Yamaha - it has 5 plugs, I missed one. Go back to the boat launch, but not without considerable bailing and panic.
+10:50 Nube: That's why I don't boat.
+10:50 Nube: I'm not a details person
+10:52 Vimes: its' good to have friends with boats
+10:52 Nube: Also, we might be shaping up for interesting Sunday night. We aren't far from the 720 Mobius was watching.
+10:58 MTS1: JQ; thought you were refering to the markets at first when you posted about someone forgetting the drain plug. .
+10:59 MTS1: MTH; prefer logs with pictures; but nice to have an automated backup so that's appreciated!
+11:11 JohnnyQuotron: mth... update me on the automated log thingy again please..
+11:14 UpTheCreek: in his mytrade
+11:17 mthfr_vaxxed: yup. got a script running that sends logs out to github. updates logs locally every 10 min. sends to github every 2 hours during weekdays
+11:18 mthfr_vaxxed: but yea....no pictures... yet
+11:24 JohnnyQuotron: mth... excellent work  how does your app send to github?  can the app email?
+11:27 JohnnyQuotron: Oops the crane barge is going to be too late... the Center Console is beneath the waves
+11:28 JohnnyQuotron: and the SPY is not looking much better
+11:28 Nube: Analogy for Europe's markets today.
+11:29 AlphaInvestor: hopefully not your center console JQkpa
+11:31 mthfr_vaxxed: just python script. does a `git add && git push` bash command.
+11:31 mthfr_vaxxed: and you could script up email .... but then your working backwords. revision control is where the cool kids hang out
+11:33 MTS1: JQ in Linux is what MTH is saying also, if you're familiar with that.
+11:33 mthfr_vaxxed: yeah. microsoft just got a bash prompt last year i think so you can be cool too
+11:34 mthfr_vaxxed: and linux got powershell i think? that one confuses me.
+11:35 UpTheCreek: lol
+11:32 tmoney20g: i missed seema
+11:33 tmoney20g: who's this sara imposter
+11:35 featherweight: When to get long CLs?
+11:35 MyOtherBrotherDarryl: did I say something wrong?
+11:37 tmoney20g: perhaps
+11:37 tmoney20g: i do that, once a day
+11:38 tmoney20g: tculs beats me with a stick
+11:38 vipin123: hi
+11:38 vipin123: how can I  move the trendline in thinkorswim
+11:38 vipin123: guys how much commision are you paying for each trade here. 10$ is slightly high, is it negotiable?
+11:39 streetglide: click on it
+11:39 MyOtherBrotherDarryl: what does censored mean?
+11:39 AlphaInvestor: You cannot move the trendline, the price moves the trendine ...
+11:40 vipin123: I want  to move it parallely
+11:40 AlphaInvestor: Darryl - that means yoiu posted something bad, don't do it again
+11:40 AlphaInvestor: Vip - use a price channel then
+11:40 vipin123: how
+11:41 JC_chart: its  not too hard, it is one of your drawing tools
+11:41 MyOtherBrotherDarryl: I didn't know complimenting someone on TV was bad.
+11:42 JC_chart: find that tool .. thenmaybe go to stock charts and look at what it is and how you create them that is probably easiest wya
+11:42 AlphaInvestor: Darryl - was it market related?
+11:42 tmoney20g: tculs runs a tight ship here
+11:42 chenmann: o man, i c bear flags every where.....
+11:43 tmoney20g: lots of shoulda coulda this week
+11:43 MyOtherBrotherDarryl: not really except she was on cnbc earlier.
+11:43 mthfr_vaxxed: is the sky falling after all ?
+11:43 SPYOPTS: Dow is negative
+11:43 vipin123: chineese taking all the money back home
+11:44 vipin123: carnage
+11:44 mthfr_vaxxed: they can take their dirty chips too
+11:44 tajtx: Wow.   
+11:45 JabbaTheCabin: nice little selloff we're havign
+11:47 tajtx: Went to all cash last Thursday.   Think I'll stay there until possibly next week.
+11:47 AlphaInvestor: DING - bot some SH ... hedging at least a part of my portolio
+11:48 tajtx: Thinking about the same Al.
+11:52 MyOtherBrotherDarryl: I had a mental price target of 171 on Qs.  It hit.
+11:53 tmoney20g: little baby rebound here
+11:54 MyOtherBrotherDarryl: Q's bounce off 200 day
+11:55 MyOtherBrotherDarryl: computer buys triggered
+11:55 JC_chart: looking at my spy and vxx xharts ... there soes seem like there could be a bounce but needs to cross above 373 and change and then hold on spy thn target would be 273.62 or short vxx which confirms
+11:58 JC_chart: yeah sppy i smarching up to that resistance line at 273.50
+11:59 JC_chart: they are selling that level so maybe just a retracement and another leg down  need to wait a few bars to see what chart says
+12:03 MyOtherBrotherDarryl: Would be shocked if no bounce here, at least to recover 50% of losses over last week
+12:04 MyOtherBrotherDarryl: 3 marching soldiers on Qs
+12:05 jsher: DIRV
+12:06 VolCrush: 3 marching soldiers, not sure i've ever heard that before
+is that like 3 praying nuns?
+12:06 fred__w: darryl  its unlikely there would be a bounce like that  not yet  anyway
+12:07 fred__w: ..imo  of course  but  we'll see
+12:07 MyOtherBrotherDarryl: candelstick term.  sposed to be bullish for trend.
+12:07 JabbaTheCabin: 3 marching soldiers? why not 4 horsemen of the apocalypse?
+12:07 VolCrush: welp this bounce is being offered by AAPL, AMZN & MSFT, fwiw
+12:08 MyOtherBrotherDarryl: Some japanese guy named it not me :)
+12:09 MyOtherBrotherDarryl: means bulls winning.
+12:09 radon224: My chart shows 4 calling birds, 3 french hens, and two turtle doves....and it's not even Christmas time yet!
+12:10 MyOtherBrotherDarryl: lol
+12:10 JabbaTheCabin: no cristmas carols before thanksgiving. And no playing "stairway to heaven" in music stores.
+12:11 SPYOPTS: Vol, what’s your take on bank earnings for Monday?
+12:11 streetglide: radon, go wipe the bike down....about time to crank
+12:11 radon224: ya, big ride this weekend.  nice an cool
+12:12 streetglide: got to blow the cob webs out of mine....havent cranked in a 2 months
+12:12 JabbaTheCabin: harley?
+12:12 streetglide: but 78 here today so Galveston here I come
+12:13 VolCrush: lots of 30' charmins 
+12:13 VolCrush: tuff to say which way they gunna blow, but they prob gunna blow by der close
+12:14 VolCrush: "ground control to Major Tom...."
+12:14 vipin123: spx at 1350 :)
+12:14 JabbaTheCabin: looks like selling coming in
+12:14 streetglide: put the pipe down
+12:15 VolCrush: me?? never
+12:15 streetglide: no, on the 1350 call
+12:16 VolCrush: owners of ABC pants my wanna try ALGN fur der E run 10/24
+12:16 JabbaTheCabin: what are ABC pants?
+12:17 vipin123: sorry I meant  amazon
+12:17 AlphaInvestor: ALGN chart broke
+12:20 brashybrash: sears is gonna make it...thats were i bought my first pair of husky jeans
+12:20 AlphaInvestor: ah, the memories
+12:21 radon224: they sold off Craftsman and Kennmore brands, and all other things that made Sears what it was.  It's done.
+12:22 streetglide: who bought Craftsman?
+12:22 AlphaInvestor: what?, What?  you don't love the 1970's fashions they have on their oversuffed racks?
+12:22 brashybrash: what happened to Montgomery wards too, i did all my last minute xmas shopping there
+12:23 streetglide: I just remember Penncrest jeans from Penny's back in the day
+12:23 brashybrash: sassoon for me
+12:25 VolCrush: all charts are broke, good obsrvation Alpha
+12:26 brashybrash: can someone walk me through options?
+12:27 radon224: I'll never forget when I was in grade school and my mom taking me to JC Penny's every year to buy school clothes.  Man I hated that place.
+12:27 VolCrush: PCALL at 1.1247
+dats hi, higher than me atm
+12:29 AlphaInvestor: Brashy - Swim Lessons - taught every day the market is open ... for freeeee by great TOS instructors
+12:31 radon224: wow, GE
+12:31 radon224: that aint good
+12:31 AlphaInvestor: duck and cover
+12:32 brashybrash: ge, i assume, means get educated?
+12:33 RollDonald: howdy
+12:34 radon224: GE means General Electric, the stock
+12:34 AlphaInvestor: Wow PNC took it on the chin after E
+12:35 invertedhammer: Rty going to drag others down?
+12:36 chenmann: yes
+12:36 brashybrash: second day on here, I'm an artist, excuse the naivate
+12:36 chenmann: algos going crazy....
+12:36 invertedhammer: Agree chen
+12:37 radon224: Set bow planes to 30-degree down angle, close all watertight doors.
+12:37 chenmann: rare to see 10 point chops on es
+12:38 tmoney20g: esmal did another one
+12:38 tmoney20g: worked out better
+12:40 radon224: Ford vehicle sales in China dropped 43%.   Ooopsie
+12:41 AlphaInvestor: not surprised at all
+12:44 MyOtherBrotherDarryl: final flush out?
+12:44 esmal: dozing off of work but glad your having success!
+12:45 tmoney20g: thank you
+12:46 MyOtherBrotherDarryl: is that a bull flag.......Qs?
+12:46 DrHouse: Most of my success happened before market opened. I am dozing off too, esmal
+12:46 tmoney20g: BUY +2 AMZN 100 (Weeklys) 12 OCT 18 1750 PUT @5.00 LMT BOX
+SELL -2 AMZN 100 (Weeklys) 12 OCT 18 1750 PUT TRSTP BID-.95 (STP 6.90) MARK BOX
+12:46 tmoney20g: probably could have squeezed it at the top there, but didn't edit it soon enough
+12:47 tmoney20g: also getting close to market close, don't want to mess around too much
+12:51 Eedie: Sometimes being delta neutral sucks... just saying
+12:52 streetglide: how boring
+12:52 MyOtherBrotherDarryl: this is setting up.  will it take off?
+12:52 VolCrush: 30' charmins firing long, atm (wit 9' to go in measuring period): AAPL, ALGN
+12:52 streetglide: get em Mr Whipple
+12:56 MyOtherBrotherDarryl: come on man....using a lot of mental energy on this bull flag to make it  work.
+13:01 VolCrush: charmins goin neg
+13:02 tmoney20g: they're having a boxing match
+13:03 tmoney20g: darn, this was the dip i wanted on that last play
+13:03 VolCrush: other than china names & TLRY, not much holdin bid
+13:04 peppizz: thoughts on mmnff
+13:04 chenmann: one can make good $ if can catch these 10 point chops
+13:04 chenmann: es
+13:05 chenmann: or killed
+13:05 chenmann: ha
+13:05 MyOtherBrotherDarryl: Mnuchin says markets are correcting.
+13:06 MyOtherBrotherDarryl: Not sure if this flag can blow in the wind.
+13:07 AlphaInvestor: Musk just tweeted
+13:07 AlphaInvestor: but it made total sense, it was about climate change
+13:08 chenmann: ha
+13:08 AlphaInvestor: Happy #NationalFarmersDay
+13:09 chenmann: big move coming....down i think
+13:10 VolCrush: MMs will have a gud weekend if they can pin der fruit to 220
+13:10 MyOtherBrotherDarryl: this flag is starting to look like a tarp
+13:13 chenmann: hmmm not much follow through
+13:14 VolCrush: back of the woodshed for XLF, that sector was handed success on a silver plater this year and by the prez, but utter and total failure......gunna be tuff for the market w/o this sector
+13:14 MyOtherBrotherDarryl: 3 marching soldiers may have walked into gunfire.
+13:16 peppizz: yah not goin
+13:20 VolCrush: should these mothas pin der fruit to 220, i will raise a shot of whiskey to der MMs
+13:21 chenmann: crooks r good
+13:21 VolCrush: i'm kinda curious about /rty, "IF EARNINGS ARE TO BE IN THE +20% YOY......WHEN DID THEY NOT GET THE MEMO"
+13:21 MyOtherBrotherDarryl: still a flag but a little droopy
+13:22 VolCrush: *ucking doji, 2hr Q's
+13:23 JC_chart: short es at 2745
+13:23 VolCrush: dat was 5 points ago
+13:23 JC_chart: target is  2740 or so
+13:24 tmoney20g: so do it again
+13:24 JC_chart: i was talking to someone sorry meant to post it when i went in
+13:24 tmoney20g: she wears short shorts
+13:24 JC_chart: GC is getting interesting in last hour but they are fliniging it around right now so waiting for long to settle
+13:24 tmoney20g: 3-4pm sell-off ?
+13:25 MyOtherBrotherDarryl: ES?
+13:25 JC_chart: i dont know just depends how the funds need to rebalance in last hour
+13:26 VolCrush: actually i like der pa in AMZN* ATM, i'd hit more but the /nq won't let me
+13:28 JC_chart: der pa?
+13:30 GQ: Anybody get crushed this week?
+13:30 VolCrush: gawd damn , in my next life i'm a MM
+13:30 VolCrush: pa = price action
+13:31 AlphaInvestor: DING - rolled ABBV pcs. Until  today it was going tyo safely expire worthless
+13:31 JC_chart: its all pretty range bound actually
+13:31 MyOtherBrotherDarryl: did ok shorting. nuthin spectacular
+13:31 VolCrush: wat is?
+13:31 GQ: 3.00 sell off?
+13:32 JC_chart: all the indexs and key tech stocks very range bound and not really anything setting up
+13:32 VolCrush: PCALL 1.1486
+13:34 MyOtherBrotherDarryl: couldnt even tell you if I'm cleared to trade options
+13:35 Lee: BAC reports Monday. Calls with volume are cheap. Has to be a fat pitch. Im buyin next weeks 30s for .08
+13:36 chenmann: gl
+13:37 MyOtherBrotherDarryl: soldiers are wounded
+13:38 GQ: Amzn down 15% time to nibble
+13:39 Anonymous so far: If I exercise a call option and do not have the $in my account when do I have to transfer the $ to you?
+13:39 JC_chart: so AMZN chart looks  awful to me and really could go either way 
+13:39 TheOnceAndFuture: You should read up on options a LOT more before you start asking that
