@@ -1,0 +1,290 @@
+16:19 blondetrader: oh right macd where he been'
+16:19 VolCrush: MACD and TNT live with Ryan, they don't care abut u
+16:19 DrHouse: I am sure MACD likes me, I call him MACDaddy to hype him up
+16:19 blondetrader: street thats a possibility
+16:20 blondetrader: I just think a holliday deal
+16:20 blondetrader: and a santa claus rally
+16:20 blondetrader: then 2019 sell sell
+16:20 blondetrader: LOL
+16:20 VolCrush: doesn't matter wat CEO'S say, der tape will be der judge
+16:20 streetglide: yeah I dont disagree
+16:20 streetglide: with bt that is
+16:21 brashybrash: neophytes
+16:21 VolCrush: SAT word in chat?    berg'd
+16:21 brashybrash: meaning me
+16:21 VolCrush: y did u use der plural?
+16:22 brashybrash: singular babysitter
+16:22 Anonymous so far: Bullish tomorrow ?
+16:22 VolCrush: welp AMZN UP big AH, all of 11 points
+16:23 DrHouse: Freaky Friday? Hoping for all greens, I assume?
+16:23 brashybrash: going up, has ro
+16:23 VolCrush: no vega
+16:23 Anonymous so far: Going into the weekend
+16:23 VolCrush: i only trade on Saturday's
+16:23 Anonymous so far: That’s my fear
+16:23 DrHouse: Same, Vol
+16:24 Anonymous so far: The market took a hit . Think the bounce will come Monday
+16:24 brashybrash: we all need a marrini
+16:24 DrHouse: I don’t drink, so nah fam
+16:25 brashybrash: still be helping
+16:25 DrHouse: Anyways traders, going to be building up a new online store. Later traders
+16:25 streetglide: what are you selling...cannibis?
+16:26 VolCrush: prob gunna sell widgets made in China
+16:26 DrHouse: Maybe
+16:26 DrHouse: Maybe not
+16:26 VolCrush: DON'T send me the link to your site
+16:26 JC_chart: ok that took a sec
+16:26 DrHouse: I got some good stores, lol.
+16:26 DrHouse: Anyways, later traders
+16:26 JC_chart: thats a link to the RTY image
+16:27 brashybrash: I'm a fine artist, top 3 in the us
+16:27 streetglide: love dolls, Dr?
+16:27 brashybrash: hah!
+16:31 VolCrush: so u use diff timeframe histograms to detect shift in direction?
+16:31 Anonymous so far: What do y&aposall think about SQ tomorrow? Down?
+16:31 VolCrush: *histograms
+16:31 JC_chart: i do actually sometimes but not in that image
+16:31 VolCrush: i tink SQ has lost all or most of their top shelf managers, apparently der CEO is an arse
+16:32 JC_chart: in that image I am showing two different histograms one driven on breadth and volume and one driven on price
+16:32 VolCrush: wats the delta rthen from one histo to the other?
+16:32 VolCrush: ah ok
+16:32 JC_chart: the move
+16:32 JC_chart: or momentum
+16:33 JC_chart: but here let me do a fib one so you dont think i am bsing you one sec
+16:33 VolCrush: momentum in volume? volume and breadth?
+16:33 VolCrush: btw, you should be able to post the chart directly in here 
+16:33 JC_chart: yes as a raw input that is transformed by the indicator
+16:38 JC_chart: this is one of the GC trades i did
+16:38 JC_chart: i tried to post it right in here but gave me a bad size
+16:39 JC_chart: the entry was at one fib and exit at another
+16:39 VolCrush: got it, thanks
+16:40 JC_chart: my sq chart says it is flat lined in a range so hard to tell what will happen tomorrow
+16:40 admin_tculs: JC  please do not post outside links here
+16:41 JC_chart: well how do you post an image in her admin_TCULS
+16:41 VolCrush: s/he is tryin to post the TOS chart in here, but I and others don't know how to do that
+16:44 AlphaInvestor: JC - make your chart smaller before clippping - I use WinDoze 10 Snipping Tool. Then past into the chat box, right click and Zoom to 10%. Then hit send
+16:45 VolCrush: ty, Alpha
+16:45 JC_chart: how small
+16:45 VolCrush: 10%
+16:45 Gus: can't wait until eveything can be shorted with ease
+16:46 AlphaInvestor: 640 x 640 I believe, but not sure
+16:46 VolCrush: LOL, shorting for the last 3 days has been as easy as it gets
+16:47 Gus: anybody a strictly short saler here?
+16:47 VolCrush: or what, Alpha said
+16:47 JC_chart: k
+16:48 Gus: also yeah, but the consistency of being able to short all the time so not just 3 days lol
+16:48 JC_chart: been able to short gold for a long time LOL
+16:49 Gus: yes yes for sure but easier lol, i guess I'm not on the JC_chart level yet haha
+16:49 AlphaInvestor: Gus - you can short most liquid things, those that are NTB or HTB, you can often go Synthetic Short via options
+16:50 AlphaInvestor: Sell an ATM call, buy an ATM put - viola ... you are synthetic short stock
+16:50 Gus: only have 18k and ive shorted $SUPV $MDXG $INNT & $BFR easy plays but as i get better I don't want to implode from lok
+16:50 AlphaInvestor: I have a couple Call Credit Spreads on BFR -- bearish play
+16:51 Gus: yeah i got out of it awhile back but thinking of heading back in soon
+16:51 VolCrush: i tink he a penny scalper
+16:52 Gus: not all the time haha but percentages are huge on plays like that
+16:52 Gus: bfr went down like 15% in the last week, i shorted $SUPV instead and got 7% before it reversed and now its down another 7% since i left
+16:53 AlphaInvestor: Vol - ah, CCS too commish intensive for penny scalping
+16:53 AlphaInvestor: SUPV doesn't trade options, I cannot be short in my IRA
+16:53 Gus: h&s pattern with a terrible downtrend on those stocks is a consistent play that I've made but don't wait long enough to realize
+16:53 Gus: the best gainz
+16:54 Gus: also, laugh if you'd like, ive never touched options haha
+16:55 Gus: just basic shorting and longing, mostly shorting, as im better at that.
+16:58 JC_chart: wow TOS sure does make it hard for you
+16:58 VolCrush: chit bronx, AH moves e.g. AMZN*
+16:59 JC_chart:  
+16:59 JC_chart: OMG did that work
+16:59 JC_chart: so vol that was an NVDA trade i took
+17:00 JC_chart: entered when histos and trend line were green at the bottom of the range fib and exited at the 23.6
+17:01 VolCrush: DAMN u did it, way to persevere
+17:01 JC_chart: i am not sure if that was more frustrating or when the time and sales stopped today on gc LOL
+17:07 AlphaInvestor: you missed the part about right clicking and scaling down to 10%
+17:08 AlphaInvestor: That way you can post a slightly bigger chart, scaled down so it doesn't burn so much buffer
+17:08 RandomDan: I am back.
+17:09 AlphaInvestor: whew
+17:10 RandomDan: I see I shouldn't have sold BABA
+17:11 408Spartan: Any idea how to enable After Hours/ Pre Market prices for the tickers in MarketWatch?
+17:12 JC_chart: I am not sure how to scale it down on my mac actually
+17:13 VolCrush: i hope someon jotted down der num bronx called out, cuz we might hit and she's sending us pics................just sayin'
+17:13 Steeplejack: Hello Everyone and Good Evening
+17:14 Steeplejack: Newbie here on the chat
+17:14 tmoney20g: hi
+17:14 tmoney20g: it happens
+17:14 VolCrush: oi jack
+17:14 Steeplejack: :)
+17:14 Steeplejack: Newbie Question for sure; can we trade on the CSE?
+17:15 Steeplejack: and or buy/sell
+17:16 JC_chart: r u just trying to see extended hours for equities?
+17:17 VET tryng to make money : Down day tomorrow ?
+17:17 tmoney20g: won't know till tomorrow
+17:18 AlphaInvestor: yup, should know about 4pm ET whether tomorrow is a down day, not a second before
+17:20 408Spartan: Yeah JC_chart
+17:20 VET tryng to make money : After the last few days , true
+17:20 VET tryng to make money : Friday’s are usually up days
+17:21 AlphaInvestor: Thanks for your service!
+17:22 JC_chart: if you go to the gear on the tool bar and then go to the equities tab or futures or forex there is a check box to check to display extended hours
+17:23 VET tryng to make money : Thank you
+17:23 VET tryng to make money : Thanks
+17:25 blondetrader: nq looking spunky
+17:26 AlphaInvestor: SPY showing green shoots in the EXT
+17:27 chenmannmobile: i m long intc and spy
+17:27 AlphaInvestor: smh
+17:27 chenmannmobile: jpm er tomorrow am.....
+17:28 chenmannmobile: even if bad think it;s priced in.....unless terrible
+17:28 AlphaInvestor: how many INTC chips are in that mobile you are posing from?
+17:28 blondetrader: jpm b4 bell?
+17:28 chenmannmobile: no idea but with all the talk about chinese spy chips maybe we should stay with intel chip no?
+17:28 chenmannmobile: yes bt
+17:29 chenmannmobile: if good , up we go
+17:30 AlphaInvestor: BT - yes, I posted the banks that are reporting earlier
+17:30 chenmannmobile: nflx er 16th al
+17:31 NullTrader: Hi I have a study that was created by my own code. I was able to edit it before. Now when I right click it, it only shows a "calculator" but no code to edit. What did I do wrong?
+
+17:31 blondetrader: well fingers crossed
+17:31 blondetrader: from these prices the long would be so much more awesome
+17:34 408Spartan: JC_chart can you post a s creenshot of what youre seeing? I couldnt find it.
+17:36 JC_chart: what im seeing  for what?
+17:36 408Spartan: the Setting youre talking bout
+17:36 VolCrush: meh, meh
+17:37 RandomDan: gap up tomorrow becoming more plausible
+17:37 chenmannmobile: buy baba back dan
+17:37 chenmannmobile: ah
+17:37 408Spartan: Apparently you cant or so says Support "Hello! Sorry about the wait. Afterhours prices you will look at the bid and ask."
+17:38 VolCrush: pics from bronx, becoming a 98% probibility with IV of 2%
+17:38 AlphaInvestor: 408 - wrong!!
+17:38 AlphaInvestor: But support don't know diddly some times
+17:38 JC_chart: im short gc at 1227
+17:38 amalia: Buy /YM
+17:38 RandomDan: too late, sold at 141.90
+17:39 RandomDan: I am not buying back at a loss
+17:39 JC_chart: target is 1226. but might not get there on 1st try
+17:39 408Spartan: AlphaInvestor thats what I thought i mean its a pretty simple utility just goddamn hard to find tht Setting
+17:39 AlphaInvestor: 408 - add a new custom column - I named mine myLast ... put a single word inside    CLOSE   ... set the aggregation to 1 minute using the little box that defaults to D (daily)
+17:39 RandomDan: I am long plenty of other stuff
+17:40 amalia: 61 t trail
+17:41 blondetrader: gc drop to 20
+17:41 JC_chart: 404spart do you see the gear in your tooldbar header a
+17:41 JC_chart: haha
+17:41 AlphaInvestor:  
+17:41 JC_chart: im hoping that for you with rty
+17:41 blondetrader: and tomorrow if below that 1213
+17:41 RandomDan: JC I think you will make money short gc
+17:41 AlphaInvestor: 408 - also, make sure you click the box for EXT hours
+17:42 AlphaInvestor: right click that post, zoom up to 100%
+17:42 blondetrader: will prob do gc short tomorrow
+17:42 amalia: P shape from 24,893
+17:42 amalia: Intraday
+17:43 VolCrush: i noticed the move in /gc today, kinda scratched myself but the $$$$ did dip a bit; inflation worries all over
+17:43 JC_chart: I dont know  gc hit 126.6 5 times now  and my chart is now  has conflict
+17:43 VolCrush: listening to the Grateful Dead eating pistachio ice cream
+who, who has it better than us?
+17:44 AlphaInvestor: NOBODY
+17:44 JC_chart: i think it was the shorts covering after  the hbid up last night and early this morning and some hedging too
+17:45 RandomDan: gc was just a fear play IMHO, fear be dissipating. It's not a good inflation hedge even if inflation actually became a thingm
+17:45 AlphaInvestor: Timberland is a great inflation hedge! And I know just the guy ...
+17:45 JC_chart: dont disagree but the market players become irrational on days like to day so....
+17:46 RandomDan: yeah but if the market rises tomorrow, gc goes back to sleep
+17:47 JC_chart: ya know GC has always a few great day trades every day
+17:47 RandomDan: I don't really follow it. It's just on my watchlist for context.
+17:48 JC_chart: and if youre right, it will march back to 1165 or so and that could be a good bit of trading to there
+17:48 JC_chart: i like trading cl too but sometimes it is just too   whiphot and wicky candles so i trade gc
+17:49 AlphaInvestor: Well, it was real today. Later Traders
+17:49 JC_chart: I dont like es as i it is expensive and actually doesnt have that many great moves except when a plunge happens
+17:49 RandomDan: No idea. I think it's going to hang around 1200, but no reasoning behind that.
+17:49 chenmannmobile: later al
+17:49 RandomDan: later Al
+17:49 VolCrush: /cl is the most news driven product out there, to trade /cl you must follow the news on /cl and global macros
+17:50 RandomDan: the mood in the room is different tonight. yesterday most of us were shell shocked
+17:50 JC_chart: I just follow my chart for cl
+17:50 JC_chart: when things agree and there is a fib range go in
+17:50 JC_chart: there are usually 10 or so trades a day on the 3m
+17:51 RandomDan: cl... I have no edge at all. Would never try it.
+17:51 JC_chart: my charts have the edge
+17:51 RandomDan: I don't know how many tankers are parked wherever... how many rigs this and that.
+17:52 JC_chart: don't really give a you know what ... my chart indicators agree there i is a trade i take it as i beleive in my charts
+17:53 JC_chart: not saying that with any obnoxiousness just saying that is the truth
+17:53 chenmannmobile: i only trade cl during war
+17:53 chenmannmobile: any war
+17:53 RandomDan: Whatever works for you man.
+17:53 JC_chart: i lost a lot of money  disagreeing with my chart and not beleiveing in my system ... once i paid attention and trusted my system its been great
+17:53 RandomDan: war, charts, loaded dice
+17:55 chenmannmobile: cnbc special, was today s flush the bottom?
+17:55 RandomDan: 
+17:56 blondetrader: ugh
+17:57 RandomDan: my sense, and take it for what its worth, is tomorrow is big bounce #1, but I have no idea if it will hold (or even happen, just the voice in my head)
+17:58 chenmannmobile: did fill that gap es 2713, and bounced right off
+17:58 RandomDan: Also, while I am playing a clairvoyant trader on TV, I would look for GOOG close to 1120
+17:59 RandomDan: 1115 maybe. Something like that.
+18:00 VolCrush: welp, if CNBS said that, we have 500 points more to the downside   
+18:00 RandomDan: Of course ERs could be awful and the whole house of cards goes to the floor.
+18:00 VolCrush: or short the gap up, LOL
+18:00 RandomDan: What are those fine folks saying?
+18:01 VolCrush: or read the *ucking tape
+18:01 chenmannmobile: "it s time to nibble" cramer
+18:01 VolCrush: i would never much less take a bite out of Cramer
+18:01 VolCrush: *I would never nibble...
+18:01 RandomDan: Cramer would be good if he didn't push his book so much.
+18:01 VolCrush: really is he tasty
+18:02 VolCrush: ??
+18:02 RandomDan: I like the guy. It's like having an uncle who's a used car salesman.
+18:03 VolCrush: you shouldn't refer to Marcos that way
+18:04 RandomDan: I wouldn't buy a car from him but I like the stories.
+18:05 chenmannmobile: o wow futures up lot....so far
+18:06 blondetrader: shhh
+18:06 blondetrader: they will hear u
+18:07 chenmannmobile: cramer thinks most aggressive selling is over.....
+18:07 tmoney20g: chen just likes the full body shot of seema
+18:08 chenmannmobile: need to remove the moving tocker
+18:08 chenmannmobile: ticker
+18:08 tmoney20g: i like this cnbc encore instead of shark tank
+18:11 tmoney20g: gonna be buyers tomorrow boize
+18:11 tmoney20g: get those calls cued up
+18:11 amalia: Going for 100 ticks
+18:12 JC_chart: you guys are very entertaining thanks for a great day .. I am going to go to the gym
+18:13 blondetrader: see ya
+18:13 JC_chart: ohh and  on that RTY i will be rooting for you
+18:14 blondetrader: thx :)
+18:18 amalia: 352 and I’ll leave one trailing
+18:28 tmoney20g: chen, sara in black !
+18:28 chenmannmobile: yep
+18:29 chenmannmobile: changed to little black dress for evening
+18:29 tmoney20g: lol, /me runs
+18:30 tmoney20g: i think we retail dip at the open then push high tomorrow
+18:31 tmoney20g: so in reality, it'll dip 1000 pts since i think its going to go up
+18:31 tmoney20g: amzn trying to hit 1760 before ah closes
+18:32 amalia: Hoping polarity stays positive
+18:32 tmoney20g: so that's almost 100 pts since 3pm
+18:36 amalia: Yep. #TeamWideStops ftw
+18:36 amalia: And for the losses. haha
+18:40 EasyE: I just need SPY to open at 288 and I'll be done.
+18:40 tmoney20g: ok, gonna play games now
+18:40 tmoney20g: see yall in the moanin
+18:42 AlphaInvestor: Woo Hoo! that is all
+18:43 chenmannmobile: lol u back
+18:43 chenmannmobile: u must be really long market
+18:43 chenmannmobile: baba just poped
+18:58 RandomDan: arghhhh
+18:58 RandomDan: damn I made a measly $108 on it, just glad to be out
+18:59 RandomDan: Well, we'll always have NIO.
+19:00 AlphaInvestor: Chen - I was 8.2% cash last week, but put some to work in some quality names over the past 2 days
+19:01 chenmannmobile: nice
+19:01 chenmannmobile: we r up so much, i m tempted to take some profits
+19:01 chenmannmobile: but no will wait for tomorrow ....
+19:03 RandomDan: don't know what to tell you
+19:03 RandomDan: fins could put a monkey wrench into our plans
+19:04 RandomDan: too late now anyway
+19:04 chenmannmobile: jpm er , even if bad thinks its priced in....if terrible maybe
+19:04 chenmannmobile: spy 24 hrs dan
+19:04 amalia: /YM >327 will take us to 427
+19:05 amalia: *472
+19:05 amalia: 327-472
+19:08 amalia: So taking 2cts off here. Leaving 2 to hit 327 then leaving one trailing.
+19:08 amalia: #TradeThePlan
+19:09 RandomDan: 
+19:10 amalia: MV?
+19:12 amalia: Ding
+19:12 amalia: 25327
+19:14 amalia: 100 ticks now. Let’s see if we can squeeeeeze some more out of this b
+19:14 RandomDan: word play
+19:45 admin_tculs: Trader Lounge chatroom will be closing soon   Please finish all conversations by 8pm ct   Have a nice evening
+19:57 G3_: Have a good night tculs and all.  These have been great trading days of late!
+19:57 admin_tculs: gn G3
