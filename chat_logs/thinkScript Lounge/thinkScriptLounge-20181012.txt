@@ -288,3 +288,334 @@ who, who has it better than us?
 19:45 admin_tculs: Trader Lounge chatroom will be closing soon   Please finish all conversations by 8pm ct   Have a nice evening
 19:57 G3_: Have a good night tculs and all.  These have been great trading days of late!
 19:57 admin_tculs: gn G3
+------- Thursday, October 11, 2018 -------
+14:11 Vimes: i guess it won'at capture screenshots
+14:11 mthfr_vaxxed: negative. text only
+14:12 Vimes: still very nice, smart work
+14:12 mthfr_vaxxed: im missing a lot of days and wanna get all the good stuff while im gone
+14:13 mthfr_vaxxed: if you know git... feel free to pull request
+14:16 MTS1: MTH; I see you have the PY exe in there also; but not sure how it works, if anything else is needed or how to set it up; if you are up for a how-to doc that'd be great also.
+14:16 mthfr_vaxxed: only works on linux
+14:17 MTS1: Ah. .
+14:17 MTS1: hell of a bounce was it Mo that we needed?
+14:18 mthfr_vaxxed: but you shouldn't need to run it. if you want it locally on your computer... learn git. after repo is cloned you just `git pull` for latest
+14:19 Nube: Yowsers this the best bounce we've had all week. I think that Mobius fellow might know a thing or two.
+14:23 mthfr_vaxxed: rgrep -E 'Mobius|AlphaInvestor|VolCrush' chat_logs/
+14:29 FrankB3: Thanks Mr. Mo: for # Typical Price Reversal Strategy,, works good
+14:29 Vimes: i agree
+14:30 Mobius: yw.. When volatility is over 20 studies like that do well
+14:31 FrankB3:   Trying to work in with any RonCo strategy
+14:33 Mobius: I just use it for intraday futures trading. RonCo is more for options. Guess you could intraday trade futures options with it
+14:34 John1a: What is a RonCo strategy?
+14:34 FrankB3:   No longer looking for homeruns: will settle for 1 -3% for 4-5 days... ha, now that you said IV :  do see a lot of  $1 -$2 moves interday in stocks
+14:38 Mobius: John - an options strategy. Set it an forget it. $1.00 wide In/Out spread.  Risk 1 to make 1 sort of thing. 
+14:40 John1a: Mobius: Thank you, so which zones study do you use, it seems there is more than one version/variety.
+14:41 Mobius: John.  What I use depends on what it is I want to see.  There's no such thing as one study fits all
+14:41 AlphaInvestor: Mobius - I updated the spreadsheet In/Out tool that DK's team built to pull the bid/ask stuff using RTD and sent it back to him
+14:42 Mobius: That by the way IS the Holy Grail. Every Study has it's use and knowing that use it the Grail
+14:43 Mobius: Alpha.. What's the weather over there looking like?
+14:43 AlphaInvestor: The Grail according to AlphaInvestor:
+The Grail - a) a set of no more than a dozen carefully selected Technical Analysis indicators that you know backwards forwards and upside down b) a Trading Plan and the discipline to follow your plan, c) a thorough understanding of fundamentals and Fundamental Analysis, d) a curious mind and a commitment to lifetime learning, e) a capacity for and love of work ... Hard Work, and f) patience when needed, the ability to react quickly when required, and the wisdom to know when each is appropriate.
+14:44 AlphaInvestor: Mobius - TS Michael was much worse than I expected here, lots of rain, high winds, power outages. It has blown thru already into NC.
+14:45 AlphaInvestor: Nothing like Florida tho .. Prayers!
+14:45 UpTheCreek: can't you put that in a pill or something?
+14:45 Mobius: Glad your safe
+14:45 Mobius: It already comes in a bottle UPC
+14:48 UpTheCreek: kinda brownish stuff I imagine...
+14:49 John1a: Mobius: I mean which study shows quaterly balance zones.
+15:17 teebone: Mobius ive been seeing some of your old stuff all over the internet
+15:19 Vimes: legen....wait for it....dary.  Legendary!
+15:35 Nube: Vimes + 1
+16:00 FrankB3: Mr. Mo> never done a "in-out spread",  did a few 2 day credit spread::  Would it be feasible to do a 1 -2 day in-out spread ?????
+16:02 inov: we're there problems with Study Alerts today after 10:00 a.m
+16:03 FrankB3:   Would be hard to get options fill??   Got my prices on credit spreads or I did not play
+16:04 FrankB3:   I know thats not the way dk teaches
+16:07 Nube: Frank, if I was only going to be in for a day or two, I wouldn't do a spread
+16:09 FrankB3: you are most right
+16:10 FrankB3:   But I like the idea of risking one to make one
+16:10 FrankB3:    sort of like a roullette bet
+16:10 AlphaInvestor: I hate the idea of risk one to make one ... no edge
+16:11 FrankB3: for 1 day ??
+16:11 Nube: I like risking 1 to make a multiple of 1, but if the strategy has an advantage then 1 to 1 is a money maker
+16:12 FrankB3:   AI::  just think you double your IRA ten time in 10 days
+16:13 AlphaInvestor: yeah, right
+16:13 FrankB3:   :(
+16:13 inov: Did anyone have issues with Study Alerts today
+16:14 JohnnyQuotron: The LoungeArchive is current
+16:14 amalia: inov, email support@thinkorswim.com
+16:14 inov: tx amalia
+16:18 MTS1: Ofcourse there can be edge in risking one to make one; the spreads they're talking about when I've seen them can have quite a variance in IV = edge, different delta (lose slower on the one you own than the one you sell) = edge, and they are directional; so the entry signal you use can be statistically based and give you edge? But the RR Should probably be updated: If your rule is to always close out at x profit (not max profit) than it's risking 1 to make x. .
+16:19 FrankB3: thanks MTS
+16:20 MTS1: inov; there are different types of study alerts; helps to be specific when you ask.
+16:20 FrankB3:     I hope I'm wrong about this study:  don't look good:      http://tos.mx/Ejq5He# 
+16:20 AlphaInvestor: MTS - the only way they make sense to me is with a strong directional play
+16:21 MTS1: DK also plays them specifically at extremes; still directional with higher chances / edge for reversal to mean.
+16:22 MTS1: Frank; not sure what you're looking at in that grid or what pecifically is not good to your eyes.
+16:23 FrankB3:   weekly and monthly breaking the moving averages.....  tested over long periods of time
+16:23 MTS1: (PSA; only one shared study in grid ;))
+16:23 AlphaInvestor: thks MTS
+16:23 FrankB3: ahhh
+16:24 FrankB3:   http://tos.mx/AUh1uT# 
+16:26 MTS1: It doesn't tell me much Frank, besides that we're still in a LT upgrend and we're having a regular pullback to MA. But maybe I'm miss-interpreting.
+16:26 MTS1: Is there something different about the secdond share?
+16:28 FrankB3:    Study was done by trader who tries to say when to get out of market for long term holders ???
+16:29 willliam1970: have been attempting  geta a 5min chart ema and sma on a 1 min and 24 tick chart is there a script that i can use that will allow this,  5min  100  50  sma and 20 and 10 ema
+16:31 amalia: Time based studies don’t work with tick charts.
+16:32 willliam1970: can this be done on a one minute chart
+16:32 amalia: It can.
+16:32 MTS1: Which study frank, the top dog stochastic on a monthly? I'm not seeing it though; not even to the prior extremes where they'd turn around. But not my chart so does not 'speak' to me I guess.
+16:34 UpTheCreek: william as an example the dailySMA study can accept other aggs as an input
+16:36 MTS1: William; for an SMA for sure and I believe for an EMA also you can simply multiply the lenght by the factor you're looking for? A 200 SMA on a daily is the same as a 40 SMA weekly; same on your minute charts.
+16:37 FrankB3: MTS:  the full stoch. and DMI was my idea to test out the idea of P3_squeeze would be better on a monthly chart for buying  targets.   You only see a TTM_Squeeze on a monthly chart, about once in 4 years... trying to hack JC's ideas
+16:43 MTS1: OK; that's not on the chart you shared I think so not looking at the same thing. The DMI is too messy to me; tried to understand in the past but does not do it for me yet, and the stoch did not jump out with a message to me.
+16:45 AlphaInvestor: William - well, isnt a 5 minute 20 EMA very similar to a 1 minute 100 EMA?
+16:46 JohnnyQuotron: Alpha... just catching up.  Had some weather today?  Pleased that you and yours are well.
+16:47 AlphaInvestor: Not a lot of effects, but definitely more than I expected being so far from the FL panhandle
+16:47 Vimes: Feels like Michael had a bigger impact than forecasted
+16:52 FrankB3: MTS:  are you a fan of the "p3-Squeeze ?
+16:54 FrankB3:    I don't think too many traders care about it:  work done by an outsider, wendy kirkland
+16:56 UpTheCreek: most of the studies in TOS are the work of outsiders, some directly acknowledged, most not.
+16:57 FrankB3:  by outsider I mean not from wall street,,  same thing ??
+16:57 Nube: MTS, regarding the risk to reward of the 1 to 1. You're correct in that most talk about taking the trade off at x percent of possible profit. As I understand the intent of the strategy is explicitly to not do that and just let it go to expiration
+17:04 FrankB3:   I think this was her orignial idea,,  before I hacked it up for shorter trades.  The idea is buy only targets: when the ADX reaches up and retraces, and the same time when the MACD drops and retraces..  IE on 5/3 and 6/29 would be buy points.  She woud buy otions 3 months out.      http://tos.mx/CCvOqz#
+17:06 FrankB3:   I never thought to test it in a down market
+17:08 FrankB3: one down fall, I'm still working on how to get by double bottoms that are close
+17:20 AlphaInvestor: Vimes - ears on?
+17:22 Vimes: yep, i'm here
+17:24 AlphaInvestor: Vimes a study you recently posted says we should now be 0*TLT and 1*SPY -- how much do you trust that study?
+17:25 Vimes: i don't have any history with it other than i head read the article from grossmann website and was curious about it
+17:25 AlphaInvestor: Gotcha - thanks
+17:26 Vimes: i have a hard time buying tlt right now, so don't disagree with that allocation, however when i go back and look at the allocations in his model i don't get a good match
+17:27 AlphaInvestor: I like the max drawdown reduction, about half
+17:27 barry314: Thank you everyone for your script help Tuesday.  A couple strange things happened after my alerts were hit. Can someone tell me how to fix?  about an hours after the alert and the reverse were hit were hit I was able to get back to my screen and the chart was poltting as a flat line.  I clicked on the alert and the chart returned to normal but that apparently ended the alert. When I checked to see why I didn't get any alerts today, I found that no alerts were active even though I had set to expire in Jan 2019.
+17:28 Vimes: yep, really other software would be better to backtest because it doesn't include dividends, i guess i could try to add a proxy for that
+17:29 Vimes: another thing to consider is its considering prior data, so i don't think its factoring in the current volatility in this month
+17:29 AlphaInvestor: Barry - if it is a MarketWatch Alert .. you need to set it up to do Reverse Crossovers
+17:29 AlphaInvestor: Vimes - likely not.
+17:30 AlphaInvestor: An adaptation could be to use a user selectible mix of historic and implied volatiltiy
+17:30 Vimes: i've always picked stocks outside my 401k but am intriqued by some of these factor models lately so just playing with them
+17:32 Vimes: not sure links will stick:
+https://logical-invest.com/universal-investment-strategy/
+17:32 AlphaInvestor: AQR has a great paper on factor investing
+Liquid Alt Ragnarok?
+17:33 Vimes: yes i've started listening to some of their podcasts
+17:33 Vimes: there is a good book for a novice like me :) by Berkin and Swedroe, called "Your complete guid to factor-based investing..."
+17:34 Vimes: it is a very plain and simple summary of alot of the prior research
+17:35 AlphaInvestor: Cliff Asness at AQR does a lot of that sumarizing too, but it can get kinda deep
+17:35 Vimes: i worry alot on stat research though, because likely there is so much maniuplation of the data and screeneing etc. that you really don't know how they actually implement it in practice.  It seems these things never really play out in reall measured returns versus the backtest
+17:36 AlphaInvestor: Vimes - a couple of my standard fundie screens are now Factor based, with custom Factor Tilts. Been using them for about a year and a half.
+17:40 Vimes: do you use a service for that?
+17:41 Nube: It isn't the fudging of the data that concerns me so much as something that worked well the last 20 years would be expected to not work well over the next 20
+17:42 Vimes: that too, i'm not saying grad students are dishonest but at some point when you are trying to get published and get your phd you can talk yourself into throwing out all sorts of outliiers to make your model work
+17:42 Nube: Sound, foundational factors probably not as bug of a concern, but a lot of the newer ones would concern me
+17:43 Vimes: well the factors in the book i mentioned all pass the logic test for a solid investing plan so i believe the results, but as i've gotten older i'm more about not losing my money so don't want to experiment too much
+17:45 AlphaInvestor: Vimes - I experiment with phantom portolios - my longest running is over 10 years old, I transfer what works to real $$
+17:46 Vimes: i started investing with ibd and the fool nearly two decades ago, and both had a tilt to combination of technical and fundamental factors
+17:46 Vimes: maybe more so ibd on the technical side
+17:46 AlphaInvestor: example, everyone was big on Piotroski a while back. I implemented a phantom portolio that selected all the 8 and 9 rated stocks using Piotroski ... a big loser
+17:47 Vimes: yes i've played with that as well using guru focus
+17:47 AlphaInvestor: ran that succa for almost 5 years before giving it up because it Never outperformed
+17:49 AlphaInvestor: Later Scripters
+17:49 Vimes: later ai
+17:50 JohnnyQuotron: later Alpha
+17:50 MTS1: Not familiar or researched the P3 Squeeze Frank; so don't know what it is based on.
+17:51 Vimes: i was curioius and looked it up on the tube, not sure its worth diverting a lot of time too unless someone is need of a direction
+17:52 Vimes: looked to usee PPO and ADx, if not mistaken to time long entries when they pinch together
+17:53 MTS1: Nube; what I've seen when DK executes it (in-out) he advocates taking profit at certain %, sooner (lower %) if it gets there quicker than expected. As I recall that was also what Mobius suggested the other day when he advocated for the strat.
+17:54 Vimes: you would place the PPO chart above the ADX chart in the lower stack
+17:54 MTS1: Letting it run to expiration applies to the Risk sidel if it does not go your way right away don't close it out.
+17:57 Nube: I should have specified I was thinking specifically that ronco strat. I only ever said 1 to 1 which is not the same thing
+17:59 Vimes: are they tracking the trades they have made - i always am a little skeptical on short dated options, i guess if there is a clear long trigger the premium should be really small so you aren't risking much
+17:59 MTS1: I thought ronco was in-out; but I could have misundersood; was the first time I heard of it this week;)
+18:00 JohnnyQuotron: Nube,, regarding DKs In and Out.  out at 50-55% profit assuming it is going your way.   never buy an in out before earnings that expires in the week or two after earnings.  more if you want it
+18:01 Nube: I think it is an in and out, but I thought the purpose of it was to not manage it. You have ot have a heckuva win percentage to make a 1 to 1 work if you're punching out half the way done
+18:01 MTS1: Not sure imes; I trust Mobius and DK, but don't have proof;)  DK might provide records when you're on his service, but I know he's a stats quant and has a reputation to uphold. 
+18:02 MTS1: Nube; Mobius mentioned 80% as I recall; have to look back in teh archives for his rules.
+18:02 JohnnyQuotron: the in out is a quant strategy.   
+18:02 JohnnyQuotron: take the 55% and run.  
+18:03 Nube: I think that was the ronco he was talking about. All 1 to 1's I dunno
+18:03 JohnnyQuotron: in at no more than 1.03% of the spread between the long and short strikes
+18:03 JohnnyQuotron: pleasedefine 1 to 1
+18:05 JohnnyQuotron: 1 long call 1 short call on the bull side
+18:05 JohnnyQuotron: 1 long put 1 short put on the bear side
+18:05 JohnnyQuotron: prefers debit to credit spreads for in out
+18:05 Nube: At 1 to 1 you would need mid 50s percent win just to break even. I can't imagine talking off a 1 to 1 at 50  based strictly on strike selection and not some other statistic.
+18:07 Nube: 1 to 1 is risk : reward. Yes, an in out spread, most commonly 2 dollars wide at a cost of a buck
+18:07 JohnnyQuotron: the theory is that with tight strikes and decent volatility and a 55% profit target the target will get hit alot.  (alot being a highly educated math term)
+18:08 Nube: But 5 wide at 2.50 is where it will need to be on most stocks with a 3 digit handle
+18:08 JohnnyQuotron: no hard stops EVER
+18:09 Nube: Well, whether ronco only or all 1 to 1's I'm sure they have their numbers chosen for a reason
+18:09 JohnnyQuotron: 10 with google... painful
+18:11 Nube: Yea, but it would be a darned good hedge for a long tech position
+18:12 MTS1: when you lose 50% before expiry you still have chance it goes to BE or profit. when u gain more than 50% and don't take it you have chance to lose it still. I'm not a Quant geak but that's how I understand it may work;) Especially if put on@extremes, reversion to mean trades
+18:32 Nube: Sounds pretty quanty to me
+19:04 MTS1: a good quant could explain it better if that is part of the edge; that's just how I wrap my simple brain around it in plain English. . Another side comment I heard DK make is that you won't usually get 100% profit unless both are ITM and you let them get assigned.
+19:23 Nube: Make sure you're seating before you read the following. I'm serious. Sit. Down. Ready? the most stable currency in the world right now is Bitcoin
+19:28 amalia: Boom!Haters
+19:29 UpTheCreek: ummm is that before orafter the 10% it lost yesterday?
+19:33 EvanBStock: DK does say if prob of touch on the long option falls below 45% to exit right then and yes take 55-65% target. Speaking of, if Dons In/Out Strat is 80% and thats assuming 50/50 odds (up or down) if I throw in a backtested strategy (based on TA) thats correct for any given time frame roughly 75%(+-5%) How would that change the probabilities or would it just make you profitable faster? Any ideas?
+19:46 admin_tculs: thinkScript Lounge chatroom will be closing soon  Please finish all conversaions by 8pm ct   Have a nice evening
+19:47 Paris: MTS - noticed some commentary on Ronco, you might like to check your chat log of 10.1.2018 where Mobius discussed that, where he also included some tos.mx links.
+19:54 Nube: Good point, UTC. Yesterday was not smooth but in recent months it's been about as stable as most G7 currency pairs
+------- Friday, October 12, 2018 -------
+06:46 harndog: Good morning
+06:47 Vimes: gm
+06:48 stevie_s: .
+06:56 Nube: Morning all!
+07:00 ZupDog: gm everyone.   have been trying to create a TTM Squeeze Label that will tell me when the squeeze is long, short, or in the squeeze.   The label script I came up should be showing RED now for the 30 min /ZN chart.  But instead is showing green.  Any help here would be appreciated.      http://tos.mx/JhHrlw#
+07:03 Vimes: try this from the source:
+# Squeeze watchlist column - Eric Purdy 2017
+# http://tos.mx/Ruon09#
+def sqz = !TTM_Squeeze().SqueezeAlert;
+def direction = TTM_Squeeze()>TTM_Squeeze()[1];
+def count = if sqz and !sqz[1] then 1 else count[1]+1;
+def fired = if !sqz and sqz[1] then 1 else 0;
+def firedCount = if fired then 1 else firedCount[1]+1;
+def firedDirection = if fired then direction else firedDirection[1];
+addLabel(yes, if sqz then "Squeeze:" + count else if sum(fired,5) then "Fired:" + firedCOunt + if firedDirection then " Long" else " Short" else "-", if sqz then color.red else if sum(fired,5) and firedDirection then color.green else color.orange);
+07:04 ZupDog: Thanks Vimes.  Will give it a try.
+07:16 Paris: upDog - replace the following snippet in your study
+AddLabel( yes, if Hist > Hist[1] then "SqzHist Up "  else "SqzHist Down" ,
+    if Hist > Hist[1] then Color.GREEN
+    else if Hist < Hist[1] then Color.RED
+    else Color.GRAY);
+07:20 ZupDog: Thanks Paris.  Will do.
+07:21 Paris: If that doesn't do it, I'm sure I have another study in my archives that does the label correctly.
+07:26 Vimes: The one i posted seems to show the squeeze on /zn for 6 bars: so could be modiifed to your liking
+ 
+07:26 Paris: ZupDog I have a version that counts the number of bars in consequtice squeezes as well. I've seen many squeeze studies being posted here in the last few years. Many ways to do this.
+07:27 Paris: BBL, heading out for a late dinner
+07:28 ZupDog: Vimes,  the one you provided works for displaying the squeeze, but does not show if the histogram has fired long or short.   I can still use this study though. Thanks for sharing it.
+07:30 ZupDog: Looks like I may have to use two separate  label scripts. One for a long / short squeeze histogram and the one that Vimes provided. 
+07:31 Vimes: once fired the label will be colored based on the direction
+07:31 Vimes: green long orange short
+07:34 ZupDog: Gottch.  Did not read the script close enough to pick up on that.  So the label you provided is just what I was looking for.  Thanks again.  Now let's see if I can modify that script to give a count for how many bars long /short.
+07:35 ZupDog: Paris, thanks for your help also.
+07:37 Vimes: for me the signal is more accurate on larger time frames, shorter time frames i think its pretty poor indicator
+07:55 Mobius: The histogram in that study (TTM Squeeze) is a momentum indicator. The "Squeeze" signal is generated from Bollinger Bands and Keltner Channel. Ther's absolutly no statistacal evidence to show which direction a squeeze will ressolve, whether up or down in a near term. For the longer term the direction is slightly more likey to be a continuation of it's longer term trend.
+07:56 Mobius: This study and the TTM Squeeze are identical
+# Momentum Squeeze
+# Mobius
+# Added Squeeze Label with directional color
+# Label is green when momentum is ascending, red when descending
+declare lower;
+input length = 20; #hint length: Length for average calculation
+input SDmult = 2.0;
+input ATRmult = 1.5;
+   def c = close;
+   def h = high;
+   def l = low;
+   def K = (Highest(h, length) + Lowest(l, length)) / 
+               2 + ExpAverage(c, length);
+  plot Momo = if isNaN(close) 
+              then double.nan
+              else Inertia(c - K / 2, length);
+       Momo.setPaintingStrategy(PaintingStrategy.HISTOGRAM);
+       Momo.setLineWeight(3);
+       Momo.assignValueColor(if Momo > Momo[1] and Momo > 0
+                             then Color.Cyan
+                             else if Momo > 0 and Momo < Momo[1]
+                             then Color.Blue
+                             else if Momo < 0 and Momo < Momo[1]
+                             then Color.Red
+                             else Color.Yellow);
+def SD = StDev(c, length);
+def Avg = Average(c, length);
+def ATR = Average(TrueRange(h, c, l), length);
+def SDup = Avg + (SdMult * Sd);
+def ATRup = Avg + (AtrMult * ATR);
+plot Squeeze = if isNaN(c)
+               then double.nan
+               else if SDup < ATRup 
+               then 0 
+               else Double.NaN;
+     Squeeze.SetPaintingStrategy(PaintingStrategy.Points);
+     Squeeze.SetLineWeight(3);
+     Squeeze.SetDefaultColor(Color.Red);
+plot zero = if IsNaN(c) or !IsNaN(Squeeze) then Double.NaN else 0;
+     zero.SetPaintingStrategy(PaintingStrategy.Points);
+     zero.SetLineWeight(3);
+     zero.SetDefaultColor(Color.Green);
+AddLabel(!isNaN(Squeeze), "Squeeze", if isAscending(Momo)
+                                     then Color.Green
+                                     else Color.Red);
+# End Code - Momentum Squeeze
+07:57 Mobius: And Purdy is not the originator of that study.
+07:59 Vimes: ok - he generated the label
+07:59 Vimes: didn't say the underlying study
+07:59 Mobius: Labels for that study have been around at least 10 years I know of
+08:00 Vimes: he's afilliated with that group of guys is all, just trying to attribute to the source
+08:00 Mobius: John Bollinger is the source not the other guys either
+08:01 ZupDog: Thanks Mobius.    Glad to see you made it thru the storm okay and are doing well.
+08:02 Mobius: yw.. Not much of a storm here. But it sure wacked Panama City and Mexico Beach. I have family there and they're not even able to get back in yet
+08:02 Vimes: Mobius, so you wouldn't attribute the use of keltner channels and bollinger bands to JC? it was in his book where i originaly saw it
+08:03 Mobius: Vimes no!  There's a lot of books in trading where a lot of writers claim a lot of stuff the just isn't true. 
+08:05 Vimes: "isn't true" meaning sobeody else proposed this as a measure, or "isn't true" meaning it just is rubbish and doesn't work?
+08:05 Mobius: Neither Standared Deviation nor an Average Range nor the combination of the two was new in this or the last century.
+08:06 Vimes: gotcha
+08:06 ZupDog: We ate at Toucans in Mexico Beach years ago. Very nice place right on the water.  At least The Gibson Inn is still standing in Appalatchacola. Sorry to hear about your family's loss though.
+08:07 woodie: junk is more like it
+08:07 Vimes: lol
+08:07 Mobius: lol  woodie
+08:07 woodie: gm mobius
+08:07 Mobius: gm.. glad to see your still kickin
+08:08 woodie: thanks, glad your ok from storm too
+08:08 Vimes: i'm not trying to defend it but seems like there are dozens of indicators that are all trying to measure consolidation as a heads up for the next potentail larger move (up or down)
+08:08 Mobius: yeah  Still haven't tested my concrete bunker. But I'm happy to wait to do so  :)
+08:09 woodie: great
+08:10 woodie: if you want to see consolidation better..put heiken asli bars on chart look for group of small body candles..
+08:11 Vimes: thx woodie, will take a look
+08:11 Mobius: Vimes... In mathematics that the measure of linearity. There's already many algorithms that do that quite well. And, that's been an object for those that specialize in higher geometry for centuries. How to measure a series with as little data as possible to predict a future line.
+08:12 Vimes: so if you would what would be the best leading indicator to measure, such a period, and trade its breakout on either side
+08:12 woodie: cci
+08:13 Mobius: You just stated the problem. The "breakout". There's nothing that proves a breakout will go any one direction. Reason - Market movement is random and any smaller aggregation.
+08:14 woodie: mobius has some great stuff on his MYTRADE page
+08:14 Vimes: no i get that, and that' sthe risk i'm comforatble taking in trading, i guess i'm just asking if you had to choose an indiator suite for such a thing what it woudl be
+08:16 Mobius: I use a log price distribution drawn as a range while price compresses and trade after the breakout and retest of the area. I use my typical approach of knowing what I'm willing to risk to test the trade and when I'll make it a risk free trade if it goes my way. And, that study is on MyTrade already
+08:17 Vimes: thx
+08:17 Mobius: yw
+08:20 woodie: a real good one is mobius cci gauassian with linear regression
+08:20 Mobius: FYI - Any price compression study, Bollinger Band Width, ADX, Squeeze, Fractal Energy or any other can be traded the exact same way
+08:21 Vimes: yep, i use risk off quite a bit, i need to be more dynamic about it but i typically just have a standard risk off target and then move to break even
+08:22 AJayKC: #this label will show Earnings in days
+def LastEarningsBar = AbsValue(GetEventOffset(Events.Earnings, 0));
+def NextEarnings = if isNaN(LastEarningsBar) then 0 else LastEarningsBar;
+addLabel(NextEarnings < 90 and NextEarnings > 0, "Earnings " + NextEarnings + " days", if NextEarnings <=3 then Color.light_Red else Color.gray);
+08:23 AJayKC: hi quick question. this code is not properly working. it shows everything in Earnings in 1 days.
+08:23 AJayKC: anything that needed to be adjusted with the code or i'm doing something wrong? help please.
+08:24 Mobius:  Typical Squeeze. Drawn as a range on the price chart rather than just points. You can see the initial breakout was lower. That didn't hold and the channel was retested then there's a breakout up which is now failing. That is typical. Making the Squeeze just another area of Balance.
+08:24 AJayKC: for example MSFT it says today is earnings. HEAR's earnings is november 1st but it says in 1 day.
+08:25 MTS1: AJ; What aggregation are you running it at and how big is your expansion area?
+08:25 AJayKC: i am using on daily chart max.
+08:25 Vimes: thanks for the illustration mobius, very helpful, will try and find the study and look into it
+08:25 UpTheCreek: ya gotta have enough exp area to actually see the earnings date
+08:25 MTS1: No; there is no try. . . ;)
+08:26 AJayKC: creek how i make sure of that?
+08:26 Vimes: :) well there are lot of studies on his mytrade, if that was to me:) so have to find the matching one
+08:26 UpTheCreek: ^^^ lol
+08:26 Mobius: Vimes - That particular study is Squeeze Pivots
+08:27 Vimes: cool, thanks, good discussion
+08:27 mthfr_vaxxed: you can view earnings on the calendar. easier than seeing it on chart if its far out
+08:27 UpTheCreek: chart settings, expansion area = whatever your criteria in the future is
+08:27 AJayKC: ok thank you creek. i changed that and it seemed to work. i appreciate your help.
+08:27 mthfr_vaxxed: marketwatch > calendar
+08:28 AJayKC: also thank you MTS1.
+08:28 UpTheCreek: yw
+08:30 Mobius: And we're off
+08:31 Nube: Where did the volume go the last couple of hours? it seemed fine all night and then it's like people just stopped trsding
+08:31 Vimes: wow lag
+08:32 chief: charts doa again
+08:34 Wally: lag again like yesterday at open
+08:42 mthfr_vaxxed: you make support ticket? sometimes devs dont know there is problem until its reported
+08:45 chief: Yes.. Too many trsders doing too much trsding
+08:49 tajtx: Mobius.   On one of your studies there is a notification of "Target Breached".   What does that mean?
+08:50 JohnnyQuotron: Good Morning thinkScript Lounge...
+08:52 MTS1: Taj; seems self explanatory?
+08:52 MTS1: If you don't understand the target; find it in the script to understand.
+08:53 tajtx: Could mean target to buy or target to sell?    I respect Mobius and want to make sure I understand the notification.    
+08:54 JohnnyQuotron: Just to clarify, regarding the tos VWAP, when chat aggregation is set to 10 min and VWAP is set to daily, does the vwap calculation begin when the chart begins ?  Or does it begin at midnight?  Or does it begin at some other time?
+08:54 JohnnyQuotron: chat = chart sorry
+08:58 MTS1: Taj; yes. Don't think he knows either what indicator you're refering to; but typically I've seen them in a color indicating target buy / sell, and again if you read the code there may be further clues.
+08:59 tajtx: I'll try and understand the code.    Thanks for the feedback.
+08:59 MTS1: JQ; don't you see the median/sd lines re-set on the chart?
+09:03 MTS1: On mine they restart when globex overnight starts at 6PM ET on futs
