@@ -874,3 +874,257 @@ https://1drv.ms/u/s!AnkeHrrRM_cvgxQTl1xckINYlKhZ
 13:21 JohnnyQuotron: that's what its there for.  Hope you find what ou want. :)
 13:22 anees: thanbks johnny appreciate it pal
 13:22 JohnnyQuotron: may the code be with you...
+13:30 sugar: does anyone know how to use the scan for donchian? I want to scan the ATRSX with close? or send me a copy of the scan.
+13:33 JohnnyQuotron: sugar..chart strategy Donchian_Channel DOWNtrend: http://tos.mx/chn8QV# 
+chart strategy Donchian_Channel UPtrend: http://tos.mx/ZR7BfU# 
+13:33 JohnnyQuotron: scan section of the onenote..search for donchian
+13:34 sugar: johnnyquotron: it states the URL is broken for both
+13:34 JohnnyQuotron: oops my mistake.. those are strategies.. duh
+13:34 sugar: johnnyquotron: it's ok you are already helping me out- so ithere a way?
+13:35 Mobius: Johnny - There's an RSI Laguerre in MyTrade. The Gaussian version won't scan - Too Complex
+13:35 Mobius: RSI Laguerre Scan in MyTrade
+13:35 sugar: Mobius: can you send me the RSI Laguerre scan?
+13:36 Mobius: no go get it from MyTrade
+13:36 sugar: Mobius: where do you get mytrade?
+13:37 sugar: Mobius: is that in think & swim?
+13:37 Mobius: Right click ANY uers name and go the profile.
+13:37 JohnnyQuotron: Mobius.. yes i have that and use it.  But with many etfs and S&P500 stocks i find the gaussian keeps me in the trade longer.    I'm a huge fan. Wonder if it will scan without the FE component?
+13:37 Mobius: nope Johnny it will not
+13:41 sugar: Mobius & Johnnyquontron: can I run a scan with donchain (ATRSX) with close?
+13:43 JohnnyQuotron: mobius... bummer bummer bummer
+13:47 Mobius: Johnny - This will scan.
+Something in the scanner has changed since I wrote the original. It wouldn't scan then but I just checked and doesn now.
+# RSI-Laguerre Self Adjusting With Fractal Energy Gaussian Price Filter
+# V01.12.2016
+# Both Fractal Energy and RSI are plotted. RSI in cyan and FE in yellow. Look for trend exhaustion in the FE and a reversal of RSI or Price compression in FE and an RSI reversal.
+# Will Scan referencing study name
+declare lower;
+#Inputs: 
+input nFE = 5;#hint nFE: length for Fractal Energy calculation. 
+input AlertOn = yes;
+input Glength  = 13;
+input betaDev =  8;
+input data = close;
+input ATRmult = 2;
+def w = (2 * Double.Pi / Glength);
+def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betaDev) - 1 );
+def alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+def Go = Power(alpha, 4) * open + 
+             4 * (1 – alpha) * Go[1] – 6 * Power( 1 - alpha, 2 ) * Go[2] + 
+             4 * Power( 1 - alpha, 3 ) * Go[3] - Power( 1 - alpha, 4 ) * Go[4];
+def Gh = Power(alpha, 4) * high + 
+             4 * (1 – alpha) * Gh[1] – 6 * Power( 1 - alpha, 2 ) * Gh[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gh[3] - Power( 1 - alpha, 4 ) * Gh[4];
+def Gl = Power(alpha, 4) * low + 
+             4 * (1 – alpha) * Gl[1] – 6 * Power( 1 - alpha, 2 ) * Gl[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gl[3] - Power( 1 - alpha, 4 ) * Gl[4];
+def Gc = Power(alpha, 4) * data + 
+             4 * (1 – alpha) * Gc[1] – 6 * Power( 1 - alpha, 2 ) * Gc[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gc[3] - Power( 1 - alpha, 4 ) * Gc[4];
+# Variables:
+def o;
+def h;
+def l;
+def c;
+def CU1;
+def CU2;
+def CU;
+def CD1;
+def CD2;
+def CD;
+def L0;
+def L1;
+def L2;
+def L3;
+plot RSI;
+plot OS;
+plot OB;
+plot M;
+# Calculations
+o = (Go + Gc[1]) / 2;
+h = Max(Gh, Gc[1]);
+l = Min(Gl, Gc[1]);
+c = (o + h + l + Gc) / 4;
+plot gamma = Log(Sum((Max(Gh, Gc[1]) - Min(Gl, Gc[1])), nFE) / 
+                (Highest(gh, nFE) - Lowest(Gl, nFE)))
+               / Log(nFE);
+gamma.SetDefaultColor(Color.Yellow);
+L0 = (1 – gamma) * Gc + gamma * L0[1];
+L1 = -gamma * L0 + L0[1] + gamma * L1[1];
+L2 = -gamma * L1 + L1[1] + gamma * L2[1];
+L3 = -gamma * L2 + L2[1] + gamma * L3[1];
+if L0 >= L1
+then {
+    CU1 = L0 - L1;
+    CD1 = 0;
+} else {
+    CD1 = L1 - L0;
+    CU1 = 0;
+if L1 >= L2
+    CU2 = CU1 + L1 - L2;
+    CD2 = CD1;
+    CD2 = CD1 + L2 - L1;
+    CU2 = CU1;
+if L2 >= L3
+    CU = CU2 + L2 - L3;
+    CD = CD2;
+    CU = CU2;
+    CD = CD2 + L3 - L2;
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0;
+RSI.AssignValueColor(if (RSI >= .20 and RSI > RSI[1])
+                      or
+                        (RSI == 1)
+                     then color.green
+                     else if (RSI < RSI[1] and RSI < .8)
+                           or
+                             (RSI == 0)
+                          then color.red
+                          else color.white);
+RSI.SetLineWeight(2);
+OS = if IsNaN(c) then Double.NaN else 0.2;
+OS.SetDefaultColor(Color.Gray);
+OS.HideBubble();
+OS.HideTitle();
+OB = if IsNaN(c) then Double.NaN else 0.8;
+OB.SetDefaultColor(Color.Gray);
+OB.HideBubble();
+OB.HideTitle();
+M = if IsNaN(c) then Double.NaN else 0.5;
+M.SetStyle(Curve.Points);
+M.SetDefaultColor(Color.Gray);
+M.HideBubble();
+M.HideTitle();
+plot FEh = if isNaN(c) then double.nan else .618;
+FEh.SetStyle(Curve.Long_Dash);
+FEh.HideBubble();
+FEh.SetDefaultColor(Color.Dark_Gray);
+FEh.HideTitle();
+plot FEl = if isNaN(c) then double.nan else .382;
+FEl.SetStyle(Curve.Long_Dash);
+FEl.SetDefaultColor(Color.Dark_Gray);
+FEl.HideBubble();
+FEl.HideTitle();
+# End Code RSI_Laguerre Self Adjusting with Fractal Energy
+13:48 Mobius: The scan  reference was to the Study name and main plot crossing 0
+13:48 Mobius: 8 returns on the S&P 500
+13:49 Mobius: Well that would make a couple thousand TOS traders happy to know.
+13:53 JohnnyQs_BackupWks: YOU THE MAN !
+13:57 JohnnyQuotron: The LoungeArchive is current.  Thank you Mobius and thank you ToS for updating those scan servers. Wahoo...
+13:58 bsinks: This has most likely been asked a bazillion times and if so I'm sorry..........Does any body have a link for a good HOD MOMO scanner for TOS
+13:58 AlphaInvestor: Mobius - last time that was shared, it had Nfe of 8, Glenght of 13, BetaDev of 4. Now it is configured 5, 13, 8.
+Any specific reason for the change. Symbol used on? aggregation period?
+14:02 Mobius: Alpha... Just the way I used it last is all
+14:02 chief: sugar, this should work as Donchian buy scan....
+input length = 50;
+plot buy = high > Highest(high[1], length);
+14:04 AlphaInvestor: Thanks mobius - the shape and crossing times change of course - I think this is agreat study, one of the best you have done ... so always interested in how/why it works the way it does.
+P.S. the math is beyond me
+14:07 Mobius: Alpha.. The latest one I've been working on uses an error correction neuron to set the length for the gaussian filter and RSI time factor. Pretty cool.
+14:07 AlphaInvestor: oooh, super cool
+14:08 AlphaInvestor: I am short a few physical neurons, so software ones are always beneficial
+14:08 Mobius: I'll post it when I'm sure it's working correctly
+14:08 AlphaInvestor: Great, thanks!
+14:08 AlphaInvestor: If yoiu need beta testers ...
+14:08 Mobius: I'm sure the group will have a ball twisting and morphing it :)
+14:09 bigworm: neuron?
+14:09 AlphaInvestor: I rarely touch your studies, except to change the lipstick, or add debug statement so that I can understand how they work
+14:10 Mobius: lol  go back to sleep big... 
+14:10 ramesh2599: Is it possible to displaly dynamic vertical line  50 bars back?
+14:10 AlphaInvestor: yes
+14:11 AlphaInvestor: why, would be an appropriate question tho
+14:12 MTS1: Ramesh; use barnumber() function and do the math to determine where 50 bars back is. Or index like IsNan(close)[-50]
+14:13 Mobius: Quite a bit of /ES volume swapping hands today with no real movement.
+14:13 ramesh2599: I am looking into its relationship with  RSI
+14:13 Mobius: let me save you some time - There is no relationship with current RSI and RSI 50 bars back
+14:14 MTS1: Ramesh; which relationship with RSI?
+14:14 ramesh2599: ok
+14:15 Mobius: Other than the Butterfly Effect
+14:15 MTS1: But 48 bars may work;)
+14:15 ramesh2599: 49 to be exact!
+14:15 ramesh2599: Thank you all though!!
+14:16 AlphaInvestor: Mobius - that is too simplistic - they will both be between 0 and 100
+14:16 bigworm: lol i wasnt sleeping.  been up since 6!! had class today to learn about the kernel trick!!!
+14:17 bigworm: seems very useful.  I have been looking at code on classifiers and it seems there are alot of ones that are iterative and you need lots of loops.  with kernels, it appears you only need to go over it once
+14:17 bigworm: so computationaly, it appears much more effiecient and easy to swap out
+14:17 Mobius: You turned left on your way to Walmart last night and because you didn't turn right an accident happened in Russia that killed the one person that could have saved the planet 40 years from now. But the one person that would save the planet 39 years from now was born because if the same turn you made last night.  True Story. 
+14:18 bigworm: lol what?
+14:19 Vimes: JD?
+14:20 Vimes: i thinke he's illustrating the butterfly effect
+14:20 bigworm: great movie
+14:22 Mobius: String Theory, Chaos Theory, Quantum Entanglement - Spooky Action at a Distance, whatever everything is connected
+14:22 bigworm: agree
+14:24 Vimes: is it simlar to the kevin bacon theory
+14:24 bigworm: mmm
+14:24 AlphaInvestor: I know a guy named Kevin, and I like bacon
+14:24 Mobius: ohhh bacon...yum
+14:26 Mobius: Did you guys read about the kid that just proved that quantum computers are actually doing quantum stuff?
+14:26 AlphaInvestor: bacon infused jack daniels - its a thng ... look it up
+14:26 Vimes: i've had bacon in bloody mary's , <-_ not ashamed
+14:27 bigworm: whats going on with your brain right now
+14:27 Mobius: hmm a breakfast idea
+14:27 bigworm: quantum bacon stuff?
+14:27 mthfr_vaxxed: urmila mahadev?
+14:27 Mobius: yep   grad student
+14:27 bigworm: lol
+14:27 Mobius: smart girl
+14:27 Mobius: she will make a difference
+14:28 Mobius: TOS needs to hire her  :)
+14:28 bigworm: when will they be out?
+14:28 bigworm: probably will be too expensive for me
+14:29 Mobius: First Quantum Trading Platform.. You guys paying attention
+14:29 Vimes: i think i'm in love
+14:29 bigworm: im not quick enough to even use a regular computer that efficiently
+14:30 AlphaInvestor: I am stuck on a continuous surface with only one side and only one boundary .. I have no time for such banal persuits
+14:31 Mobius: I loved one of the illustrations used to describe a core problem with understanding what a quantum computer is doing. One with 100 qbits held in a single state would take a current harddrive the size of the visible universe to hold it's state data.  
+14:33 Mobius: How could any human know if that data is correct??
+14:34 mthfr_vaxxed: "Mahadev's protocl is unlikely to be implemented in a real quantum computer in the immediate future. For the time being, the protocol requires too much computing power to be practical."
+14:34 Mobius: That young woman found a way... That is cool!
+14:34 mthfr_vaxxed: sounds like an expensive "trust" function ....
+14:35 Mobius: trust isn't an option
+14:35 Mobius: Not unless you thing the Terminator would be a nice buddy
+14:36 Mobius: think
+14:38 NUG: Since TOS changed the futures symbols, I'm wondering if it is possible to use wildcards in thinkscript to compare with the results of the getSymbol() function??
+14:38 Mobius: Why wonder. Use Addlabel and find out
+14:38 Vimes: terminator 2, i think he was a nice buddy, been a while though
+14:39 NUG: For example: current code is if getSymbol() == "/ES:XCME"
+14:39 John1a: Does anyone have a script for the Std Channel in TOS that changes the channels color (green, yellow, red) depending on a trend, up, down, neutral. Thank you.
+14:39 NUG: can I use if getSymbol() == "/ES*" ?
+14:40 AlphaInvestor: Nug - you can use it, but I don't hink it will work any more
+14:41 NUG: belly laugh
+14:41 NUG: then why use it?
+14:41 NUG: wish they'd leave shit alone
+14:42 Vimes: i thought it was an exchange thing
+14:42 bigworm: when did you stop teaching formally mobius
+14:43 NUG: well, then they should code a routine to change the exchange requirements to the old TOS symbols so our code still works
+14:50 NUG: Thanks anyway
+14:56 AlphaInvestor: Nug - use   /ES:XCME   in your if statement
+15:01 rupam: the RTD function for "/vxx18" does not work - any ideas?
+15:01 rupam: i.e. RTD("tos.rtd",,"LAST","/VXX18") returns an error
+15:02 Up_n_Up: put it on a watchlist and export it and stop futzing with the Excel side
+15:02 rupam: hmm
+15:03 AlphaInvestor: use      "/VXX18:XCBF"
+15:05 rupam: aha! thanks...
+15:09 Up_n_Up: watchlist columns that get exported somehow magically have the correct syntax, it's .... increeeedable...
+15:09 chief: Never mind grad students and quantum computers. This is the headline that should get more attention  "New research suggests that climate change could trigger a global shortage of beer. " 
+15:15 Taurean: Hey could somebody help me with a study as to when the Stochasitc RSI on the 5 minute chart goes above overbought or oversold and the Average line and the Value line are both greater than or less than the previous on the 30 minute chart please
+15:18 Mobius: cheif - That is serious
+15:20 Mobius: big.. I retired full time teaching 20 years ago. I had a grad student course up until 2 yrs ago and a couple students finishing last year.
+15:20 Taurean: Hey Mobius could you give me a hand with my above statement if you dont mind?
+15:21 Mobius: Taurean.. For a scan that can be done with the scan wizard easily.
+15:21 AlphaInvestor: Mobius - how the heck old are you, are you in your 200's yet?
+15:21 Mobius: lol  close
+15:21 AlphaInvestor: retired 20 years ago, dats a long time ago
+15:22 Mobius: Some of us don't wait till we're 70 to retire you know
+15:23 AlphaInvestor: I dream of retiring that early
+15:25 MTS1: @180???
+15:25 Mobius: Alpha... There's this little thing called trading. Try that and you'll never go to an office again.  :)
+15:26 AlphaInvestor: never heard tell of that kinda thing ... how would one learn how to do that?
+15:27 Up_n_Up: somebody told me it was hard once
+15:28 Mobius: We've traded two inside days since the "Big Red One". How often does that happen and what typically happens next?
+15:29 Up_n_Up: sounds like today's pop quiz
+15:35 AlphaInvestor: I would bet that the 3rd day after Big Red is not an inside day
+15:35 AlphaInvestor: BUT, if I knew the answer, I might just become a trader
+15:37 Taurean: Im going to put this on the 5 minute chart...can someone tell me where i went wrong?
+15:38 Taurean: StochRSI("rsi length" = 10, "k period" = 10, "slowing period" = 3, "average type" = "EXPONENTIAL")."FullK" crosses below StochRSI("rsi length" = 10, "k period" = 10, "slowing period" = 3, "average type" = "EXPONENTIAL")."OverSold"
+MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Value" is greater than MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Value" from 1 bars ago and MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Avg" is greater than MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Avg" from 1 bars ago
+15:39 New_Trade: Mobius plese, please open teaching trading room
