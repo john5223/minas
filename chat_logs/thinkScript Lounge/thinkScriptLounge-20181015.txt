@@ -685,3 +685,192 @@ AddLabel(1, "NASDAQ:  " + NQADV + " / " + NQDEC, if between(NQADV, 50, 75) then 
 11:18 gary8329: Week Open woud be at what price the stock opened at on the first day of the week.   Converserly, Month Open would be the opening price of the stock at the first day of the month. 
 11:18 Double07trader: Hi all, anyone know if there is some setting to allow one to drag order prices on TOS chart, i can drag on demo account but not on live account (e.g. i want to move up a Stop Loss using mouse) ?
 11:19 MTS1: Gary; just select open to be displayed and make sure you use the aggregations mentioned for each column
+11:21 Vimes: gary, you would need to create two separete custom quotes one set for wekly aggreationg with something like
+plot o = open;
+and then do the exacty sme thing for the weekly
+11:21 Vimes: er monthly
+11:22 gary8329: I see.  Create a custom quote.
+11:23 MTS1: Gary; plot o = open;
+11:23 chief: EAK....From Mr Script
+########################
+# PSAR with Alerts
+# Mr Script
+# 3.10.2015
+#HINT: This is a copy/paste/tweak of the traditional PSAR study that includes the addition of audible and visual alerts when the dots flip + an always on chart label denoting whether the PSAR dots are above or below price. 
+# from input all the way down to plot is merely a copy/paste of the traditional PSAR study.  Below that is the additional lines added to the code to create audible and visual alerts + chart label.
+input accelerationFactor = 0.02;
+input accelerationLimit = 0.2;
+assert(accelerationFactor > 0, "'acceleration factor' must be positive: " + accelerationFactor);
+assert(accelerationLimit >= accelerationFactor, "'acceleration limit' (" + accelerationLimit + ") must be greater than or equal to 'acceleration factor' (" + accelerationFactor + ")");
+def state = {default init, long, short};
+def extreme;
+def SAR;
+def acc;
+switch (state[1]) {
+case init:
+    state = state.long;
+    acc = accelerationFactor;
+    extreme = high;
+    SAR = low;
+case short:
+    if (SAR[1] < high)
+    then {
+        state = state.long;
+        acc = accelerationFactor;
+        extreme = high;
+        SAR = extreme[1];
+    } else {
+        state = state.short;
+        if (low < extreme[1])
+        then {
+            acc = min(acc[1] + accelerationFactor, accelerationLimit);
+            extreme = low;
+        } else {
+            acc = acc[1];
+            extreme = extreme[1];
+        }
+        SAR = max(max(high, high[1]), SAR[1] + acc * (extreme - SAR[1]));
+    }
+case long:
+    if (SAR[1] > low)
+        extreme = low;
+        if (high > extreme[1])
+            extreme = high;
+        SAR = min(min(low, low[1]), SAR[1] + acc * (extreme - SAR[1]));
+}
+plot parSAR = SAR;
+parSAR.SetPaintingStrategy(PaintingStrategy.POINTS);
+parSAR.SetDefaultColor(color.BLUE);
+#code below this line creates a visible alert (chart label) and audible alert on the first bar the PSAR dots flip (price crosses PSAR)
+# because of the copy/paste of tradtional PSAR study above this it is easy to use that to create the below def and plot with simple lines of code.
+def PSAR = ParabolicSAR(accelerationFactor = accelerationFactor, accelerationLimit = accelerationLimit);
+plot BullishSignal = Crosses(PSAR, close, CrossingDirection.BELOW);
+BullishSignal.SetLineWeight(5);
+BullishSignal.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_UP);
+BullishSignal.AssignValueColor(CreateColor(51, 204, 0));
+# in Alert you select what text will appear in the messages window when your alert trigers by placing those words between quotation marks.  Alert(condition or trigger, words to appear, how often to sound the alert, what sound to hear)
+Alert(BullishSignal, "Bullish PSAR", Alert.BAR, Sound.Ring);
+AddLabel(close > PSAR, "     Bullish PSAR     ", CreateColor(51,204,0));
+# Because BullishSignal will be true ONLY for the bar where the PSAR dots flip, this label is a visual alert that will ONLY appear at the time the PSAR dots flip
+AddLabel(if BullishSignal == 1 then yes else no, "     PSAR just flipped to Bullish     ", (CreateColor(51,204,0)));
+plot BearishSignal = Crosses(PSAR, close, CrossingDirection.ABOVE);
+BearishSignal.SetLineWeight(5);
+BearishSignal.SetPaintingStrategy(PaintingStrategy.BOOLEAN_ARROW_DOWN);
+BearishSignal.AssignValueColor(Color.RED);
+# Because BeaarishSignal will be true ONLY for the bar where the PSAR dots flip, this label is a visual alert that will ONLY appear at the time the PSAR dots flip
+Alert(BearishSignal, "Bearish PSAR", Alert.BAR, Sound.Ring);
+AddLabel(close < PSAR, "     Bearish PSAR     ", color.RED);
+AddLabel(if BearishSignal == 1 then yes else no, "     PSAR just flipped to Bearish     ", color.RED);
+11:23 MTS1: when you add the custom 'script' there's an optin in the editor to select timeframe.
+11:24 MTS1: ^Gary
+11:27 gary8329: Ok, thank you MTS1.  I have a starting point to work from.  
+11:28 Mobius: This study shows the value of Fractal analysis even with price squeeze studies
+# Price Squeeze At Higher Aggregation
+# V01.10.2018 Chat Room Discussion
+input agg = AggregationPeriod.Hour;
+def h = high(period = agg);
+def l = low(period = agg);
+def c = close(period = agg);
+def SD = StDev(c, 20);
+def ATR = Average(TrueRange(h, c, l), 20);
+def avg = Average(c, 20);
+def squeeze_m = if squeeze and !squeeze[1]
+                then HL2(period = agg)
+                else squeeze_m[1];
+plot s = if squeeze
+         then squeeze_m
+     s.SetStyle(Curve.Points);
+     s.SetLineWeight(5);
+     s.SetDefaultColor(Color.Pink);
+11:29 gary8329: and Vimes
+11:30 Mobius: Above study showing why price is stuck in a range today
+11:33 AlphaInvestor: Well, somebody get some WD-40 and un-stick it so I can get some fills
+11:36 Vimes: very nice, thx
+11:45 EAK: CHIEF!!!  THANK YOU SO MUCH!!!!!
+11:46 EAK: Yes, i was yelling to make sure you heard me.  Thanks so much for helping a code challenged person.  
+11:52 chief: Good learing example for you. Lots of hints. yw
+12:02 EAK: You are awesome.  Have a great day!
+12:34 bkstrader: I need some help from a bubble expert. I have read the JohnnyQ
+Educational material and tried a few tests but I can't get current
+Variable values to show up in a bubble 8 bars away from current 
+Bar. Any help would be greatly appreciated here is the code
+input barsFromNow = 8;
+def na = Double.NaN;
+def bn = BarNumber();
+def currentBar = HighestAll(if !IsNaN(close) then bn else na);
+def currentDay = HighestAll(if   bn == currentBar then day else na); 
+def hi = HighestAll(if bn == currentBar then high else na);
+def lo = HighestAll(if bn == currentBar then low else na);
+AddChartBubble(bn == CurrentBar + barsFromNow, lo, +KeyEvent + " Evt \n" 
++Round(ADX(),0) +" ADX\n" +Volume() +" Vol \n", Color.Light_Gray, 0);
+All values are showing as N/A
+12:41 MTS1: Is "day" defined?
+12:41 Nube: !IsNaN(close[8]) and IsNaN(close[7])
+12:42 Nube: bj, the values are showing na because there are no values in the expansion area.
+12:42 MTS1: nor is keyevent defined?
+12:44 MTS1: Start troubleshooting the location of hte bubble by just using "test" for the text; then add in the text syntax once the locatoin is correct? Text syntax can be tested with a label also.
+12:44 Nube: Yeah, not sure what's up there. Either way he will have to make whatever value recursive and then Bob's his uncle
+12:45 bkstrader: Nube I understand that . I tried to use (0)  and [bn] to define current value. That;'s the part I don't know how to do . Key event is a variable I defined. The bubble will show on the current bar but I don't know how to define it in the expansion area
+12:45 bkstrader: MTS  The bubble shows where it is supposed to but the variable values show as n/A
+12:46 MTS1: Then the bubble locatoin is not the issue? Seems like you're saying it is corect but not in the expansion area which is contradictory. Can't troubleshoot the variable values without the rest of the script if the only issue is the text displayed.
+12:49 Nube: keyevent[8]
+12:49 bkstrader: I tested the values in that snippet with a bubble on the current bar and they show up fine. I can't figure out how to reference the currnt value in the expansion area is that possible ?
+12:49 TICKZ: bkstrader is that a adx studie?
+12:50 Nube: Make keyevent recursive or index it back at least as many bars as you have moved the bubble forward.
+12:50 bkstrader: Tickz I have the TOS Code for ADX in a larger script
+12:51 TICKZ: just asking..i have a couple i picked up here..
+12:51 TICKZ: was wondering if you need..
+12:52 bkstrader: Nube I tried ADX [-8] and that didn't work  not sure what I need to do differently
+12:52 TICKZ: http://tos.mx/vlwmX1# adx
+12:52 TICKZ: http://tos.mx/jjW8aT# adx
+12:52 TICKZ: http://tos.mx/6LkSkx# adx
+12:53 bkstrader: Tick Thanks but ADX is not the problem its referenceing current bar in the expansion area
+12:53 TICKZ: oh ok
+12:54 TICKZ: http://tos.mx/3MrTfG# psar
+12:55 JohnnyQuotron: bks... when you scripted the fool proof x axis addchart bubble did it paint in the proper place?
+12:56 Nube: bk, that's 8 in the wrong direction.
+12:56 Nube: That's 8 forward from where you have the bubble, you want 8 back.
+12:58 bkstrader: JohnnyQ The scipt from the library works fine fine . I modified it with new lines and my variables theat's when I get the N/A
+12:59 bkstrader: Nube If the bububble is 8 bars in expansion isn't current ADX [-8] from the bubble ?
+13:00 JohnnyQuotron: minus sign is future.  Trust Nube.. Nube knows math
+13:00 JohnnyQuotron: bks.if the bubble is in the future you need to access the value from the past
+13:01 bkstrader: Tried ADX [8] still n/a
+13:02 Nube: bk, how hard would it be to delete the minus sign and try it.
+13:03 bkstrader: Just did Nube no luck
+13:03 JohnnyQuotron: The LoungeArchive is current.
+13:05 JohnnyQuotron: Question.. has anyone scripted a scan for the Gaussian Self Adjusting RSI Laguerre with FE?  I will try if not.
+13:09 JohnnyQuotron: bks.  trouble shoot.. try a bubble with just the adx...  then try another with just the other variable data one by one  create debug labels for each bit of variable data you want in the bubble.  
+13:09 Nube: bk, did you use the incorrect syntax that is in the post at :03?
+13:09 JohnnyQuotron: Is the bubble in the proper xy location?
+13:10 anees: hello , is there a way to get the floor pivot points, i get the pre programmed pivots and they arent accurate thanks
+13:10 Nube: If you use the correct syntax and index the y value back the same distance you index the x value, you will have data
+13:10 JohnnyQuotron: anees check mobius my trade or the community one note
+13:11 anees: where is that
+13:12 JohnnyQuotron: View Only Link for the browser enabled version of the thinkScript Community OneNote
+https://1drv.ms/u/s!AnkeHrrRM_cvgxQTl1xckINYlKhZ
+13:12 JohnnyQuotron: for mobius mytrade right click on his name and view user's profile
+13:13 bkstrader: Thanks JohnnyQ, That's where I'm headed The bubble is in the right location. I was hoping with the skills in this room there might be quick. Time to roll up the sleeves tonight
+13:13 bkstrader: Nube That gives me anothe direction to try
+13:14 JohnnyQuotron: debug the variables one at a time in the bubble. Trust Nube
+13:14 bkstrader: JQ I know , Nube has helped may times in the past
+13:15 anees: i dont get what i am supposed to do here
+13:15 anees: but thank you
+13:15 JohnnyQuotron: anees
+13:15 JohnnyQuotron: which method
+13:15 JohnnyQuotron: which source
+13:16 anees: i dont know all i know its called floor pivot points , i saw they were pretty accurate and wanted to ask if they are available for tos because i already have them on DAS
+13:17 JohnnyQuotron: are you in the onenote?
+13:17 JohnnyQuotron: are you in mobius mytrade?
+13:17 anees: yeah
+13:18 JohnnyQuotron: which
+13:18 anees: one note
+13:19 JohnnyQuotron: support resistance section?
+13:19 anees: ok
+13:20 anees: oh i see them
+13:20 JohnnyQuotron: 2. Pivot Scripts... there are 30 of them  Floor Trader Pivots may be a place to start
+13:21 anees: yeah im gonna try all of them
+13:21 anees: thank you so much
+13:21 JohnGalt82: Hi - Wondering if this is built in TOS or has been shared.  Looking to plot swing lines that cross back and forth over a moving average
+13:21 JohnnyQuotron: that's what its there for.  Hope you find what ou want. :)
+13:22 anees: thanbks johnny appreciate it pal
+13:22 JohnnyQuotron: may the code be with you...
