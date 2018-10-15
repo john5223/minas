@@ -1128,3 +1128,101 @@ P.S. the math is beyond me
 15:38 Taurean: StochRSI("rsi length" = 10, "k period" = 10, "slowing period" = 3, "average type" = "EXPONENTIAL")."FullK" crosses below StochRSI("rsi length" = 10, "k period" = 10, "slowing period" = 3, "average type" = "EXPONENTIAL")."OverSold"
 MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Value" is greater than MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Value" from 1 bars ago and MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Avg" is greater than MACDTwoLines(aggregationPeriod.THIRTY_MIN)."Avg" from 1 bars ago
 15:39 New_Trade: Mobius plese, please open teaching trading room
+15:42 AlphaInvestor: Taurean - split that into 2 or more separate conditions, then use
+plot Scan = cond1 and cond2 and cond3'
+15:42 New_Trade: 2 inside days and VIX = 21.30....
+15:42 chief: There is a small pennant on the spy which is usually a continuation pattern. Break to the downside suggests 257 spy
+15:43 Nube: I support Mobius having a teaching room but only open by invite to those with the sufficient foundation and desire as determined by the Selection Committee of One.
+15:45 AlphaInvestor: Nube - do you chair the SCoO?
+15:45 New_Trade: but  scripting is not mandatory...   LOL
+15:45 novapawshere: I cant get an alert that occurs when one moving average crosses anohter moving average to work? can someone help me figure out why this may be?
+15:45 amalia: 5/29,5/30&5/31 was last InsideBar
+15:46 Up_n_Up: ok ,and then what happened?
+15:46 amalia: The bottoming happened and we shot up.
+15:47 amalia: 4.91% up before we formed a top
+15:48 AlphaInvestor: Amalia - i'm game
+15:48 Nube: M does.
+15:48 novapawshere: anyone willing to hlep?
+15:49 AlphaInvestor: Nova - Chart Alert, Marketwatch Alert, or Dynamic Watchlist Alert?
+15:49 Nube: Don't get me wrong, I'm glad we don't have that - I'd have never learned to script.
+15:49 novapawshere: marketwatch alert
+15:49 AlphaInvestor: so for a single symbol
+15:50 novapawshere: Like i do if this moving average of 5 periods crosses this moving average of 9 periods alert me. Activates but never alerts when they do cross
+15:50 novapawshere: also i do alert if 'true'
+15:51 New_Trade: amalia  on 5/29 - 5/31 /ES was above 50 MA and now we below 200 MA
+15:52 novapawshere: I feel like it must have something to do with the chart timeframes because  moving averages are different if your looking at a 5m vs 15m but there is no way to select one within alert options as far as i can tell
+15:52 slashgw: there should be the option
+15:53 novapawshere: where?
+15:53 slashgw: when creating the alert
+15:53 novapawshere: how confident are you in that?
+15:54 slashgw: https://screencast.com/t/R5h1wzt6
+15:54 novapawshere: ahh
+15:55 novapawshere: i just cant find it in the options though
+15:55 novapawshere: wait
+15:55 slashgw: https://screencast.com/t/QewgbCq9yeo8
+15:55 novapawshere: the live support guy just found it for me
+15:55 AlphaInvestor: So, do you have a Study Alert something lke this:
+MovingAvgCrossover(length1 = 5, length2 = 9, "crossing type" = "below")
+15:55 novapawshere: yeah
+15:56 novapawshere: sweet i think that will fix it
+15:56 slashgw: cool. goodluck
+15:56 novapawshere: thankss slashgw and alphainvester
+15:56 novapawshere: you guys rock
+15:56 amalia: yw
+15:57 AlphaInvestor: Another satisfied ThinkScript Lounge customer
+16:21 JohnnyQuotron: The LoungeArchive is current.  Time to heat up a few ToS Scan Farm CPUs.
+16:24 JohnnyQuotron: bks.. did your bubble issue get resolved?
+16:26 FrankB3:  Would someone color the background of the chart:  when the pink line is over the blue>> green,  and when th blue line is over the  pink >> red,, thanks      http://tos.mx/Thr0JJ#
+16:28 Nube: AssignBackgroundColor ()
+16:29 FrankB3:   Do I have to first marry the two scripts to normalize them ??
+16:33 Nube: If they aren't on the same script, yes.
+16:37 FrankB3:   Really not a good idea,,, thanks any way....  Mr. Mo's  script close enough for ship yard work::      http://tos.mx/CeOe8E#
+16:41 DSF_TX: Could someone help me with a script for a scan .  I want to scan for the 8 ema to be above the 34 ema for 21 days or more.
+16:41 DSF_TX: I was able to write the script without the timeframe.  but want to add the 21 day timeframe.
+16:42 AlphaInvestor: Combining a Momentum indicator .. and a Choppiness indicator, and looking for where they cross ... hmmm
+16:42 AlphaInvestor: share what you have
+16:43 FrankB3: Yep,, its called RSI Lagear
+16:44 FrankB3:   already been done by Mr. Mo
+16:45 AlphaInvestor: Frank - good point
+16:45 AlphaInvestor: I don't know that the crossover is a signal tho
+16:45 DSF_TX: http://tos.mx/bbxr7t#
+16:46 Vimes: def ema8 = expAverage(close,8);
+def ema34 = expAverage(close,34);
+plot scan = sum(ema8>ema34,21)>=21;
+16:47 AlphaInvestor: showoff
+16:47 Vimes: me? never
+16:47 Vimes: that has about a 50% chance of working
+16:48 Nube: The swing from 0 to 1 or visa versa on the LG RSI is fast enough that often it will cross .5 and OB or OS on the same bar so it's likely not a bad cross to take as a signal.
+16:48 Nube: Not because the cross itself is special, but the speed makes most crosses about the same
+16:49 Donnie: Do they have a screener for the mobile app? Or just the pc
+16:50 Vimes: Not sure on the screener part, but i know you can save a screen based watchlist and access it via mobile
+16:51 AlphaInvestor: Nube - I configure mine to cross slower ... more of an oscillator, not a yes/no signal
+16:51 Nube: Ah, then that would be a different beast
+16:52 AlphaInvestor: I know that Mobius likes it to be more of a signal ... because he uses it for program trading
+16:53 AlphaInvestor: I prefer the gray area ... when used as an oscillator
+16:54 amalia: Donnie, the built in one are pretty good and accessible on mobile. If you prefer a custom one, create one on desktop, save it under a name then you can access the screener on mobile.
+16:55 amalia: *ones
+17:02 Nube: There's for sure a legitimate reason to want an indication to be an on / off switch. I make my final trade decisions based on a couple of yes or no criteria so it's clear cut. But screening before I get to the yes or no stage is entirely different matter, and one I do not want switch type indicators for.
+17:06 TICKZ: Im trying to make a grid to look at the global markets..but I can't find the tickers.. Can Anyone help me plz? or any Ideas?
+17:13 chief: tickz...just do a googl search on country etfs
+17:14 TICKZ: ok. thanks
+17:15 slashgw: also look at cme futures
+17:15 TICKZ: like? /6a/6b/6e etc ?
+17:15 Nube: Tickz, check out the ishares website. They have ETFs for most counties in the EAFE and the EEM
+17:15 slashgw: sure, currencies as well as /NKD and I'm sure there are others
+17:16 slashgw: checkout their website to see what all is available
+17:16 Nube: ewt, Eden, qat etc etc
+17:16 TICKZ: Ok. Thanks guys!
+17:25 amalia: Just trade MinRange on /YM.
+17:25 mthfr_vaxxed: amalia : did you prepare?
+17:26 mthfr_vaxxed: i think your one of the few who listens to my crazy anticts
+17:28 amalia: =)
+17:30 hguru: How do you scan on the mobile app what am o missing ?
+17:32 amalia: I listen to contributors. My leaning towards shortcuts in tS comes from BLT/Mobius, long term books are similar to AlphaInvestor, my daytrading is similar to Mobius’ ORB, my curiosity behind the veil in studies from Nube, etc.
+17:33 Nube: Save a scan on desktop and it will be a watchlist on mobile
+17:34 hguru: Hum ok I have a bunch of watch lists
+17:35 hguru: Your talking scan results becomes a watchlist I get that
+17:43 MTS1: Save it as a query and it becomes a 'live' scan / watchlist that updates in mobile.
+17:43 MTS1: (Don't just save the output as a watchlist)
+17:44 MTS1: Those dynamic watchlists / queries have a pink symbol in front of them on desktop.
+17:46 MTS1: (OR green; believe those are option hacker scans)

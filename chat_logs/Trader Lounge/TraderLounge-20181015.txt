@@ -1066,3 +1066,52 @@ dats my plan
 15:33 novapawshere: I can't get an alert that occurs when one moving average crosses another moving average to work. Can someone please help me figure out why this may b?
 15:34 AlphaInvestor: Nova - try the ThinkScript Lounge
 15:35 novapawshere: okay thanks
+16:00 AlphaInvestor: ADBE^ up over 5% in the EXT
+16:01 AlphaInvestor: reaffirmed guidance
+16:01 Eedie: Hello I just read above
+16:01 Eedie: Lilfish’s vomiting camel is hilarious
+16:01 chenmannmobile: let me guess , u r long and strong al...!
+16:02 Eedie: Hey Chen and al
+16:02 chenmannmobile: adbe
+16:02 chenmannmobile: hi eedie
+16:02 Eedie: Not in Adobe darn
+16:03 AlphaInvestor: Chen - just a couple pcs' that I added last week. It was one of the Quality names thrown out with the bathwater
+16:03 AlphaInvestor: Hey EE -- how you liking the new house?
+16:03 chenmannmobile: u gonna take profit tomorrow
+16:03 chenmannmobile: ?
+16:03 Eedie: Wtg Alpha
+16:03 AlphaInvestor: Chen - depends on where the option prices move
+16:04 Eedie: I love the new house. Thank you
+16:04 AlphaInvestor: Great ... you gotsa spare bedroom for me?
+16:05 Eedie: LOL no... no investors allowed
+16:05 AlphaInvestor: ha
+16:05 Eedie: But if you give me you boat then I will think about it
+16:05 AlphaInvestor: Investors are long-term ... dey might just stay forever
+16:06 Eedie: I know that’s a major concern
+16:08 Eedie: Ok I have to go.. I will be trading tomorrow
+16:09 AlphaInvestor: Later EE
+16:46 Donnie: Is there a screener for the mobile app?
+16:56 Rere: How can I deposit?
+16:56 Rere: Check is the only way to deposit?
+17:02 yoz: market was high on weed today
+17:03 yoz: How's MedMen look now AI??
+17:04 yoz: doubled market cap since I posted about it but still loses a dollar for every dollar in rev?
+17:04 yoz: sounds like a winning ticker to me!
+17:10 yoz: so what's all this Saudi drama going to do to oil prices?  What I've been reading is that it could skyrocket oil if it all leads to heavy tariffs on Saudi oil, so.. you guessed it, GUSH may jump back up to 40+ real quick if it turns our the Saudis killed that guy
+17:14 tmoney20g: Al, what indicators do you use ?
+17:14 tmoney20g: since tos has so darn many
+17:15 AlphaInvestor: I use several - Bollinger Bands, ADX, LinearRegressionChannel are some of the built in ones that I use
+17:16 tmoney20g: i'll take a peek at those
+17:16 tmoney20g: i'm in the studies dictionary now
+17:16 AlphaInvestor: I also use RSI_Laguerre, Fractal Pivots, Pivots with Projections, The ORB, the real IV_Percentile
+17:17 AlphaInvestor: custom studies
+17:18 AlphaInvestor: and a few of my own concoction like Internal Bar Strength, Absolute Momentum
+17:21 AlphaInvestor: Tmoney - since you are getting more into Options, IMO this is the most important study for options traders. Meant to be used on 1 Year Daily chart
+http://tos.mx/bO1Rr7#
+17:23 AlphaInvestor: I am heading out, if you have any questions, hit me up tomorrow
+17:35 tmoney20g: ok ty
+17:38 yoz: haha... MedMen is featured on Cramer rn... AI.. gotta comment on this
+17:47 tmoney20g: his link was weird
+17:47 tmoney20g: wanted me to reinstall tos
+17:47 tmoney20g: have to ask him more later
+17:50 TheOnceAndFuture: Add it in TOS manually
