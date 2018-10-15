@@ -530,3 +530,158 @@ so respectfully disagree
 08:52 HoBo: /
 08:58 Vimes: Weekend update, I was digging into the Mobius volatility compression study (SqueezePivots), that was discussed in the chat last friday. I wanted to make it easier to review prior squeeze events on a historical chart, so I added some of the legacy points to the chart from the default study.  In addition, I was thinking it would be helpful to visualize the compressed trading range prior to the squeeze entry.  I used half this range to estimate a proposed risk value, which might be used against signals while "in the squeeze" range or upon squeeze exit... Finally, i thought it might be interesting to take the whole range while in the squeeze event to form the basis of a pivot projection to give a visual for potential risk off points or to better interpret the trading action after the squeeze exits, this is kept active until the next squeeze fires.  See the attached for a quick visual and the modified study.  I've placed all my code at the very bottom of the default study. Hopefully, this is additive to the original study, if anybody has any improvements or better coding skills to make it more useful/practical please feel free to modify.  Or if its complete garbage, well that's ok with me too.
 http://tos.mx/MLI3TY#
+09:32 JohnnyQuotron: Vimes.. what software are you using to add the text and your Name with Underline?    
+09:33 Vimes: snagit
+09:33 JohnnyQuotron: Good Morning Scripters...
+09:33 Vimes: there is a free version i belive as well
+09:34 JohnnyQuotron: vimes... thank you.
+09:35 JohnnyQuotron: windows 10 not has a built it but it doesnt annotate
+09:37 Vimes: you can also annotate withiin tos but a bit tedious
+09:39 JohnnyQuotron: agreed. TY
+09:50 nextrade: Vimes-nice-thanks for sharing !
+09:50 Vimes: yw
+09:52 nextrade: gives nice visual for mobius' ppo osc
+10:16 nextrade: i overlay a second ppo osc- set at 20 /50 change histograms  to lines - and wait for cross at extremes
+10:16 EAK: hi all.  i would like an alert on parabolicSAR and it's not available.  Can anyone here help me with this? 
+10:18 Vimes: Eak, if you are willing to try, read this:
+https://tlc.thinkorswim.com/center/reference/thinkScript/Functions/Others/Alert.html
+10:18 EAK: k
+10:18 EAK: thx
+------- Saturday, October 13, 2018 -------
+10:20 EAK: i'm totally coding ignorant.  do you know if this indicator can have an alert?
+10:20 Mobius: Another interesting way to look at a Price Squeeze
+# Squeeze Bars
+# Mobius
+# Plots the initial bar of a Squeeze and points for each bar in a squeeze
+# Will also plot a trend line of all first squeeze bars.
+# V01.10.2018
+input PlotAllSqueezeBars = yes;
+def SD = StDev(close, 20);
+def ATR = Average(TrueRange(high, close, low), 20);
+def avg = Average(close, 20);
+def squeeze = avg + 2 * SD < avg + 1.5 * ATR;
+def sqBar = if squeeze and !squeeze[1]
+            then barNumber()
+            else double.nan;
+plot AllsqBars = if PlotAllSqueezeBars and !isNaN(sqBar)
+                 then hl2
+                 else double.nan;
+     AllSqBars.EnableApproximation();
+def h_sqBar = if barNumber() == HighestAll(sqBar)
+              then high
+              else h_sqBar[1];
+def l_sqBar = if barNumber() == HighestAll(sqBar)
+              then low
+              else l_sqBar[1];
+def m_sqBar = if barNumber() == HighestAll(sqBar)
+              then HL2
+              else m_sqBar[1];
+plot h = if barNumber() >= HighestAll(sqBar)
+         then HighestAll(if isNaN(close[-1])
+                         then h_sqBar
+                         else double.nan)
+         else double.nan;
+     h.SetDefaultColor(Color.Green);
+     h.HideBubble();
+     h. HideTitle();
+plot l = if barNumber() >= HighestAll(sqBar)
+                         then l_sqBar
+     l.SetDefaultColor(Color.Red);
+     l.HideBubble();
+     l.HideTitle();
+plot m = if barNumber() >= HighestAll(sqBar)
+                         then m_sqBar
+     m.SetDefaultColor(Color.Gray);
+     m.HideBubble();
+     m.HideTitle();
+plot points = if squeeze
+              then m
+              else double.nan;
+     points.SetStyle(Curve.Points);
+     points.SetLineWeight(3);
+     points.SetDefaultColor(Color.Yellow);
+     points.HideBubble();
+     points.HideTitle();
+addCloud(l, m, color.red, color.red, yes);
+addCloud(m, h, color.green, color.green, yes);
+# End Code
+10:21 MTS1: EAK; if you're talking about MarketWatch alerts PSAR uses recursive variables which are not allowed in MW Alerts. Chart alert function is the one Vimes mentioned which can easilly be added.
+10:21 AlphaInvestor: Squeeze Bars ... now that is the kind of bar I can get my head around
+10:23 Vimes: thanks mobius, will take a look later
+10:23 Vimes: is there any merit to how i'm thinking about your oringal study?
+10:23 Mobius: EAK - Since ParabolicSAR will scan you can setup MarketWatch alerts, email and SMS notices that way.
+10:24 katherine1234: annyone know how to find EOY 2017 balance for IRA?
+10:24 Mobius: Vimes - I've not been able to prove ANY statistical advantage or value to a squeeze. I keep looking though.  
+10:26 Vimes: ok- i guess i'm confused then, why code the orignial squeeze study - do you not believe volatiliy compression is a valid heads up to trading?
+10:27 AlphaInvestor: Mobius - it makes logical sense that Options IV should reduce while in the squeeze, then expand when the squeeze exits. Have you looke into that? If so, that would be tradable - buy options in the squeeze to sell them after it exits.
+10:27 Mobius: lol   I've coded well over 10,000 studies. I find little of value in most of them.  I code because I can
+10:29 EAK: Thank you Vimes and Mobius.  
+10:29 EAK: and MTS1
+10:30 Vimes: ok, visually to me this has some merit, maybe should try and simluate some backtest results
+10:30 Mobius: Alpha.. If price squeezes and then drops IV will rise. But if price squeezes and then rises out of the squeeze IV will reduce. Without knowing which way price will breakout of the squeeze what can you sell or buy while price is in a squeeze that gives you any advantage??
+10:31 Vimes: I guess it also gels with everything i've read back to dow theory, etc on periods of consolidatino, distibtuion, etc. to find the next period o f volatility expansion, so i'm not trying to challeng you more than clarify how you think about things
+10:32 New_Trade: Hello smart scripters       Do you have a script to show small labels Advance and Decline value in left corner of my charts?  Would like to see it for futures /ES /NQ /GC ...and also for stocks   Thanks
+10:32 AlphaInvestor: if price squeezes IV should drop, I agree that exiting the squeeze to the downside will cause a big IV rise. But exiting the squeeze to the upside could cause a minor uptick in IV ... since ATR and such went up.
+10:32 Mobius: Alpha ... Prove that  :)
+10:32 AlphaInvestor: Mobius - I was asking if YOU had tested that
+10:33 EAK: so guys, i looked over that page, and it's foreign to me.  TD apparently won't code anything anymore.  They too told me this would be easy.  Is there ANY chance of someone coding that ParSAR alert PLEASE?
+10:33 AlphaInvestor: I know logic and markets don't always go hand in hand  '-)
+10:33 Mobius: I've tried and failed to find that very notion
+10:35 Vimes: EAK, what alert on you exactly wanting and what did you not undrestand about the syntax of the alert functino
+10:35 mthfr_vaxxed: you try looking during live markets or you use historical option chain stats to find it?
+10:36 AlphaInvestor: Mobius - thanks, then I won't waste computer cycles, electrons, and precious brain cells on the search
+10:36 EAK: vimes, just a simple alert to trigger when this indicator switches it's signal
+10:37 DCR: Does ToS have the ability to tell what kind of options transaction took place on any given options trade.  Ie a Sweep, Tied to Stock, Spread, etc?
+10:37 EAK: I don't understand much about coding.  I've tried my hand at it on and off since the intro of the PC.  I don't seem to have an aptitude for it.  
+10:38 Vimes: DCR, only thing i know is the trade flash gadget
+10:38 DCR: @Vimes, Thank you
+10:39 Mobius: Alpha.. You may find what I couldn't.  What I found was that while in a squeeze if typical duration IV didn't do much at all. If a squeeze lasted a long time IV wold drop but not often far enough to profit from a strangle or straddle 
+10:39 Mobius: Since you don't know which way price will breakout those seemed the only logical trade options to me
+10:41 AlphaInvestor: Mobius - agreed in principal. But the location of prior support/resistance would enter into my decisions if doing manual trades
+10:43 Mobius: Ok - What would be a scenario we could test?
+10:45 Vimes: Well a squeeze to me means historical volatility is collapsing, which you are betting on a future volatily expansion?  Whether this is predictive of IV is perhaps another beast
+10:47 harndog: Warning...always dangerous.... ariff on Mobius' trend line of squeeze...substitute ECI  and re-run. https://www.screencast.com/t/gW3UIkv4LfB
+10:47 harndog: a riff
+10:48 harndog: Note: In this script, I track the start of the Fractal Balance Point, and I call it (FBP).
+10:48 AlphaInvestor: Mobius - sounds like you already tested it.
+But - IV pre-squeeze - IV In the Squeeze - IV post-Squeeze - a) when squeeze exits up, b) when squeeze exits down. Sort these by Squeeze Lenght ... look for tradable patterns.
+likely beyond the capability of TOS
+10:49 harndog: Here is the script idea shown in the visual: http://tos.mx/EXcR0h#
+10:51 harndog: I am heading out, unfortunately, but visually, tracking the FBP starts did a nice job tracking the market and how a trader should not fight a  "V" trend reversal.
+10:53 Vimes:  
+maybe similar view of same time frame?
+10:53 Paris: New_Trade - Here is a color coded Advancers/Decliners Label I did a while back for the DJIA, S&P 500 and NASDAQ. Feel free to make any adjustment as needed
+# Advancers/Decliners Label
+# Paris
+# 8.17.2017
+# Displays the number of advancing/declining components of the 
+# DJIA, S&P 500, and NASDAQ. This is to be used on a Daily chart. 
+def DJADV = CompoundValue(1, if IsNaN(close("$ADVI")) then DJADV[1] else close("$ADVI"), 0);
+def DJDEC = CompoundValue(1, if IsNaN(close("$DECLI")) then DJDEC[1] else close("$DECLI"), 0);
+def SPADV = CompoundValue(1, if IsNaN(close("$ADVSP")) then SPADV[1] else close("$ADVSP"), 0);
+def SPDEC = CompoundValue(1, if IsNaN(close("$DECLSP")) then SPDEC[1] else close("$DECLSP"), 0);
+def NQADV = CompoundValue(1, if IsNaN(close("$ADVND")) then NQADV[1] else close("$ADVND"), 0);
+def NQDEC = CompoundValue(1, if IsNaN(close("$DECLND")) then NQDEC[1] else close("$DECLND"), 0);
+AddLabel(1, "A/D DJIA:  " + DJADV + " / " + DJDEC, if between(DJADV, 16, 21) then Color.YELLOW else if DJADV > 21 then Color.ORANGE else Color.PINK);
+AddLabel(1, "S&P 500:  " + SPADV + " / " + SPDEC, if between(SPADV, 251, 320) then Color.YELLOW else if SPADV > 320 then Color.ORANGE else Color.PINK);
+AddLabel(1, "NASDAQ:  " + NQADV + " / " + NQDEC, if between(NQADV, 50, 75) then Color.YELLOW else if NQADV > 75 then Color.ORANGE else Color.PINK);
+10:53 harndog: My version of Mobius' Flag script "works" below four minutes. Mobius uses 2  minute typically. Also, I included notes of Mobius and Johnny.
+10:54 New_Trade: Thank you Paris
+10:55 Paris: yw
+10:57 harndog: Vimes... Substituting the ECI and Mobius' flag version, "might" do a better job highlighting the expansion contraction market nature. Also, the Flag script has the ECI label measuring compression.
+10:57 harndog: Again... all filtered through a padwan learner...:)
+10:57 harndog: BBL
+10:57 Vimes: ok will look further at your study
+10:57 Vimes: thx for sahring
+10:58 harndog: Thank you  and Mobius for sharing ...a riff on riff... all starting with a MObius idea.... lol
+11:00 harndog: VImes,.. look at the screenshot first... the idea seems to track well, and that's why I shared it.
+11:00 harndog: BBL
+11:01 gary8329: In a watchlist,  is there a way to show the Week and Month opens?
+11:08 EAK: Glad you guys are feeling the love.  Any way I can coax that knowledge to code my "simple alert" for ParSAR?  Thanks :)
+11:11 Nube: There isn't anything to code, EAK. Just set up a scan for it and set an alert. viola.
+11:11 MTS1: Gary; please clarify
+11:11 MTS1: (Open whats?)
+11:11 EAK: I will try that NUBE.  thx
+11:18 gary8329: Week Open woud be at what price the stock opened at on the first day of the week.   Converserly, Month Open would be the opening price of the stock at the first day of the month. 
+11:18 Double07trader: Hi all, anyone know if there is some setting to allow one to drag order prices on TOS chart, i can drag on demo account but not on live account (e.g. i want to move up a Stop Loss using mouse) ?
+11:19 MTS1: Gary; just select open to be displayed and make sure you use the aggregations mentioned for each column
