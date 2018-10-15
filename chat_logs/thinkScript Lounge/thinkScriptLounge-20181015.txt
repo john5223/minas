@@ -1,0 +1,532 @@
+13:03 Vimes: step, your example works for me back to max available data, daily bars, the low gets plotted
+13:03 Nube: I have never tried this but there is a first() function and I can't say whether that will carry the value to other bars so first(low) might be worth a try
+13:04 stepandfetchit:    Note that the first 9 bars have the issue!  -- the yellow is just plotting the low
+13:05 stepandfetchit: What am I doing wrong?  -- 
+13:05 Nube: post the code, step
+13:06 Vimes: here's my same example, and it seems to work:
+ 
+13:06 Nube: May well be doing nothing wrong
+13:06 stepandfetchit: Good point!  Let me do a clean build.  Likely something else is causing the greif!
+13:08 AlphaInvestor: Step - who the heck cares what the low was 15 years ago, really?
+13:09 stepandfetchit: Vimes:  Thanks!  -- I must have a bug.
+13:09 AlphaInvestor: Or, asked a different way.   How will knowing what the low was 15 years ago make you more money tomorrow?
+13:10 stepandfetchit: Alpha... This thnkscrpt is examining distance between new lows, so begins with most historice point, and advances to recient, so need it to START!
+13:11 AlphaInvestor: so if it starts 15 years minus 9 days instead of a full 15 years ago your strategy is ruined?
+13:12 Vimes: again i think for most studies there is a prefetch that is automatic, though not familiar 100%, if you really want to take care of initializing a variable use compoundvalue
+13:12 AlphaInvestor: prefetch works on all Moving Averages
+13:12 Vimes: oic
+13:13 AlphaInvestor: since BollingerBands includes a moving average, it works too
+13:14 AlphaInvestor: sometimes, if you include a moving average in you list of studies, it will do the prefetch for all the other studies too ... YMMV
+13:14 AlphaInvestor: this is consistently inconsistent
+13:15 MTS1: "Three thinkScript� functions use prefetch: ExpAverage, EMA2, and WildersAverage." http://tlc.thinkorswim.com/center/howToTos/tutorials/Advanced/Chapter-12---Past-Offset-and-Prefetch.html; but I thought the SMA also. .
+13:17 Nube: Average will, MTS. through a 200 day on a chart and it will plot from the first bar.
+13:17 Nube: *Throw
+13:17 MTS1: Yea; even the documentation that is there cannot always be relied on;)
+13:17 AlphaInvestor: well, average is a moving average ... so
+13:18 MTS1: Point is when I read doc before it specifically states EMA's and then lists the 3; I did not think it was all MA's which is why I looked it up again.
+13:21 MTS1: Hm; maybe that's how the scanner looks back further; we found the other day the scanner not looking back as far as doc states, but maybe doc is considering prefetch also?
+13:22 stepandfetchit: @ Alpha...  I just need to programatically determine when valid data can be referenced.  So, in this case, if  KNEW the first 9 bars were not avail, then I just start with next bar. So, if this IS related to "prefetch" amount, If I can compute the #bars of prefetct, I can use that to avoid the issue.  Is there a way to compute PREFETCH withing a thinkscript?
+13:23 AlphaInvestor: Nube answered that use isNAN() to determine when you don't have valid data
+13:24 AlphaInvestor: Does anybody else have a problem with either a) the Study  AccountNetLiq ... or b) the function   GetNetLiq()
+13:25 AlphaInvestor: I have never had it return a net liq for me
+13:25 stepandfetchit: Alpha... That does not work for the leading  (oldest) case!  -- 
+13:26 stepandfetchit: I'll figure something out.
+13:26 AlphaInvestor: what, you cannot use isnan() on the first 9 bars of the chart ... huh?
+13:26 stepandfetchit: correct!
+13:26 AlphaInvestor: that function should work on any bar on the chart
+13:27 stepandfetchit: Agreed!
+13:27 stepandfetchit: There is some "prefetch" issue I am bumping into
+13:27 stepandfetchit: I will hack arround it, but was hopeing for a more elegent solution.
+13:28 stepandfetchit: I may toy with that "compound" function (which I have not been using)
+13:28 MTS1: steph, this has nothing to do with prefetch
+13:29 AlphaInvestor: what exactly are you trying to do?
+13:29 stepandfetchit: MTS1:  Can you enlighten me?  -- you are probalby correct,
+13:29 MTS1: isnan works on any bar, but so should low. .
+13:29 MTS1: Steph; look at the link I posted
+13:30 AlphaInvestor: Step - if you are trying to do something like     close > low[9]     that is pulling data from 9 bars ago ... which won't work on the first 9 bars because that data won't exist
+13:31 AlphaInvestor: compoundvalue cannot pull data from before the start of the chart either
+13:32 stepandfetchit: Ah!  So, is NOT related to Prefetch (per your above ref).   Do you know what it May be related to?  -- is influenced by chart size (# bars trying to show), and influenced by any look-back references.
+13:32 MTS1: but refering to prefetch close > Avg(low,1)[9] may work.
+13:32 AlphaInvestor: what is the    IT    you refer to
+13:32 MTS1: No steph; sounds like a data feed issue
+13:33 MTS1: ignore my avg prefetch example; it only pre-fetches the number of bars data needed for the average.
+13:37 AlphaInvestor: Tculs - do you or anybody working the Trade Desk today have any experience with either a) the Study  AccountNetLiq ... or b) the function   GetNetLiq()
+13:39 stepandfetchit: Kinda interesting observation:  Attempt to plot "barnumber()", missing the leading bars as well!
+13:40 MTS1: AI; I have nothign special in my accout and both seem to work for me. Have you tried emailing TS Support?
+13:40 AlphaInvestor: all symbols, or just one symbol?
+13:41 AlphaInvestor: MTS - I haven't, I was gunna call today to discuss ... but was asking Tculs if anybody with knowledge was in to discuss it with me
+13:44 AlphaInvestor: MTS - I have a couple "special" things in my portfolio. One with a Q at then end of the symbol, one worth 0.0003 per share, a couple recent spinouts, and 10 leftover Washington Mutual Inc Escrow thingies
+13:44 MTS1: I've not tried often, but seems eml is easier for TS specific issue; not timely respose but probably gets to the right person to answer. Seems like TradeDesk has to transfer / refer to TS team which when I've called after hours they said only in during the weekdays.
+13:45 MTS1: But I've not been around long and go here for most my TS support needs;)
+13:46 MTS1: Oh; no symbol; just just blank function w/o inputs and dropped the study on a chart; happened to be $TICKAR chart;)
+13:46 stepandfetchit: If interested:  This seems to find the "mysterious" leading "unreferenceable BARS": def secret = first(barnumber());
+13:50 AlphaInvestor: MTS - what is the TS Support e-mail?
+13:50 MTS1: Steph; guess not sure what the issue with IT is; or why your script would not work because of it. Pretend the first bars are not there and the chart starts after that? It sounds weird, but is what it is I guess. Can pass it to support and see what they find; but probably need to give them ticker and chart timeframe.
+13:52 MTS1: AI; thinkscript@thinkorswim.com is what I've used.
+13:53 Burns56: Hi I am looking for some help on how to combine 3 lower studies into one complete study, I can easily do it on my computer but i am trying to combine to see if they will load on my ipad , any help would be greatly appreciated                                                                  ## TD Ameritrade IP Company, Inc. (c) 2007-2018#
+>declare lower;
+>input length = 14;input over_Bought = 70;input over_Sold = 30;input price = close;input averageType = AverageType.WILDERS;input showBreakoutSignals = no;
+>def NetChgAvg = MovingAverage(averageType, price - price[1], length);def TotChgAvg = MovingAverage(averageType, AbsValue(price - price[1]), length);def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0;
+>plot RSI = 50 * (ChgRatio + 1);plot OverSold = over_Sold;plot OverBought = over_Bought;plot UpSignal = if RSI crosses above OverSold then OverSold else Double.NaN;plot DownSignal = if RSI crosses below OverBought then OverBought else Double.NaN;
+>UpSignal.SetHiding(!showBreakoutSignals);DownSignal.SetHiding(!showBreakoutSignals);
+>RSI.DefineColor(OverBought, GetColor(5));RSI.DefineColor(Normal, GetColor(7));RSI.DefineColor(OverSold, GetColor(1));RSI.AssignValueColor(if RSI over_Bought then RSI.color(OverBought) else if RSI over_Sold then RSI.color(OverSold) else RSI.color(Normal));OverSold.SetDefaultColor(GetColor(8));OverBought.SetDefaultColor(GetColor(8));UpSignal.SetDefaultColor(Color.UPTICK);UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP);DownSignal.SetDefaultColor(Color.DOWNTICK);DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+>
+>input length = 20;input secondarySymbol = /CL;
+>def bol1 = 1 + (close - Average(close, length) + 2 * StDev(close, length)) / (4 * StDev(close, length) + 0.0001);def secClose = close(secondarySymbol);def bol2 = 1 + (secClose - Average(secClose, length) + 2 * StDev(secClose, length)) / (4 * StDev(secClose, length) + 0.0001);
+>plot Divergence = (bol2 - bol1) / bol1 * 100;plot UpperLevel = 20;plot ZeroLine = 0;plot LowerLevel = -20;
+>Divergence.SetDefaultColor(GetColor(1));UpperLevel.SetDefaultColor(GetColor(3));ZeroLine.SetDefaultColor(GetColor(7));LowerLevel.SetDefaultColor(GetColor(3));
+>declare lower;input CorrelationWithSecurity = SPX;input referenceDate = 20150217;def close2 = close(CorrelationWithSecurity);
+>plot RS = if close2 == 0 then 0 else close/close2;RS.setDefaultColor(GetColor(6));
+>def startDate = DaysFromDate(referenceDate) == 0;
+>addchartbubble(startDate, RS, Start, color.RED);
+>def sr = CompoundValue(historical data = RS[0], visible data = if startDate = 0 then sr[1] else RS[0]);plot SRatio = sr;SRatio.setDefaultColor(GetColor(5));
+># use this plot statement to find bullish crossovers#plot Scan = RS[1] SRatio[1] and RS SRatio;
+># use this plot statement to find bearish crossovers#plot Scan = RS[1] SRatio[1] and RS SRatio;
+># use this plot statement to find stocks trending stronger than the index#plot Scan = lowest(RS - SRatio, 21) 0;
+># use this plot statement to find stocks trending weaker than the index#plot Scan = highest(RS - SRatio, 21) 0;
+13:54 MTS1: Burns; did you see what that looked like before you hit enter?
+13:55 stepandfetchit: MTS1:  I think I can code arround this now, using that First(barnum.. kludge!  
+13:55 Vimes: still not sure its an issue if you had a more reasonable chart horizon i doubt you would see the issue
+13:56 Vimes: and even on my chart with 15 years it works fine
+13:56 Burns56: http://tos.mx/swR1qD#
+13:56 Vimes: Burns, has redacted his own study
+13:58 stepandfetchit: Vimes:  Some of my scripts requrie some lookback/lookforward, so looking for a generic solution for them as well. --  This seems to be at least a partial solution for me.
+14:01 JohnnyQs_BackupWks: the LoungeArchive is current.  It even contains Burns56's invisible study
+14:01 AlphaInvestor: Thanks MTS - emailing them now
+14:02 Burns56: I apologize its like i am using disappearing typing, Help
+14:02 MTS1: Burns; I won't open a workspace I don't need unless maybe I'm in PM; maybe try sharing the chart or the script? As for posting script directly in here; try to run it through something like notepad so that there is no extra formatting like from e-mail or word etc added.
+14:02 Vimes: step, i get that but i guess what i'm saying is even if you have let's say a 6M, 1D chart with a 9 period lookback TOS will still look past your current chart setting, you typically do not need to do anything special:  This is plottting close[9] for example.
+14:03 MTS1: Burns; please exit and re-enter the room to fix your font.
+14:05 MTS1: Vimes; not what I've seen; is that the far left of your chart? Maybe they changed somethign. .
+14:05 Vimes: that is the left of my chart,yes
+14:05 Vimes: no other lower studies or upper studies
+14:05 Burns56: I apologize it’s like my keyboard has turned into invisible ink
+14:05 Burns56: I had to come to my phone to write this message
+14:08 Burns56: declare lower; input length = 14; input over_Bought = 70; input over_Sold = 30; input price = close; input averageType = AverageType.WILDERS; input showBreakoutSignals = no; def NetChgAvg = MovingAverage(averageType, price - price[1], length); def TotChgAvg = MovingAverage(averageType, Ii(price - price[1]), length); def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0; plot RSI = 50 * (ChgRatio + 1); plot OverSold = over_Sold; plot OverBought = over_Bought; plot UpSignal = if RSI crosses above OverSold then OverSold else Double.NaN; plot DownSignal = if RSI crosses below OverBought then OverBought else Double.NaN; UpSignal.SetHiding(!showBreakoutSignals); DownSignal.SetHiding(!showBreakoutSignals); RSI.DefineColor("OverBought", GetColor(5)); RSI.DefineColor("Normal", GetColor(7)); RSI.DefineColor("OverSold", GetColor(1)); RSI.AssignValueColor(if RSI > over_Bought then RSI.color("OverBought") else if RSI < over_Sold then RSI.color("OverSold") else RSI.color("Normal")); OverSold.SetDefaultColor(GetColor(8)); OverBought.SetDefaultColor(GetColor(8)); UpSignal.SetDefaultColor(Color.UPTICK); UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP); DownSignal.SetDefaultColor(Color.DOWNTICK); DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN); declare lower; input length = 20; input secondarySymbol = "/CL"; def bol1 = 1 + (close - Average(close, length) + 2 * StDev(close, length)) / (4 * StDev(close, length) + 0.0001); def secClose = close(secondarySymbol); def bol2 = 1 + (secClose - Average(secClose, length) + 2 * StDev(secClose, length)) / (4 * StDev(secClose, length) + 0.0001); plot Divergence = (bol2 - bol1) / bol1 * 100; plot UpperLevel = 20; plot ZeroLine = 0; plot LowerLevel = -20; Divergence.SetDefaultColor(GetColor(1)); UpperLevel.SetDefaultColor(GetColor(3)); ZeroLine.SetDefaultColor(GetColor(7)); LowerLevel.SetDefaultColor(GetColor(3)); declare lower; input CorrelationWithSecurity = "SPX"; input referenceDate = 20150217; def close2 = close(CorrelationWithSecurity); plot RS = if close2 == 0 then 0 else close/close2; RS.setDefaultColor(GetColor(6)); def startDate = DaysFromDate(referenceDate) == 0; addchartbubble(startDate, RS, "Start", color.RED); def sr = CompoundValue("historical data" = RS[0], "visible data" = if startDate <= 0 then sr[1] else RS[0]); plot SRatio = sr; SRatio.setDefaultColor(GetColor(5)); # use this plot statement to find bullish crossovers #plot Scan = RS[1] < SRatio[1] and RS > SRatio; # use this plot statement to find bearish crossovers #plot Scan = RS[1] > SRatio[1] and RS < SRatio; # use this plot statement to find stocks trending stronger than the index #plot Scan = lowest(RS - SRatio, 21) > 0; # use this plot statement to find stocks trending weaker than the index #plot Scan = highest(RS - SRatio, 21) < 0;
+14:08 MTS1: That is strange Vimes; I think that may be new. Just tried it on shorter SPY chart and see the same as you, with max available is the only time it starts after the lookback index period. .
+14:08 Burns56: I’m sorry if it didn’t come out correctly I don’t have a lot of experience with posting here. But it’s three separate lower studies that I’m trying to combine into one so hopefully I can load on my phone when I’m traveling
+14:09 MTS1: Burns; on your PC exit the room and re-enter that will fix it.
+14:10 MTS1: Then see if you have a better formatted script that you can paste from notepad
+14:11 stepandfetchit: If anyone is interested in an example for what I observer on certain Symbols when time frame is very very large, here is simple script:
+14:11 stepandfetchit: 
+plot apriorclose=close[5];
+def secret = first(barnumber());
+plot sc=secret;
+addlabel(1,secret);
+#
+14:12 AlphaInvestor: WOW!!! that script from Burns is even worse now that I can see it
+14:12 stepandfetchit: Use VXX or UVXY with 15 years to observe, then switch to spy or something
+14:12 MTS1: Burns; Also at first glance it looks like you should just be able to append the scripts together into one; just take out the extra 'declare lowers'. The issue may be scaling; in which case the studies have to be normalized. May be easier to just overlay the 3 scripts in which case TOS does the normalization automagically.
+14:12 amalia: lol
+14:12 MTS1: Using white background now AI?
+14:12 MTS1: ;)
+14:12 MTS1: Oh the re-post. .
+14:14 MTS1: First one actually looked better;)
+14:16 Burns56:  
+14:16 hbmicro: AI, Burnout again???
+14:16 Burns56: sorry is that to big?
+14:16 Burns56: 75% reduced
+14:18 MTS1: Burns; what are those 3 different indicators at the bottom?
+14:18 amalia: Try 10
+14:18 Burns56: "WOW!!! that script from Burns is even worse now that I can see it" Omg i needed a belly laugh thanks / now you know you are dealing with a genius. sorry i will exit stage left
+14:20 Burns56: RSI, This indicator that this gentlemean hahn shared and i modified a little and another called traders tips divergence that i dont know how or when i got it
+14:20 MTS1: So RSI goes between 0 and 100; the other ones?
+14:21 Burns56: i can post them one at a time or probably better to not torture you guys with my insanity
+14:22 Burns56: the rsi is standard
+14:22 amalia: One at a time is good
+14:22 AlphaInvestor: Burns - try to get them to post in their original format ... not all turned into one big long line
+14:22 AlphaInvestor: and yes, one at a time
+14:24 Burns56: declare lower; input length = 14; input over_Bought = 70; input over_Sold = 30; input price = close; input averageType = AverageType.WILDERS; input showBreakoutSignals = no; def NetChgAvg = MovingAverage(averageType, price - price[1], length); def TotChgAvg = MovingAverage(averageType, Ii(price - price[1]), length); def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0; plot RSI = 50 * (ChgRatio + 1); plot OverSold = over_Sold; plot OverBought = over_Bought; plot UpSignal = if RSI crosses above OverSold then OverSold else Double.NaN; plot DownSignal = if RSI crosses below OverBought then OverBought else Double.NaN; UpSignal.SetHiding(!showBreakoutSignals); DownSignal.SetHiding(!showBreakoutSignals); RSI.DefineColor("OverBought", GetColor(5)); RSI.DefineColor("Normal", GetColor(7)); RSI.DefineColor("OverSold", GetColor(1)); RSI.AssignValueColor(if RSI > over_Bought then RSI.color("OverBought") else if RSI < over_Sold then RSI.color("OverSold") else RSI.color("Normal")); OverSold.SetDefaultColor(GetColor(8)); OverBought.SetDefaultColor(GetColor(8)); UpSignal.SetDefaultColor(Color.UPTICK); UpSignal.SetPaintingStrategy(PaintingStrategy.ARROW_UP); DownSignal.SetDefaultColor(Color.DOWNTICK); DownSignal.SetPaintingStrategy(PaintingStrategy.ARROW_DOWN);
+14:24 MTS1: OR share the chart with the 3 on them (not the workspace)
+14:24 MTS1: You have a function Li() on one of them also that does not exist.
+14:27 Burns56: declare lower; input length = 20; input secondarySymbol = "/CL"; def bol1 = 1 + (close - Average(close, length) + 2 * StDev(close, length)) / (4 * StDev(close, length) + 0.0001); def secClose = close(secondarySymbol); def bol2 = 1 + (secClose - Average(secClose, length) + 2 * StDev(secClose, length)) / (4 * StDev(secClose, length) + 0.0001); plot Divergence = (bol2 - bol1) / bol1 * 100; plot UpperLevel = 20; plot ZeroLine = 0; plot LowerLevel = -20; Divergence.SetDefaultColor(GetColor(1)); UpperLevel.SetDefaultColor(GetColor(3)); ZeroLine.SetDefaultColor(GetColor(7)); LowerLevel.SetDefaultColor(GetColor(3));
+14:27 Burns56: That’s the divergence pink on chart pic
+14:29 Burns56: declare lower; input CorrelationWithSecurity = "SPX"; input referenceDate = 20150217; def close2 = close(CorrelationWithSecurity); plot RS = if close2 == 0 then 0 else close/close2; RS.setDefaultColor(GetColor(6)); def startDate = DaysFromDate(referenceDate) == 0; addchartbubble(startDate, RS, "Start", color.RED); def sr = CompoundValue("historical data" = RS[0], "visible data" = if startDate <= 0 then sr[1] else RS[0]); plot SRatio = sr; SRatio.setDefaultColor(GetColor(5)); # use this plot statement to find bullish crossovers #plot Scan = RS[1] < SRatio[1] and RS > SRatio; # use this plot statement to find bearish crossovers #plot Scan = RS[1] > SRatio[1] and RS < SRatio; # use this plot statement to find stocks trending stronger than the index #plot Scan = lowest(RS - SRatio, 21) > 0; # use this plot statement to find stocks trending weaker than the index #plot Scan = highest(RS - SRatio, 21) < 0;
+14:29 Burns56: This is the third studythey all work fine when I combined them separately on my computer into one lower chart individually
+14:30 Burns56: I would like to be able to write them into one study combined without having three separate lower studies because I haven’t figured out how to combine three separate studies on my iPad manually
+14:30 Vimes: the advantage of having them separate is when you drag them together TOS will autofit them to the lower panel, why do you want them in one study again?
+14:30 Vimes: ^
+14:30 Vimes: oh
+14:31 Burns56: Yeah when I’m traveling I’d like to be able to get out of the SPY using this chart I guess I could bring my laptop
+14:31 MTS1: Burns; the first study does not work; it has a function Li in there that does not exist; you probably have a typo.
+14:32 Vimes: out of curiousity what are you trading that you want to see divergence with CL and correlation with SPX?
+14:32 Burns56: Sorry the first studyis just a standard RSI that comes loaded in thinkorswim I must’ve copied and paste it it incorrectly
+14:32 Vimes: Li should be absvalue()
+14:34 Burns56: Yeah it’s funny that it’s giving a pretty good signal for me when to get out of the market when one of the cyan line crosses below to exit in both cyan lines cross above the pink line to enterWhat do you can correlate it up just about against anything on the platform It gives you that potential
+14:36 Burns56: Of course this was last year’s market conditions who knows now
+14:38 Burns56: If anyone could improve on it that would be great .I’m just like a kindergartner working with it
+14:39 MTS1: Well; this is what it looks like on one chart; not sure if normalizing would do much for you either:  
+14:43 amalia: Well, glad that got settled. Next!
+14:44 Nube: Burns, which condition for each of those indicators do you look for when deciding to exit?
+14:46 amalia: Burns left.
+14:50 AlphaInvestor: Sometimes peeps on phones and pads don't show up in the list of People in Room
+14:50 amalia: Pictures or it didn’t happen
+14:54 Nube: Maybe he's having Smithers monitor the chat for him.
+14:55 AlphaInvestor: Nube - berged for TV prefereces ... I had to look that up
+14:55 Burns56: Sorry I have something on the stove brb
+14:56 Vimes: you never watched the simpsons alpha, cmon, man!
+14:56 AlphaInvestor: I can say that I have never suffered thru a whole episode
+14:56 MTS1: wow. .
+14:57 Nube: Put together a silly Correlation Index and then got to thinking maybe o should take it serious. Anyone know what some of the most common factors are that quants tend to use? With there being an ETF for everything now we could probably see when those correlations get egg shaped
+14:58 AlphaInvestor: Nube - I know the factors in common use
+14:58 AlphaInvestor: most of the underlying data needed is not available in thinkScript
+14:59 amalia: ^
+15:00 amalia: >=|
+15:00 MTS1: TCULS; could you please delete my picture? 
+15:02 amalia: Why
+15:03 Nube: Drats, Alpha. I was hoping to have it be simple.
+15:04 Nube: If there isn't a price to sales etf, or price to ebit etc then we have ourselves a niche to fill.
+15:05 twoshoes: TDA should start a "Fantasy ETF" league.
+15:06 Vimes: nube, you may already know this but look up the crsp indexes, all (i believe) are available on TOS,
+15:06 Vimes: http://www.crsp.com/indexes-pages/crsp-indexes-quick-reference-guide
+15:06 Burns56: MTS thank you
+15:07 amalia: yw
+15:08 Nube: I didn't know that, Vimes. Thanks. That will help out a lot.
+15:09 Vimes: it doesn't capture yet some of the volatility facotr investments but has the majority of the common investment styles tracked
+15:09 AlphaInvestor: TwoShoes - one recently shut down, that I cannot name here
+15:10 AlphaInvestor: Thanks Vimes - news to me too
+15:15 Vimes: again, likely obvious but you would just use the index identifier for the symbol in tos, the totral return indexes can be helpful if you want to simulate returns with dividends, (however they don't have volume) so you wouldn't be able to get to carried away: CRSPTMT, for example
+15:18 AlphaInvestor: For the week, the winning sectors were Utilities (+1.0%), and Consumer Staples (-4.0%) if you can call a -4% a winner. The losers were Materials (-9%), and Technology and Industrials (tied at -7.0%). This is using SPDR data pulled using TOS and RTD.
+15:19 Vimes: that's definitely bearish, xlu, xlp leading
+15:23 amalia: I started trading after Obama came into office. What is.... bearish?
+15:24 AlphaInvestor: yung pup
+15:25 AlphaInvestor: dats when minRange quits workin'
+15:25 amalia: lmao
+15:26 Nube: Emerging markets outperforming is not bearish.
+15:26 Nube: So all is not lost yet
+15:31 Nube: I'm not saying buy Brazilian Small Caps, mind you.
+15:32 AlphaInvestor: Two of my "market posture" indicators went bearish on Thursday, the sector rotation model actually went bearish on 09/21
+15:38 Nube: That was timely.
+15:42 AlphaInvestor: belay that -- Big Hand went bearish on the daily chart, but should have been run on weekly. Still bulish now.
+15:48 Nube: Pretty much every I have looks ill on the daily but weekly doesn't look worse than a normal market spill yet. There's always next week.
+15:50 Nube: Limit down Sunday night is my hope.
+15:50 AlphaInvestor: So I have 3 Market Posture indicators Bull, 2 Market Posture indicators Bear
+15:57 Noob1: So it just occurred to me that Netflix reports on Tuesday. If mkt in the toilet could they even sail w/ gd er?
+15:57 Noob1: Good earnings
+16:04 MTS1: Or maybe good earnings will lift the market. . Not sure; my crystal ball indicator has a bug in it;)
+16:05 MTS1: If you don't have an edge; don't play it
+16:06 AlphaInvestor: since they are spheres, crystal balls don't have edges - just sayin'
+16:07 MTS1: THAT's the problem with the indicator I guess; keeps going in loops!
+16:08 amalia: lol
+16:10 bsinks: This is pretty awesome.........didnt even know there was live chat rooms.
+16:11 AlphaInvestor: Bsinks and Noob1 -- this chat room is for thinkScript coding discussions only. There are other live chat rooms open Monday to Friday if the market is open
+16:12 MTS1: this one is pretty awsome though!
+16:14 bsinks: Can I ask if there is a thinkscript for a custom column on the scanner for a time stamp so I can sort by time that a new stock hits the scanner.
+16:15 AlphaInvestor: You can ask, that is a perfect question for this forum
+16:15 AlphaInvestor: Unfortunately, there is not
+16:15 bsinks: lol........story of my life.......thank you
+16:17 MTS1: But if you save it as a query = dynamic watchlist, you can set it up to e-mail alerts to you when stcks get added (or removed); which you could sort in your e-mail reader.
+16:18 AlphaInvestor: They will also show up in the order triggered in the Message Center
+16:18 bsinks: yea thats how I watch it is in the message center......but it adds like 8 at a time
+16:19 bsinks: still it works pretty good like that
+16:19 Vimes: or even send you a mobile alert which is what i use
+16:22 MTS1: Vimes; have you used other types also? Wonder about timing; seems like mobile alerts for order confirmations are sometimes very timely and sometimes delayed. Wonder if there can be a delay in any of the communicatoin methods and how MW alerts handles them.
+16:23 Vimes: well i guess i should clarify that i'm using the trader app on mobile, it seems to alert at the exact same time as my pc platform
+16:24 Vimes: even on pc  i think there is a dealy of a few minutes for watchlist alerts
+16:25 MTS1: OK; have not tested / compared the different methods yet, but wonder if there's a difference between methods.
+16:26 AlphaInvestor: Look at the LAST price for JPM ... does TOS know something that I haven't heard yet?
+16:28 Vimes: maybe i'm not looking right, i see 106.95
+16:30 AlphaInvestor: I got 0 on the Analyze Tab
+16:30 AlphaInvestor: and a watchlist
+16:31 AlphaInvestor: RTD pulls 106.95 -- curious
+16:35 Nube: Push Alerts on the mobile app have been good in the little I have used them. Text and email are so so
+16:44 JohnnyQs_BackupWks: The LoungeArchive is current.
+16:45 amalia: Thanks
+16:50 Paris: In case anyone is interested, I tracked down the second script that Burns56 posted. Seems that this was modified from a script that Nube posted on 7.13.2016 called BB Divergence with Mobius Standard Deviation Line.
+16:53 AlphaInvestor: oh, that was back when Nube was but a noob
+16:55 amalia: Thanks
+16:56 amalia: Thanks
+16:58 amalia: wtf
+17:00 AlphaInvestor: amalia is very thankful today '-)
+17:04 amalia: Dude somethings up w mobile app. It’s a recurrence
+17:04 Nube: You're welcome
+17:04 Burns56: Paris thank you do you have the original ? thanks
+17:07 Paris: Here is the attribution of the 3 scripts that Burns56 posted earlier today.
+
+Script 1: Standard TOS RSI study
+Script 2: Modified from Nube's study called BB Divergence with Mobius Standard Deviation Line posted on 7.13.2006
+Script 3: Relative Strength Scan from Hahn Tech
+Note that Hahn's script is also available on Youtube
+17:07 Burns56: yes thats where i got that one
+17:08 Paris: Time for breakfast. BBL.
+17:09 Nube: I forgot about that script. The idea was for the next step to change the bands to something more conventional but never followed through
+17:10 AlphaInvestor: I have trouble reading those scripts that are all jumbled together because of the small text on my screen. However, It seems to me that it would be a happy accident that a study with /CL in it would be a good Combined Signal Approach candidate for all equities or indicies. The other two make sense, but are they really just the same thing in different clothing?
+17:11 Burns56: it also looked good with $TICK and various $pcall symbols
+17:12 Burns56: i checked it with some strong monthly sectors like health care and services too
+17:14 Burns56: i thought it may have some potential with the vix too but i am just looking at different ideas
+17:14 amalia: That’s what drew Nube’s attention away from it; looking at different ideas.
+17:15 Paris: Burns56 - I'm on mobile, and to respond to your question, yes I do have Nube's original study of 2016, which is where I found the correspondence. Will be back in about an hour's time.
+17:22 AlphaInvestor: got to go now - Later Traders
+17:22 AlphaInvestor: Tculs - thanks for opening the room for us again today. You da bomb!
+17:31 Vimes: i learned that if you hit the reformat code button, it will quickly fix the code that was pasted, just fyi
+17:32 Farmin: majil
+17:32 Farmin: majik
+17:32 Farmin: now if they would just have a fix errors button
+17:33 Vimes: thtat woudl be sweet, find replace would also be sort of convenient
+17:34 Farmin: hmmm, like a grown up editor?
+17:34 Vimes: exactly
+17:44 Burns56: TZA symbol with $tick as secondary symbol looks interesting on that chart
+17:51 Burns56:  
+18:14 amalia: Uncheck Fit Studies
+18:16 Bear: Hey
+18:16 Bear: Does anyone know how to simulate buying trades?
+18:20 amalia: OnDemand on paperMoney
+18:25 G3_: Til Sunday eve open.  Good night tculs and all.
+19:02 Farmin: bear, you have to hang around longer than that
+19:21 amalia: Laters g3
+------- Monday, October 15, 2018 -------
+05:44 slashgw: gm all
+05:49 DMonkey: 👋
+05:52 slashgw: hey DMonkey, gm.  here is the beginning of what I have been working on, based on that chartbubble code. https://screencast.com/t/54lIo4cNtAO
+06:02 DMonkey: looks good
+06:08 slashgw: thanks!  still working on the automation portion via Python.  able to pull the data easily enough from online, just working on formatting the output to the thinkscript file.
+06:29 TICKZ: @slashgw who made that bband studie?
+06:32 slashgw: tickz, that was made by a friend of mine
+06:33 TICKZ: whats his name? i hve the same studie..but i dont know who made it..
+06:33 slashgw: won't say his name, but initials are jb
+06:33 TICKZ: ok
+07:43 PhatDog: i've been trying for sometime now to come up with script to identify stocks that have less than 5 trades during the after hours/pre hours session.  anyone have such scrip?
+07:44 MTS1: Phat; you could only potentially do this on a tick chart set to 1 tick, and count the bars after RTH. Look at the date/time functions for functions available to check when RTH ends.
+07:47 Vimes: I don't think you can use ticks in the scanner though
+07:51 PhatDog: i'd be good to count the 1 minute bars during that session.
+07:52 Vimes: Phat, instead you could scan for a particular volume in pre-market
+07:53 MTS1: Phat; assuming since you're looking for low volume and may not have multiple trades on the same 1 min bar that might work for you. What is the purpose of finding such stocks?
+07:54 PhatDog: possibly, but ive been unable to come up with the scipt to capture a total volume during the session
+07:55 Vimes: You're the first one i've heard want to look at low volume in pre-market as an indicator, but i know there have been several pre-market volume scans shared here -let me see if i have one saved
+07:57 PhatDog: its one factor to identify low volume pre market stocks the move upward during the regular session
+07:57 Vimes: Try this on a 1min agg in teh scanner with extended hours checked, you would need to adjust the volume threshold:
+def Active = SecondsFromTime(0400) >= 0 and
+                     SecondsTillTime(0930) > 0;
+def vol = if Active and !Active[1]
+                then volume
+                else if Active
+                        then vol[1] + volume
+                        else vol[1];
+plot isTrue = vol >= 500000;
+07:59 Vimes: Phat, ok but that is going to be almost 100% of all stocks behavior (imo)
+08:08 PhatDog: Vimes, tried your code with no other factors and just changed your vol to 5000 and no matches.
+08:10 Vimes: works for me there are about 385 stocks >5000 and 8317!!! less than 5000 again low volume or low trade count is not going to find a needle in teh haystack so to speak
+08:16 PhatDog: ah yes. so sorry. had another limiter still on.  THX!
+08:16 Vimes: yw
+08:27 MTS1: Logic seems contrarian to what most traders would be looking for volume wise.
+------- Friday, October 12, 2018 -------
+15:23 VolCrush: so bronx, don't u owe us something?
+15:23 RandomDan: I think the market is set to go sideways, newsflow dependent.
+15:24 blondetrader: lol
+15:24 blondetrader: we didnt open 2780 so I only owe it to u
+15:25 AlphaInvestor: So, WFC which missed E is up 1.3% today ... but JPM that beat E is down 1.09% today. What kinda bizarro world do we live in.
+15:26 VolCrush: ok, i'll wait patiently for the "ping" on my phone
+any second now, right?
+15:26 blondetrader: keep watching for it
+15:26 JC_chart: cuirious on rty trade
+15:26 RandomDan: It's my fault Al. Fins going up as soon as I take a loss on my GS.
+15:26 JC_chart: mind sharing your entry and exit and chart timeframe
+15:26 RandomDan: but I don't feel like doing that
+15:26 VolCrush: welp you Alpha, more than anyone here know that funnies don't mean chit with respect to how the market reacts
+ergo, drop funnies
+LOL
+15:27 JC_chart: totally ok if you say no... just interested
+15:27 VolCrush: i figured bronx, never keep your word....typical w
+15:27 blondetrader: lol
+15:27 blondetrader: well its not like i wear a tutu to trade
+15:28 VolCrush: but u trade nekked , no?
+15:28 blondetrader: JC I am flat rn
+15:28 blondetrader: this was not the day I expected
+15:28 blondetrader: haha no
+15:28 JC_chart: did you hold it thru last night?
+15:28 blondetrader: I did
+15:28 blondetrader: and got stopped out this am
+15:28 JC_chart: holy s**
+15:28 JC_chart: that's a big stop LOL
+15:29 blondetrader: no lol I made $$
+15:29 RandomDan: bt, really. This is exactly the day I expected... using your TA!
+15:29 JC_chart: i am sure you did
+15:29 JC_chart: u were short right
+15:29 AlphaInvestor: Vol - with both reporting the same day, they should have reacted in relation to their E results
+15:29 blondetrader: :)
+15:29 JC_chart: as of yesterday afternoon
+15:29 blondetrader: no i was long into this am
+15:29 VolCrush: welp send me a pic wearing red soled only then...........
+15:29 JC_chart: ohhh i thought you were short
+15:29 VolCrush: Alpha, they did
+15:29 JC_chart: it went up 25 points
+15:29 blondetrader: nooo I was on for the rally pffft
+15:29 blondetrader: I was looking for 95 lol
+15:30 RandomDan: she was long, I remember
+15:30 JC_chart: what tiemframe do you use to identify entries
+15:30 blondetrader: 4 hr mostly
+15:30 blondetrader: and dly
+15:30 RandomDan: so what about the day didn't go as you expected?
+15:30 blondetrader: well Dan I thought the pop would have more teeth
+15:30 blondetrader: this was like a little kitten
+15:30 blondetrader: not a lion
+15:31 RandomDan: I thought it was pretty good, considering the wreckage.
+15:31 blondetrader: I would not be surprised to see another wave of selling monday am b4 we get any consecutive days of green
+15:31 blondetrader: dissapointing
+15:32 blondetrader: but i have some scary tgts lower
+15:32 RandomDan: the day was a big cup, also a positive.
+15:32 blondetrader: so to avoid mkt need to do some work
+15:32 VolCrush: not a bad pop actually, only because the close was vary gud on /nq
+so respectfully disagree
+15:32 blondetrader: nq could rally another 100
+15:32 blondetrader: and still look like shit
+15:32 VolCrush: or more
+15:33 blondetrader: btw that would be res for leg 2
+15:33 blondetrader: anything over........we good
+15:33 VolCrush: well we wanna buy chit, who wants to buy gud?
+15:33 blondetrader: lol yes but if nq fails that
+15:33 blondetrader: you can buy it a lot cheaper
+15:33 VolCrush: sell against
+15:34 blondetrader: like to the tune of67s
+15:34 VolCrush: true but we got pick our lines in der sand
+15:34 blondetrader: figure 150 off this weeks low would be next tgt dn
+15:34 blondetrader: well nq needs to hold 7112
+15:34 VolCrush: i gots my names for hunting season and will fall on my sword if necessary
+15:34 JC_chart: we could have some violent upswing no doubt in the indexes but I think insitutions need market to drop more so they can buy it and bid it back up like they do in every cycle
+15:35 blondetrader: yes
+15:35 AlphaInvestor: I think this past couple days was selling der MoMo and a rotation into Quality. MSFT, ADBE and such did very well for me when those trades were put in this week during the downturn
+15:35 blondetrader: as i mentioned we have a htf bear move happening that isnt complete momo wise
+15:35 blondetrader: and we have a dly oversold
+15:35 VolCrush: heck i wanted 6845 on /nq, when i called 7 k /nq i got laffed out of here 
+15:35 blondetrader: so would make sense to get some relif
+15:35 JC_chart: yeah 6800 is the midpoint for nq for a 1Y daily chart
+15:36 VolCrush: ah hah, ty @JC
+15:36 JC_chart: honestly all that matters is AMZN
+15:37 JC_chart: so we should just trade that as it makes up what percent of NQ ... 60 haha
+15:37 VolCrush: emmmm, der fruit is a playa and mr softie is now relevant for some reason
+15:37 blondetrader: 1835 needs to break amzn
+15:37 blondetrader: orr 1621 lol
+15:38 blondetrader: rty closed red today
+15:38 blondetrader: no bueno
+15:38 VolCrush: either way lots of resistance with every pop now
+15:38 JC_chart: RTY is very sick on my chart
+15:38 VolCrush: yah true dat, rty is a big problem atm
+15:39 blondetrader: honesly
+15:39 VolCrush: yes dear
+15:39 blondetrader: if it has to rinse like to get it done this month
+15:39 JC_chart: it trendline has been down since 9/24 and the pitch of that line is steep not much releif soon unless earning are rocking
+15:39 blondetrader: like before last week of oct
+15:39 VolCrush: welp u wanna see a down trend line go see XLF
+15:40 blondetrader: it made a lower low today lol
+15:40 JC_chart: youre right it is sicker
+15:40 blondetrader: and it leads imo
+15:40 blondetrader: this turned 1-2 weeks b4 the others gave it up
+15:41 JC_chart: so any of you ever traded wheat futures or soybeans?
+15:41 blondetrader: yep
+15:42 JC_chart: you know they have nive moves in the morning
+15:42 blondetrader: I do :)
+15:42 Bid_Ask: what's nive
+15:42 JC_chart: and they are super volatile but i was thinking i almost like them better than es
+15:42 blondetrader: for sun night mon am i am really leaning on selling rty
+15:42 JC_chart: you have the same payout
+15:42 blondetrader: they offer minis
+15:43 blondetrader: imo the trend is more true in ags
+15:43 JC_chart: i was sitting in soybeans yesterday and forgot about the monthlyr eport and it ripped about 5 dollars in a nano second
+15:43 blondetrader: yea got to mind those report
+15:44 JC_chart: i was lucky i was long it also whipped back so i did fine but yes that was my thought exactly when i  sold the contracts LOL
+15:44 blondetrader: lol
+15:45 JC_chart: when you speak of trend you are speaking of trend on daily right?
+15:45 blondetrader: genericly yes
+15:45 blondetrader: but I prefer when all time frames are in agreement
+15:46 JC_chart: me too ibut i try to just focus on one chart
+15:46 JC_chart: i look at the daily 30m for trend
+15:46 JC_chart: and then trade the 3 or 1m
+15:46 blondetrader: oh yea thats too small for me
+15:46 JC_chart: i built some indicaotrs that are multitimeframe so that helps just using one chart
+15:46 fred__w: jc  i use 3 charts for context  1yr-mo 3mo-wk 14da-da
+15:47 fred__w: and look for >11ema
+15:47 JC_chart: im happy with a 10 tick move on cl or gc moer is great but i am greatful for that
+15:47 JC_chart: im not an ema fan
+15:47 fred__w: jc  i do that to build probability
+15:48 JC_chart: but i get why you use it so please dont misunderstand my intent
+15:48 fred__w: jc  the particular method is not criotical  i was giving you a variation of bt's stmt
+15:49 blondetrader: :)
+15:49 blondetrader: I have errands......see you guys sund night
+15:49 JC_chart: appreciat that
+15:49 JC_chart: have a good weekend
+15:53 Eedie: Bye all
+16:03 chenmannmobile: boom
+16:20 vipin123: hi blonde, hows trade going?
+16:20 Darkthirty: Can anyone help me figure out how to change the colors on a layover on prophet?
+16:46 admin_tculs: Trader Lounge Chatroom will be closing soon   Please finish all conversations by 5pm ct   Have a nice weekend
+16:51 Darkthirty: thanks for the help
+16:53 G3_: Have a good one tculs and all.   Historic week.  Sunday night open should be interesting.
+16:53 admin_tculs: you too G3
+16:55 patd: Is there search tool to find a symbol on TOS?
+16:58 admin_tculs: patd   click on arrow next to symbol box  lookup
+05:12 invertedhammer: Gm
+05:29 G3_: Gm
+06:18 Bealzybub: Yo-Ga
+06:43 Tom: When I was on Prophet Charts last Thursday, Oct.11 the days CHARTS showed up well.  On Fri. Oct.12 (as has been the case 1-2 times per month) the chart for Thurs. was simply not there.  This has become an all too frequent occurance in 2017 &2018. Now, for the first time, the last 2 trading days are NOT showine up on Prophet Charts.  Many times I have contacted Technical Support.  I have asked them if it is "my computer or your" responsibility and have been told they "are aware of the problem."  Now, for the first time, the last 2 trading days are NOT showine up on Prophet Charts.  What is every one else out there doing about this problem?  I suspect this problem started to occur when TD Ameritrade took over.  In my communication with support personel I have been told there are other 'changes' coming.  Good Grief...Does anyone in the community have a solution...other than going to ScottTrade?
+06:50 Bealzybub: Wish I could help. I cant even get answers about the "Marketwatch" trade trending lines.
+06:51 Bealzybub: Which is really no problem. I'll get it figured out one way or the other. I'm making my 4% per day.
+06:51 Tom: Do you have the same problem on Prophet Charts?
+06:52 Bealzybub: I dont even know what that is. Which is the same answer I get when asking about "Marketwatch".
+06:53 Bealzybub: I mean I've just been asking the community here and havent bothered tech @ Ameritrade.
+07:00 Tom: TDAmer took over ThinkOrSwim, which as their trading platform, has the wonderful old Investools platform (if I have the history correct), but the Tech Support people have not been able to solve this problem.  They admit it is their issue and not my computer.  When the went over to Ameritrade we lost many of the research abilities and one, in particular, indicator...Virtual Volume (VV%).  All of the placating and "education support" they've offered have been ineffective in helping together with direct conversation.  I've moved funds and not placed funds with them because of their lack of genuine support.  This is the first time I've gone public and have asked for anyone with solutions to the problem and any similar experience(s).  
+07:02 Tom: Is anyone else out there using the ThinkOrSwim, Prophet Charts platform for trading, research, etc?
+07:06 Tom: It is still early in the morning to get suffiecient responses, but as I've turned on the ThinkOrSwim website & platform, I've noticed that the past 2 trading days (last Thurs. & Friday) charts are simply not there, even though I used them on their given days!
+07:39 nora: Hi Tom.   TDam had announced last year that they were not going to support/upgrade Prophet charts any more.  In fact it was supposed to go away.  I have used and still am trying to use Prophet charts but recognze its limitation.  I am surprised that it is still functioning and available.  The Tos charts have lots of problems amd limitations also.
+07:40 nora: My prophet charts have thurs and Friday.
+07:40 MTS1: Tom; TDA 'took over' Thinkorswim ages ago, as well as prophet charts and more recently invest tools. ScottTrade was the most recent addition that they took over, but did not intergrate their platform. Prophetcharts has been slated for retirement for a while also, when supposedly all features are moved to TOS, but still left in for legacy users complaining when it was removed. I would not continue relying on prophet as a primary platform considering the priorities within TDA / TOS, and see if the TOS side is a better fit.
+07:41 Nube: Prophet charts are no longer supported with any particular concern so I wouldn't expect to continue to work with them
+07:41 MTS1: So you're too late to move to ScottTr;)
+07:44 nora: The TOS charting had a really tough time last Wed and Thurs because of the high volume.  The charts froze for different lengths of time and lagged fro others.   
+07:44 dellsystem: Whats going on with WTW  no Last 
+07:50 nora: i have a premarket last... for WTW, 66.88 fwiw
+07:51 dellsystem: Yes the  Feed is not updating  Think or Swim
+08:01 dellsystem: Just updated
+08:01 dellsystem: and now retracted
+08:02 Tom: Where are the rest of you with your charts & research?  Where are the great trading platforms today?
+08:03 AlphaInvestor: #TOSisBoss
+08:04 Tom: Sorry Alpha...but read my paragraphs, above.  I used to think the same as you!
+08:05 AlphaInvestor: Prophet is being sunsetted, suck it up and use TOS charts
+08:05 AlphaInvestor: I can no longer get parts for my Edsel either
+08:06 Tom: My complaints are about TOS...I HAVE TOS, and Prophet charts are what is displayed!
+08:06 radon224: Alpha, I can give you a link for Edsel parts if you need it
+08:06 AlphaInvestor: Prophet Charts = bye bye
+08:06 Tom: How do I make the switch you describe?
+08:07 Tom: I've been with InvestTools, TOS since 2007 but have received no notices for any type of switch that I can recall.
+08:08 AlphaInvestor: There are two charting systems right now in thinkorswim a) TOS charts, b) Prophet Charts. Learn to use A, because B is going away
+08:10 tmoney20g: will do big daddy Al
+08:10 gerardom: sup tmoney
+08:10 tmoney20g: o hi gerar
+08:10 AlphaInvestor: As MTS1 mentioned, we were told that all Prophet functionality would be moved to TOS charts before it finally goes away
+08:10 gerardom: gm man
+08:10 tmoney20g: missed you on friday
+08:10 tmoney20g: got my trailstop for options working
+08:11 tmoney20g: just have to get used to it
+08:11 tmoney20g: don't know why i didn't enable that 6 months ago
+08:11 gerardom: nice! im going to test once out today
+08:12 saint: where do i find level  2
+08:12 gerardom: did u get into any positions from friday?
+08:12 AlphaInvestor: Tmoney - as I mentioned last week, if you are using Stops with options... Then you don't understand options!!!
+08:12 Tom: Alright...show me how to get to TOS charts. TOS is now what I use...but the chart display is still called/labeled "Prophet."  How do I enable it?  Tech Support has NOT suggested that in any of my communications with them.
+08:13 Tom: When you converted were there any deletions of your current information, at the time?
+08:13 tmoney20g: went 4/4 on friday
+08:13 AlphaInvestor: TOS charts are to the left of Prophet Charts on the menu
+08:14 Tom: I'll start there, Alpha.
+08:15 radon224: RIP SHLD....no surprise
+08:15 tmoney20g: never even heard of "prophet" charts
+08:20 AlphaInvestor: Don't get me wrong, I love Prophet Charts
+08:21 Nube: Tom, click the charts tab. Those aren't he ToS charts. Click the Prophet tab and you get the Prophet charts.
+08:21 Vimes: I should maybe give them a second look, just confusing that they have two charting engines on the same platform
+08:22 AlphaInvestor: That's why one is going away
+08:22 tmoney20g: if they are going away, why even bother
+08:22 tmoney20g: looking like buyers at the open ?
+08:23 Nube: Prophet had the advantage of being able to do ratio charts in the ticket box and it had a better pattern finder but those are the only two advantages I ever found it to have. Had more historic data which could be meaningful depending on the user but ToS has mucho historic data now too
+08:23 tmoney20g: what's your take on the econ data Al ?
+08:24 AlphaInvestor: Pattern Finder in Prophet is da bee's knees
+08:26 Scott_OT: Only 1 out of three computers I have TOS on shows a prophet tab.
+08:27 tmoney20g: 2 minutes
+08:27 AlphaInvestor: Tmoney - must have sold lotsa cars to get the combination of numbers released this morning
+08:28 esmal: good morning all
+08:28 tmoney20g: i was interested in the internet retail
+08:28 tmoney20g: up 1.1% i think they said
+08:28 tmoney20g: but amazon gapped down a little at 830
+08:29 tmoney20g: what you eyeing esmal ?
+08:29 Nube: My take on econ data is that we should outlaw collecting it so there charlatans of monetary experiment can't use it as an excuse to monkey around
+08:29 AlphaInvestor: Internet retailing... It's just a fad
+08:52 HoBo: /
+08:58 Vimes: Weekend update, I was digging into the Mobius volatility compression study (SqueezePivots), that was discussed in the chat last friday. I wanted to make it easier to review prior squeeze events on a historical chart, so I added some of the legacy points to the chart from the default study.  In addition, I was thinking it would be helpful to visualize the compressed trading range prior to the squeeze entry.  I used half this range to estimate a proposed risk value, which might be used against signals while "in the squeeze" range or upon squeeze exit... Finally, i thought it might be interesting to take the whole range while in the squeeze event to form the basis of a pivot projection to give a visual for potential risk off points or to better interpret the trading action after the squeeze exits, this is kept active until the next squeeze fires.  See the attached for a quick visual and the modified study.  I've placed all my code at the very bottom of the default study. Hopefully, this is additive to the original study, if anybody has any improvements or better coding skills to make it more useful/practical please feel free to modify.  Or if its complete garbage, well that's ok with me too.
+http://tos.mx/MLI3TY#
