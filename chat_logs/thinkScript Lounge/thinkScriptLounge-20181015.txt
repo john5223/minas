@@ -1226,3 +1226,34 @@ plot scan = sum(ema8>ema34,21)>=21;
 17:43 MTS1: (Don't just save the output as a watchlist)
 17:44 MTS1: Those dynamic watchlists / queries have a pink symbol in front of them on desktop.
 17:46 MTS1: (OR green; believe those are option hacker scans)
+17:58 hguru: Hum ok thx
+18:03 inov: hello..i am writing a simple study alert like below and when I receive the Alert msg, I dont get the text "SimMovAvg_Greater", instead a portion of the code is shown, can one of you help
+18:03 inov: def agg = AggregationPeriod.DAY;
+plot cPrice = close(period = agg);
+plot savg = close > simpleMovingAvg(cPrice,20);
+Alert (savg, "SimMovAvg_Greater");
+18:08 TICKZ: Nube.. im using your "LABLE" script to add the countrys name.. i change the studie name..but it keeps changing other lables... can you help me plz?
+18:09 TICKZ:  
+18:10 Up_n_Up: inov, if the syntax is right, contact support and tell them Alert is broken
+18:10 TICKZ:  
+18:11 Up_n_Up: I guess the obvious question is how did you change it?
+18:12 amalia: Buy /YM
+18:13 TICKZ: i changed the script name for each country.. thinking it will stp changing other countrys name..
+18:14 Up_n_Up: the name of the script has nothing to do with what gets displayed
+18:14 Up_n_Up: lounge rule #12 - you can't have your own syntax
+18:14 TICKZ:  
+18:15 Up_n_Up: that will ALWAYS display Saudi Arabia, no matter what the chart, but then you know that by now
+18:15 TICKZ: hah yeah
+18:17 Up_n_Up: the one means always display the text string
+18:18 slashgw: should be able to take a vote on the syntax one
+18:18 TICKZ: I gtg... Thanks
+18:18 Up_n_Up: lol slash
+18:22 DMonkey: tickz....you will need to use getsymbol() aand use an if then statement....
+18:25 Up_n_Up: well not really right  addlbl(getsym()=="whatever", "whatevertxt");
+18:26 Up_n_Up: so much fun to make up your own syntax....   :)
+18:28 amalia: lol Wish it worked like that.
+19:37 John1a: Is there a way to change the color of the columns in the price ladder DOM? I've screen shots with different colors for Bis Size column and other columns, but I cannot find a setting for it. Or is it no longer an option in the current version?
+19:45 DMonkey: example....this is one way to accomplish.....you pick your symbols & what you want the text to display.....
+addlabel(1,if getsymbol() == "SPY" then "SPY" else if getsymbol() == "XOM" then "Exxon Mobile" else "" + getsymbol());
+19:48 admin_tculs: thinkScript Lounge chatroom will be closing soon   Please finish all conversations by 8pm ct   Have a nice evening
+19:50 DMonkey: gn
