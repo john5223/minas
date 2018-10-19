@@ -1231,3 +1231,863 @@ rsi_c.SetPaintingStrategy(PaintingStrategy.TRIANGLES);
 10:32 Mobius: johnny - beta is the weighting
 10:33 JohnnyQuotron: Thank you
 10:33 Mobius: yw
+09:56 ameriman: Amalia +10
+09:57 chenmann: hence i m so interested
+09:57 ameriman: Index Arbitrage trading needs huge size so only institutions can do it and it’s a gold mine for them
+09:57 The100yearBULL: oh wow, hey guys
+09:58 tmoney20g: hi
+09:58 fred__w: ..im only vying for replacing expenses
+09:58 fred__w: ..if things get better than that  great
+09:59 blondetrader: well stopped on rty but now know
+09:59 chenmann: if any one can figure out a way for small players to play index arbitrage, i will pay u
+09:59 tmoney20g: nq 7300 go go
+09:59 tmoney20g: make it a nice friday
+09:59 chenmann: been trying and no luck
+09:59 fred__w: chen  thats not me
+09:59 The100yearBULL: chenmann you should come work for me as a recruiter
+09:59 chenmann: haha
+09:59 chenmann: crooks play ground
+10:00 ameriman: Chen the problem is there is a symbol which tells you the arbitrage differential value between index and futures and that symbol is not available on TOS and regular brokerages
+10:00 ameriman: You need that symbol to do arbitrage trading
+10:00 TnT: you can do that yourself on TOS, for example, /YM-$DJI
+10:00 JabbaTheCabin: got stopped on nq short, took 14 points
+10:00 ameriman: Then all you do is put on a mean reversion study on symbol
+10:01 JohnnyStocks: Where is the "TV Gadget"?
+10:01 amalia: Tculs, was I just censored for posting Buy /YM?
+10:01 ameriman: And do mean reversion trading when differential high
+10:01 TnT: hit + sign to add, lower left corner
+10:01 amalia: Buy /YM
+10:02 fred__w: chen  a guiding princople for me is  if you are x long and x short to start  and one side goes to 2x  the othe to 0.5x  then  your 2x becomes 2.5x
+10:02 admin_tculs: amalia   my apologies  fat finger
+10:02 amalia: wtf. I posted that at hh:59
+10:02 amalia: All is well :)
+10:02 amalia: You should buy /YM tho
+10:03 chenmann: i got censored....crooks in the room
+10:03 TnT: I have never been censored accidently, it was always on purpose
+10:03 chenmann: ha
+10:03 amalia: lol
+10:03 JohnnyStocks: Anyone know where the TV Gadget is?
+10:04 TnT: I just told you above, lower left + sign
+10:04 TnT: if you post a question, read the reply
+10:04 JabbaTheCabin: my tv gadget often gets lodged under the couch cushion
+10:05 lilFish: lol jabba
+10:05 amalia: JohnnyStocks, you can request a platform tour by messaging support@thinkorswim.com and they’ll have an answer to all of your inquiries about navigating around. Welcome to TDA.
+10:05 JohnnyStocks: ??? huh. I will look.  Im lost.
+10:05 lilFish: would love to see spy pypl pg etc exceed high water mark
+10:05 TnT: click on the + sign, add tv gadget, lower left corner
+10:06 lilFish: and rock the casbah
+10:06 mthfr_vaxxed: anyone wake up early and catch crazy action on NCTY ?
+10:06 lilFish: didnt
+10:06 JohnnyStocks: I don't see any + sighn
+10:06 TnT:  
+10:06 JabbaTheCabin: should have reentered short on nq after I got stopped out.
+10:07 DavePR: biggest action i ever seen was PLAG
+10:07 amalia: Hope you read my reply to you, JohnnyStocks
+10:07 blondetrader: I flipped on rty after stopping out
+10:07 lilFish: dude lower left
+10:07 blondetrader: this is so far petering out
+10:07 amalia: Careful going long when bt going against you
+10:07 ameriman: Chen all you need is fair value (FV) of index versus futures, then when FV is at a 2 or 3 SD distance then do mean reversion trading
+10:07 JohnnyStocks: I don't see that page, tnt
+10:07 amalia: Damit
+10:07 blondetrader: lol well so far I am like a puppy
+10:08 amalia: I have a ReverseStopOrder handy
+10:08 amalia: -(r*.5)
+10:08 blondetrader: I did sell covered FAST GWPH AND MU to offset the cost of puts
+10:08 Bid_Ask: you see the page whenyou hit the +
+10:08 blondetrader: amzn nothing added
+10:09 TnT: click on + symbol to see it, cheez
+10:09 DavePR: ok guys productive day for me with $800+ yall have a nice day
+10:09 ameriman: Dave nice
+10:09 Bid_Ask: + sign, then pick trader tv
+10:10 invertedhammer: Rty 63.5 has been in play
+10:10 TnT: Johnny Stocks, go  to live Support tab above, ask for help and a platform tour
+10:10 JohnnyStocks: I hit the + sign and nothing came up
+10:10 amalia: I already advised that, TnT.
+10:10 TnT: live support tab
+10:10 blondetrader: yes Hammer I am looking at 64/63 as the lis for 50 48
+10:10 amalia: Didn’t listen
+10:10 amalia: GL
+10:10 blondetrader: regardless it is still pretty weak
+10:11 JohnnyStocks: Do I have to be on a certain page before I hit the + sign?
+10:11 Bid_Ask: then use up/down arrows
+10:11 Bid_Ask: might be higher/lower
+10:11 TnT: no, live support above, you need help
+10:11 amalia: JOHNNYSTOCKS!!!!!!!!!
+10:11 mthfr_vaxxed: whats up with PLAG? why are china based us listed stocks surging?
+10:11 amalia: Hi.
+10:11 ameriman: Johnny might have the left panel closed
+10:12 ameriman: So he cannot see the + symbol
+10:12 amalia: Nor me
+10:12 ameriman: Open the left panel on main window
+10:12 tmoney20g: bt, based on today so far, where do you see nq ending up ?
+10:13 blondetrader: while over 7200 there is a good shot at 7270s
+10:14 blondetrader: if it cant hold and 7180 gets taken out.....7055
+10:14 blondetrader: mind u a close under top # NG for nq intro next week
+10:14 amalia: #TeamWideStops
+10:15 tmoney20g: i like the 7270 idea better
+10:15 tmoney20g: lol
+10:15 TheOnceAndFuture: Anyone else bearish on NFLX into 2019?
+10:15 blondetrader: well nflx bearish def to psl
+10:16 blondetrader: esp under 358
+10:16 TheOnceAndFuture: "PSI"?
+10:16 blondetrader: close over may give it room to move a bit higher like 370
+10:16 blondetrader: prior swing low
+10:17 invertedhammer: Short rty 66.9
+10:18 blondetrader: welcome
+10:18 blondetrader: now we can go to 50 together
+10:18 TheOnceAndFuture: Thanks BT
+10:19 blondetrader: rty remains the weakset link
+10:19 blondetrader: :)
+10:19 invertedhammer: Sounds good
+10:21 Bealzybub: Might be a silly question but does anyone think some of this volatility is in part due to the upcoming election?
+10:22 blondetrader: yes
+10:22 amalia: Ffffffffffffffffffffffffffff....bt
+10:22 blondetrader: no one else does tho so what do I know
+10:22 blondetrader: lol ama
+10:22 JabbaTheCabin: here comes the selloff
+10:22 fred__w: beal  everything is built into price  imo
+10:22 amalia: Why don’t you ever join me in a trade? Maybe MsMarket will listen if we’re on the same side
+10:22 TheOnceAndFuture: Elections should be worked in Bealzy
+10:23 radon224: now bt, I've talked about the election volatility for days now
+10:23 blondetrader: sorry ama I tried and got spanked
+10:23 ameriman: Amalia the prisoners dilemma will never let that happen
+10:23 TheOnceAndFuture: Un;ess repubs keep the majoirty
+10:23 ameriman: join same side
+10:23 Bealzybub: As in its main effect are already boughtin?
+10:23 blondetrader: well yes radon.....you and me
+10:23 blondetrader: I think outcome so uncertain and mkt doesnt like not knowing
+10:24 MyOtherBrotherDarryl: the RTY went in the toilet
+10:24 blondetrader: lots riding on it more so than normal jimo
+10:24 radon224: exactly, the final result does not matter
+10:24 radon224: it's the not knowing part
+10:24 blondetrader: rty canary in coal mine
+10:24 TheOnceAndFuture: In my opinion the market will only react if repubs keep majority. Politicians arounf the board expect dems to take majoirty
+10:24 Bealzybub: Thats what I would think blonde but I'm kinda a newb as it applies to that.
+10:24 fred__w: beal  weve been needing a real correction for a while now  and this is the typical time corrections come
+10:25 blondetrader: imo rep keeping control and a china deal swings us to new highs
+10:25 Bealzybub: We all voting red?
+10:25 radon224: don't
+10:25 blondetrader: lol
+10:25 radon224: go there
+10:25 TheOnceAndFuture: lol
+10:25 blondetrader: but yes shhhh
+10:25 fred__w: beal  i ignore politics in here
+10:26 Bealzybub: Ok, I get it.
+10:26 MyOtherBrotherDarryl: I'm voting for GREEN
+10:26 radon224: It' not even a discussion for family during Thanksgiving, much less a trading chat room, imo
+10:26 fred__w: ..leads to exclusion  :)
+10:26 streetglide: OnceandFuture.....election is not baked in
+10:26 blondetrader: nq close to moment of truth
+10:26 blondetrader: haha radon...peeps take their opinions way too seriously
+10:26 Mark: Money is not showing in my account balance. It left my bank account? Any help thanks !
+10:27 AlphaInvestor: I leave when politics gets discussed in here ... Goodbye
+10:27 amalia: Mark, contact support@thinkorswim.com and let them know of the issue.
+10:27 blondetrader: my house is a hoot my dad a nazzi and my uncle is bernie sanders
+10:27 amalia: Ok bye AlphaInvestor
+10:27 amalia: =p <3
+10:27 streetglide: lol, bt
+10:27 blondetrader: I get a headache
+10:27 Bealzybub: I shall refrain. Wasnt meaning to bring anything "political" in, just as it applies to the volatility
+10:27 blondetrader: well I think its important Beal
+10:28 amalia: We haven’t even started talking politics and it’s already bad. lol
+10:28 Mark: Mhm
+10:28 TheOnceAndFuture: Not really talking politics, we're talking how they might affect the market
+10:28 Mark: Thanks Amalia
+10:28 amalia: And it’s already bad. lol
+10:28 TheOnceAndFuture: lol 
+10:28 blondetrader: look bottom line I dont think mkt will like impeach repeal talk
+10:28 streetglide: mrs.street hates politics, but keep trying to tell her its important to keep up
+10:28 radon224: It goes downhill quickly, trust me
+10:29 blondetrader: mr BT too street
+10:29 blondetrader: he likes sports...yawn
+10:29 streetglide: she lives in happy bubble
+10:29 Kidd: Peep IPCI
+10:29 Bealzybub: Well, I'm about two ticks from going green lol
+10:29 radon224: Given the recent market action, today doesn't seem very bullish to me, even with the "upness"
+10:29 chenmann: invertedhammer, nice trade rty....got a target?
+10:30 streetglide: stros suc, chen
+10:30 chenmann: sorry
+10:30 JabbaTheCabin: if you want to know what the street thinks of the election, look no further than what is being priced into the option market.
+10:30 MyOtherBrotherDarryl: I get the feeling these "premarket" moves are designed to suck you in
+10:30 blondetrader: ^^
+10:30 streetglide: didnt bring their sticks
+10:30 mthfr_vaxxed: indeed
+10:30 invertedhammer: Ty. 50 then 42
+10:30 radon224: this move happened after the open
+10:31 radon224: today that is
+10:31 chenmann: kate upton s gonna dump verlander
+10:31 streetglide: lol
+10:31 radon224: and it's monthly OPEX
+10:31 blondetrader: who
+10:31 streetglide: I will comfort her
+10:31 radon224: lol
+10:31 chenmann: lol
+10:31 radon224: me first
+10:32 amalia: If anyone’s counting a non rolling year of a bear market like 2015, we’ve got 6 more months of volatility. Last ATH drop was -15.57%. ATH-15.57% in /YM now equates to 22767ish.
+10:32 blondetrader: es coming into moment of truth
+10:32 TheOnceAndFuture: I swear the reporter on CNBC just said "bong market"
+10:32 TheOnceAndFuture: Instead of "bond"
+10:32 streetglide: seema?
+10:32 blondetrader: nice ama
+10:33 JabbaTheCabin: maybe it was the bong market in canada
+10:33 TheOnceAndFuture: Yeah Seema
+10:33 streetglide: Pat Benatar.....shadow room.....crank it
+10:33 MyOtherBrotherDarryl: If this mkt doesn't hold ya'll know what that means right?
+10:34 blondetrader: new lows 
+10:34 radon224: I've got Coheed & Cambria "Ten Speed" rocking on the speakers.
+10:34 blondetrader: I feel like a parrot
+10:34 JabbaTheCabin: are you getting hit with her best shot?
+10:34 lilFish: missed my in on iwm, darn
+10:34 MyOtherBrotherDarryl: for all we know you are a parrot  :)
+10:34 chenmann: i would love to see doom today lead by rty, but der fruit must break other wise chop feast
+10:34 chenmann: imo
+10:34 blondetrader: i sold calls and bought puts on all my stk positions this am
+10:35 blondetrader: fruit is amazing
+10:35 ameriman: Now let’s see if it breaks 7170
+10:35 MyOtherBrotherDarryl: parrot trader people.
+10:35 blondetrader: am selling covered there next
+10:35 Eedie: New lows on Deck??? Is that what you guys are saying?
+10:35 JabbaTheCabin: you did a collar on your positions?
+10:35 blondetrader: splat if it does
+10:36 Eedie: Hot dang
+10:36 blondetrader: yes Jabba
+10:36 blondetrader: took the calls $$ to offset buying puts
+10:36 JabbaTheCabin: sure
+10:36 JabbaTheCabin: i've done  them before but have never really worked all that well for me.
+10:36 MyOtherBrotherDarryl: glad i got out of URTY. Took small loss.
+10:37 blondetrader: well my out lay was 1/3 more than prem taken in...I can live with that
+10:37 blondetrader: atm I am pretty confident at a min we retest lows
+10:37 blondetrader: likely break
+10:37 JabbaTheCabin: this we wll see a gapfill on nasdaq
+10:37 JabbaTheCabin: think'
+10:37 blondetrader: so I dont mind spending some $$ to save myself 
+10:38 streetglide: Toto - Hold the line.....crank it
+10:38 JabbaTheCabin: this morning the internals were looking pretty weak even though price was rising a lot
+10:38 Eedie: Street...love isnt always on time
+10:38 streetglide: never
+10:38 blondetrader: lol
+10:39 streetglide: all about timming
+10:39 radon224: I pretend I'm not old by listening to much more progressive stuff
+10:39 JabbaTheCabin: love is never on time. Anyone who is married knows this.
+10:39 blondetrader: ha
+10:40 Nube: Johhny, your methodfro aligning those squares is about as good as any I've run across. If you give yourself some expansion area you can then move the line a little above or below the price plot but that's the only additional option I know of
+10:47 dennis1711: Jonny- Is that a public tab?  
+10:56 JohnnyQuotron: everythin in the OneNOte is public except the TT tab
+10:57 JohnnyQuotron: dennis...the section is "Uncategorized" the tab name is Stop Lights & Strength Meters
+11:00 dennis1711: thanks!
+11:03 dennis1711: screen shots w/ scripts r awsome.
+11:05 Nube: Using the McClellan as an example of using a light type of system. If a person doesn't nned to see a line, a label makes things a lot simpler
+# McClellan Oscillator    
+# Example for using label instead of indicator
+# Nube 10.19.18
+input exchange = {NYSE, NASDAQ, default SPX};
+input fastLength = 19;
+input slowLength = 39;
+    # variablea
+case SPX:
+    advances = close("$ADVSP");
+    declines = close("$DECLSP");
+def advance = if   !IsNaN(advances)
+              then advances 
+              else advance[1];
+def decline = if   !IsNaN(declines)
+              then declines
+              else decline[1];
+def ad = if   advance + decline > 0
+         then (advance - decline) / (advance + decline)
+         else ad[1];
+def emaFast = ExpAverage(ad, fastLength);
+def emaSlow = ExpAverage(ad, slowLength);
+def mcClellanOsc = if   !IsNaN(close) 
+                   then emaFast - emaSlow            
+                   else Double.NaN;
+    # plots   
+ZeroLine = 0;
+ZeroLine.  SetDefaultColor(Color.Gray);
+ZeroLine.  SetStyle(Curve.Long_Dash);
+    
+AverageMc = Average(mcClellanOsc,fastLength);
+AverageMc.  SetDefaultColor(Color.Gray);
+McOsc = mcClellanOsc;
+McOsc.  AssignValueColor(if   McOsc < AverageMc    
+                         then if   McOsc < McOsc[1]
+                              then Color.Red
+                              else Color.Gray
+                         else if   McOsc < McOsc[1]
+                              then Color.Gray
+                              else Color.Green);
+addcloud(McOsc, 0, Color.Dark_Gray, Color.Dark_Gray);
+AddLabel(SecondsTillTime(1530) > 0, " ", 
+                         if   McOsc < AverageMc    
+                         else if  McOsc < McOsc[1]
+11:06 Nube: variablea, from Greek for something or other, I swear.
+11:09 Nube: A better example: I'm sure we all have M's High Low Index but do we need to look at it intraday or are we just looking at it for directional bias.
+11:15 JohnnyQuotron: The LoungeArchive is current.
+11:17 dennis1711: I have a general question about time frame data in TOS.  In the chat window pane, TOS alows me to select specific aggregation periods (1h, 1d, etc) and a specific time interval (1d, 1 w, 1 year, 5 y, etc) for that aggregation.  Howver, the time interval is limited in drop down box.  For exapmle, a one hour aggregation can only go out 365 days.   I'd like to test a strategy beyond 365 days.  Is there an override or work around?
+11:18 bigworm: hey mobius do quant funds only hire from the best schools?
+11:19 AlphaInvestor: Dennis - test this past year, then set specific dates and test last yar
+------- Wednesday, October 17, 2018 -------
+11:23 dennis1711: ok. thanks.
+11:25 mthfr_vaxxed: bigworm : no
+11:26 mthfr_vaxxed: lots of factors involved. write public jupyter notebooks on github teaching what you learn and that'll be enough probably to get you in
+11:27 bigworm: so write my code and post on github?
+11:27 mthfr_vaxxed: also that max dama pdf details a lot too
+11:27 mthfr_vaxxed: yes... quants are weird that they want everything secret. coders want everything open source. find the middle ground.
+11:28 Nube: XLB has had a rough week. I think that's gotta be on the list of things to short on a bounce
+11:28 bigworm: i was looking last night in new york
+11:29 mthfr_vaxxed: also research your funds... some are friendly. some are stuck up. dont blast out a resume and accept first offer. you'll waste time.
+11:29 bigworm: i was looking at one and it had so many job titles.  they all seemed like the same job though
+10:54 Denice: Hi everyone - can you tell me how to get to trader tv?
+10:54 amalia: Another Denise!
+10:54 lilFish: wow, was lookin good there for a half a second
+10:55 amalia: Ok kiddos. I’m off. Laters
+10:55 tmoney20g: byes
+10:55 lilFish: denice - sidebar, click + and ad trader tv
+10:55 lilFish: bye amalia
+10:56 VolCrush: covered me TEAM pcs on yesterday's E play for a .30 loss, $150
+no soup for me tonight
+10:57 Denice: Thank you thank you lilFish! I get SO many notifcations about it, I may as well take a look.
+10:57 VolCrush: ah, nice amalia, with recs last night i may have to join you in der parlor
+10:57 Denice: Thanks again  - enjoy your day everyone
+10:57 Oggy25: Can anyone tell me what CI A means. I see it in the 9:25am news for SQ. Is it Call Imballance on the ask?
+10:57 Eedie: f-ing euro
+10:58 lilFish: ee is that why we are givin up the gains?
+10:58 VolCrush: central intellegence agency = CIA
+10:59 streetglide: :)
+11:00 Oggy25: maybe none of ya know nuttin, huh?
+11:00 VolCrush: i know i don't
+11:00 streetglide: we do this chat in between video games
+11:01 VolCrush: and shots and hits of der ganje
+11:01 streetglide: she gone
+11:01 VolCrush: ah
+11:01 Eedie: FIsh..with euro going up, then dollar should go down, therefore es would rise.  
+11:02 lilFish: i c
+11:03 lilFish: dollar looked up this a.m. when i looked, now going down
+11:03 lilFish: head scratcher
+11:03 radon224: Imo, the rest of this day is left to Monthly OPEX shenanigans.
+11:04 lilFish: ^^
+11:04 AlphaInvestor: Healthcare underperforming today - hmmm
+11:04 radon224: Trading Friday afternoons on Monthly OPEX is a great way for me to get sliced and diced
+11:05 AlphaInvestor: mGEga - up another 1.6%  today ... will that growth demon ever stop
+11:05 lilFish: bullish crossover alert on amzn - 4hr, 28/50
+11:06 tmoney20g: what's 28/50 ?
+11:06 lilFish: 28 and 50 moving aves
+11:07 tmoney20g: ah
+11:07 Dimka: Argh, come on MU, wake up
+11:07 VolCrush: petit poisson are u in FDX
+11:08 lilFish: not right now, u?
+11:08 VolCrush: NO, just lukin atm
+11:11 lilFish: tarantula - bob schneider:)
+11:12 lilFish: cha cha cha
+11:13 fred__w: ok  6x0.77% down now  
+11:14 chenmann: chips leading market down
+11:14 Majic: question, please help me.  If i plan to buy some stock at price level i want to get in start building but then earning coming next few days, what should i do?
+11:14 chenmann: mu testing 40
+11:14 featherweight: Qs goin to 0!
+11:15 invertedhammer: Off 1@55 rty
+11:15 chenmann: nice trade
+11:15 fred__w: majic  odds are against you  right now
+11:15 AlphaInvestor: MU good support in the 40 area
+11:15 blondetrader: well majic it is risk u take with earnings and it depends on what stk
+11:16 chenmann: careful al, i c volume in smh amat and others yesterday
+11:16 VolCrush: hot dang, more dumpage
+11:16 Majic: i am not earning player
+11:16 ameriman: wow AI Momersion indicator indicated possible Mean Reversion on 5 min in NQ since 10:30 am EST
+11:17 Majic: i just want to build my portfolio, that's all
+11:17 AlphaInvestor: Ameriman - dat new tool working for you?
+11:17 fred__w: majic  best to wait
+11:17 blondetrader: well it is a risk to buy b4 earnings in any case
+11:17 ameriman: I’m testing it it luks great
+11:17 Majic: ok fred thanks for the inout
+11:17 Majic: input
+11:18 DaveW5348: wow, chips are tanking
+11:18 ameriman: Majic as a general rule avoid trading stock just before earnings
+11:18 streetglide: +1
+11:19 chenmann: doom
+11:20 RLS: Noob question....with ACBFF gearing up to start trading on NYSE....is it a good idea to hold off buying into that stock?
+11:20 lilFish: mini doom
+11:20 blondetrader: yes
+11:20 blondetrader: rls
+11:20 AlphaInvestor: Doom is okay, Vol saved me a couch and I got first dibs
+11:21 chenmann: hedge al....
+11:21 ameriman: I thought he gave you dibs on one of his mansions
+11:21 tmoney20g: damnit, sold too early, as usual
+11:21 Majic: actually american, i am not looking for a trade
+11:21 fred__w: majic  i wouldnt consider individs until the index rises above da-44ema  but  im a swing trader in individs  fyi
+11:21 AlphaInvestor: hedging is for woosies
+11:21 Majic: i only trade NQ, ES
+11:21 blondetrader: well I am a happy wossie about now
+11:22 JabbaTheCabin: nasdaq just went negative.
+11:22 MyOtherBrotherDarryl: you guys only trade indexes mostly?
+11:22 ameriman: Majic whenever you buy or sell it is a trade
+11:22 chenmann: gl al, i dont like this at all, wish  shorted more
+11:22 Majic: i hardly trade stocks @ american
+11:22 VolCrush: we are at he county fair and it's whacka a mole time
+11:22 ameriman: Majic opening a long term position is a trade
+11:22 AlphaInvestor: Chen - I have a small hedge on
+11:22 Majic: i see
+11:22 RLS: Blonde, is it likely, in your opinion, they won&apost do as well...I notice a considerable decline when Canada went legal.
+11:22 tmoney20g: well, i'm up on the day, so that's a relief
+11:22 chenmann: mu
+11:23 MyOtherBrotherDarryl: hedging is for woosies
+11:23 blondetrader: exactly rls
+11:23 Russ: Hey
+11:23 fred__w: darryl  i do mostly as a position trader  until at least my index passes above 44ema-da
+11:24 MyOtherBrotherDarryl: NKE is headed for 72.....i think
+11:24 AlphaInvestor: Chen - my INTC*^ is hedged too
+11:24 VolCrush: dats pretty funny, "hedging is for woosies"
+11:25 invertedhammer: Bt rty 50
+11:25 Russ: Any good penny shares worth buying ?
+11:25 blondetrader: :)
+11:25 blondetrader: 46 and 36
+11:25 fred__w: crossed 7x0.77% point
+11:26 chenmann: doom
+11:26 MyOtherBrotherDarryl: alpha said that too.  I just seconded  :)
+11:26 tony: I have almost $14,000 into FB. Think it was dumb to to not just sell on July 25th? Articles on the possible rebound are so contradicting.
+11:26 amalia: Whoever does NOT hedge will be turned into a woosie
+11:26 invertedhammer: Want 31
+11:26 lilFish: whoa
+11:26 amalia: Also, is it true mega millions is at 1bil?
+11:26 lilFish: this am was a bit of a whoosy daisy
+11:26 tony: It is
+11:26 Russ: Yes I&aposm in NY
+11:27 lilFish: tried to say that like da church lady
+11:27 VolCrush: +1 amalia
+11:27 MyOtherBrotherDarryl: haha amalia.  i understand the need when trading options.  Just ribbing.
+11:27 blondetrader: tony FB going to follow the mkt in general imo
+11:27 JabbaTheCabin: Majic - if you want to buy a stock, and you have earnings coming up, you have 2 choices. Either wait till the earnings before buying, or take advantage of heightened volatiliy now  and sell 1 put contract for every 100 shares you want to buy. If the stock goes up, you will make some money. If it goes down below your strike price,, you will get put the stock, albeit at a discount
+11:27 tony: what i was thinking
+11:27 MyOtherBrotherDarryl: yes, mega will be close to 1B
+11:28 ameriman: chen retest in progress
+11:28 tmoney20g: what
+11:28 blondetrader: if owned 14k worth I would be selling calls and then using the $$ to offset cost of puts
+11:28 tmoney20g: oh, another tony
+11:28 tanker: qqq
+11:28 santorine: ... thinking of unloading this trash
+11:28 JabbaTheCabin: so, ameriman what were you saying earlier about nasdaq internals being strong?
+11:29 MyOtherBrotherDarryl: fb is losing disgruntled users
+11:29 blondetrader: yes
+11:29 chenmann: omg clf ceo....makes musk looks like a child
+11:29 Russ: FB has become too bias for my liking
+11:29 blondetrader: ^^^
+11:29 mep1976: ohwow street
+11:30 mep1976: you hear about cliffy call
+11:30 mep1976: i gotta listen to that one
+11:30 mep1976: lol
+11:30 lilFish: ya mon
+11:30 invertedhammer: 25402 key ym
+11:30 ameriman: NQ internals were very strong then around 10:30 they weakened and gave sell signal
+11:30 ameriman: Jabba trading is dynamic
+11:30 ameriman: Internals gave sell signal 10:30
+11:31 JabbaTheCabin: as i said earlier, looking at tick breadth and a/d lines, nasdaq and russell were a sell, and es was a little stronger
+11:31 MyOtherBrotherDarryl: fb censors my moms posts.  I am not on it. you can only say what they want you to say.
+11:31 AlphaInvestor: DING - closed TLRY ccs - 57% of max profit
+11:31 JabbaTheCabin: nice alpha
+11:31 ameriman: NQ internals were right on, sell signal at 7240
+11:32 chenmann: nice al
+11:32 AlphaInvestor: made money on der shorts, made money on der longs - TLRY been good to me
+11:32 chenmann: haha
+11:32 chenmann: not over....
+11:33 chenmann: more to come
+11:33 blondetrader: also RE FB there is a grumble over shutting down pages AFTER taking $$$$
+11:33 AlphaInvestor: I am out of TLRY - no position any more
+11:33 streetglide: yeah meps go listen, its hilarious.....the half time is bustin his chops for it
+11:33 Halo: Any great ideas for options today
+11:33 mep1976: i will listen to it tonight
+11:33 mep1976: since i will be a long term investor in there lol
+11:33 streetglide: lol
+11:33 AlphaInvestor: BT - you gunna share any of your Back Ratio's wit me, here or the other room?
+11:33 lilFish: going retro- groove with you isley brothers
+11:33 streetglide: its good luggage, meps
+11:34 MyOtherBrotherDarryl: please expound Blonde?  not following.
+11:34 blondetrader: al yes will post em
+11:34 mep1976: bro i was all over that since 6-7
+11:34 lilFish: fb always been crooks
+11:34 Eedie: IH...Ym broke your level
+11:34 blondetrader: there are some orgainzarions that paid advertising dollars 
+11:34 mep1976: im just gonna stash them going forward
+11:34 VolCrush: i'd like to propose sumtin, this market is kinda bearish
+11:34 blondetrader: and then they shut down page: mostly conservative pages
+11:34 Eedie: I want it to break 402 with authority
+11:35 lilFish: very astute vol:)
+11:35 mep1976: stashing SDPI
+11:35 blondetrader: and they are apparently trying to band together for a lwa suit
+11:35 blondetrader: rumor has it
+11:35 AlphaInvestor: Vol - really, ya think?
+11:35 Eedie: There we go ym....with authority.
+11:36 VolCrush: shhhh, Alpha...der fruit and mr softie are just fine....
+11:36 JabbaTheCabin: look like nasdaq will test yesterdays low 7094.5. See if it finds support there
+11:36 MyOtherBrotherDarryl: I wouldn't doubt if Zuck has been selling data to the gov agencies
+11:36 mep1976: im in bitcoin for saftey
+11:36 MyOtherBrotherDarryl: I'm following now BT
+11:36 blondetrader: me either
+11:36 VolCrush: i'm in my bunker, for safety
+11:37 AlphaInvestor: AMD taken to the woodshed
+11:37 joseph9166: can someone please tell me how to exercise an optin
+11:37 lilFish: can i take it to the bridge?
+11:37 joseph9166: option
+11:37 MyOtherBrotherDarryl: Vol, you have a missile silo?  :)
+11:37 lilFish: right on right on
+11:37 VolCrush: i tink AMD may report soon
+11:37 VolCrush: foh shu NFLX reports tonight
+11:37 blondetrader: but regardless with FB if they continue to alienate they are going to really put a dent in revenue
+11:37 lilFish: shake yo money maker
+11:38 blondetrader: 7060 NQ on deck under 7112
+11:38 santorine: Nooby question here... How is it that HYLD is still looking good if people are woried about credit quality?
+11:38 blondetrader: 55 es
+11:38 MyOtherBrotherDarryl: He got high speed internet in his missile silo.  only connection to outside world ;)
+11:38 VolCrush: dats true
+11:38 AlphaInvestor: Joseph - there is almost always a better alternative to Exercising options - Call the Trade Desk - every time they found me a better choice
+11:39 VolCrush: FANGS kissin der baby
+11:39 santorine: wondering if I should start to load up on debt today or after monday?
+11:40 AlphaInvestor: Vol - there are a number of Quality names holding up, MSFT, AAPL, GS, JPM, even GE
+11:31 mthfr_vaxxed: also stay away from bitcoin quants... their dangerous
+11:32 bigworm: lol bitcoin is gross
+11:32 bigworm: i would total stay awy from that.
+11:32 mthfr_vaxxed: yeah job descriptions suck... you gotta know what questions to ask . kinda like with this room
+11:34 dennis1711: is there a way to do shorter aggreation periods (1hr) over multiple years?  Custom does not seem to allow that.
+11:35 dennis1711: scap that. it does...just need to use scoll....
+11:35 dennis1711: scrap
+11:42 Mobius: This is an Example of a Combined Signal Approach using Stop Lights.. 
+# Combined Signal Stop Lights
+# Boundary plots
+plot lower = -.5;
+     lower.SetDefaultColor(Color.Black);
+plot upper = 3; # To push to upper chart change to 20. For lower 3;
+     upper.SetDefaultColor(Color.Black);
+#Inputs: 
+input nFE = 5;#hint nFE: length for Fractal Energy calculation. 
+input AlertOn = yes;
+input Glength  = 13;
+input betaDev =  8;
+input data = close;
+input ATRmult = 2;
+input length = 10;
+input Agg = {default current, min5, min10, min15, min30, daily, weekly}; #hint Agg: For Zscore Volume only.
+def w = (2 * Double.Pi / Glength);
+def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betaDev) - 1 );
+def alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+def Go = Power(alpha, 4) * open + 
+             4 * (1 – alpha) * Go[1] – 6 * Power( 1 - alpha, 2 ) * Go[2] + 
+             4 * Power( 1 - alpha, 3 ) * Go[3] - Power( 1 - alpha, 4 ) * Go[4];
+def Gh = Power(alpha, 4) * high + 
+             4 * (1 – alpha) * Gh[1] – 6 * Power( 1 - alpha, 2 ) * Gh[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gh[3] - Power( 1 - alpha, 4 ) * Gh[4];
+def Gl = Power(alpha, 4) * low + 
+             4 * (1 – alpha) * Gl[1] – 6 * Power( 1 - alpha, 2 ) * Gl[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gl[3] - Power( 1 - alpha, 4 ) * Gl[4];
+def Gc = Power(alpha, 4) * data + 
+             4 * (1 – alpha) * Gc[1] – 6 * Power( 1 - alpha, 2 ) * Gc[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gc[3] - Power( 1 - alpha, 4 ) * Gc[4];
+# Variables:
+def o;
+def h;
+def l;
+def c;
+def CU1;
+def CU2;
+def CU;
+def CD1;
+def CD2;
+def CD;
+def L0;
+def L1;
+def L2;
+def L3;
+def RSI;
+# Calculations
+o = (Go + Gc[1]) / 2;
+h = Max(Gh, Gc[1]);
+l = Min(Gl, Gc[1]);
+c = (o + h + l + Gc) / 4;
+def gamma = Log(Sum((Max(h, c[1]) - Min(l, c[1])), nFE) / 
+                (Highest(h, nFE) - Lowest(l, nFE)))
+               / Log(nFE);
+L0 = (1 – gamma) * c + gamma * L0[1];
+L1 = -gamma * L0 + L0[1] + gamma * L1[1];
+L2 = -gamma * L1 + L1[1] + gamma * L2[1];
+L3 = -gamma * L2 + L2[1] + gamma * L3[1];
+if L0 >= L1
+then {
+    CU1 = L0 - L1;
+    CD1 = 0;
+} else {
+    CD1 = L1 - L0;
+    CU1 = 0;
+if L1 >= L2
+    CU2 = CU1 + L1 - L2;
+    CD2 = CD1;
+    CD2 = CD1 + L2 - L1;
+    CU2 = CU1;
+if L2 >= L3
+    CU = CU2 + L2 - L3;
+    CD = CD2;
+    CU = CU2;
+    CD = CD2 + L3 - L2;
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0;
+# Zscore Volume
+def t;
+switch (Agg){
+case current:
+    t = volume;
+case min5:
+    t = volume(period = AggregationPeriod.FIVE_MIN);
+case min10:
+    t = volume(period = AggregationPeriod.TEN_MIN);
+case min15:
+    t = volume(period = AggregationPeriod.FIFTEEN_MIN);
+case min30:
+    t = volume(period = AggregationPeriod.THIRTY_MIN);
+case daily:
+    t = volume(period = AggregationPeriod.DAY);
+case weekly:
+    t = volume(period = AggregationPeriod.Week);
+def Zscore = if isNaN(close[-1])
+              then double.nan
+              else (t - Average(t, length)) / StDev(t, length);
+plot Energy = if isNaN(c) then double.nan else 0;
+     Energy.SetStyle(Curve.Points);
+     Energy.SetLineWeight(3);
+     Energy.AssignValueColor(if Gamma > .618
+                             then color.green
+                             else if between(gamma, .382, .618) and Gamma < Gamma[1]
+                                  then color.green
+                             else color.red);
+     Energy.HideBubble();
+     Energy.HideTitle();
+def BubbleLocation = isNaN(close[3]) and !isNaN(close[4]);
+addChartBubble(BubbleLocation, -.5, "Energy", color.cyan);
+plot RSIsignal = if isNaN(c) then double.nan else 1;
+     RSIsignal.SetStyle(Curve.Points);
+     RSIsignal.SetLineWeight(3);
+     RSIsignal.AssignValueColor(if RSI > RSI[1] and RSI >= .2
+                                then color.green
+                                else if RSI crosses above .2
+                                     then color.green
+                                     else if RSI > .99
+                                          then color.green
+                                          else if RSI < .2
+                                               then color.red
+                                               else if RSI < RSI[1] and 
+                                                  between(RSI, .2, .9)
+                                               else color.red);
+     RSIsignal.HideBubble();
+     RSIsignal.HideTitle();
+addChartBubble(BubbleLocation, 1, "RSI", color.cyan);
+plot Zv = if isNaN(c) then double.nan else 2;
+     Zv.SetStyle(Curve.Points);
+     Zv.SetLineWeight(3);
+     Zv.AssignValueColor(if between(Zscore, -.5, .5) and RSI > RSI[1]
+                         then color.green
+                         else if between(Zscore, -.5, .5) and RSI < RSI[1]
+                         then color.red
+                         else if Zscore > .5 and Zscore > Zscore[1]
+                              then color.green
+                              else if Zscore < -.5
+                                   then color.red
+                              else color.red);
+     Zv.HideBubble();
+     Zv.HideTitle();
+AddChartBubble(Bubblelocation, 2, "Volume", color.cyan);
+              
+11:45 Mobius: That study can be pushed to the upper chart by changing the upper plot location.  See note in study
+11:46 AlphaInvestor: Mobius - all chart aggregations?
+11:48 inbuffalo: This is from Mobius's Supertrend
+AddChartBubble(close crosses below ST and bubbles, low[1], AsPrice(low[1]), color.pink);
+What do I have to add so that the bubble only shows the last occurrence
+Thanks
+11:49 AlphaInvestor: CanadianInBuffalo - just zoom in until only one shows
+11:50 inbuffalo: Thats too easy AI
+11:50 AlphaInvestor: Simple is best
+11:51 Mobius: Alpha.. As long as the Zscore is set to current and not an intraday value yes all aggregations
+11:51 AlphaInvestor: Thx
+11:53 AlphaInvestor: BTW - those look more like Porshe Dots, not stoplights
+11:53 Mobius: Porshe Dots came out after those studies. Carter does like his own name
+11:54 AlphaInvestor: ;-)
+11:54 Nube: I for one am shocked someone appropriate an idea from this room. Shocked, I say.
+11:54 Mobius: We were building those when this chat window first opened
+11:54 nextrade: the first that i recall seeing red-light /  green-light -was when that system was being plastered all over TV years ago. But you had to be wize to trade .
+11:55 Mobius: wisdom still works.
+11:56 nextrade: i don't think their in business anymore
+11:57 Mobius: At any rate - The idea is not making the indicator Multicolinear and using several in different aggregations.
+11:57 nextrade: '' you just wait for the light to turn green-and you buy-then sell when the light turns red ''
+11:58 nextrade: that might be why their out of business
+11:58 AlphaInvestor: This is what ChrisBell's original stoplight looked like
+11:59 Mobius: you still have to know what the green and red is telling you.
+11:59 Mobius: don't know chris Bell and hadn't seen that.
+11:40 MyOtherBrotherDarryl: I actually would like one of them silos.  pretty cool digs.
+11:40 lilFish: i'd like an earth ship
+11:40 mep1976: ge is a another safety trade
+11:40 santorine: lol mep
+11:41 chenmann: cash = safety
+11:41 VolCrush: black monday?
+11:41 chenmann: hmmm
+11:41 chenmann: interesting
+11:41 blondetrader: that would be amazballs W
+11:41 chenmann: let s c the close
+11:41 MyOtherBrotherDarryl: you are on earth ship.  It's called a rock in outer space  ;)
+11:41 lilFish: good point darryl
+11:41 JabbaTheCabin: thinking I should take off AA skewed strangle. Put on nov monthly for earnigns, collectyed 6.60, and had an order to cover at 3.30. Now it is trading for 4.50 . May take it off.
+11:41 futs: ameriman agreed, I have a script that gives signals based on /NQ internals and it gave sell signal at 10:05 EST
+11:42 futs:  
+11:42 futs: that was sell signal in /NQ based on /NQ internals
+11:42 santorine: eeenteresting
+11:42 Landerland: VFC buying opportunity or trap
+11:42 AlphaInvestor: ah, a chart with no labels, no axis, no ticker ... very helpful
+11:42 lilFish: po'd with self for not buying put on q's at 10:15 cst
+11:43 VolCrush: no woulda, shoulda coulda....please
+11:43 tmoney20g: oi vol
+11:43 blondetrader: 7136/45 res nq
+11:43 blondetrader: 74-78 band es
+11:43 blondetrader: 52-55 rty
+11:43 MyOtherBrotherDarryl: do you guys/gals buy puts or sell calls on stocks breaking down?
+11:44 blondetrader: both
+11:44 VolCrush: prob gunna say der same thing i said yestereday, "anyone shorting the bounce?"
+11:44 JabbaTheCabin: i almost never buy puts
+11:44 blondetrader: and will answer same
+11:44 TnT: 31 years ago today was Black Monday
+11:44 futs: AI I am still waiting for proof that FDA says buprenorphin is abuse deterrent
+11:44 VolCrush: yup bronx, LOL
+11:44 chenmann: tnt
+11:44 chenmann: nice
+11:44 futs: suboxone is not just buprenorphin it is mixture with naloxone, naloxone is deterrent
+11:45 VolCrush: so we have a 31 year Fib time cycle, nice
+11:45 lilFish: maclemore -thrift shop:0
+11:45 fred__w: darryl  as a position trader  its about building a position until things flip  then  hold till your model signals a change
+11:45 MyOtherBrotherDarryl: still think we will get some kind of bounce.....but it not....bombs away
+11:46 lilFish: ok peeps - gonna get your chance soon
+11:46 TnT: vix back above 20, everyone skeered yet?
+11:46 VolCrush: well if it is, my bunker should hold up
+11:46 futs: FDA says SUBOXONE is deterrent becaus eit has naloxone in it which is the deterrent
+11:46 futs: FDA never says buprenorphine is deterrent
+11:46 tmoney20g: i got $20 worth of megamillions
+11:46 dennis1711: Does TOS 1hr chart data go out more that 365 days?   
+11:47 MyOtherBrotherDarryl: mega officially hits 1B
+11:47 VolCrush: yeah, wat he said
+11:47 tmoney20g: i'll share
+11:47 VolCrush: wats mega
+11:47 tmoney20g: lottery
+11:47 VolCrush: oh, ty
+11:47 AlphaInvestor: I hedged my MegaMillions with some Powerball
+11:47 tmoney20g: just hit 1B jackpot for tonight
+11:47 TnT: that is an s* load
+11:47 tmoney20g: so 300m after taxes if you take lump sum
+11:48 AlphaInvestor: Dennis - I answered your query in the other chat
+11:48 AlphaInvestor: The answer isn't different in here
+11:48 tmoney20g: lol
+11:48 TnT: so, a chat room 2 timer
+11:48 tmoney20g: just looking the answer he "wants" to hear
+11:48 MyOtherBrotherDarryl: SPX wants to retest 200 day.  Better hold.
+11:49 VolCrush: fruit, google & mr softie couldn't care less, just an fyi
+11:49 MyOtherBrotherDarryl: They are selling the NKE bounces
+11:50 dennis1711: Sorry, I think it is a different question that I need help with....does 1hr go out past 365?
+11:50 dennis1711: just asking.
+11:50 TnT: try it and see
+11:51 MyOtherBrotherDarryl: No there are exactly 365 days in year.  No extra hours.
+11:51 AlphaInvestor: Dennis - the data length for each chart aggegation is listed in the Manual
+11:51 Dimka: Al, thinking to get more SPPI, got more TXMD this morning, SPPI is overdue for a bounce me thinks
+11:51 AlphaInvestor: Dimka - I got a ton of SPPI, all of it now ITM
+11:51 futs: dennisdennis NO the 1hr does not go beyond 360 days, try it and you will see like TnT said
+11:51 lilFish: 252 trading days
+11:52 dennis1711: I did. and did not work.  Seeing if I missed something.  thanks .
+11:52 Dimka: Al, stock or options?
+11:53 AlphaInvestor: options
+11:53 AlphaInvestor: pcs
+11:53 dennis1711: I should have read the manual before asking....
+11:53 dennis1711: my bad.
+11:53 futs: dennis you can try on demand 1 hour time frame you can see 3 years past data
+11:54 futs: in on demand feature
+11:54 dennis1711: right, okay!  I'll give that a try.  Many thanks.
+11:54 futs: yw
+11:55 lilFish: expy fri - extra skitzy :)))
+11:58 lilFish: lets see if q's can make a triangle
+11:58 VolCrush: fruit max pain pin....you guessedit 220
+11:59 lilFish: aint over till the weight challenged gal sings
+12:00 AlphaInvestor: fish - they might not gender identify as a gal ... or a guy for that matter
+12:00 VolCrush: last week was 220 - 222.5, it closed at 222.11
+12:00 mep1976: @street
+12:00 mep1976: clf ceo on cnbc at 3pm lol
+12:00 chenmann: damage control
+12:01 VolCrush: vary gud reaction to AXP earnings, MA* benifing from dat
+12:02 lilFish: true dat vol
+12:02 lilFish: i mean alpha
+12:02 AlphaInvestor: Vol - you got me in der MA^ trade, tanks for dat
+12:03 tmoney20g: rgr
+12:03 tmoney20g: @esmal, how you doin today
+12:04 AlphaInvestor: I think RGR changed their ticker
+12:04 trader_4_life: is it possible to set alerts when price touches a trend line?
+12:07 tmoney20g: you can't figure out what price that would be from your own trendline ?
+12:08 cryptos: trader try thinkscript lounge to see if they have answer
+12:08 AlphaInvestor: Trader4 - yes yoiu can
+12:08 MyOtherBrotherDarryl: he wants to do an auto buy/sell im guessing
+12:08 tmoney20g: oh, i guess it would be dynamic since you don't know what day that will be
+12:09 tmoney20g: could be 3 years from now
+12:09 MyOtherBrotherDarryl: not adviseable :)
+12:12 lilFish: hmmm she said
+12:12 VolCrush: Alpha, yeah sorry about dat re: MA*
+12:16 AlphaInvestor: I see green shoots
+12:16 VolCrush: not much overhead on MA* until 220
+12:16 TnT: grab the roundup AI
+12:16 TnT: kill it
+12:16 AlphaInvestor: I will sell at 50% of max profit - MA was a trade, not an investment
+12:16 VolCrush: just a handful of names, but they're der BSDs
+12:16 chenmann: yesal, i m gonna cover my shorts for a small lost here, ....wait to reshort nexk week
+12:17 chenmann: yes al
+12:18 AlphaInvestor: Consumer Goods and Utilities still outperforming - those are Defensive ... lets see if we rotate out of those into some growh names
+12:21 lilFish: if q's get back up on bear flag support, next week could be bullish?
+12:22 chenmann: i m very bearish just think todays down move s done
+12:22 lilFish: one day china and us will announce a deal
+12:23 lilFish: that'll be a major cover ur shorts day:)
+12:23 TnT: Xi is making sure that is after the US election
+12:23 chenmann: ++
+12:23 chenmann: i miss tnt .... alot
+12:24 lilFish: agreed
+12:24 TnT: I'm right here
+12:24 TnT: lol
+12:24 lilFish: lol
+12:24 chenmann: ha
+12:24 fred__w: lil  best to stay with the trend  and not anticipate too much
+12:24 mep1976: jajajaj
+12:24 lilFish: fred, lookin for my in on q's
+12:25 lilFish: but if it gets up on that line, I'm not goin short
+12:25 lilFish: or long
+12:25 VolCrush: should we go with the Captain and Tenille or some Opera today?
+12:25 fred__w: lil  i recommend against longs till your 44ema-da is breached 
+12:26 lilFish: no vol -nooo:)
+12:26 fred__w: ..at least
+12:27 VolCrush: wat der hell happened to NVDA today, Alpha?
+12:27 VolCrush: more sellers than buyers?
+12:27 chenmann: haha
+12:28 chenmann: i c alot bearish bets in chips
+12:28 mep1976: omg street
+12:28 TnT: I hate Opera
+12:28 mep1976: jajajajajjajaja
+12:28 mep1976: you messing with the wrong guy
+12:28 mep1976: ha
+12:28 mep1976: tony montana
+12:29 lilFish: i think q's 174.85 eod would be a bullish sign for next wk
+12:30 VolCrush: BA fur an E run perhaps
+12:30 mep1976: CEO from clf tuff guy huh lol
+12:31 chenmann: dont mess with him
+12:31 mep1976: he make you eat iron pellets
+12:31 chenmann: ha
+12:31 mep1976: jajajajja
+12:31 chenmann: he s got make the shorts jump out windwos
+12:31 chenmann: windows
+12:32 chenmann: gonna
+12:32 VolCrush: slightly diff bounce today, BSDs held their ground
+12:32 mep1976: I might own some soon chen
+12:32 mep1976: lol
+12:32 chenmann: on my watch list now
+12:32 chenmann: haha
+12:33 VolCrush: der fruit in der kill zone: max pain
+12:33 chenmann: big reason why i cover my shorts
+12:33 chenmann: today
+12:34 VolCrush: too damn early in the day IMO, but a tell never der less, which it happened 1.5 hours from now
+12:34 VolCrush: *wish
+12:36 GQ: Hello room anybody have any thoughts on CATS earnings tues am?
+12:36 GQ: Down over 20% from high of 172
+12:37 lilFish: bar set low
+12:38 radon224: CAT made a big investment in gowing sales in China.  Investors are fearful for obvious reasons.
+12:39 GQ: Can they beat both lines? I’m in the hole right now

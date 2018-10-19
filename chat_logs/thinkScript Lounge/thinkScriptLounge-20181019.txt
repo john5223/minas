@@ -592,3 +592,635 @@ AddLabel(DisplayStrengthMeter and BullishTrend and ADX >= 50, " ", CreateColor(H
 AddLabel(DisplayStrengthMeter and !(BullishTrend and ADX >= 50), " ", CreateColor(0, 77, 25));
 AddLabel(FixedValueBkgndColor and ShowDigits == 2, Floor(ADX), CreateColor(ADXBkgndValueR, ADXBkgndValueG, ADXBkgndValueB));
 AddLabel(!FixedValueBkgndColor and ShowDigits == 2, Floor(ADX), CreateColor(if !BullishTrend then 255 else HighlightColor, if !BullishTrend then HighlightColor else 255 , 51));
+09:57 JohnnyQuotron: Mobius... if you have the time, what might i read that would help me understand the betaDev variable in your Gaussian RSI LaGurerre?  Something without too many big scary words.
+09:58 amalia: lol
+10:00 JohnnyQuotron: morning amalia :)
+10:07 AlphaInvestor: Some folks were asking about Stoplight last night, but then were posting things that were not Stoplightish ... Stoplight (as done by multiple authoures) is a lower study. What peeps seemed to be asking about was Meters not lights. Here is an example of a Strength Meter
+10:10 JohnnyQuotron: Thank you Alpha.  That will give me something to chew on.  And to be clear.  StopLights are lower studies.  Strength Meters are upper studies?
+10:19 AlphaInvestor: Well, all the
+10:20 mthfr_vaxxed: well thats cool. thanks alpha.
+10:21 Mobius: The name Stop Lights started years ago when the subject of Combined Signal Approach was first introduced to this group. A way to look at three different studies all signaling an entry at the same time.  Someone said "It's like a stop light" with all the red green and yellow point colors in a row. The name stuck. That was when this chat room first opened. I was here that day and it wasn't long after that when the subject was opened
+10:21 AlphaInvestor: Well, all the Stoplight studies that I have from ChrisBell, LAR, and Dilbert are lower studies, or lower study "like" studies pushed to the upper
+10:23 JohnnyQuotron: Thank you, I have changed the Tab to read;  Stop Lights & Strength Meters
+10:25 JohnnyQuotron: Fruit Loops and FooBars are among my favorite manes.  Alpha if you could share the "Dilbert" stoplight that would be great.  It is not in the OneNote.
+10:26 Nube: The HoHo Squeeze is still my favoriten
+10:28 AlphaInvestor: 
+#Dilbert_AdvanceDeclineStopLights
+# V1.0  -  041116   -  Dilbert    - 1st code cut
+input exchange = {default NYSE, NASDAQ, AMEX};
+def advances;
+def declines;
+switch (exchange) {
+case NYSE:
+    advances = close("$ADVN");
+    declines = close("$DECN");
+case NASDAQ:
+    advances = close("$ADVN/Q");
+    declines = close("$DECN/Q");
+case AMEX:
+    advances = close("$ADVA");
+    declines = close("$DECA");
+def advnDecl1 = advances / (advances + declines);
+plot One = 1;
+One.AssignValueColor(if advnDecl1 > advnDecl1[1] then Color.Green else Color.Red);
+One.SetPaintingStrategy(PaintingStrategy.SQUARES);
+def advnDecl2 = (advances - declines) / (advances + declines);
+plot Two = 2;
+Two.AssignValueColor(if advnDecl2 > advnDecl2[1] then Color.Green else Color.Red);
+Two.SetPaintingStrategy(PaintingStrategy.SQUARES);
+def advnDecl3 = advances / declines;
+plot Three = 3;
+Three.AssignValueColor(if advnDecl3 > advnDecl3[1] then Color.Green else Color.Red);
+Three.SetPaintingStrategy(PaintingStrategy.SQUARES);
+def advnDecl4 = advances - declines;
+plot Four = 4;
+Four.AssignValueColor(if advnDecl4 > advnDecl4[1] then Color.Green else Color.Red);
+Four.SetPaintingStrategy(PaintingStrategy.SQUARES);
+10:29 AlphaInvestor: Another ... but not really Stoplightish
+# dilbert: I update the RSI stop light system to have the length's as input to see what would happen.  At first I though that the short lengths was not a good idea, but with longer length's the outputs do not reach extremes near as fast.
+#start
+# V1.1 - 063015 - Dilbert - input lengths, PaintingStrategy's
+# V1.0 - 063015 - NickNameNag - 1st code cut
+input Alength = 2;
+input Blength = 4;
+input Clength = 2;
+script wrsi {
+    input length = 14;
+    input over_Bought = 70;
+    input over_Sold = 30;
+    input price = close;
+    input averageType = AverageType.WILDERS;
+    def NetChgAvg = MovingAverage(averageType, price - price[1], length);
+    def TotChgAvg = MovingAverage(averageType, AbsValue(price - price[1]), length);
+    def ChgRatio = if TotChgAvg != 0 then NetChgAvg / TotChgAvg else 0;
+    plot RSI = 50 * (ChgRatio + 1);
+    plot OverSold = over_Sold;
+    plot OverBought = over_Bought;
+    RSI.DefineColor("OverBought", GetColor(5));
+    RSI.DefineColor("Normal", GetColor(7));
+    RSI.DefineColor("OverSold", GetColor(1));
+    RSI.AssignValueColor(if RSI > over_Bought then RSI.Color("OverBought") else if RSI < over_Sold then RSI.Color("OverSold") else RSI.Color("Normal"));
+    OverSold.SetDefaultColor(GetColor(8));
+    OverBought.SetDefaultColor(GetColor(8));
+plot rsi_a = wrsi(length = Alength);
+rsi_a.SetPaintingStrategy(PaintingStrategy.POINTS);
+plot rsi_b = wrsi(length = Blength, price = hl2);
+rsi_b.SetPaintingStrategy(PaintingStrategy.SQUARES);
+plot rsi_c = wrsi(length = Clength, price = hl2);
+rsi_c.SetPaintingStrategy(PaintingStrategy.TRIANGLES);
+#end
+10:30 JohnnyQuotron: Thank you.
+10:32 Mobius: johnny - beta is the weighting
+10:33 JohnnyQuotron: Thank you
+10:33 Mobius: yw
+10:40 Nube: Johhny, your methodfro aligning those squares is about as good as any I've run across. If you give yourself some expansion area you can then move the line a little above or below the price plot but that's the only additional option I know of
+10:47 dennis1711: Jonny- Is that a public tab?  
+10:56 JohnnyQuotron: everythin in the OneNOte is public except the TT tab
+10:57 JohnnyQuotron: dennis...the section is "Uncategorized" the tab name is Stop Lights & Strength Meters
+11:00 dennis1711: thanks!
+11:03 dennis1711: screen shots w/ scripts r awsome.
+11:05 Nube: Using the McClellan as an example of using a light type of system. If a person doesn't nned to see a line, a label makes things a lot simpler
+# McClellan Oscillator    
+# Example for using label instead of indicator
+# Nube 10.19.18
+input exchange = {NYSE, NASDAQ, default SPX};
+input fastLength = 19;
+input slowLength = 39;
+    # variablea
+case SPX:
+    advances = close("$ADVSP");
+    declines = close("$DECLSP");
+def advance = if   !IsNaN(advances)
+              then advances 
+              else advance[1];
+def decline = if   !IsNaN(declines)
+              then declines
+              else decline[1];
+def ad = if   advance + decline > 0
+         then (advance - decline) / (advance + decline)
+         else ad[1];
+def emaFast = ExpAverage(ad, fastLength);
+def emaSlow = ExpAverage(ad, slowLength);
+def mcClellanOsc = if   !IsNaN(close) 
+                   then emaFast - emaSlow            
+                   else Double.NaN;
+    # plots   
+ZeroLine = 0;
+ZeroLine.  SetDefaultColor(Color.Gray);
+ZeroLine.  SetStyle(Curve.Long_Dash);
+    
+AverageMc = Average(mcClellanOsc,fastLength);
+AverageMc.  SetDefaultColor(Color.Gray);
+McOsc = mcClellanOsc;
+McOsc.  AssignValueColor(if   McOsc < AverageMc    
+                         then if   McOsc < McOsc[1]
+                              then Color.Red
+                              else Color.Gray
+                         else if   McOsc < McOsc[1]
+                              then Color.Gray
+                              else Color.Green);
+addcloud(McOsc, 0, Color.Dark_Gray, Color.Dark_Gray);
+AddLabel(SecondsTillTime(1530) > 0, " ", 
+                         if   McOsc < AverageMc    
+                         else if  McOsc < McOsc[1]
+11:06 Nube: variablea, from Greek for something or other, I swear.
+11:09 Nube: A better example: I'm sure we all have M's High Low Index but do we need to look at it intraday or are we just looking at it for directional bias.
+11:15 JohnnyQuotron: The LoungeArchive is current.
+11:17 dennis1711: I have a general question about time frame data in TOS.  In the chat window pane, TOS alows me to select specific aggregation periods (1h, 1d, etc) and a specific time interval (1d, 1 w, 1 year, 5 y, etc) for that aggregation.  Howver, the time interval is limited in drop down box.  For exapmle, a one hour aggregation can only go out 365 days.   I'd like to test a strategy beyond 365 days.  Is there an override or work around?
+11:18 bigworm: hey mobius do quant funds only hire from the best schools?
+11:19 AlphaInvestor: Dennis - test this past year, then set specific dates and test last yar
+------- Wednesday, October 17, 2018 -------
+11:23 dennis1711: ok. thanks.
+11:25 mthfr_vaxxed: bigworm : no
+11:26 mthfr_vaxxed: lots of factors involved. write public jupyter notebooks on github teaching what you learn and that'll be enough probably to get you in
+11:27 bigworm: so write my code and post on github?
+11:27 mthfr_vaxxed: also that max dama pdf details a lot too
+11:27 mthfr_vaxxed: yes... quants are weird that they want everything secret. coders want everything open source. find the middle ground.
+11:28 Nube: XLB has had a rough week. I think that's gotta be on the list of things to short on a bounce
+11:28 bigworm: i was looking last night in new york
+11:29 mthfr_vaxxed: also research your funds... some are friendly. some are stuck up. dont blast out a resume and accept first offer. you'll waste time.
+11:29 bigworm: i was looking at one and it had so many job titles.  they all seemed like the same job though
+11:31 mthfr_vaxxed: also stay away from bitcoin quants... their dangerous
+11:32 bigworm: lol bitcoin is gross
+11:32 bigworm: i would total stay awy from that.
+11:32 mthfr_vaxxed: yeah job descriptions suck... you gotta know what questions to ask . kinda like with this room
+11:34 dennis1711: is there a way to do shorter aggreation periods (1hr) over multiple years?  Custom does not seem to allow that.
+11:35 dennis1711: scap that. it does...just need to use scoll....
+11:35 dennis1711: scrap
+11:42 Mobius: This is an Example of a Combined Signal Approach using Stop Lights.. 
+# Combined Signal Stop Lights
+# Boundary plots
+plot lower = -.5;
+     lower.SetDefaultColor(Color.Black);
+plot upper = 3; # To push to upper chart change to 20. For lower 3;
+     upper.SetDefaultColor(Color.Black);
+#Inputs: 
+input nFE = 5;#hint nFE: length for Fractal Energy calculation. 
+input AlertOn = yes;
+input Glength  = 13;
+input betaDev =  8;
+input data = close;
+input ATRmult = 2;
+input length = 10;
+input Agg = {default current, min5, min10, min15, min30, daily, weekly}; #hint Agg: For Zscore Volume only.
+def w = (2 * Double.Pi / Glength);
+def beta = (1 - Cos(w)) / (Power(1.414, 2.0 / betaDev) - 1 );
+def alpha = (-beta + Sqrt(beta * beta + 2 * beta));
+def Go = Power(alpha, 4) * open + 
+             4 * (1 – alpha) * Go[1] – 6 * Power( 1 - alpha, 2 ) * Go[2] + 
+             4 * Power( 1 - alpha, 3 ) * Go[3] - Power( 1 - alpha, 4 ) * Go[4];
+def Gh = Power(alpha, 4) * high + 
+             4 * (1 – alpha) * Gh[1] – 6 * Power( 1 - alpha, 2 ) * Gh[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gh[3] - Power( 1 - alpha, 4 ) * Gh[4];
+def Gl = Power(alpha, 4) * low + 
+             4 * (1 – alpha) * Gl[1] – 6 * Power( 1 - alpha, 2 ) * Gl[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gl[3] - Power( 1 - alpha, 4 ) * Gl[4];
+def Gc = Power(alpha, 4) * data + 
+             4 * (1 – alpha) * Gc[1] – 6 * Power( 1 - alpha, 2 ) * Gc[2] + 
+             4 * Power( 1 - alpha, 3 ) * Gc[3] - Power( 1 - alpha, 4 ) * Gc[4];
+# Variables:
+def o;
+def h;
+def l;
+def c;
+def CU1;
+def CU2;
+def CU;
+def CD1;
+def CD2;
+def CD;
+def L0;
+def L1;
+def L2;
+def L3;
+def RSI;
+# Calculations
+o = (Go + Gc[1]) / 2;
+h = Max(Gh, Gc[1]);
+l = Min(Gl, Gc[1]);
+c = (o + h + l + Gc) / 4;
+def gamma = Log(Sum((Max(h, c[1]) - Min(l, c[1])), nFE) / 
+                (Highest(h, nFE) - Lowest(l, nFE)))
+               / Log(nFE);
+L0 = (1 – gamma) * c + gamma * L0[1];
+L1 = -gamma * L0 + L0[1] + gamma * L1[1];
+L2 = -gamma * L1 + L1[1] + gamma * L2[1];
+L3 = -gamma * L2 + L2[1] + gamma * L3[1];
+if L0 >= L1
+then {
+    CU1 = L0 - L1;
+    CD1 = 0;
+} else {
+    CD1 = L1 - L0;
+    CU1 = 0;
+if L1 >= L2
+    CU2 = CU1 + L1 - L2;
+    CD2 = CD1;
+    CD2 = CD1 + L2 - L1;
+    CU2 = CU1;
+if L2 >= L3
+    CU = CU2 + L2 - L3;
+    CD = CD2;
+    CU = CU2;
+    CD = CD2 + L3 - L2;
+RSI = if CU + CD <> 0 then CU / (CU + CD) else 0;
+# Zscore Volume
+def t;
+switch (Agg){
+case current:
+    t = volume;
+case min5:
+    t = volume(period = AggregationPeriod.FIVE_MIN);
+case min10:
+    t = volume(period = AggregationPeriod.TEN_MIN);
+case min15:
+    t = volume(period = AggregationPeriod.FIFTEEN_MIN);
+case min30:
+    t = volume(period = AggregationPeriod.THIRTY_MIN);
+case daily:
+    t = volume(period = AggregationPeriod.DAY);
+case weekly:
+    t = volume(period = AggregationPeriod.Week);
+def Zscore = if isNaN(close[-1])
+              then double.nan
+              else (t - Average(t, length)) / StDev(t, length);
+plot Energy = if isNaN(c) then double.nan else 0;
+     Energy.SetStyle(Curve.Points);
+     Energy.SetLineWeight(3);
+     Energy.AssignValueColor(if Gamma > .618
+                             then color.green
+                             else if between(gamma, .382, .618) and Gamma < Gamma[1]
+                                  then color.green
+                             else color.red);
+     Energy.HideBubble();
+     Energy.HideTitle();
+def BubbleLocation = isNaN(close[3]) and !isNaN(close[4]);
+addChartBubble(BubbleLocation, -.5, "Energy", color.cyan);
+plot RSIsignal = if isNaN(c) then double.nan else 1;
+     RSIsignal.SetStyle(Curve.Points);
+     RSIsignal.SetLineWeight(3);
+     RSIsignal.AssignValueColor(if RSI > RSI[1] and RSI >= .2
+                                then color.green
+                                else if RSI crosses above .2
+                                     then color.green
+                                     else if RSI > .99
+                                          then color.green
+                                          else if RSI < .2
+                                               then color.red
+                                               else if RSI < RSI[1] and 
+                                                  between(RSI, .2, .9)
+                                               else color.red);
+     RSIsignal.HideBubble();
+     RSIsignal.HideTitle();
+addChartBubble(BubbleLocation, 1, "RSI", color.cyan);
+plot Zv = if isNaN(c) then double.nan else 2;
+     Zv.SetStyle(Curve.Points);
+     Zv.SetLineWeight(3);
+     Zv.AssignValueColor(if between(Zscore, -.5, .5) and RSI > RSI[1]
+                         then color.green
+                         else if between(Zscore, -.5, .5) and RSI < RSI[1]
+                         then color.red
+                         else if Zscore > .5 and Zscore > Zscore[1]
+                              then color.green
+                              else if Zscore < -.5
+                                   then color.red
+                              else color.red);
+     Zv.HideBubble();
+     Zv.HideTitle();
+AddChartBubble(Bubblelocation, 2, "Volume", color.cyan);
+              
+11:45 Mobius: That study can be pushed to the upper chart by changing the upper plot location.  See note in study
+11:46 AlphaInvestor: Mobius - all chart aggregations?
+11:48 inbuffalo: This is from Mobius's Supertrend
+AddChartBubble(close crosses below ST and bubbles, low[1], AsPrice(low[1]), color.pink);
+What do I have to add so that the bubble only shows the last occurrence
+Thanks
+11:49 AlphaInvestor: CanadianInBuffalo - just zoom in until only one shows
+11:50 inbuffalo: Thats too easy AI
+11:50 AlphaInvestor: Simple is best
+11:51 Mobius: Alpha.. As long as the Zscore is set to current and not an intraday value yes all aggregations
+11:51 AlphaInvestor: Thx
+11:53 AlphaInvestor: BTW - those look more like Porshe Dots, not stoplights
+11:53 Mobius: Porshe Dots came out after those studies. Carter does like his own name
+11:54 AlphaInvestor: ;-)
+11:54 Nube: I for one am shocked someone appropriate an idea from this room. Shocked, I say.
+11:54 Mobius: We were building those when this chat window first opened
+11:54 nextrade: the first that i recall seeing red-light /  green-light -was when that system was being plastered all over TV years ago. But you had to be wize to trade .
+11:55 Mobius: wisdom still works.
+11:56 nextrade: i don't think their in business anymore
+11:57 Mobius: At any rate - The idea is not making the indicator Multicolinear and using several in different aggregations.
+11:57 nextrade: '' you just wait for the light to turn green-and you buy-then sell when the light turns red ''
+11:58 nextrade: that might be why their out of business
+11:58 AlphaInvestor: This is what ChrisBell's original stoplight looked like
+11:59 Mobius: you still have to know what the green and red is telling you.
+11:59 Mobius: don't know chris Bell and hadn't seen that.
+12:00 AlphaInvestor: LAR's original stuff references ChrisBell as the originator
+12:01 Mobius: Solomon said " To the writing of books there is no end. And reading them is tiresome." Same applies to indicators.
+12:01 AlphaInvestor: but, I am sure many had hands in the pie back then
+12:01 Mobius: Lar was late to that party. He'd not been in here when we started writing those.  
+12:02 AlphaInvestor: where is Lar these days (and yes I di know his curent handle)
+12:02 Mobius: IDK.  Haven't seen him in a while
+12:03 AlphaInvestor: haven't seen Dilbert around either
+12:04 Mobius: Dilbert was talking about property rentals
+12:04 nextrade: last year he was talking about getting into flipping houses
+12:04 Mobius: Been there, done that, have the tee shirt
+12:05 AlphaInvestor: Mobius - ah yes, money pit management
+12:05 nextrade: i saved the eviction notices- to remind me of the pain of being a landlord
+12:05 Mobius: I'm starting to see a pattern in the Market. Anyone else picking it up?
+12:05 AlphaInvestor: I think I am seeing that pattern in my portfolio
+12:06 Nube: Sell everything that hints at rebound
+12:06 Mobius: yeah - Ouch
+12:06 AlphaInvestor: Mobius - do you have a spare room, or should I reserve a space under the bridge
+12:06 bigworm: lol
+12:06 Mobius: Got a boat all outfitted and ready to sail  :)
+12:07 AlphaInvestor: Nube seems to have taken Dilbert's place ... a producive coder with great ideas
+12:08 Nube: Scripting too much. Had a target hit on /6B that I intended to hold over the weekend. Thought about moving it and then thought "nah,  I'll finish this first"
+12:08 AlphaInvestor: now, if he would just finish that 78 bar POC, VAH, VAL study
+12:08 JohnnyQuotron: my 2cents... last two days we fell into the london close.. rallied into the close... is that what you are seeing?
+12:08 Nube: Got taken out green but now I'm out of a trade I wanted to be and have no good reentry spot.
+12:09 Nube: This means the Pound is going to the moon Monday
+12:09 AlphaInvestor: London Calling .... The Clash
+12:09 Nube: Jack The Ripper let loose on the markets
+12:09 JohnnyQuotron: I remember those days  And the hangovers.
+12:09 Mobius: Phases of a Coder:
+1) Bashes Head to learn
+2) Light comes on
+3) Prolifically pumps out code one idea after another
+4) Realizes everything he's done has been done and abandon
+5) Bashes head for learning to code
+12:09 Nube: ES does have an awful pertty bear flag going
+12:10 Nube: Getting to stage 5
+12:10 Nube: "Mobius Already Wrote Everything" is stage 4 in ThinkScript
+12:11 Mobius: You don't see me getting in someones way.  No way to stop a newly empowered coder from running to what's already been done. 
+12:12 Mobius: And sooner or later they do find what they will actually use. Until one day you just look at the chart and damn, you don't need the code anymore.
+12:12 AlphaInvestor: 
+6) learns which studies really fit your trading style
+7) pares down chart to only 15 indicators
+8) realizes that 15 indicators leads to Analysis Paralysis
+9) pares down chart to a) the ORB, b) RSI_Laguerre, c) Fractal Pivots
+10) finally becomes consistently protitable
+12:13 Nube: <---- Still can't use Laguerre.
+12:14 JohnnyQuotron: what about SuperPivots?
+12:14 Nube: SuperPivots would be a good Big Picture
+12:14 AlphaInvestor: JQkpa - dats just one man's take on mobius FractalPivots
+12:14 Mobius: Laguerre is just another garden variety polynomial
+12:15 JohnnyQuotron: I like gardens
+12:15 AlphaInvestor: hmmm - there are no Garden Variety polynomials - there arent' even any garden variety uninomials
+12:17 Nube: I think my inability to use Laguerre is that it's better suited for a more patient trader.
+12:18 Mobius: Best traders have the patience of an oyster
+12:18 Nube: I think if a person is more comfortable buying a little carnage or has a longer time frame then it's likely the correct, dirt simple line to follow
+12:18 AlphaInvestor: Mmmm I love oysters, lightly steamed is best
+12:18 bigworm: and nice pants
+11:25 blondetrader: 46 and 36
+11:25 fred__w: crossed 7x0.77% point
+11:26 chenmann: doom
+11:26 MyOtherBrotherDarryl: alpha said that too.  I just seconded  :)
+11:26 tony: I have almost $14,000 into FB. Think it was dumb to to not just sell on July 25th? Articles on the possible rebound are so contradicting.
+11:26 amalia: Whoever does NOT hedge will be turned into a woosie
+11:26 invertedhammer: Want 31
+11:26 lilFish: whoa
+11:26 amalia: Also, is it true mega millions is at 1bil?
+11:26 lilFish: this am was a bit of a whoosy daisy
+11:26 tony: It is
+11:26 Russ: Yes I&aposm in NY
+11:27 lilFish: tried to say that like da church lady
+11:27 VolCrush: +1 amalia
+11:27 MyOtherBrotherDarryl: haha amalia.  i understand the need when trading options.  Just ribbing.
+11:27 blondetrader: tony FB going to follow the mkt in general imo
+11:27 JabbaTheCabin: Majic - if you want to buy a stock, and you have earnings coming up, you have 2 choices. Either wait till the earnings before buying, or take advantage of heightened volatiliy now  and sell 1 put contract for every 100 shares you want to buy. If the stock goes up, you will make some money. If it goes down below your strike price,, you will get put the stock, albeit at a discount
+11:27 tony: what i was thinking
+11:27 MyOtherBrotherDarryl: yes, mega will be close to 1B
+11:28 ameriman: chen retest in progress
+11:28 tmoney20g: what
+11:28 blondetrader: if owned 14k worth I would be selling calls and then using the $$ to offset cost of puts
+11:28 tmoney20g: oh, another tony
+11:28 tanker: qqq
+11:28 santorine: ... thinking of unloading this trash
+11:28 JabbaTheCabin: so, ameriman what were you saying earlier about nasdaq internals being strong?
+11:29 MyOtherBrotherDarryl: fb is losing disgruntled users
+11:29 blondetrader: yes
+11:29 chenmann: omg clf ceo....makes musk looks like a child
+11:29 Russ: FB has become too bias for my liking
+11:29 blondetrader: ^^^
+11:29 mep1976: ohwow street
+11:30 mep1976: you hear about cliffy call
+11:30 mep1976: i gotta listen to that one
+11:30 mep1976: lol
+11:30 lilFish: ya mon
+11:30 invertedhammer: 25402 key ym
+11:30 ameriman: NQ internals were very strong then around 10:30 they weakened and gave sell signal
+11:30 ameriman: Jabba trading is dynamic
+11:30 ameriman: Internals gave sell signal 10:30
+11:31 JabbaTheCabin: as i said earlier, looking at tick breadth and a/d lines, nasdaq and russell were a sell, and es was a little stronger
+11:31 MyOtherBrotherDarryl: fb censors my moms posts.  I am not on it. you can only say what they want you to say.
+11:31 AlphaInvestor: DING - closed TLRY ccs - 57% of max profit
+11:31 JabbaTheCabin: nice alpha
+11:31 ameriman: NQ internals were right on, sell signal at 7240
+11:32 chenmann: nice al
+11:32 AlphaInvestor: made money on der shorts, made money on der longs - TLRY been good to me
+11:32 chenmann: haha
+11:32 chenmann: not over....
+11:33 chenmann: more to come
+11:33 blondetrader: also RE FB there is a grumble over shutting down pages AFTER taking $$$$
+11:33 AlphaInvestor: I am out of TLRY - no position any more
+11:33 streetglide: yeah meps go listen, its hilarious.....the half time is bustin his chops for it
+11:33 Halo: Any great ideas for options today
+11:33 mep1976: i will listen to it tonight
+11:33 mep1976: since i will be a long term investor in there lol
+11:33 streetglide: lol
+11:33 AlphaInvestor: BT - you gunna share any of your Back Ratio's wit me, here or the other room?
+11:33 lilFish: going retro- groove with you isley brothers
+11:33 streetglide: its good luggage, meps
+11:34 MyOtherBrotherDarryl: please expound Blonde?  not following.
+11:34 blondetrader: al yes will post em
+11:34 mep1976: bro i was all over that since 6-7
+11:34 lilFish: fb always been crooks
+11:34 Eedie: IH...Ym broke your level
+11:34 blondetrader: there are some orgainzarions that paid advertising dollars 
+11:34 mep1976: im just gonna stash them going forward
+11:34 VolCrush: i'd like to propose sumtin, this market is kinda bearish
+11:34 blondetrader: and then they shut down page: mostly conservative pages
+11:34 Eedie: I want it to break 402 with authority
+11:35 lilFish: very astute vol:)
+11:35 mep1976: stashing SDPI
+11:35 blondetrader: and they are apparently trying to band together for a lwa suit
+11:35 blondetrader: rumor has it
+11:35 AlphaInvestor: Vol - really, ya think?
+11:35 Eedie: There we go ym....with authority.
+11:36 VolCrush: shhhh, Alpha...der fruit and mr softie are just fine....
+11:36 JabbaTheCabin: look like nasdaq will test yesterdays low 7094.5. See if it finds support there
+11:36 MyOtherBrotherDarryl: I wouldn't doubt if Zuck has been selling data to the gov agencies
+11:36 mep1976: im in bitcoin for saftey
+11:36 MyOtherBrotherDarryl: I'm following now BT
+11:36 blondetrader: me either
+11:36 VolCrush: i'm in my bunker, for safety
+11:37 AlphaInvestor: AMD taken to the woodshed
+11:37 joseph9166: can someone please tell me how to exercise an optin
+11:37 lilFish: can i take it to the bridge?
+11:37 joseph9166: option
+11:37 MyOtherBrotherDarryl: Vol, you have a missile silo?  :)
+11:37 lilFish: right on right on
+11:37 VolCrush: i tink AMD may report soon
+11:37 VolCrush: foh shu NFLX reports tonight
+11:37 blondetrader: but regardless with FB if they continue to alienate they are going to really put a dent in revenue
+11:37 lilFish: shake yo money maker
+11:38 blondetrader: 7060 NQ on deck under 7112
+11:38 santorine: Nooby question here... How is it that HYLD is still looking good if people are woried about credit quality?
+11:38 blondetrader: 55 es
+11:38 MyOtherBrotherDarryl: He got high speed internet in his missile silo.  only connection to outside world ;)
+11:38 VolCrush: dats true
+11:38 AlphaInvestor: Joseph - there is almost always a better alternative to Exercising options - Call the Trade Desk - every time they found me a better choice
+11:39 VolCrush: FANGS kissin der baby
+11:39 santorine: wondering if I should start to load up on debt today or after monday?
+11:40 AlphaInvestor: Vol - there are a number of Quality names holding up, MSFT, AAPL, GS, JPM, even GE
+11:40 MyOtherBrotherDarryl: I actually would like one of them silos.  pretty cool digs.
+11:40 lilFish: i'd like an earth ship
+11:40 mep1976: ge is a another safety trade
+11:40 santorine: lol mep
+11:41 chenmann: cash = safety
+11:41 VolCrush: black monday?
+11:41 chenmann: hmmm
+11:41 chenmann: interesting
+11:41 blondetrader: that would be amazballs W
+11:41 chenmann: let s c the close
+11:41 MyOtherBrotherDarryl: you are on earth ship.  It's called a rock in outer space  ;)
+11:41 lilFish: good point darryl
+11:41 JabbaTheCabin: thinking I should take off AA skewed strangle. Put on nov monthly for earnigns, collectyed 6.60, and had an order to cover at 3.30. Now it is trading for 4.50 . May take it off.
+11:41 futs: ameriman agreed, I have a script that gives signals based on /NQ internals and it gave sell signal at 10:05 EST
+11:42 futs:  
+11:42 futs: that was sell signal in /NQ based on /NQ internals
+11:42 santorine: eeenteresting
+11:42 Landerland: VFC buying opportunity or trap
+11:42 AlphaInvestor: ah, a chart with no labels, no axis, no ticker ... very helpful
+11:42 lilFish: po'd with self for not buying put on q's at 10:15 cst
+11:43 VolCrush: no woulda, shoulda coulda....please
+11:43 tmoney20g: oi vol
+11:43 blondetrader: 7136/45 res nq
+11:43 blondetrader: 74-78 band es
+11:43 blondetrader: 52-55 rty
+11:43 MyOtherBrotherDarryl: do you guys/gals buy puts or sell calls on stocks breaking down?
+11:44 blondetrader: both
+11:44 VolCrush: prob gunna say der same thing i said yestereday, "anyone shorting the bounce?"
+11:44 JabbaTheCabin: i almost never buy puts
+11:44 blondetrader: and will answer same
+11:44 TnT: 31 years ago today was Black Monday
+11:44 futs: AI I am still waiting for proof that FDA says buprenorphin is abuse deterrent
+11:44 VolCrush: yup bronx, LOL
+11:44 chenmann: tnt
+11:44 chenmann: nice
+11:44 futs: suboxone is not just buprenorphin it is mixture with naloxone, naloxone is deterrent
+11:45 VolCrush: so we have a 31 year Fib time cycle, nice
+11:45 lilFish: maclemore -thrift shop:0
+11:45 fred__w: darryl  as a position trader  its about building a position until things flip  then  hold till your model signals a change
+11:45 MyOtherBrotherDarryl: still think we will get some kind of bounce.....but it not....bombs away
+11:46 lilFish: ok peeps - gonna get your chance soon
+11:46 TnT: vix back above 20, everyone skeered yet?
+11:46 VolCrush: well if it is, my bunker should hold up
+11:46 futs: FDA says SUBOXONE is deterrent becaus eit has naloxone in it which is the deterrent
+11:46 futs: FDA never says buprenorphine is deterrent
+11:46 tmoney20g: i got $20 worth of megamillions
+11:46 dennis1711: Does TOS 1hr chart data go out more that 365 days?   
+11:47 MyOtherBrotherDarryl: mega officially hits 1B
+11:47 VolCrush: yeah, wat he said
+11:47 tmoney20g: i'll share
+11:47 VolCrush: wats mega
+11:47 tmoney20g: lottery
+11:47 VolCrush: oh, ty
+11:47 AlphaInvestor: I hedged my MegaMillions with some Powerball
+11:47 tmoney20g: just hit 1B jackpot for tonight
+11:47 TnT: that is an s* load
+11:47 tmoney20g: so 300m after taxes if you take lump sum
+11:48 AlphaInvestor: Dennis - I answered your query in the other chat
+11:48 AlphaInvestor: The answer isn't different in here
+11:48 tmoney20g: lol
+11:48 TnT: so, a chat room 2 timer
+11:48 tmoney20g: just looking the answer he "wants" to hear
+11:48 MyOtherBrotherDarryl: SPX wants to retest 200 day.  Better hold.
+11:49 VolCrush: fruit, google & mr softie couldn't care less, just an fyi
+11:49 MyOtherBrotherDarryl: They are selling the NKE bounces
+11:50 dennis1711: Sorry, I think it is a different question that I need help with....does 1hr go out past 365?
+11:50 dennis1711: just asking.
+11:50 TnT: try it and see
+11:51 MyOtherBrotherDarryl: No there are exactly 365 days in year.  No extra hours.
+11:51 AlphaInvestor: Dennis - the data length for each chart aggegation is listed in the Manual
+11:51 Dimka: Al, thinking to get more SPPI, got more TXMD this morning, SPPI is overdue for a bounce me thinks
+11:51 AlphaInvestor: Dimka - I got a ton of SPPI, all of it now ITM
+11:51 futs: dennisdennis NO the 1hr does not go beyond 360 days, try it and you will see like TnT said
+11:51 lilFish: 252 trading days
+11:52 dennis1711: I did. and did not work.  Seeing if I missed something.  thanks .
+11:52 Dimka: Al, stock or options?
+11:53 AlphaInvestor: options
+11:53 AlphaInvestor: pcs
+11:53 dennis1711: I should have read the manual before asking....
+11:53 dennis1711: my bad.
+11:53 futs: dennis you can try on demand 1 hour time frame you can see 3 years past data
+11:54 futs: in on demand feature
+11:54 dennis1711: right, okay!  I'll give that a try.  Many thanks.
+11:54 futs: yw
+11:55 lilFish: expy fri - extra skitzy :)))
+11:58 lilFish: lets see if q's can make a triangle
+11:58 VolCrush: fruit max pain pin....you guessedit 220
+11:59 lilFish: aint over till the weight challenged gal sings
+12:00 AlphaInvestor: fish - they might not gender identify as a gal ... or a guy for that matter
+12:00 VolCrush: last week was 220 - 222.5, it closed at 222.11
+12:00 mep1976: @street
+12:00 mep1976: clf ceo on cnbc at 3pm lol
+12:00 chenmann: damage control
+12:01 VolCrush: vary gud reaction to AXP earnings, MA* benifing from dat
+12:02 lilFish: true dat vol
+12:02 lilFish: i mean alpha
+12:02 AlphaInvestor: Vol - you got me in der MA^ trade, tanks for dat
+12:03 tmoney20g: rgr
+12:03 tmoney20g: @esmal, how you doin today
+12:04 AlphaInvestor: I think RGR changed their ticker
+12:04 trader_4_life: is it possible to set alerts when price touches a trend line?
+12:07 tmoney20g: you can't figure out what price that would be from your own trendline ?
+12:08 cryptos: trader try thinkscript lounge to see if they have answer
+12:08 AlphaInvestor: Trader4 - yes yoiu can
+12:08 MyOtherBrotherDarryl: he wants to do an auto buy/sell im guessing
+12:08 tmoney20g: oh, i guess it would be dynamic since you don't know what day that will be
+12:09 tmoney20g: could be 3 years from now
+12:09 MyOtherBrotherDarryl: not adviseable :)
+12:12 lilFish: hmmm she said
+12:12 VolCrush: Alpha, yeah sorry about dat re: MA*
+12:16 AlphaInvestor: I see green shoots
+12:16 VolCrush: not much overhead on MA* until 220
+12:16 TnT: grab the roundup AI
+12:16 TnT: kill it
+12:16 AlphaInvestor: I will sell at 50% of max profit - MA was a trade, not an investment
+12:16 VolCrush: just a handful of names, but they're der BSDs
+12:16 chenmann: yesal, i m gonna cover my shorts for a small lost here, ....wait to reshort nexk week
+12:17 chenmann: yes al
+12:18 AlphaInvestor: Consumer Goods and Utilities still outperforming - those are Defensive ... lets see if we rotate out of those into some growh names
+12:21 lilFish: if q's get back up on bear flag support, next week could be bullish?
+12:22 chenmann: i m very bearish just think todays down move s done
+12:22 lilFish: one day china and us will announce a deal
+12:23 lilFish: that'll be a major cover ur shorts day:)
+12:23 TnT: Xi is making sure that is after the US election
+12:23 chenmann: ++
+12:23 chenmann: i miss tnt .... alot
+12:24 lilFish: agreed
+12:24 TnT: I'm right here
+12:24 TnT: lol
+12:24 lilFish: lol
+12:24 chenmann: ha
+12:24 fred__w: lil  best to stay with the trend  and not anticipate too much
+12:24 mep1976: jajajaj
+12:24 lilFish: fred, lookin for my in on q's
+12:25 lilFish: but if it gets up on that line, I'm not goin short
+12:25 lilFish: or long
+12:25 VolCrush: should we go with the Captain and Tenille or some Opera today?
+12:25 fred__w: lil  i recommend against longs till your 44ema-da is breached 
+12:26 lilFish: no vol -nooo:)
+12:26 fred__w: ..at least
+12:27 VolCrush: wat der hell happened to NVDA today, Alpha?
+12:27 VolCrush: more sellers than buyers?
+12:27 chenmann: haha
+12:28 chenmann: i c alot bearish bets in chips
+12:28 mep1976: omg street
+12:28 TnT: I hate Opera
+12:28 mep1976: jajajajajjajaja
+12:28 mep1976: you messing with the wrong guy
+12:28 mep1976: ha
+12:28 mep1976: tony montana
+12:29 lilFish: i think q's 174.85 eod would be a bullish sign for next wk
