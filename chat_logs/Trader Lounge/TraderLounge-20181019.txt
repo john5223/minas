@@ -2091,3 +2091,647 @@ Thanks
 12:37 lilFish: bar set low
 12:38 radon224: CAT made a big investment in gowing sales in China.  Investors are fearful for obvious reasons.
 12:39 GQ: Can they beat both lines? I’m in the hole right now
+12:00 AlphaInvestor: LAR's original stuff references ChrisBell as the originator
+12:01 Mobius: Solomon said " To the writing of books there is no end. And reading them is tiresome." Same applies to indicators.
+12:01 AlphaInvestor: but, I am sure many had hands in the pie back then
+12:01 Mobius: Lar was late to that party. He'd not been in here when we started writing those.  
+12:02 AlphaInvestor: where is Lar these days (and yes I di know his curent handle)
+12:02 Mobius: IDK.  Haven't seen him in a while
+12:03 AlphaInvestor: haven't seen Dilbert around either
+12:04 Mobius: Dilbert was talking about property rentals
+12:04 nextrade: last year he was talking about getting into flipping houses
+12:04 Mobius: Been there, done that, have the tee shirt
+12:05 AlphaInvestor: Mobius - ah yes, money pit management
+12:05 nextrade: i saved the eviction notices- to remind me of the pain of being a landlord
+12:05 Mobius: I'm starting to see a pattern in the Market. Anyone else picking it up?
+12:05 AlphaInvestor: I think I am seeing that pattern in my portfolio
+12:06 Nube: Sell everything that hints at rebound
+12:06 Mobius: yeah - Ouch
+12:06 AlphaInvestor: Mobius - do you have a spare room, or should I reserve a space under the bridge
+12:06 bigworm: lol
+12:06 Mobius: Got a boat all outfitted and ready to sail  :)
+12:07 AlphaInvestor: Nube seems to have taken Dilbert's place ... a producive coder with great ideas
+12:08 Nube: Scripting too much. Had a target hit on /6B that I intended to hold over the weekend. Thought about moving it and then thought "nah,  I'll finish this first"
+12:08 AlphaInvestor: now, if he would just finish that 78 bar POC, VAH, VAL study
+12:08 JohnnyQuotron: my 2cents... last two days we fell into the london close.. rallied into the close... is that what you are seeing?
+12:08 Nube: Got taken out green but now I'm out of a trade I wanted to be and have no good reentry spot.
+12:09 Nube: This means the Pound is going to the moon Monday
+12:09 AlphaInvestor: London Calling .... The Clash
+12:09 Nube: Jack The Ripper let loose on the markets
+12:09 JohnnyQuotron: I remember those days  And the hangovers.
+12:09 Mobius: Phases of a Coder:
+1) Bashes Head to learn
+2) Light comes on
+3) Prolifically pumps out code one idea after another
+4) Realizes everything he's done has been done and abandon
+5) Bashes head for learning to code
+12:09 Nube: ES does have an awful pertty bear flag going
+12:10 Nube: Getting to stage 5
+12:10 Nube: "Mobius Already Wrote Everything" is stage 4 in ThinkScript
+12:11 Mobius: You don't see me getting in someones way.  No way to stop a newly empowered coder from running to what's already been done. 
+12:12 Mobius: And sooner or later they do find what they will actually use. Until one day you just look at the chart and damn, you don't need the code anymore.
+12:12 AlphaInvestor: 
+6) learns which studies really fit your trading style
+7) pares down chart to only 15 indicators
+8) realizes that 15 indicators leads to Analysis Paralysis
+9) pares down chart to a) the ORB, b) RSI_Laguerre, c) Fractal Pivots
+10) finally becomes consistently protitable
+12:13 Nube: <---- Still can't use Laguerre.
+12:14 JohnnyQuotron: what about SuperPivots?
+12:14 Nube: SuperPivots would be a good Big Picture
+12:14 AlphaInvestor: JQkpa - dats just one man's take on mobius FractalPivots
+12:14 Mobius: Laguerre is just another garden variety polynomial
+12:15 JohnnyQuotron: I like gardens
+12:15 AlphaInvestor: hmmm - there are no Garden Variety polynomials - there arent' even any garden variety uninomials
+12:17 Nube: I think my inability to use Laguerre is that it's better suited for a more patient trader.
+12:18 Mobius: Best traders have the patience of an oyster
+12:18 Nube: I think if a person is more comfortable buying a little carnage or has a longer time frame then it's likely the correct, dirt simple line to follow
+12:18 AlphaInvestor: Mmmm I love oysters, lightly steamed is best
+12:18 bigworm: and nice pants
+12:22 inbuffalo: stay away from the praire oysters if you go out west
+12:22 JohnnyQuotron: Are they less slimy when lightly steamed?
+12:23 JohnnyQuotron: the oysters not the pants...
+12:24 bigworm: i bet lightly steamed pants feel good in the winter
+12:24 Nube: They can't taste worse than oysters
+12:26 Nube: sardines and mackerel, packed in a tin for several months to several years. That's the good stuff.
+12:28 JohnnyQuotron: sardines, pickle and cheese wiz on white bread.. before hazing was taboo
+12:40 Nube: Dollar / Yen looks to me like it's  in trouble
+12:47 TICKZ: Hi, Anyone have a elliowave studie they can share?
+12:40 GQ: Did great with PG today
+12:42 GQ: Thinking of taking a loss before earnings ? Any thoughts???
+12:45 chenmann: sorry man....no idea
+12:45 GQ: Thanks chen
+12:47 VolCrush: LIS time now
+12:50 VolCrush: no idea on los gatos, i don't follow the funnies..
+12:52 GQ: U funny VOL
+12:52 VolCrush: must say that is an amazing chart on CAT, if the tape "knows" then i would say for whatever reasons peeps aren't expecting much.......but who knows how the market will react to earnings
+12:54 lilFish: alrighty then - q's
+12:57 GQ: Vol why is it an amazing chart on cat?
+12:58 TnT: a few shots of whiskey makes charts look amazing
+12:59 featherweight: Meeep
+12:59 RandomDan: NFLX... that's a surprise.
+12:59 RandomDan: Definitely didn't see that coming.
+13:03 Nube: Alpha, you got a copy of your momersion handy?
+13:35 John1a: Anybody has a buffer after Alpha posted "Kind of Stoplight"? Thank you.
+13:36 AlphaInvestor: JQkpa - steamed oysters are not slimy at all, lightly steamed are in between - best or both worlds
+13:36 BookProfits: Hey fellow traders, need assistance with writing a simple thinkscripts formula. How would I  write the net change of the price of one stock divided by the net change of another?
+13:36 AlphaInvestor: Nube - I shared AI_Momersion yesterday, no soup for you
+13:41 Nube: Book, what is the math for that?
+13:46 BookProfits: Not sure. In this example, its the net change of $DIA (.80) divided by net change of $SPY (.03).
+13:48 John1a: Nube:  http://tos.mx/TNYLaj#
+13:00 VolCrush: /rty leading again...
+13:00 blondetrader: yep
+13:01 blondetrader: 44 42 36
+13:01 blondetrader: tg lower rty
+13:01 TnT: rusty is a good dog
+13:01 TnT: on fresh lows
+13:04 fred__w: just crossed the 8x0.77% down boundary
+13:04 RandomDan: NVDA, another underperformer
+13:04 VolCrush: der fruit rollin' now
+13:05 VolCrush: yah i saw NVDA big whack by the wise guys today
+13:06 blondetrader: amzn :))))
+13:06 RandomDan: 15 points is not that bad
+13:06 TnT: /NQ breaks PL
+13:07 blondetrader: nope but it is low enuogh to confirm my thoughts
+13:07 TnT: /vx fresh high
+13:07 TnT: everyone panic
+13:07 streetglide: just got back from mowing the yard....who let this chit drop?
+13:07 TnT: Idid it
+13:08 MyOtherBrotherDarryl: think MSFT gettin ready to break down too....symmetrical triangle...daily
+13:08 TnT: NLT -1239
+13:08 blondetrader: amzn 35 would be pretty
+13:08 TnT: DOOM
+13:08 blondetrader: fwiw rty low was 1530.70
+13:08 blondetrader: we r closing in
+13:08 RandomDan: bt, you and your witchcraft! I need that book! Something to read over the weekend.
+13:08 invertedhammer: Rty to 31
+13:09 blondetrader: :) Dan
+13:10 MyOtherBrotherDarryl: witch book?
+13:10 blondetrader: market incantations and spells
+13:10 blondetrader: lol
+13:11 mep1976: bitcoin very stable
+13:11 MyOtherBrotherDarryl: haha
+13:12 RandomDan: a book by a guy called Dilernia, but like any book of spells, it's hard to find.
+13:12 blastoff: IGC
+13:12 blondetrader: lol
+13:12 blastoff: HAHAHA
+13:12 blastoff: What a month
+13:12 blondetrader: got to search the dark web
+13:13 blondetrader: or find me to loan it to you
+13:13 blondetrader: lol
+13:13 TnT: mep, stable like Nicholsen in "The Shining"?
+13:13 blastoff: bought at 2 sold at 14 and just laughing now
+13:14 mep1976: @tnt it will surprise
+13:15 blondetrader: suprise if it doesnt go to 3k
+13:15 streetglide: get you some more cliffy :)
+13:15 streetglide: meps
+13:15 RandomDan: all work and no trades makes jack a dull boy
+13:16 TnT: lol
+13:16 TnT: +1
+13:16 blondetrader: the way i see rty atm
+13:17 blondetrader: if nq and es push to their tgts rty can get close to or exceed PL
+13:17 TnT: bank on lod
+13:17 mep1976: @street I might be long 1000 shares soon
+13:18 mep1976: my puts are in nov
+13:18 TnT: grains close 1 min
+13:19 streetglide: so still some time....this might blow over by then and if he gets more ticked....a buyback
+13:19 mep1976: i have my popcorn ready for 3pm
+13:19 mep1976: he will be on cnbc lol
+13:19 streetglide: eastern?
+13:19 mep1976: yup
+13:20 mep1976: my avg will be $10.50 if assigned
+13:20 streetglide: that will be fine
+13:21 mep1976: yea
+13:23 Eedie: someone kick es down a notch....While I wait, any more songs from you people?  I've got one for Alpha for yesterday.....
+13:23 Eedie: It's van Halen....Jump...might as well jump
+13:23 TnT: lol eeeeeeeeeeeeeeeeeeeedie!
+13:24 MyOtherBrotherDarryl: why do they tease me to go long right before weekend?
+13:24 Ali: What is the entery point for Tesla?
+13:24 TnT: zero
+13:25 AlphaInvestor: EE - I just jumped, but it hurt my knee
+13:25 Eedie: LOL
+13:25 MyOtherBrotherDarryl: whatever you wanna pay
+13:25 AlphaInvestor: Ali - most enter thru the doors
+13:25 TnT: AI is basement, has to climb uip to jump out
+13:27 TnT: /LBS up today, cheer up
+13:27 AlphaInvestor: I got two pesky clients bugging me, can hardly focus on trading
+13:28 TnT: lol
+13:28 Eedie: LSU vs Miss State this weekend.  GEAUX  Tigers...just saying.
+13:29 VolCrush: Momma said there would be days like this
+hit,  the Shirelles
+13:30 Eedie: My Momma said
+13:30 AlphaInvestor: working a couple ADBE^ pcs
+13:30 Eedie: Left a good job in the city.  Workin for the man every night and day
+13:30 Eedie: Oh wait...that's tina turner
+13:31 TnT: lol
+13:32 AlphaInvestor: dem der Lousiannnna folk dey don't speeka der english nor der freanch - Geaux is not a word
+13:32 Eedie: and I never lost one minute of sleepin worryin bout the way things might have been....big wheel keep on rolling...Proud mary keep on rolling.
+13:33 RandomDan: Ali, about here is usually fine for TSLA. Past performance is not a guarantee etc.
+13:33 Eedie: Alpha, Mais oui, BRO
+13:36 lilFish: momma said there'd be days like this:)
+13:36 lilFish: was put some csx, had to deal
+13:37 VolCrush: "wise men say, only fools rush in"
+13:37 Eedie: Elvis?
+13:37 lilFish: hope you like jammin too - Marley
+13:38 TnT: did Marley yesterday, lame 70's today
+13:38 lilFish: now spinnin Life is Beautiful - Keb Mo:)
+13:39 TnT: Rocket Man at the moment
+13:39 lilFish: luvs it
+13:39 mep1976: street
+13:39 lilFish: bennie n the jets my fav
+13:39 mep1976: guy that got rant is on cnbc
+13:39 mep1976: lol
+13:39 lilFish: of his
+13:39 streetglide: it wasnt about him though, meps
+13:40 VolCrush: juju in honor of your Tigers, i'm listening to "The Battle of New Orleans"
+Johnny Horton
+13:40 TnT: Santelli?
+13:41 Eedie: hahahahahahaha
+13:41 mep1976: lucas pipes b riley analyst
+13:41 Eedie: Sorry but I had to Google that.
+13:41 mep1976: CLF ceo on next at 3pm
+13:41 mep1976: lol
+13:42 TnT: wow Vol, that is an old one, listened to that as a young boy
+13:42 RandomDan: just took F off my watchlist. I realized I haven't even looked at it in weeks, don't care about it.
+13:42 TnT: on AM radio
+13:42 VolCrush: welp i'm fired up for Saturday and some futbol
+13:42 VolCrush: some stream off of xfinity
+13:42 Eedie: Hot boudin cold couscous...come on Tigers PUSH PUSH PUSH
+13:43 mep1976: random yea F looking bad
+13:43 VolCrush: simmer down pussy cat
+13:43 Eedie: It's the eye of the tiger its the thrill of the fight.
+13:43 Eedie: I'm only going to talk in lyrics now
+13:44 VolCrush: now i know y tigers eat their young
+13:44 streetglide: Melisa trying to get him to say something bad,meps
+13:44 mep1976: yup
+13:44 streetglide: stick a sock in her
+13:45 Eedie: Sweet Melissa....Gregg Alman Band?
+13:45 streetglide: good song
+13:45 VolCrush: i hope you guys have a small tv next to your big tv, the small tv should be dialed to the Telemundo station to catch the Weather, no dats some viewing
+13:45 streetglide: lol
+13:45 Eedie: Too funny.
+13:45 mep1976: i read that there pellets are less pollutant that's why there doing well
+13:46 Eedie: I watch the spanish tv here in Florida...I understand them, but I don't understand them.  you know what I mean?
+13:46 VolCrush: ISRG she broke
+13:47 Eedie: Ok..  I have to go and get kids....TGIF!!!!  Have a great weekend everyone.  Even you ALpha.
+13:47 Eedie: Bye
+13:47 streetglide: later
+13:47 TnT: later eeeeeeeeeeeeeeeeeeeeeedie
+13:47 AlphaInvestor: Later EE
+13:47 VolCrush: solid gold oldies on exfinity GO
+13:47 VolCrush: cheers Alpha
+13:48 lilFish: ee - you went to LSU?
+13:48 AlphaInvestor: Chen - der crooks at YECO got their comuppance today
+13:48 chenmann: lol
+13:48 chenmann: they switched to ncty this morning
+13:49 VolCrush: no she went to Couscous Community College
+13:49 streetglide: she gone, fish
+13:49 chenmann: they all over chinese small names as of late....mep was on to it also
+13:49 blondetrader: lol
+13:49 blondetrader: 52 may be a nice spot for rty next leg
+13:50 VolCrush: fruit back to der pin motha of all battles
+13:50 streetglide: chinese tsla and chinese nflx both down
+13:50 lilFish: ha! I was wondering if she's heard the 'Neck" chant the student body sings now - very funny
+13:50 chenmann: smaller street....$1 ish
+13:51 chenmann: ncty today and yeco yesterday
+13:51 chenmann: o sorry yeco wednesday
+13:51 chenmann: there s ur mega lotto ticket
+13:51 VolCrush: we have a Neck chant at my U, right in der neck, right in der neck......give 'em the Axe, right in der Neck
+dats for our Rival Stanfurd
+13:51 streetglide: man what happened yesterday?....rockets
+13:52 chenmann: who knows
+13:52 lilFish: tame compared to this one vol - youtube it
+13:52 VolCrush: i will , ty
+13:52 ameriman: chenmann told you yesterday high chance of retest
+13:52 lilFish: retest of what
+13:53 AlphaInvestor: retest of the former test
+13:53 ameriman: Lows
+13:53 lilFish: oh of the former test of the former test
+13:53 VolCrush: who do u know you're a crotchidy trader? 
+13:54 lilFish: who's crotchidy
+13:54 AlphaInvestor: Fish - Xactly
+13:54 blondetrader: al is
+13:54 TnT: lol
+13:54 VolCrush: when 500 point down moves don't phase u
+13:54 lilFish: getting used to it
+13:55 lilFish: trying to hone my day trader skills
+13:55 CrotchityTrader: Who me?
+13:55 blondetrader: lol
+13:55 lilFish: ha
+13:55 VolCrush: actually, bronx's answer is better
+13:55 VolCrush: dar he is
+13:55 VolCrush: XLI has issues
+13:56 blondetrader: maybe 52 is a lot to ask of rty
+13:56 lilFish: i have issues with dar issues
+13:56 AlphaInvestor: Vol - worst performer this week = XLI
+13:56 lilFish: bt -- doesnt hurt to ask
+13:56 VolCrush: u women are powerful
+13:56 lilFish: u can call us goddesses
+13:56 VolCrush: welp, dat ain't gud especially fur der Donald
+13:57 AlphaInvestor: Vol - XLY, right behind
+13:57 blondetrader: lol
+13:57 VolCrush: oh, you , bronx, juju and Jill are most definetly der goddesses
+13:57 blondetrader: :) W aint no fool
+13:58 TnT: vix back below 20, the horror
+13:58 lilFish: aww - luvs it
+13:58 VolCrush: damn i missed TnT
+13:58 TnT: lol
+13:58 VolCrush: only person that luks at the internals
+13:59 AlphaInvestor: TnT - you were honestly missed by many peeps
+13:59 blondetrader: lol 
+13:59 VolCrush: saves me a step
+13:59 blondetrader: and the news
+13:59 blondetrader: whoever been covering news for him doesnt do as good as he does
+13:59 VolCrush: meh, don't need news, dats in der tape
+13:59 blondetrader: news is like gossip
+13:59 VolCrush: no one can do wat TnT does
+13:59 AlphaInvestor: every woman likes some gossip
+13:59 blondetrader: u need it in your life to feel better about yourself
+14:00 streetglide: what are yall talking about...I took calls from Tnt to report the internals
+14:00 lilFish: lol
+14:00 VolCrush: gawd damn battle royal wit cheese
+whars my fries w mayo
+14:00 blondetrader: street....ur too slow
+14:00 streetglide: cat
+14:00 chenmann: finally
+14:00 blondetrader: by the time tnt dials u on the roatry phone etc
+14:00 DaveW5348: $10 swing for NFLX today, that hurts
+14:00 streetglide: green cat
+14:00 DaveW5348: *$20
+14:00 TnT: bondage done, 1 hr to weekend
+14:01 VolCrush: ok you ladies, this for you
+Roy Orbison: Pretty Woman
+14:01 VolCrush: & crank it and dance around the room
+14:02 lilFish: dancin now:)
+14:02 VolCrush: vary nice3
+14:02 blondetrader: I am feeling let the bodies hit the floor
+14:02 TnT: turn on web cam
+14:02 fred__w: vol  nice  and  only the lonely
+14:02 streetglide: eww dark one, bt
+14:02 streetglide: slam dancing
+14:02 blondetrader: yaaaaa 
+14:03 blondetrader: into the close lets gooooo
+14:03 lilFish: I'm feelin 'Dark Necessities - red hot chili peppers
+14:03 lilFish: spinnin it
+14:03 streetglide: nice
+14:03 VolCrush: actually, full respect for "let the bodies...."
+14:03 streetglide: like the chili peps
+14:03 blondetrader: something got giveeeeeee
+14:03 VolCrush: yup
+14:04 blondetrader: drowning pool will scare mkt lol
+14:04 lilFish: you is net short i;m thinkin
+14:04 blondetrader: also disturbed sound of silence
+14:04 blondetrader: ohhhh love
+14:04 blondetrader: yes
+14:04 blondetrader: and collared
+14:04 blondetrader: and options
+14:05 streetglide: collared greens?
+14:05 blondetrader: hopefully next week :)
+14:05 lilFish: i like collards
+14:05 VolCrush: greens
+14:05 streetglide: and mustard greens
+14:05 lilFish: yesss street
+14:06 AlphaInvestor: damned Vegans
+14:06 lilFish: my grandma would mix all of them
+14:06 blondetrader: ok well that didnt work
+14:06 VolCrush: did she pickle anything
+14:06 streetglide: mine did it with a sweet creamy sauce....mmmmmmm
+14:06 lilFish: yes - all lined up in the storehouse for winter
+14:06 VolCrush: i was on orphan, no grandma
+14:07 blondetrader: ok here we go
+14:07 fred__w: that was my aunt  but  not my gram
+14:07 blondetrader: drip drip 
+14:07 lilFish: heads up
+14:07 streetglide: bottle rocket in to the close?
+14:07 blondetrader: wwaaaa
+14:07 blondetrader: why u talk like that
+14:08 tmoney20g: thanks for you help this week bt
+14:08 blondetrader: :)
+14:08 streetglide: cause I got some luggage
+14:08 VolCrush: yah, /vx 19.05 could be a flush, don't care net short wit a lot of cars about to go to der dump, ty zonian*
+14:08 blondetrader: I am not playing rocket man
+14:08 blondetrader: I am playing bodies...splat
+14:08 streetglide: lol
+14:08 lilFish: false alarm
+14:08 VolCrush: hey, i'm a man i got a rocket
+14:08 lilFish: fake news
+14:09 blondetrader: LOL
+14:09 lilFish: on the q's goin down yall
+14:09 TnT: long froggies jumping out window, then splat
+14:09 blondetrader: 7080 and 60 and 40
+14:09 blondetrader: we have an hour
+14:09 streetglide: here we go meps
+14:09 mep1976: you are an embrassment to you parents
+14:09 mep1976: lol
+14:09 blondetrader: mine lol
+14:10 VolCrush: welp, petit poissson we are net short into today's close, so let it drop
+13:51 AlphaInvestor: John - I was just kidding, I would have shared it with Nube
+14:03 nextrade: yeah- what seems humorous to one-may not be to another.Reminds me of when i was 15 yo and my non-stop excitedness about getting my DL when i turned 16yo- . My Dad said-not at 16yo-maybe later. I didn't talk to him until i turned 16 yo -after my sister took me to the DL test. I heard about that incident for the next 40 years.
+14:04 John1a: Alpha: np
+14:15 JohnnyQuotron: The LoungeArchive is current.
+14:18 John1a: Thank you, JQ
+14:10 AlphaInvestor: being short is Anti-American ... you folks need to buy USA to support the economy
+14:10 mep1976: lol
+14:11 lilFish: i have 3 amzn pcs at 1875 that needs help
+14:11 TnT: too funny AI, Elon Musk was saying that recently
+14:11 chenmann: ...looking down .....
+14:11 fred__w: alpha  that bunk  shorts provide a baseline to the mkt  they are the last buyers
+14:11 TnT: about shorting
+14:11 blondetrader: nflx 326 next up
+14:11 AlphaInvestor: TnT - have you ever seen Elon and me in the same room? Hmm
+14:11 TnT: clueless as congress
+14:11 VolCrush: i already told u wat der situation is wit them pcs, petit poisson
+14:12 mep1976: lol
+14:12 blondetrader: then after we break prev low 304-293
+14:12 mep1976: jajajaja
+14:12 blondetrader: then buy it
+14:12 VolCrush: may change my handle to "THE SITUATION"
+14:12 mep1976: this guys nuts
+14:12 lilFish: spinnin drowning pool for bt
+14:12 fred__w: bt  thats not my model  of course
+14:12 mep1976: tuff miner lol
+14:12 VolCrush: bronx, u need to start posting your trades live in MyTrade
+14:12 TnT: Marcos, don't watch it, causes brain damage
+14:13 blondetrader: sure in my spare time lol
+14:13 streetglide: please sara
+14:13 blondetrader: I can just text them to u
+14:13 lilFish: somethin's gotta give
+14:13 blondetrader: yesssss
+14:13 VolCrush: it's auto, nothing to do 
+14:13 blondetrader: come on people
+14:13 blondetrader: row
+14:13 VolCrush: "row the boat"
+14:13 blondetrader: W I dont trade much thru .....u know
+14:14 lilFish: i'll row after amzn 1875:)
+14:14 mep1976: lol
+14:14 mep1976: ok
+14:14 TnT: come on little Rusty, show them the way
+14:14 VolCrush: der fruit gud on der pin, as stated
+14:14 tmoney20g: that's next friday
+14:14 blondetrader: 35 on close 
+14:14 mep1976: jajjajajaja
+14:14 tmoney20g: not this friday
+14:14 mep1976: this guys a stubborn as a bull
+14:14 AlphaInvestor: BT promised me she would post her Back Ratio trades, then nuttin'
+14:14 blondetrader: I posted them
+14:14 blondetrader: look in the other window
+14:14 blondetrader: like 3 hrs ago
+14:15 TnT: he has all the windows boarded up
+14:15 AlphaInvestor: sorry, pesky clients
+14:15 tmoney20g: you guys and your secret rooms
+14:15 VolCrush: Alpha, any shifts dat u noticed in sectors......me guesss is XLP, must be gettin attention
+14:15 chenmann: think i like this guy
+14:15 mep1976: wow
+14:15 chenmann: clf ceo
+14:15 blondetrader: not a secret T
+14:15 mep1976: cookie cutters
+14:15 mep1976: jajajaja
+14:15 mep1976: im different ha
+14:15 blondetrader: some of us know eachother and were able to connect to share
+14:16 tmoney20g: ah
+14:16 VolCrush: wat is CLF, powwer bars
+14:16 AlphaInvestor: XLP best for the week, and today
+14:16 mep1976: miner
+14:16 blondetrader: rty
+14:16 VolCrush: k, ty Alpha.....makes senses
+14:16 VolCrush: *sense
+14:17 AlphaInvestor: Vol - seeing some major rotation going on in the past week
+14:17 chenmann: ^^^
+14:18 VolCrush: MMs will save der day, Monday a new day and they are netnet neutral
+14:18 Helen: Hello, first time trading options today, already losing
+14:18 VolCrush: yah, I agree.....on der job, ty
+14:18 lilFish: that's normal helen
+14:18 tmoney20g: lol
+14:18 AlphaInvestor: with all this rotation, maybe we should do the Twist - chubby checker I think
+14:18 fred__w: jst crossed 9th 0.77% boundary  just also liquidated my first 1/2 position
+14:18 VolCrush: or Bachata
+14:18 Helen: Should I get out?
+14:18 lilFish: but dont give up
+14:18 tmoney20g: until all your money is gone
+14:19 streetglide: Vol is already twisting one up
+14:19 VolCrush: @Helen of wat name
+14:19 fred__w: 1st of many btw
+14:19 Helen: Spy
+14:19 AlphaInvestor: Helen - what did you trade?  What was your expectation? Did your expectations change?
+14:19 VolCrush: long or short
+14:19 fred__w: helen  im short  btw  not long
+14:19 VolCrush: TICKS
+14:19 lilFish: q's
+14:19 lilFish: dudes
+14:20 VolCrush: INTERNALS
+14:20 Helen: Call contact that expires October 26
+14:20 blondetrader: yuck
+14:20 tmoney20g: what strike
+14:20 VolCrush: wat strike
+14:20 AlphaInvestor: Helen - on what?   Long or Short?
+14:20 blondetrader: spy
+14:20 blondetrader: long call
+14:20 VolCrush: more impportantly enty trade location
+14:20 tmoney20g: we need more deets
+14:20 AlphaInvestor: spy long call - dats not good
+14:21 VolCrush: depends on location
+14:21 VolCrush: u all wrong
+14:21 tmoney20g: she gone already
+14:21 VolCrush: oh, ok
+14:21 blondetrader: it could b located in tahitti and its not good
+14:21 VolCrush: u wrong
+14:21 AlphaInvestor: Spy IV Percentile is 90% ... that is a seller, not a buyer
+14:21 blondetrader: no way
+14:21 tmoney20g: big ER's next week tho
+14:21 VolCrush: yup
+14:21 blondetrader: ^^^
+14:21 blondetrader: what he said
+14:22 VolCrush: zactly 20g
+14:22 tmoney20g: but we dunno what she had, so oh well
+14:22 blondetrader: and a drop into lows or new ones would suck the juice
+14:22 AlphaInvestor: SPY doesn't report earnings next week
+14:22 tmoney20g: like did she have a 277, or a 280
+14:22 AlphaInvestor: but NFLX does
+14:22 blondetrader: and even if we rallied hard into ends on next it will prob b a looser
+14:22 VolCrush: depends on trade location, bronx
+14:22 blondetrader: next week exp
+14:22 VolCrush: u don't know her location
+14:22 tmoney20g: aapl, amzn next thurs ?
+14:22 blondetrader: and I will assume far up there
+14:22 blondetrader: since she was concerned
+14:22 VolCrush: bad to assume when trading
+14:23 VolCrush: she's retail
+14:23 blondetrader: well I understand women and concern
+14:23 tmoney20g: hell i was down today on my first trade
+14:23 VolCrush: tue dat, you got me
+14:23 tmoney20g: but vol knows i'm broke
+14:23 blondetrader: we dont get bothered by small losses
+14:23 VolCrush: cuz i don't understand women
+14:23 AlphaInvestor: New option trader ... most likely trade ... a way OTM long call .
+.. they think it is cheap, when really it has such low probabiltiy is is close to worthless
+14:24 Helen: Spy call at 4.51 strike expression oct 36
+14:24 tmoney20g: o hi
+14:24 tmoney20g: again
+14:24 blondetrader: helen
+14:24 VolCrush: der fruit gunna get close to der pin
+14:24 tmoney20g: 4.51 is not the strike
+14:24 tmoney20g: it would be like 275, 277, 280 ?
+14:24 VolCrush: Oct 36???
+14:24 blondetrader: thats the price?
+14:24 blondetrader: 26th
+14:24 blondetrader: W
+14:24 Helen: Yes 26
+14:24 TnT: who's on first?
+14:24 Helen: 451
+14:25 tmoney20g: wut
+14:25 VolCrush: strike?
+14:25 TnT: that's 3 strikes, yur out
+14:25 VolCrush: or easier said ITM or OTM
+14:26 VolCrush: 12:20'S showed up, hahahahahahahaha
+14:26 tmoney20g: 450 strike would be like oct 26, 2021
+14:26 AlphaInvestor: Vol - Oct 36 is on the Mayan calendar
+14:26 TnT: (in my spare time, I enjoy contributing to the confusion and chaos)
+14:26 VolCrush: Alpha, if u gunna ask for advice know wat the *uck you are asking
+14:27 VolCrush: 12:20's broke them dreamers
+14:27 TnT: /vx trying to drop, watch fingers
+14:27 VolCrush: shhhhhhhhh TnT, now u are being too helpful
+14:27 TnT: oops
+14:28 VolCrush: fruit she gud
+14:29 TnT: 30  to cash clothes
+14:29 TnT: my eyes
+14:29 radon224: O_O
+14:29 lilFish: buyin into the clothes
+14:29 TnT: call an optomtrist quick
+14:29 lilFish: intersting
+14:29 mep1976: lol
+14:29 tmoney20g: i saw 276.5
+14:29 radon224: and.....poof, it's gone
+14:30 tmoney20g: which you should be it the money right now, but not by much
+14:30 lilFish: ticks gapped up
+14:29 Les_H: Anyone know the code snippets for getting the actual upcoming earnings DATE to display as a custom column in a Watchlist?  (Again, looking to display the DATe, not the # of days til earnings.)
+14:38 Mobius: yes
+14:30 lilFish: just filled that gap tho
+14:30 VolCrush: ok here's the deal, Helen.....gunna assume a 1 lot ain't gunna bust you
+you don't have a plan and dont have the ability to deal with stress
+so cover by the close today
+not thee way i trade, BUT I HAVE A PLAN
+14:30 mep1976: lol street that craps funny
+14:31 mep1976: i had to pause it
+14:31 AlphaInvestor: Looks like there was 2 - one was a 275 ... so an ITM long call
+14:31 VolCrush: I TOT it was 2 at diff striks but it got deleted
+*uck it
+14:31 lilFish: oh man , see those dead fish
+14:31 Helen: What&aposs your plan?
+14:31 VolCrush: not now i'm trading
+14:31 AlphaInvestor: I agree with Vol's assessment - close it oout for a small loss  ... learn options
+14:32 lilFish: helen there are lessons on tos every day
+14:32 lilFish: streams live
+14:32 VolCrush: after the close we can talk, not now helen
+14:32 VolCrush: fruit still gud
+14:32 Helen: Ok I appreciate it, thanks
+14:32 TnT: seminars tab above, and trader TV every day, learn first, then trade
+14:32 VolCrush: 18.4 vx may clear chit
+14:33 VolCrush: watchin der /vx
+14:34 chenmann: glad i covered earlier .....as posted here
+14:34 chenmann: wait for next week
+14:34 chenmann: to short
+14:34 VolCrush: yah, gud on u
+14:35 chenmann: but something s going on in chips....amd
+14:35 AlphaInvestor: GE - "it brings good portfolios to light"
+14:35 chenmann: and mu
+14:36 VolCrush: welp, me thinks no matter E, they gunna dump it, Nov 1....tbd we shall see wat der tape says
+14:36 chenmann: i c it now
+14:36 AlphaInvestor: Chen - chips are down because those Canadians didn't get the munchies
+14:36 chenmann: amd warned
+14:36 VolCrush: gawd damn der fruit
+14:37 radon224: Flamin Hot Cheetos are the preferred food of Cannibis users, dont cha know?
+14:37 AlphaInvestor: I warned about AMD before they even knew about it
+14:37 VolCrush: gunna rat *uck us come Monday
+14:37 chenmann: lol but yes u did al
+14:37 VolCrush: /vx stuck
+14:38 VolCrush: 12:20's did a gud job, there will be short covereing and proit taking at der close, as expected
+14:39 radon224: Monthly OPEX pinners want things to stay right where they are, then the cash close is a free for all.
+14:39 chenmann: nice
+14:40 VolCrush: could be and has been for wat, several weeks?
+big moves are AH
+14:40 chenmann: yup
+14:42 Tanya: Holly cow, 8nwent out to have my auxiliary battereplced and came back like this!
+14:42 VolCrush: short term trend on /vx remains up
+14:42 VolCrush: tmi
+14:43 lilFish: hi tanya
+14:43 Tanya: Hi lfish
+14:43 lilFish: have you done any more amazing trades like nflx?
+14:44 Tanya: Another bloody day!
+14:44 tmoney20g: i'm interested too
+14:44 lilFish: not as bloody as some would like
+14:44 Tanya: Just trying to add NFLX now
+14:44 tmoney20g: i want you not to be -60k
+14:44 AlphaInvestor: Bloody - I am Green for the day
+14:45 JohnnyQuotron: Alpla...FYI..BOT +10 VERTICAL COST 100 (Weeklys) 23 NOV 18 227.5/232.5 CALL @2.60 CBOEMARK=229.19 IMPL VOL=22.57%
+14:45 lilFish: whoa ticks
+14:45 VolCrush: welp, u ready to be a broker for her, 20g 
+14:45 tmoney20g: nope
+14:45 tmoney20g: i just don't want her to be negative so much
+14:45 VolCrush: told u petit poisson
+14:45 lilFish: wha?
+14:45 AlphaInvestor: Thanks JQkpa
+14:45 VolCrush: and dar she blows
+14:46 VolCrush: der fruti will pin within pennies
+14:46 Tanya: Have limit order for NFLX at 330
+14:46 lilFish: hmmm
+14:46 Tanya: 333
+14:46 VolCrush: them MMs just killed dreams
+14:47 lilFish: the crookedest crooked crooks have 13 mins
+14:47 JohnnyQuotron: alpha.  the trend is my friend.  just looking for $1
+14:47 tmoney20g: what catalyst will nflx have to go back up ?
+14:47 fred__w: lil  am i a crook?  i dont think so
+14:47 VolCrush: naw, they brilliant, just need to read the tape and der chain
+14:47 tmoney20g: other fang ers ?
+14:47 Tanya: I am drowning and see one one around!
+14:47 AlphaInvestor: JQkpa - nice In/Out, with chart going in the right direction
+14:47 lilFish: why vol - coz aapl under 120?
+14:48 lilFish: i mean 220
+14:48 VolCrush: 120?
+14:48 lilFish: fred i dont think you are a crook
+14:48 VolCrush: now der chain said dats where it was going on qrtly exirey, she's there
+14:48 lilFish: if you are you are a very nice one
+14:48 AlphaInvestor: JQkpa - did that trigger in the RonCo alert?
+14:48 fred__w: lil  thats good
+14:49 VolCrush: sorry monthly expiery
+14:49 VolCrush: so ergo, no flush
+14:49 lilFish: i'd like to see q'a above 174 before the clothes
