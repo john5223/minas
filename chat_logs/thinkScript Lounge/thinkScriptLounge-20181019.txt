@@ -1,0 +1,492 @@
+09:49 ruffle: Trying to find newly IPO&aposd stocks
+09:49 ruffle: Or IPO within x number of days
+09:50 MTS1: Ruffle; that's quite  different than your earlier example; what does that statement mean in plain english? 
+09:50 MTS1: In any casep if there is no bar 100 days ago there is no close; but that's different than NaN
+09:51 MTS1: NaN means there is a 'bar 'but no value for close; like the expansion area. If you want items with less than 100 bars simply use BarNumber() function
+09:52 ruffle: Is appendix d wrong? OHLC values of the current symbol are NaN when a script tries to retrieve them from the time point before IPO or before the first visible bar on tick and range charts. The same happens when the script tries to retrieve OHLC values from the right expansion of the chart (i.e., from the time point in the "future", which doesn&apost have any OHLC values yet).
+09:52 Mobius: Arianna - It's impossible for you to offend me. My statement stands regardless of your past use.  Zscore is a simple indicator of where price is in a standard deviation envelope. The levels are simple reminders of excepted standards. 1, 2, 3, 4 and 5 standard deviations from the mean.  If you knew what you were looking at you'd have known that
+09:53 MTS1: Nope; example from D rowks fine
+09:53 Ariana3: Mobius: I know that, I asked how to write in the code.
+09:54 ruffle: Seems like you&aposre telling me "OHLC values of the current symbol are NaN when a script tries to retrieve them from the time point before IPO or before the first visible bar on tick and range charts" is not true?
+09:54 ruffle: Is not true?
+09:54 Mobius: I gave you the code.  The only thing you need to do is add
+
+plot one = 1;
+plot two = 2;
+plot three = 3;
+09:55 MTS1: Debug it Ruffle and check it out; I also gave you a solution I know works.
+09:55 Ariana3: Mobius: Thank you very much!
+09:57 Mobius: Just as a reminder -
+We don't work for TOS. We're traders interested in helping other traders to learn to code. We appreciate those that try to learn. Those that just want a code because they don't know how to code are encouraged to learn to code. Anyone can that works at it a bit.
+09:59 ruffle: Ok I&aposll try that. Still puzzling to me why the other way doesn&apost work. Seems like exactly what app d is stating!
+09:59 Mobius: ruffle - keep at it - the light will shine just before the train hits you
+10:00 ruffle: Thanks guys & thanks Möbius I was starting to think you might work for ToS! Ya&aposll are really awesome for helping us!
+10:09 inov: hello Mobius...thanks for ur reply but I would like to know the highest intraday volume, let's say around 1:00 p.m or any time before end of RTH.....any tips on how to code will be helpful
+10:21 Vimes: inov, what you are requesting will predominatly be the open or close as mobius said, it could be coded as you requested, but maybe as an alternative look at this "high volume node" code from Mobius:
+# High Volume Nodes
+# Mobius
+# V01.02.2018
+# Looks for the highest volume candle in "n" periods and plots the candle range. 
+# As Volatility increases this study has two values. Plotting a current high volume node as a channel which price will be drawn back to and test since a very high volume node will move price quickly, and price will retest that area. And, with the legacy plots a way to quickly see if larger traders, those that can generate a high volume node, are accumulating or distributing inventory. 
+input n = 20;
+input LegacyPoints = yes;
+def h = high;
+def l = low;
+def c = close;
+def v = volume;
+def x = barNumber();
+def HighVolume = if ((v - Lowest(v, n)) / (Highest(v, n) - Lowest(v, n))) >= 1
+                 then x
+                 else Double.NaN;
+def hh = if !IsNaN(HighVolume)
+         then h
+         else hh[1];
+def ll = if !IsNaN(HighVolume)
+         then l
+         else ll[1];
+plot hhLine = if x >= HighestAll(HighVolume)
+              then HighestAll(if IsNaN(c)
+                              then hh
+                              else Double.NaN)
+              else Double.NaN;
+hhLine.SetDefaultColor(Color.GRAY);
+plot llLine = if x >= HighestAll(HighVolume)
+                              then ll
+llLine.SetDefaultColor(Color.GRAY);
+plot legacy = if LegacyPoints and !IsNaN(HighVolume)
+              then l - (2*TickSize())
+legacy.SetStyle(Curve.POINTS);
+legacy.SetLineWeight(3);
+legacy.SetDefaultColor(Color.Gray);
+AddCloud(llLine, hhLine, Color.GRAY, Color.GRAY);
+# End Code High Volume Nodes
+10:21 nextrade: that gave me  an interesting idea to propose to TDA. I would think that the small fortune that TDA has spent to attract the 11 million funded accounts - was to increase their profits-not to teach all of us how  to code ; which is in itself a lengthy and to some a fruitless endeavor.I would think most of the 11 million clients just want to place trades ( which is revenue for TDA ) - not to be coders. So- '' Hey TDA - how about hiring a smart coder to help clients design the scripts that they wish to use in trading ''. If it increases their trading activity ( and you make more fees); then you keep the coder in house. If TDA does not see an increase in trading activity- you fire his a_ _.
+10:23 Vimes: i think they could do more, but they at least try to stay connected with some developments like TASC and provide those indicators in platform each month
+10:23 AlphaInvestor: Next - they have some peeps who do that for High Net Worth and Active Traders -- I know, becuase I know some of those people, not because I am one
+10:24 Up_n_Up: how the other half lives
+10:26 nextrade: guess i'll have to sell the Farm - to increase my account size -)
+10:26 inov: thanks Vimes
+10:28 Vimes: np, Mobius is primary to thank as i find alot of use in that indicator
+10:30 nextrade: Ai- 20 years ago i was with a broker, and my account rep was a former salesclerk. He non-chalantly told me that he liked working for a broker, because he got to see the big money accounts- and their monetflow
+10:32 Mobius: As in much of life - It's not what you know but who you know that often makes the difference.
+10:34 AlphaInvestor: I know Mobius ... it has made a huge difference
+10:35 AlphaInvestor: Thank you kind sir!
+10:35 inov: Thanks Mobius for your help
+10:35 Mobius: ha - You need to get out more often  :)
+10:36 Nube: Having someone else write my scripts for me does not appeal to me one bit. The wisdom of that has to be inversely proportional to account size.
+10:38 AlphaInvestor: Nube - I am more than happy to have you and Mobius write scripts for me!
+10:43 Nube: Better be sure, my scripts have me long Turkey and Brazilian Small Caps
+10:44 Nube: The good part of that is that if those trades work then ES is going to 5k so we'll all be riding high
+10:46 AlphaInvestor: Nube - I think the elections in Brazil will turn those markets, to some extent already have
+10:51 Nube: I'm a firm believer in the bullish politics is gridlock
+10:51 Nube: So could well be
+10:56 Mobius: Seems Brazil is always about something short. Brazillian Bikini, Brazillian Wax ......... Maybe Short is just a better idea
+10:57 Nube: I ain't bullish on this thing their century, so maybe I should hedge...
+10:59 online1: @Alpha or others - is it possible to have this scan show results for the net change starting from the 9:30 open?  I have no idea how to do modify.
+http://tos.mx/6jbtdI#
+couldn't sshot as was too bid and then couldn't see if made smaller
+11:23 Nube: Watching what we do here like a hawk.
+11:36 New_Trade: I just would like to follow Mobius trades...So many scripts only confusing but following big money...would be great   Better learning experience 
+11:36 MTS1: Online; looks like you shared a wachlist, not a scan query or the script. Look at Mobius' ORB script for example of checking if the time has passed (Active) so you can retain the open so you can use it to compare with current close to calc net change.
+11:37 MTS1: Agreed NT; good attitude. Not just see the trades though; understand trade decisions.
+11:38 New_Trade: Yes I need to learn a lot
+11:40 New_Trade: So would be great to ask Mobius to have teaching and trading room  He learned from his dad....
+11:41 MTS1: He already spends as much time here as he likes;)
+11:41 New_Trade: Agree he is helping a lot
+11:41 MTS1: He's retired you know; in the right way it sounds like: Doing what he enjoys;)
+11:44 New_Trade: It is very hard to learn by myself.    Zillions scripts not really helping.   I would like to find a better way to learn to make money
+11:46 AlphaInvestor: In the long run you need no more than a dozen indicators, mosly likely about 6 or so, carefully selected
+11:50 New_Trade: And how to use them right way
+11:50 AlphaInvestor: Xactly
+11:52 MTS1: scripts are just tools to help you see what's happening with price. key is finding what works for you; usually that means lots of chart reading / testing. Then have a trading plan based on what you know statistically works and follow that plan. Record your trading decisions and review those in hindsight to hopefully improve going forward (how you followed / did not follow your plan and how to improve plan / execution). Indicators are probably only a very small part of what it takes to make money...
+11:52 woodie: oooops sorry wrong place
+11:54 woodie: thanks admin
+11:57 amalia: Dang it. Missed it.
+11:57 amalia: Next time don’t be so good at your job admin =p
+11:58 AlphaInvestor: amalia - Woodies 4 up Grid setup
+12:36 amalia: Got it. Thanks librarians
+12:45 Vimes: different platform
+12:50 online1: MTSI - it is basically this -
+ 
+12:50 online1: but the change is from the close of yesterday and I would like the net change to be from the 9:30 opening
+12:51 amalia: What's the formula for net change?
+13:05 DMonkey: net change from open....
+def o = if secondsFromTime(0930) == 0 
+        then open
+        else o[1];
+plot change = c - o;
+13:07 donh: Mobius, Ever since TOS changed the futures to a two digit suffix rather the one,  the SpotRisk study that you created does not seem to work at all.  Can you suggest a fix?  Looking at your code, I only see that the problem may be associated to the GetSymbol()=="/NQ".  Appreciate any suggestion?
+13:08 amalia: The mobile friendly version:
+declare lower;
+def o = if GetTime() crosses RegularTradingStart(GetYYYYMMDD())
+then Open
+else o[1];
+plot change = c- o;
+13:09 MTS1: Don; confirm the current value for /NQ in your charting window and update the script with the new value TOS is using now
+13:10 MTS1: believe /NQ:XCME for NQ
+13:11 donh: MTSI - Thanks I'll try your suggestion.
+13:14 amalia: donh, please exit and re-enter the room. Thanks.
+13:16 JohnnyQuotron: The LoungeArchive is current.
+13:17 donh: MTSI - Thanks again.   Your suggestion worked.
+13:18 MTS1: yw
+13:20 donh: The room seems choppy and slow even after following Amalia's request t exit and reenter the room.  Logging out for now.  
+13:21 MTS1: room seems fine; the logging back in was to fix your font. Sorry (not) if we're too slow to respond;)
+13:22 amalia: ^
+13:55 HighDesertZero: I need to read up on referencing one study within another what topic heading would that come under?
+13:56 AlphaInvestor: High - you can Reference built-in studies, but not custom user studies
+13:57 HighDesertZero: grrrrrrrr, thanks alpha
+14:01 amalia: You can use Script{}
+14:46 em11: http://tos.mx/ldV5mA#    hi all, can some one direct me on where to find info on how to code the highest and the lowest of the colored interval ... two EMA crossing, highest and lowest of the candles located when fast EMA below slow EMA
+14:56 thomas7156: Trying  to create a custom scan code to select stocks which are above the MA midpoint and the Upper_Band of a Keltner Channel. With the MA as a variable zero point the selection channel would fall in a range of about +1.25 and +2.5 times the MA. Here id the thinkscript
+14:56 thomas7156: input bandfactor = 2.5;
+input MAlength = 20;
+def price = close;
+def MAaverage = Average(price, MAlength);
+def Upper_Band = bandfactor * Average(TrueRange(high, close, low), MAlength);
+between(close, KeltnerChannels()."Upper_Band", KeltnerChannels()."Upper_Band" + MAaverage/2);
+Useless function invocation at 6:1
+At least one plot should be defined
+14:58 thomas7156: the errors are below the script . THe issue is with the between statement  and it also wants a plot statement but this is for a scan and not a plot
+14:59 scotty: where's the options page
+15:00 scotty: I am a penny stocks investor and I am looking for a few GREAT stocks this week in the Canadian pot stocks.
+15:00 scotty: options for those
+15:00 Vimes: wrong room
+15:01 scotty: REALLY LIKE which room
+15:01 chief: thoma.....plot oyvey = between(close, KeltnerChannels()."Upper_Band", KeltnerChannels()."Upper_Band" + MAaverage/2);
+15:01 scotty: ????
+15:01 Mobius: em11 - here is your code with arrows at low and high plotted
+#----------------------------------------------------------------------------#
+############### exp MA-s 10_20 
+input price = close;
+input length1 = 20;
+input displace1 = 0;
+plot longl = ExpAverage(price[-displace1], length1);
+input priceh = close;
+input lengthh = 10;
+input displace = 0;
+plot shortl = MovingAverage(AverageType.exponentIAL, priceh, lengthh)[-displace];
+shortl.DefineColor("Up", Color.DARK_GREEN);
+shortl.DefineColor("Down", Color.DARK_RED);
+shortl.AssignValueColor(if shortl > shortl[1] then shortl.Color("Up") else shortl.Color("Down"));
+longl.AssignValueColor(if shortl > longl then CreateColor(29, 70, 130) else CreateColor(200, 70, 33));
+longl.SetLineWeight(2);
+input paintBars = yes; # paint bars based on TSF
+DefineGlobalColor("Positive", CreateColor(70, 120, 1));
+DefineGlobalColor("Negative", CreateColor(200, 30, 50));
+AssignPriceColor(if !paintBars
+    then Color.CURRENT
+    else if shortl > longl
+        then GlobalColor("Positive")
+        else GlobalColor("Negative"));
+def nan = double.nan;
+def ll = if shortl > longl
+         then nan
+         else if shortl crosses below longl
+              then low
+              else if low < ll[1]
+                   then low
+                   else ll[1];
+def ll_x = if low == ll
+           then x
+           else nan;
+plot pivotL = if x == HighestAll(ll_x)
+              then ll
+              else nan;
+     pivotL.SetPaintingStrategy(PaintingStrategy.Arrow_UP);
+     pivotL.SetDefaultColor(Color.Green);
+def hh = if shortl < longl
+         else if shortl crosses above longl
+              then high
+              else if high > hh[1]
+                   then high
+                   else hh[1];
+def hh_x = if high == hh
+plot pivotH = if x == HighestAll(hh_x)
+              then hh
+     pivotH.SetPaintingStrategy(PaintingStrategy.Arrow_DOWN);
+     pivotH.SetDefaultColor(Color.Red);
+15:01 Vimes: really like maybe something with the word "trade" or "trader" in it
+15:02 AlphaInvestor: or Worthless, or GoingToZero
+15:03 Mobius: Totally Dude
+15:03 thomas7156: Mobius gave me the following yesterday  and perhaps I changed something wrong. Any help would be greatly appreciated
+15:03 Vimes: do penny stocks even have options, whats teh point
+15:04 em11: thank you Mobius, always appreciated
+15:05 Mobius: yw
+15:06 Mobius: Vimes - This is no place for logic..  Oh wait, maybe it is.  Good point!
+15:07 Vimes: if only i could afford 100 shares of this penny stock, oh wait let me buy the options!!
+15:10 Mobius: thomas.. the syntax for referencing a study in the scanner is
+StudyName()."PlotName"
+if your going to change any input in the study that change with the input name has to be added between the parentheses
+Example:
+StudyName(length = 30)."PlotName"
+15:39 Biometrizilla: Have a question about indexing. If I create a new study with def x = x[1]; plot showx = x; then x is always zero. Then if I change to def x=x[1]+1; and plot, x starts at 2 and increases by one for each bar. I thought that defining x sets it to zero so x[1]+1 should start at 1. I have used the x=x[1]+1; in a couple of custom studies and have x[1]+1 starting at 2 for one study, x[1]+1 starting at 13 for another. Does ThinkScript do some sort of auto-lookback period determination that determines the value of x[1] for each study?
+15:41 Mobius: If you want to index x then use compoundValue
+compoundValue(1, x[1] + 1, 1)
+where the first variable is the bar to start the second is the variable to perform and the third variable is the initial value
+15:45 Biometrizilla: Does that mean that the code on the Web site for Inertia is incorrect?
+15:45 Biometrizilla: script inertiaTS {
+    input y = close;
+    input n = 20;
+    def x = x[1] + 1;
+    def a = (n * Sum(x * y, n) - Sum(x, n) * Sum(y, n) ) / ( n * Sum(Sqr(x), n) - Sqr(Sum(x, n)));
+    def b = (Sum(Sqr(x), n) * Sum(y, n) - Sum(x, n) * Sum(x * y, n) ) / ( n * Sum(Sqr(x), n) - Sqr(Sum(x, n)));
+    plot InertiaTS = a * x + b;
+}
+input length = 20;
+plot LinReg1 = Inertia(close, length);
+plot LinReg2 = InertiaTS(close, length);
+15:45 Mobius: no  it means your use was.  That code works as designed
+15:45 AlphaInvestor: Biom - don't Dis der Mobius scripts
+15:46 Mobius: I have checked every study and function in TOS - There is only one that doesn't work as purposed   declare once_per_bar
+15:48 Biometrizilla: Not dissing, trying to understand. I know that the study works. How is the usage different? I took the code I just posted and put it in a new study. If I plot x it starts at 13 on the first bar. Why does it do that?
+15:49 Mobius: My crystal ball is broken. You'll have to post the entire code for me to give a reason
+15:50 Mobius: Or you can use AddLabel or plot .Values_Below to deBug your code
+15:51 Mobius: There's always a reason. And; 99.99999% of the time it's PEBCAK error
+15:52 Mobius: That holds for me too. Not picking on anyone
+15:52 thomas7156: Thanks Mobius  I need to do some reading and study on thinkscript coding syntax etc.. I haven't done any coding in the last 30 years and that was basic and early C+. I chanded the top 2 line to input try to get dome feed back from TOS and I posted the chqnged code I changed the inputs back to def and the scan runs bu does not finish or display anything. Further study for sure won't hurt me. I have been retired for 4 years and I have some time to devote to it.  Thanks so much for your help I really apreciate it. I use your and really like your True Momentum Oscillator that someone sent me. Thanks Again I'' be back
+15:54 Mobius: thomas  - For some scans it's easier write the scan as a STUDY frist to make sure it's plotting as you want then reference that plot. I find that easiest
+16:00 Biometrizilla: Code coming up. I took the inertiaTS off the website, declared it a lower study and put in a plot statement in the script. In this case the x value for the first bar seems to match the length value.
+16:00 Biometrizilla: declare lower;
+script inertiaTS {
+    plot xplot = x;
+16:00 Biometrizilla: It has to be operator error but I need to figure out what I'm doing to cause it.
+16:04 amalia: Refer to post @hh:50
+16:04 Biometrizilla: Then if I take the same code, don't use the script approach and use different equations for calculating slope and intercept, the output matches and this time x for first bar is 13.
+16:04 Biometrizilla: declare lower;
+input length = 89;
+# Incrementing x for each bar moves endpoint each bar
+# This duplicates the TOS LinearRegCurve function, which calls Inertia
+def x = x[1]+1;
+plot XPlot = x;
+# Slope & Intercept calculations
+def Ex = Sum(x,length);
+def Ey = Sum(price,length);
+def Exy = Sum(x*price,length);
+def Ex2 = Sum(x*x,length);
+def Denominator = (length*Ex2) - sqr(Ex);
+def Slope = ((length*Exy) - (Ex*Ey)) / Denominator;
+def Intercept = ((Ex2*Ey) - (Ex*Exy))/ Denominator;
+plot LinearRegCurve = (Slope * x) + Intercept;
+LinearRegCurve.setdefaultColor(color.Red);
+# Check against TOS built-in Inertia function
+plot InertiaTS = Inertia(price,length);
+InertiaTS.setdefaultColor(color.Yellow);
+16:08 Up_n_Up: don't know if this applies in this case, but in any case you probably should find 'prefetch
+16:08 Up_n_Up: in the manual/tutorials and understand the potential impacts
+16:10 Up_n_Up: CompoundValue, as was pointed out,, is a more definitive of initializing a variable,
+16:10 Up_n_Up: *method* of
+16:11 AlphaInvestor: Yeah ... where does it get that first X -  I am sure Biom is assuming the first X is zero ... but why is he assuming that?
+16:12 AlphaInvestor: def X = if barnumber() == 1 then 1 else x[1] + 1;      # might work better
+16:12 MTS1: Debug the code as suggested already to find out. .
+16:13 Biometrizilla: Up_n_Up - that's what I was refering to in my initial question. Prefetch determines an auto-lookback period based on what is going on in the study. I'll investigate this some more. Thanks for pointing me in that direction.
+16:14 Biometrizilla: AlphaInvestor - I believe in reading through the material that when discussing recursion it was stated that when you define a variable it starts at zero. But that may not be the case if Prefetching comes into play.
+16:14 Mobius: Prefetch isn't used except for infinite impulse ThinkScript Native Studies.
+16:14 MTS1: Nope; based on the MA period and type only Bio
+16:15 Mobius: You can not call or access prefetch
+16:15 Mobius: from thinkScript or any thinkScript function. Only the native studies call it
+16:15 MTS1: That's why compoundvalue was suggested.
+16:16 Biometrizilla: Past offset is what looks like is the appropriate item. It's on the same page as Prefetch.
+16:16 Mobius: native studies and native functions such as
+ExpAverage()
+Average()
+WildersAverage()
+16:17 MTS1: Past Offset does not impact 'visible data' which is only data TS has access to.
+16:17 Mobius: Although Average isn't an infinite impulse tos does use prefetch so that it plots at the first bar
+16:17 bigworm: native blankets
+16:18 Mobius: Alrighty then. Time to find something interesting to drink.
+16:18 bigworm: jack and coke?
+16:18 bigworm: that used to get me into trouble
+16:19 Biometrizilla: So I posted the cut and paste from the Inertia definition. Would you expect that x at the first bar would be zero?
+16:19 Mobius: I'd never ruin a perfectly good whisky with coke. Yuk
+16:19 bigworm: are you saying jack daniels is a good whiskey?
+16:20 Mobius: Bio.. I expect nothing I check.  Use SetPaintingStrategy(PaintingStrategy.Values_Below) and find out
+16:20 bigworm: ive been told makers mark is pretty good.  also, they have a cool bottle.
+16:21 Mobius: JD is whisky.  Single Barrel is Good and some others are great
+16:21 AlphaInvestor: Biom - I would expect it to be some random number pulled out of the air ... because you didn't initialize it
+16:22 AlphaInvestor: It MAY work sometimes, but in every case it is Bad Form
+16:26 Biometrizilla: Ok. I'll play around with CompoundValue. Plenty of examples in the online information that shows def x = x[1] + 1; as a valid way to do things.
+16:27 Mobius: Bio..
+def x = x[1] + 1;
+def y = compoundValue(1, y[1] + 1, 0);
+plot data1 = x;
+data1.SetPaintingStrategy(PaintingStrategy.Values_Below);
+plot data2 = y;
+data2.SetPaintingStrategy(PaintingStrategy.Values_Above);
+16:33 MTS1: And Bio; remember that we here have no input or control on the manual; just volunteers interested in TS that try to help. The manual is certainly a place to start learn TS or find functions, but when you get answers here and suggestions (and how to) debug to verify what's happening, it is of no value to argue, repeat code examples without debugging, or quote the manual back. .
+16:36 AlphaInvestor: Biom - add this as well. You will see that my method, which initializes the first bar using a RECursive variable, also works
+def z = if barnumber() == 1 then 0 else z[1]+1;
+plot data3 = z;
+data3.SetPaintingStrategy(PaintingStrategy.Values_Below);
+16:36 MTS1: (quote the manual back questioning the answers without verifying yourself I meant)
+16:43 Mobius: Valid for a use. Like a hammer is valid for a use. But painting a house isn't one of those uses. Sure you could do it but it'd be a lot easier to use a different tool
+16:45 Mobius: In Incrementing a variable it may or may not be important to start at 1 or 0.
+16:47 Nube: As an example, when I was a lad I washed my mother's car with a rock. A rock is a perfectly good tool, not so much for cleaning mumsie's Cordoba however.
+16:48 Nube: "I love what you've done to my Cordoba" was not her response
+16:48 Mobius: ha
+16:49 Mobius: I did the same sort of thing when Brillo Pads first came out
+16:49 AlphaInvestor: Mobius - how did the boat fare after Michael?
+16:50 Mobius: No problems. Alpha...  Not anything the bilge pump even had a hard time with  :)
+16:52 bigworm: sometimes I acutally laugh out loud at whats said in this room
+16:53 bigworm: not just a fake lol but furealz
+16:53 Mobius: I've done that with a mouth full of coffee.. Not good for the keyboard.
+17:01 AlphaInvestor: I keep wipes handy to clean off my monitor for such occurances
+17:57 dtree: hello gurus
+17:57 dtree: need help on configuring scans
+17:59 dtree: how can I get alert with stocks that have 3 consecutive 1 minute green candels?
+18:01 Up_n_Up: how are you defining green?
+18:01 dtree: green close - close > open ? I dont know - guessing
+18:02 Up_n_Up: so close higher than open?
+18:02 dtree: in that minute yes
+18:02 Up_n_Up: sum(close>open,3)==3
+18:03 Up_n_Up: that be it.
+18:03 Up_n_Up: later folks...
+18:04 dtree: do you have a library of scripts I can read
+18:05 momo: dtree make sure you select 1 minute aggregation in scan script with that code
+18:06 momo: Default is usually D for daily, change that to 1 minute
+18:06 dtree: I am compeletely new for this guys - I worked on C# and TSQL
+18:07 dtree: basically what i want is - priceline is above VWAP , 20SMA, 50SMA, 200 SMA
+18:07 dtree: and when 3 green candlestickes occure I want to get alert
+18:08 dtree: please help
+18:10 momo: close > VWAP() and close > average(close,20) and close > average(close,50) and close > average(close,200) and sum(close > open,3) == 3
+18:11 momo: select 1 minute aggregation in script
+18:12 momo: Then you can save scan as watchlist and also create alert on scan
+18:13 dtree: would it be possible for you to send me this custome scan? I want to learn from it also , as its going to be the first script for me
+18:14 momo: I already wrote it above, copy paste in custom scan
+18:15 momo: Call support to guide you through how to use scan feature and they will guide you one on one
+18:16 momo: 866-839-1100
+18:16 dtree: ok thank you
+18:16 momo: yw
+18:21 ameriman: dtree also this video
+18:21 ameriman: https://tlc.thinkorswim.com/center/howToTos/thinkManual/Scan/Stock-Hacker.html
+18:48 dynce1: what is a expected double? trying to clean up my code.
+18:52 amalia: Need a if then else I believe.
+18:57 MTS1: expected double means a number (double) was expected that was not provided or something else was provided instead.
+18:57 Up_n_Up: it's expecting a number,  double precision to be exact, check your syntax
+19:02 dynce1: ok thanks
+19:27 christian5245: Hello i would like to run some code to create ma alerts based on certain list of ticker
+19:28 christian5245: I have my criteria and they apply to all the stock i watch .. any clue how to do that
+19:36 Up_n_Up: I'd start here - http://tlc.thinkorswim.com/center/howToTos/thinkManual/Scan/Stock-Hacker.html
+19:37 JohnnyQuotron: The LoungeArchive is current.
+19:42 christian5245: I’ll check tks
+19:48 admin_tculs: thinkScript Lounge chatroom will be closing soon  Please finish all conversations by 8pm  ct  Have a nice evening
+------- Thursday, October 18, 2018 -------
+07:19 JAtrader: good morning
+07:47 stevie_s: .
+07:52 harndog: Good morning. Room FAQ:  A good starting place is having questions and taking a free platform tour. Contact support@thinkorswim.com
+This is a lounge of volunteers who do not work for TOS. 
+We are not TOS support, just experienced users interested in coding, and helping others learn to code.
+When you're setting up your platform tour, request the chat room scripts created by TOS support.
+When looking for scripts ask a search engine: Thinkscripts, TOS scripts or check out MyTrade/Mobius
+If you find the room valuable, contribute back into the room.
+Other common questions:
+Getting started: https://tlc.thinkorswim.com/center/howToTos/thinkManual/Getting-Started.html
+How to thinkorswim: http://tlc.thinkorswim.com/center/howToTos/thinkManual.html
+TDA API page: https://developer.tdameritrade.com/
+TDA has retail data restrictions.
+The scanner runs every three minutes.
+TDA can export to excel with considerations.
+You cannot make up your own syntax.
+08:00 rcmcfe: anyone know how to set an alert on a stock when it falls 1% or more from the previous days' close?
+08:03 MTS1: A MarketWatch alert, or what type of alert? If MW,use the built-in wizard to build one; RTM @ http://tlc.thinkorswim.com/center/howToTos/thinkManual/MarketWatch.html
+08:05 rcmcfe: An alert on a specific stock...
+08:08 dmj: Hi,  does anyone happen to have a script that automatically plots the 1st hr high and low ?  and possibly also the overnight high and low ?
+08:11 MTS1: DMJ; Mobius' ORB script can be set to an opening range of 1 h to do that; on his MyTrade.
+08:18 MTS1: yw. .
+------- Friday, October 19, 2018 -------
+05:53 chief: Nube..not sure if he was first but I think rp did it with an indicator called "Edge"
+06:18 Nube: Thanks, chief! I will look into that.
+06:25 Nube: There's an error in the ToS translation of the Stiffness Indicator in the latest issue of TASC mag. It's effectively the same but has the wrong multiplier for scaling. The accompanying strategy mentioned specific levels which are incorrect in the study version shared in the mag. This version corrects that error.
+06:26 Nube: 
+# Markos Katsanos Stiffness Indicator
+# From TASC Nov 2018
+# Transalated to Thinkscript
+# Nube 10.18.18
+# http://tos.mx/2agL05#
+    # inputs
+input price           = close;
+input averageLength   = 100;
+input indicatorLength = 60;
+    # variables
+def ma = Average(price, averageLength) - .2 * StDev(price, averageLength);
+def aboveMACount = Sum(price > ma, indicatorLength );
+    # plots
+plot 
+Stiffness = aboveMAcount * 100 / indicatorLength;
+Stiffness.  SetPaintingStrategy(PaintingStrategy.SQUARED_HISTOGRAM);
+Stiffness.  AssignValueColor(if   Stiffness < Stiffness[1]
+                             then Color.DownTick
+                             else Color.UpTick);
+# f/ Markos Katsanos Stiffness Indicator
+06:32 chief: Nube...the study for Stoplight ( a different study than The Edge by rp) has this header..."
+#lar?: #Stoplight_Indicator_v2 by Lar
+#Origianl concept by ChrisStoplight, By Chris Ball (xxx) on 1/31/09
+#Added Choppiness and Squeeze Indicator by Mobius@Thinkscript Lounge
+#Added FW_Mobo_Basic
+#Modified to add/change indicators
+06:42 Paris: Looked through my stash, the only study with "Stop Light" as an embedded string is Mobius Multiple Aggregation EMA Stop Lights, published in May 2018
+06:44 Anonymous so far: Is there any documentation on Thinkscript that explains which functions work on the mobile app?
+06:45 Nube: Anonymous, no but there are some people here with experience with the mobile app. What question / problem are you having with it?
+06:47 Anonymous so far: I have a script which uses addlabel() do display text based on some basic conditions. it works perfectly on desktop platform but nothyis displayed on mobile app
+07:07 Nube: Yeah, no string on mobile so label and bubble are no go
+07:07 Anonymous so far: oh ok. thanks for clarifying
+07:10 Nube: I have used a plot to display that data but it's not nearly as handy as a label or bubble
+input labelData = yes;
+plot output = if labelData then labelData else indicator;
+07:26 crashman: TOS has renko bars?
+07:27 crashman: anyone?
+07:30 SWPRoth: gm all
+07:30 SWPRoth: antone have a link that explains use of Stiffness indicator?
+07:32 Mobius: crash.. yes TOS has RENKO bars
+07:33 crashman: how do i access?
+07:34 Mobius: read the manual
+07:34 crashman: can u tell me please. make it easy 4 me
+07:34 Mobius: no  not my job
+07:35 crashman: what manual?
+07:37 Nube: The manual on the platform you have questions about
+07:37 crashman: so mean
+07:38 Nube: Wait til we start drinking
+07:38 crashman: just tell me how to access it renko bar settings
+07:38 Nube: no
+07:39 JohnnyQuotron: nube...the stop light visualization method that I have been playing with  http://tos.mx/ayq5nc#
+07:42 JohnnyQuotron: the Stop Light indicators are likely badly named in the OneNote and can be found under Composite Indicators in the uncategorized section.  sorry
+07:43 Nube: The mobile app question reminded me I've not done a Globex High Low for the app
+#
+# GlobexHighLow for Mobile
+# v.01
+# Nube
+# 10.19.18
+# http://tos.mx/gqT4qb#
+    # universals
+def bn = BarNumber();
+def na = Double.NaN;
+def rteBar = if   GetTime() crosses below   
+                  RegularTradingStart(GetYYYYMMDD()) 
+             then bn
+             else rteBar[1];
+def hRteBar = HighestAll(rteBar);
+def rthBar = if   bn > hRtebar
+             &&   GetTime() crosses above  
+             else rthBar[1];
+def hRthBar = HighestAll(rthBar);
+def gXhigh = HighestAll(if   IsNaN(hRthBar)
+                        &&   bn >= hRteBar
+                        then high
+                        else if   bn >= hRteBar
+                             &&   bn <  hRthBar
+                             then high 
+                             else na);
+def gXlow  = LowestAll(if   IsNaN(hRthBar)
+                       &&   bn >= hRteBar
+                       then low
+                       else if   bn >= hRteBar
+                            &&   bn <  hRthBar
+                            then low 
+                            else na);
+plot
+GlobexHigh = if bn > hRteBar then gXhigh else na;
+GlobexHigh.  SetDefaultColor(Color.Green);
+GlobexLow = if bn > hRteBar then gXlow else na;
+GlobexLow.  SetDefaultColor(Color.Red);
+# f/ GlobexHighLow for Mobile
+07:46 JohnnyQuotron: Regarding the Stiffness Indicator.  ...  Never mind, even on pain meds,  I won't go "there" so early in the morning.   
+07:47 JohnnyQuotron: Morning Lounge.  Its a great day!
