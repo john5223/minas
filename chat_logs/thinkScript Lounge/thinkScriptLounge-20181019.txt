@@ -490,3 +490,105 @@ GlobexLow.  SetDefaultColor(Color.Red);
 # f/ GlobexHighLow for Mobile
 07:46 JohnnyQuotron: Regarding the Stiffness Indicator.  ...  Never mind, even on pain meds,  I won't go "there" so early in the morning.   
 07:47 JohnnyQuotron: Morning Lounge.  Its a great day!
+07:57 Nube: Morning to you as well. I will take a look at that, JQ. The squares might work better
+09:22 Jeremy: Couple of good starts today
+09:31 JAtrader: hi guys gm
+09:32 JAtrader: have a ques. Is there a way to allow custom studys to send alert to email instead of making an alarm sound? whats the code?
+09:33 Mobius: JA.. Use the custom study as a Dynamic Scan where MarketWatch Alerts can be set
+09:33 JohnnyQuotron: nube.. if you can think of a more precise method than my range method  (highestAll high lowest all low) to keep the arrows and squares aligned i would love to hear it.
+09:34 JAtrader: Mobius not sure if i understand. Use it under the scan tab, is that what ur saying?
+09:34 JAtrader: alerts tab does not allow me to set emails alerts for custom study
+09:35 Mobius: I'm saying - Use the custom study as a Dynamic Scan where MarketWatch Alerts can be set.  Use the manual and lookup Dynamic Scans and Alerts for them
+09:36 JAtrader: ok
+# BWD_TrendStrengthMeter ToS Study
+# Author: BigWaveDave
+# Version:  1.7
+# Release Date:  6/27/14
+# No guarantees as to accuracy expressed or implied
+# Use at your own discretion
+# Usage:
+#    Run on any chart... best on 2min and 15min charts, however.
+# 
+# Version 1.7 Changes
+# ===================
+#    + Fixed issue with meter not displaying correctly after another TOS update.
+# Version 1.6 Changes
+#    + Fixed issue with meter not displaying correctly after TOS update.
+# Version 1.5 Changes
+#    + Added another settings option to use a fixed color background for the
+#        ADX value label.  Some people had difficulty reading the value
+#        depending upon their chart background color.  Sadly, I've hit a bug
+#        in TOS and can't make the value editable via the Study Settings.  To
+#        change the fixed background color, you'll need to manually edit the
+#        RGB values below ADXBkgndValueR, ADXBkgndValueG, and ADXBkgndValueB
+# Version 1.4 Changes
+#    + Based on excellent suggestions, modifed to draw ADX value background
+#        in same color as currently active segment.
+# Version 1.3 Changes
+#    + Optionally turn off then meter to view only the ADX value.
+# Version 1.2 Changes
+#    + Added display of ADX value option.
+# Version 1.1 Changes
+#    + Fixed logic error causing dropped segments.
+# Version 1.0 Changes
+#    + Initial release.  Feedback requested.
+input length = 14;
+input ShowADXValue = {DoNotShow, OnLeft, default OnRight};
+input DisplayStrengthMeter = {"No", default "Yes"};
+input FixedValueBkgndColor = {default "No", "Yes"};
+def ADX = DMI(length).ADX;
+def DIBull = DIPlus(length);
+def DIBear = DIMinus(length);
+def BullishTrend = DIBull >= DIBear;
+def ShowDigits;
+switch (ShowADXValue)
+{
+case DoNotShow:
+    ShowDigits = 0;
+case OnLeft:
+    ShowDigits = 1;
+case OnRight:
+    ShowDigits = 2;
+#if DI+ > DI- then trend is bullish
+#if DI- > DI+ then trend is bearish
+#if ADI >= 20 then market is trending
+def HighlightColor =
+    if (ADX >= 50) then 51 else
+    if (ADX >= 40 and ADX < 50) then 51 else    
+    if (ADX >= 30 and ADX < 40) then 102 else    
+    if (ADX >= 20 and ADX < 30) then 153 else    
+    if (ADX >= 10 and ADX < 20) then 204 else    
+    255;
+# default background color for ADX value label.  Can be changed via study settings
+# sadly, I've some sort of color limitation bug in TOS scritping.  To change the
+# background color, you'll need to modify the RGB values below, which means that
+# you unfortunately can't have a different background color for different charts.
+def ADXBkgndValueR = 25;
+def ADXBkgndValueG = 25;
+def ADXBkgndValueB = 25;
+AddLabel(FixedValueBkgndColor and ShowDigits == 1, Floor(ADX), CreateColor(ADXBkgndValueR, ADXBkgndValueG, ADXBkgndValueB));
+AddLabel(!FixedValueBkgndColor and ShowDigits == 1, Floor(ADX), CreateColor(if !BullishTrend then 255 else HighlightColor, if !BullishTrend then HighlightColor else 255 , 51));
+AddLabel(DisplayStrengthMeter and !BullishTrend and (ADX >= 50), " ", CreateColor(255, HighlightColor, 51));
+AddLabel(DisplayStrengthMeter and !(!BullishTrend and (ADX >= 50)), " ", CreateColor(77, 0, 25));
+AddLabel(DisplayStrengthMeter and !BullishTrend and (ADX >= 40 and ADX < 50), " ", CreateColor(255, HighlightColor, 51));
+AddLabel(DisplayStrengthMeter and !(!BullishTrend and (ADX >= 40 and ADX < 50)), " ", CreateColor(77, 0, 0));
+AddLabel(DisplayStrengthMeter and !BullishTrend and (ADX >= 30 and ADX < 40), " ", CreateColor(255, HighlightColor, 51));
+AddLabel(DisplayStrengthMeter and !(!BullishTrend and (ADX >= 30 and ADX < 40)), " ", CreateColor(77, 25, 0));
+AddLabel(DisplayStrengthMeter and !BullishTrend and (ADX >= 20 and ADX < 30), " ", CreateColor(255, HighlightColor, 51));
+AddLabel(DisplayStrengthMeter and !(!BullishTrend and (ADX >= 20 and ADX < 30)), " ", CreateColor(77, 51, 0));
+AddLabel(DisplayStrengthMeter and !BullishTrend and (ADX >= 10 and ADX < 20), " ", CreateColor(255, HighlightColor, 51));
+AddLabel(DisplayStrengthMeter and !(!BullishTrend and (ADX >= 10 and ADX < 20)), " ", CreateColor(77, 77, 0));
+AddLabel(DisplayStrengthMeter and ADX < 10, " ", CreateColor(255, HighlightColor, 51));
+AddLabel(DisplayStrengthMeter and ADX > 10, " ", CreateColor(77, 77, 0));
+AddLabel(DisplayStrengthMeter and BullishTrend and (ADX >= 10 and ADX < 20), " ", CreateColor(HighlightColor, 255, 51));
+AddLabel(DisplayStrengthMeter and !(BullishTrend and (ADX >= 10 and ADX < 20)), " ", CreateColor(77, 77, 0));
+AddLabel(DisplayStrengthMeter and BullishTrend and (ADX >= 20 and ADX < 30), " ", CreateColor(HighlightColor, 255, 51));
+AddLabel(DisplayStrengthMeter and !(BullishTrend and (ADX >= 20 and ADX < 30)), " ", CreateColor(51, 77, 0));
+AddLabel(DisplayStrengthMeter and BullishTrend and (ADX >= 30 and ADX < 40), " ", CreateColor(HighlightColor, 255, 51));
+AddLabel(DisplayStrengthMeter and !(BullishTrend and (ADX >= 30 and ADX < 40)), " ", CreateColor(25, 77, 0));
+AddLabel(DisplayStrengthMeter and BullishTrend and (ADX >= 40 and ADX < 50), " ", CreateColor(HighlightColor, 255, 51));
+AddLabel(DisplayStrengthMeter and !(BullishTrend and (ADX >= 40 and ADX < 50)), " ", CreateColor(0, 77, 0));
+AddLabel(DisplayStrengthMeter and BullishTrend and ADX >= 50, " ", CreateColor(HighlightColor, 255, 51));
+AddLabel(DisplayStrengthMeter and !(BullishTrend and ADX >= 50), " ", CreateColor(0, 77, 25));
+AddLabel(FixedValueBkgndColor and ShowDigits == 2, Floor(ADX), CreateColor(ADXBkgndValueR, ADXBkgndValueG, ADXBkgndValueB));
+AddLabel(!FixedValueBkgndColor and ShowDigits == 2, Floor(ADX), CreateColor(if !BullishTrend then 255 else HighlightColor, if !BullishTrend then HighlightColor else 255 , 51));
