@@ -432,3 +432,172 @@ mid.setpaintingStrategy(paintingStrategy.POINTS);
 mid.setdefaultColor(color.cyan);
 ###   End Code   ##
 08:18 DMonkey: are you changing into your sweater?
+08:21 Mobius: Just about cool enough for one  :)
+08:27 tarbog: thanks guys.  
+08:28 trendman: GM all
+08:29 trendman: Stuck on a scan writing SMA 1 > SMA 2 by $2.00.  Any thoughts?
+08:31 DMonkey: sma1 - sma2 > 2
+08:31 DMonkey: assuming you defined your sma's....
+08:33 trendman: yes, I have defined the SMA
+08:37 trendman: I was trying to get fancy.  Simple works thanks.  Feel silly now!
+08:42 UpTheCreek: well to get fancy sma1 > sma2 + 2
+08:44 DMonkey: sma2 + 2 < sma1
+09:12 Mobius: Bounced right off the lower reach of the implied move. Now it's time to fish or cut bait
+09:27 randykreisel: Help with conditional orders.  I would like to test two conditions with AND.  All my reading says the order wizard only handles OR.  Help Please
+09:28 Vimes: Mobius, i'm not getting the implied probable moves to plot today on /es, has worked like a charm in days past, is there something wrong?
+09:29 AlphaInvestor: Vimes - likely the symbol change messing with you
+09:30 Vimes: well it worked fin last week with the prior update
+09:30 Mobius: The study is working fine.
+09:30 Vimes: must be a data feed problem
+09:33 Vimes: figured it out, i only had it on my 15min chart which i had changed over the weekend to hide ext hours - pbkac error
+09:45 Vimes: ping pong
+09:57 Nube: Alpha did a momersion study and it got me looking for ways to determine market regimes. One of the places I looked was comparing an ETF price to it's asset value using the .NV ticker symbol. It's late to the party but in case it's useful for ETF buyers / traders
+09:57 Nube: 
+# Discount or Premium to Net Asset Value
+#be sure to use .nv
+# Nube 10.21.18
+declare lower;
+    #inputs
+input netAssetValue = "SPY.NV";
+    #variables
+def c = close;
+def nav = close(netAssetValue);
+def discount = nav - c;
+    #plots
+plot 
+discountToNetAssetValue = discount;
+discountToNetAssetValue.AssignValueColor(if   discount < 0
+                                         then Color.DownTick
+                                         else Color.UpTick);
+AddChartBubble(!IsNaN(c) and IsNaN(c[-1]), discount,
+""+GetSymbol()+" disount or premium \nto "+netAssetValue+": "+discount, 
+if discount < 0 then Color.DownTick else Color.UpTick, discount > 0);
+09:58 Nube: Now we need on the masters to show us how to manipulate the string so get it to pull the .NV ticker automatically
+10:03 AlphaInvestor: Nuibe - string concatonation is easy peasy - it is pulling them apart that is impossible
+10:05 Nube: def test = close(GetSymbol()+".NV");
+10:05 Nube: I should have given it one more shot before giving up
+10:07 John1a: When VWAP does not open with the price, is this a bug in TOS? https://www.screencast.com/t/sils0LXI
+10:08 Nube: New and Improved
+# Discount or Premium to Net Asset Value
+#be sure to use .nv
+# Nube 10.21.18
+declare lower;
+    #variables
+def c = close;
+def nav = close(GetSymbol()+".NV");
+def discount = nav - c;
+    #plots
+plot 
+discountToNetAssetValue = discount;
+discountToNetAssetValue.SetDefaultColor(Color.Gray);
+discountToNetAssetValue.AssignValueColor(if   discount < 0
+                                         then Color.DownTick
+                                         else Color.UpTick);
+AddChartBubble(!IsNaN(c) and IsNaN(c[-1]), discount,
+""+GetSymbol()+" disount to\n"+GetSymbol()+".NV: "+discount, 
+if discount < 0 then Color.DownTick else Color.UpTick, discount > 0);
+10:09 AlphaInvestor: der we go
+10:09 John1a: "Normal" VWAP open: https://www.screencast.com/t/rHD5u6q561bG
+10:10 MTS1: John; is that the built-in VWAP? Does not look like it.
+10:11 John1a: MTS1: Yes, built-in, I just did not plot STD bands, just the VWAP
+10:12 John1a: The dashed horizontal line is the built-in VWAP
+10:13 Vimes: what are you plotting, i don't see that on my charts
+10:13 MTS1: have not seen it behave like that John
+10:14 John1a: Does not happen often, but if you do , for example, 60 days, 15 minutes on ES or RTY and scroll to the left, you will see a number of days when it did that
+10:17 Vimes: sorry, i don't see that
+10:19 MTS1: Looks like hte VWAP script uses the VWAP fundamental price value; if you're seeing the wrong 'price' or vwap value it may be a data feed issue on those time aggregations; not sure what days you see them on, are they holidays or other weird gaps?
+10:19 John1a: Here is an exa ple on ES, starting on 09/10/18: https://www.screencast.com/t/qBFpFPnYug
+10:19 MTS1: (uses VWAP and Volume)
+10:23 Vimes: uncheck adjust for contract changes
+10:23 John1a: ITt goes way back, for example, from 08/02/18, past 09/10/18 every day overnight open was like that
+10:23 Vimes: or plot the exact contract
+10:24 Nube: post the script, John1a
+10:25 AlphaInvestor: undoubtedly PEBKAC error
+10:25 John1a: Vimes: Interesting, unchecking fixed it, but isn't suppose to work with a continues contract?
+10:26 John1a: Nube: It is a VWA which is in TOS
+10:26 AlphaInvestor: is Start Aggregaion at Market Open checked?
+10:26 John1a: VWAP
+10:26 Vimes: its something you will never see in real time imo, its only in trying to back correct teh continuous contract, don't know the math behind how they do this
+10:26 John1a: Alpha: No
+10:27 DMonkey: John. Just write your own and initialize from your starting bar. Vwap isn’t hard to calculate.
+10:27 MTS1: I can't replicate it on those dates / times; try it on a different computer John
+10:27 Vimes: they are at minimum two instruments they are trying to blend together so maybe not so easy to make it look seamless
+10:28 Nube: John, what time frame do you ahve selected?
+10:28 John1a: If I uncheck "Adjust for contract changes" it snaps to the Globex open bar and looks correct
+10:29 John1a: Nube: 15 minutes
+10:30 Nube: No tchart aggregation. What time frame do oyu have selected in thte study input?
+10:30 AlphaInvestor: he has DAY selected
+10:30 Nube: I suspect you have day but want something else
+10:31 John1a: Yes, day, no that is what I wanted, Day VWAP that starts at the session open (Globex) and goes till the end of the RTH
+10:32 Nube: You don't get a choice in what time or price it begins calculating at, If you want that you would need to write your own as mentioned by DMonkey above.
+10:33 John1a: What do you mean? Day starts at the rollover line on ES, RTY, etc
+10:34 John1a: If I want it to always start at the rollover line I need to write my own?
+10:35 Nube: I don't know what the study you have up is calculating from and neither do you. Write your own, be sure
+10:37 Vimes: i may no t know either but seems like the solution is to uncheck adjust for contract changes, maybe i'm not seeing what you are seeing
+10:37 John1a: I don't know how to write my own, but I have this
+10:37 John1a: #
+# TD Ameritrade IP Company, Inc. (c) 2011-2018
+#
+
+input numDevDn = -2.0;
+input numDevUp = 2.0;
+input timeFrame = {default DAY, WEEK, MONTH};
+
+def cap = getAggregationPeriod();
+def errorInAggregation =
+    timeFrame == timeFrame.DAY and cap >= AggregationPeriod.WEEK or
+    timeFrame == timeFrame.WEEK and cap >= AggregationPeriod.MONTH;
+assert(!errorInAggregation, "timeFrame should be not less than current chart aggregation period");
+
+def yyyyMmDd = getYyyyMmDd();
+def periodIndx;
+switch (timeFrame) {
+case DAY:
+    periodIndx = yyyyMmDd;
+case WEEK:
+    periodIndx = Floor((daysFromDate(first(yyyyMmDd)) + getDayOfWeek(first(yyyyMmDd))) / 7);
+case MONTH:
+    periodIndx = roundDown(yyyyMmDd / 100, 0);
+}
+def isPeriodRolled = compoundValue(1, periodIndx != periodIndx[1], yes);
+
+def volumeSum;
+def volumeVwapSum;
+def volumeVwap2Sum;
+
+if (isPeriodRolled) {
+    volumeSum = volume;
+    volumeVwapSum = volume * vwap;
+    volumeVwap2Sum = volume * Sqr(vwap);
+} else {
+    volumeSum = compoundValue(1, volumeSum[1] + volume, volume);
+    volumeVwapSum = compoundValue(1, volumeVwapSum[1] + volume * vwap, volume * vwap);
+    volumeVwap2Sum = compoundValue(1, volumeVwap2Sum[1] + volume * Sqr(vwap), volume * Sqr(vwap));
+}
+def price = volumeVwapSum / volumeSum;
+def deviation = Sqrt(Max(volumeVwap2Sum / volumeSum - Sqr(price), 0));
+
+plot VWAP = price;
+plot UpperBand = price + numDevUp * deviation;
+plot LowerBand = price + numDevDn * deviation;
+
+VWAP.setDefaultColor(getColor(0));
+UpperBand.setDefaultColor(getColor(2));
+LowerBand.setDefaultColor(getColor(4));
+10:38 John1a: How would I write my own differently, the code above is from TOS
+10:38 Nube: Try pasting that into a new study. Nobody can duplicate your problem using the stock study. IF the problem persists, contact ToS and let them know about it
+10:40 John1a: If you have Adjust for contract changes checked, you don't see the same thing on ES on 09/10/18?
+10:41 Vimes: i do not
+10:42 John1a: Oh, ok, got it. I'll contact support. Thank you all.
+10:43 Vimes: but unless you are doing some kind of backtesting who cares, teh current vwap will be on the actie contract
+10:45 John1a: Vimes: Yes, I am doing some backtesting
+10:46 JoshuaK: i have a question regarding how TOS references values from studies
+10:46 John1a: How do I force it to start at the rollover line? Without unchecking "Adjust for contract changes" ?
+10:47 Vimes: 9/10 per your request - i don't see the issue
+ 
+10:47 JoshuaK: so lets say i go to Marketwatch>Quotes>customize the tool bar so that it has open close VWAP
+10:47 JoshuaK: the VWAP is close study that has plots
+10:47 JoshuaK: how does the column know to reference the specific value in the study called VWAP
+10:47 John1a: Vimes: Do you have overnight displayed and Adjust for contract changes checked?
+10:48 JoshuaK: the reason i ask because i have someself defined studies, and im  tryingto display only the values, but the study itself plots things. Im just trying to extract the value itself, and display it in a column
+10:49 JohnnyQuotron: The LoungeArchive is current.
