@@ -817,3 +817,92 @@ plot cond = consolidation and breakout;
 14:49 ittechman: Thank you!!!!!!!
 15:04 AlphaInvestor: AMTD beat E, beat R - must be our fine support in this chat room  ;-)
 15:09 Vimes: yeah free lifetime trades all around!!
+15:10 MTS1: ha; don't think that's how they plan to continue beating;)
+15:10 Vimes: it's a trend that's coming, eventually
+15:44 Nube: Flood of new customers since the release of the Fundamental Data to ThinkScript
+15:46 Nube: 1d34: That means idea and that I'm hip. The concept of splitting good volatility from bad volatility - has anyone tried looking at agreement between price and volatility? In other words, if both are up or both are down, that's good volatility.
+15:51 Vimes: i've seen studies between historical and implied volatility, not that i'd want to call one good or bad
+16:06 Vimes: I guess to tie it back to teh FE study if all the volatility is tied to directinoal movement you are going to see the FE move lower in value, versus if the volatility is non directional (bad?) you will see the value rise into chop or "in efficient" action
+16:11 AlphaInvestor: Nube - idk, I was always under the impressions that IV and price went in opposite directions most times.
+16:12 AlphaInvestor: I have done a few correlation studies between HV and IV, both with and without lags (because IV is meant to represent volatiltiy about 1 month out). The correlations are never good.
+16:20 JohnnyQuotron: alpha.. a question or 2 regarding IV?
+16:20 AlphaInvestor: sure
+16:21 JohnnyQuotron: IV is meant to represent volatility a month out?  
+16:21 JohnnyQuotron: Please be more specific, I am not following that.  (not intended to be a trick question) but with the advent of weeklies..
+16:22 AlphaInvestor: IV in TOS uses the same formula that the VIX uses. it is a complex calculation using implied voltiltiies from a number of expirations and is meant to represent the IV approximately 1 month out.
+16:22 AlphaInvestor: http://www.cboe.com/products/vix-index-volatility/vix-options-and-futures/vix-index/the-vix-index-calculation
+16:22 Nube: To me, comparing IV to HV does a pretty good job of proving that what the market agrees is going to happen cannot happen.
+16:23 Nube: Well, totally can but for a reason the market didn't think of.
+16:24 AlphaInvestor: I know a guy who did a study that looked at putting IV bands around price ...and seeing how often the price stayed inside ... that guy was pretty smart
+16:24 AlphaInvestor: that had lags too
+16:25 JohnnyQuotron: follow on question to make certain i understand.... tos IV takes into account multiple futures expirations rather than just the IV of the most current ATM put and call?
+16:26 AlphaInvestor: Here is the generalized (I assume they mean simplified) version of the VIX calculation
+16:27 AlphaInvestor: JQkpa - definitietly, in fact, if closer than 7 days, it ignores the front week volatiltiy altogether I believe
+16:30 JohnnyQuotron: I got curious this afternoon about the Gaussian RSI-L using inputs of 5, 13, 8 versus 8, 13, 4 or whatever.  So I put my Dr. Frankenstein mask on and put this monster together.  http://tos.mx/jclhlG#
+16:32 AlphaInvestor: One requirement with the old VIX calculation was that it couldn�t use options with less than 7 days to expire.
+The CBOE's new calculation always uses options that expire within a week of the VIX's 30 days.
+16:33 JohnnyQuotron: And Tos's IV study has been rewritten to meet that change?  
+16:34 AlphaInvestor: I believe we were told that at one time.  That change was a while back.
+16:34 JohnnyQuotron: thank you.
+16:35 AlphaInvestor: I don't know how they deal with options that only have Monthly's
+16:36 AlphaInvestor: David Kier (the old Mr.Script) was good about telling us about the internal calculations of TOS, but he never let the Market Maker Move (MMM) out of the bag
+16:36 JohnnyQuotron: By the way.. and this is not a solicitation as I am not asking for money.  I am upgrading my x99 motherboards and processors to the x299 series.  If anyone would like the x99 boards and processors for spare parts please let me know.
+16:37 AlphaInvestor: Pop the TOS Imp_Volatiltiy up for an SPX chart.... and add the VIX to t he bottom. You should find them to be indentical
+16:38 JohnnyQuotron: Alpha... I trust your volatility fetish.
+16:39 AlphaInvestor: I haven't tested that in a while
+16:40 MTS1: hm; calling it a fetish after asking for help lol
+16:40 Vimes: bad vix, bad!!
+16:41 JohnnyQuotron: fetish is a gentler term than addiction
+16:41 Nube: Even if they're not exactly identical, I highly doubt they after effectively different.
+16:42 JohnnyQuotron: One can certainly lose big money trading of of either.
+16:42 AlphaInvestor: I have both a fetish, and an addiction to IV
+16:43 JohnnyQuotron: but do you have negative XHB deltas?
+16:46 AlphaInvestor: I probably should, to hedge my small biz
+16:49 JohnnyQuotron: If I were only smart enough to craft a scan to identify trends relative to the SPY like that one.  I'd be ......
+16:57 Ariana3: JohnnyQ: Very nice work, butit seems that price is rarely in a Gaussian distribution.
+17:04 AlphaInvestor: that is Exactly why that study converts to Gaussian first
+17:06 Ariana3: It would be interesting to see it without using arbitrary N numbers, 5, 13, etc. Can it  be done for a daily distribution using VWAP?
+17:08 AlphaInvestor: JQ - my current desktop can be upgraded to any of these 3 processors
+Intel Core i7 4770 (Haswell) 3.4 GHz Quad Core
+Intel Core i7 4770K (Haswell) 3.5 GHz Quad Core
+Intel Core i7 4790 (Haswell) 3.6 GHz Quad Core
+Do we have a match?
+17:12 JohnnyQuotron: is that an x99 board 2011-3 socket?
+17:12 Nube: # attempting to split good and bad volatility
+# first idea
+# Nube 10.22.18
+input n = 20;
+script normalize {
+    input h = high;
+    input l = low;
+    input Length = 20;
+    input AvgPeriod = 2;
+    def ll    = Lowest(l, Length);
+    def cll   = c - ll;
+    def hhll  = Highest(h, Length) - ll;
+    def norm  = if   hhll != 0
+                then Average(cll / hhll, AvgPeriod)
+                else norm[1];
+    plot
+    normalized = norm;
+def p  = hl2;
+def iv = if   !IsNaN(imp_volatility())
+         then imp_volatility()
+         else iv[1];
+def y = normalize(p, p, p, n); # normalized HL2 between 0 - 1
+def nIV = normalize(iv, iv, iv, n); #normalize VixFix betwen 0 - 1
+def ivValue = if   nIV  > nIV [1]
+               then 1
+               else if   nIV  < nIV[1]
+                    then 0
+                    else ivValue[1];
+def priceValue = if   y > y [1]
+                 then 1
+                 else if   y < y[1]
+                      then 0
+                      else priceValue[1];
+plot line = Sum(ivValue == priceValue, n);
+17:13 JohnnyQuotron: Go Nube.  I like volatility in the direction of my deltas
+17:13 Nube: So the notes are from the script I took the snippets out of. That uses IV, not vixfix
+17:14 Nube: Note on that is wrong.
+17:14 slashgw: it's an interesting idea.  
