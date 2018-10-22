@@ -1,1 +1,434 @@
-netflix documentary abortionist doctor
+------- Saturday, October 20, 2018 -------
+15:45 Grasul: def LL = Lowest(low,9);
+def NewLow = if low == LL then 1 else Double.NaN;
+#def ReferenceHigh = if NewLow == 1 then high
+#    else if high > ReferenceHigh then high 
+#    else ReferenceHigh[1];
+#def BullCounter = if NewLow == 1 then 0 
+#    else if high > ReferenceHigh then BullCounter[1]+1 
+#    else BullCounter[1];
+15:46 Grasul: minus the commenting of course, I can't firgure out why ReferenceHigh doesn't ever seem to have a value
+15:46 Grasul: if I plot ReferenceHigh I get nothing
+15:47 JohnnyQuotron: But if you are like me and you look at Gaussian RSI Laguerre as the primary indicator but TMO and Gaussian SMA Crossovers then having a little quick and dirty profit calc on each lower study is reassuring.
+15:56 Nube: grasul, make your reference high tow variables. The first being the high at the ll and the next being for highs above that. Doing that will let you see where the problem is.
+15:56 Grasul: ok, thank you
+15:58 JohnnyQuotron: trying to self-assign a non initialized rec...   do you have a little ! on your chart?
+16:01 JohnnyQuotron: grasul.. please post the fix as I need to learn how to fix that error as well
+16:09 Grasul: will do
+16:30 amalia: Look at Renko study for example
+16:41 MTS1: JQ; I think you can click on the ! to figure out the cause.
+16:46 Grasul: I figured out my issue. The line that read def ReferenceHigh = if NewLow == 1 then 0 else if high > "ReferenceHigh" then high else ReferenceHigh[1];
+16:47 Grasul: The ReferenceHigh in quotes needs to be ReferenceHigh[1], it can't test against itself, it needs to test against the previous bar
+16:48 MTS1: makes sense; good feeling you found it right?
+16:49 Grasul: I don't know about you guys, I consider myself pretty decent at logic chains, but in my coding, its almost always a logic issue
+16:50 Grasul: (once you know the basic syntax)
+16:50 Grasul: squishing bugs is always a good feeling past the initital frustration
+16:50 MTS1: so it is for trading, plus human psycology..
+16:51 MTS1: In scripting helps to know how to debug to see the values you're working with. Or breaking down statemetns smaller to see if the final statement is correct logic.
+16:52 Grasul: yah, I code for at least part of my job for a living (though SQL, not this) so I get lots of practice squishing bugs.  The human part of trading, testing against yourself and figuring what makes yourself tick are for sure the interesting and challenging part.
+16:54 Grasul: in this language, you do so much of the work in the variable definition, I think I'm just going to start by plotting almost all of my variables as I write the code and then remove the variable plots I don't care about once I'm sure they're getting the right answers.  It seems like the best way to debug.
+16:56 MTS1: That probably gets cumbersome once you're somewhat familiar with the syntax, plus you cannot plot recursive variables that reference themselves. But yes that is the right way to debug; if there are many variables I'll debug a section at a time though. (and add plot statements for recursive variables that can easily be commented out again).
+16:57 Grasul: that makes sense, I appreciate the help
+16:57 MTS1: yw
+17:21 amalia: yw
+18:22 Vimes: re: gaps, someting i shared a few months ago to estimate fill % and stats, needs to be on a chart with extended hours hidden and the gap fill stats are based on teh first bar, so to estimate stats based on fill in the first 30mins set the chart to a 30min aggregation, the labels might need to be adjusted or split out for smaller screens
+#vimes - gap stas - chat discussion 2018-07-12
+#only evaulates the first opening bar so set the chart to desired period
+# for evaulation of gap fills in the first opening range of the chart period
+
+declare hide_on_daily;
+
+input mingap = 6; #hint mingap: minimum gap to trade in pts (i.e identify gap trades of at least 6 /es pts or 10 /ym points)
+input maxgap = 60;#hint maxgap: maxium gap to evaulate (filter to not analyze larger moves which might indicate  continuation
+input usethreshold = yes;#hint usethreshold: apply threshold? yes will only consider gaps less than threshold; no will evaulate every gap
+
+def o = if GetYYYYMMDD() > GetYYYYMMDD()[1] then open else o[1];
+def c = if GetYYYYMMDD() > GetYYYYMMDD()[1] then close[1] else c[1];
+
+#helper scripts
+script retrace {
+    input retrace_per = 0.5;
+    input o = open;
+    input c = close;
+    def retracement = if o > c then o - (o - c) * retrace_per else o + (c - o) * retrace_per;
+    plot retrace = retracement;
+}
+
+script guf {
+    input Gap = 1;
+    input tgt = close;
+    plot guf = if Gap and low <= tgt then 1 else 0;
+    plot percfill = totalsum(guf)/totalsum(gap)*100;
+}
+script gdf {
+    input gap = 1;
+    input tgt = close;
+    plot gdf = if gap and high >= tgt then 1 else 0;
+    plot percfill = totalsum(gdf)/totalsum(gap)*100;
+}
+
+script pts {
+    input gf = 1;
+    input tgt = close;
+    plot pts = if gf and open > tgt then open - tgt else if gf and open < tgt then tgt - open else 0;
+    def cnt = TotalSum(gf);
+    plot totpts = totalsum(pts);
+    plot avgpts = totpts / cnt;
+    def exc = if gf and open > tgt then high - open else if gf and open < tgt then open - low else 0;
+    plot avgexc = TotalSum(exc) / cnt;
+    plot maxexc = highestAll(exc);
+
+}
+#retrace levels
+plot retrace100 = retrace(1,o,c);
+plot retrace75 = retrace(0.75,o,c);
+plot retrace50 = retrace(0.5, o, c);
+plot retrace25 = retrace(0.25, o, c);
+def retrace10 = retrace(0.1,o,c);
+
+def newday = GetYYYYMMDD() <> GetYYYYMMDD()[1] ; #only analyzing the first bar of the day based on the chart period
+def GapUP = if o > c and newday and usethreshold and o-c>=mingap and o-c<=maxgap then 1
+    else if o > c and newday and !usethreshold then 1 else 0;  
+def GapDN = if o < c and newday and usethreshold and c-o>mingap and c-o<=maxgap then 1
+    else if O < c and newday and !usethreshold then 1 else 0;
+
+def cntGapUpDays = TotalSum(GapUP);
+def cntGapDnDays = TotalSum(GapDN);
+#50% retrace
+#def guf50 = if GapUP and low <= retrace50 then 1 else 0;
+def guf100 = guf(gapup,retrace100);
+def guf75 = guf(gapup,retrace75);
+def guf50 = guf(gapup,retrace50);
+def guf25 = guf(gapup,retrace25);
+def guf10 = guf(gapup,retrace10);
+
+def gdf100 = gdf(gapdn,retrace100);
+def gdf75 = gdf(gapdn,retrace75);
+def gdf50 = gdf(gapdn,retrace50);
+def gdf25 = gdf(gapdn,retrace25);
+def gdf10 = gdf(gapdn,retrace10);
+
+def pguf100 = guf(gapup,retrace100).percfill;
+def pguf75 = guf(gapup,retrace75).percfill;
+def pguf50 = guf(gapup,retrace50).percfill;
+def pguf25 = guf(gapup,retrace25).percfill;
+
+def pgdf100 = gdf(gapdn,retrace100).percfill;
+def pgdf75 = gdf(gapdn,retrace75).percfill;
+def pgdf50 = gdf(gapdn,retrace50).percfill;
+def pgdf25 = gdf(gapdn,retrace25).percfill;
+
+def ptsguf100 = pts(guf100, retrace100);
+def totptsguf100 = pts(guf100, retrace100).totpts;
+def avgptsguf100 = pts(guf100, retrace100).avgpts;
+def avgexcguf100 = pts(guf100, retrace100).avgexc;
+def maxexcguf100 = pts(guf100, retrace100).maxexc;
+
+def ptsguf75 = pts(guf75, retrace75);
+def totptsguf75 = pts(guf75, retrace75).totpts;
+def avgptsguf75 = pts(guf75, retrace75).avgpts;
+def avgexcguf75 = pts(guf75, retrace75).avgexc;
+def maxexcguf75 = pts(guf75, retrace75).maxexc;
+
+def ptsguf50 = pts(guf50, retrace50);
+def totptsguf50 = pts(guf50, retrace50).totpts;
+def avgptsguf50 = pts(guf50, retrace50).avgpts;
+def avgexcguf50 = pts(guf50, retrace50).avgexc;
+def maxexcguf50 = pts(guf50, retrace50).maxexc;
+
+def ptsguf25 = pts(guf25, retrace25);
+def totptsguf25 = pts(guf25, retrace25).totpts;
+def avgptsguf25 = pts(guf25, retrace25).avgpts;
+def avgexcguf25 = pts(guf25, retrace25).avgexc;
+def maxexcguf25 = pts(guf25, retrace25).maxexc;
+
+def ptsgdf100 = pts(gdf100, retrace100);
+def totptsgdf100 = pts(gdf100, retrace100).totpts;
+def avgptsgdf100 = pts(gdf100, retrace100).avgpts;
+def avgexcgdf100 = pts(gdf100, retrace100).avgexc;
+def maxexcgdf100 = pts(gdf100, retrace100).maxexc;
+
+def ptsgdf75 = pts(gdf75, retrace75);
+def totptsgdf75 = pts(gdf75, retrace75).totpts;
+def avgptsgdf75 = pts(gdf75, retrace75).avgpts;
+def avgexcgdf75 = pts(gdf75, retrace75).avgexc;
+def maxexcgdf75 = pts(gdf75, retrace75).maxexc;
+
+def ptsgdf50 = pts(gdf50, retrace50);
+def totptsgdf50 = pts(gdf50, retrace50).totpts;
+def avgptsgdf50 = pts(gdf50, retrace50).avgpts;
+def avgexcgdf50 = pts(gdf50, retrace50).avgexc;
+def maxexcgdf50 = pts(gdf50, retrace50).maxexc;
+
+
+def ptsgdf25 = pts(gdf25, retrace25);
+def totptsgdf25 = pts(gdf25, retrace25).totpts;
+def avgptsgdf25 = pts(gdf25, retrace25).avgpts;
+def avgexcgdf25 = pts(gdf25, retrace25).avgexc;
+def maxexcgdf25 = pts(gdf25, retrace25).maxexc;
+
+
+#check ladder to ladder as potential lower risk trade
+def p10to25up = totalsum(guf25)/totalsum(guf10 or guf25)*100;
+def p25to50up = totalsum(guf50)/totalsum(guf25 or guf50)*100;
+def p50to75up = totalsum(guf75)/totalsum(guf50 or guf75)*100;
+def p75to100up = totalsum(guf100)/totalsum(guf75 or guf100)*100;
+
+def p10to25dn = totalsum(gdf25)/totalsum(gdf10 or gdf25)*100;
+def p25to50dn = totalsum(gdf50)/totalsum(gdf25 or gdf50)*100;
+def p50to75dn = totalsum(gdf75)/totalsum(gdf50 or gdf75)*100;
+def p75to100dn = totalsum(gdf100)/totalsum(gdf75 or gdf100)*100;
+
+def prof10to25dn = if gdf10 and gdf25 then retrace25-retrace10 else 0;
+def prof25to50dn = if gdf25 and gdf50 then retrace50-retrace25 else 0;
+def prof50to75dn = if gdf50 and gdf75 then retrace75-retrace50 else 0;
+def prof75to100dn = if gdf75 and gdf100 then retrace100-retrace75 else 0;
+
+def prof10to25up = if guf10 and guf25 then retrace10-retrace25 else 0;
+def prof25to50up = if guf25 and guf50 then retrace25 - retrace50 else 0;
+def prof50to75up = if guf50 and guf75 then retrace50 - retrace75 else 0;
+def prof75to100up = if guf75 and guf100 then retrace75 - retrace100 else 0;
+
+def c25u = totalsum(guf25);
+def c50u = totalsum(guf50);
+def c75u = totalsum(guf75);
+def c100u = totalsum(guf100);
+
+def ldr10to25up = totalsum(prof10to25up)/c25u;
+def ldr25to50up = totalsum(prof25to50up)/c50u;
+def ldr50to75up = totalsum(prof50to75up)/c75u;
+def ldr75to100u = totalsum(prof75to100up)/c100u;
+
+def c25d = totalsum(gdf25);
+def c50d = totalsum(gdf50);
+def c75d = totalsum(gdf75);
+def c100d = totalsum(gdf100);
+
+def ldr10to25dn = totalsum(prof10to25dn)/c25d;
+def ldr25to50dn = totalsum(prof25to50dn)/c50d;
+def ldr50to75dn = totalsum(prof50to75dn)/c75d;
+def ldr75to100d = totalsum(prof75to100dn)/c100d;
+
+addlabel(!usethreshold,"Considering all gaps at the open there are a total of up/down gaps =, "
+  + astext(cntGapUpDays) + "/" +  astext(cntgapdndays)
+    ,color.cyan);
+
+addlabel(usethreshold,"Considering min/max gaps at the open of: " + astext(mingap) + "/" + astext(maxgap) 
+    +", there are a total up/down gaps = " + astext(cntGapUpDays) + "/" +  astext(cntgapdndays)
+    ,color.cyan);
+
+AddLabel(yes, "Gap up and probability of 100/75/50/25% retrace on the first bar, "
+    + astext(pguf100) + " / " + astext(pguf75) + " / " + astext(pguf50) +  " / " + astext(pguf25)
+    + "%, Avg pts: " + AsText(avgptsguf100)  + " / " + AsText(avgptsguf75) + " / " + AsText(avgptsguf50) + " / " + AsText(avgptsguf25)
+    + " Total pts: " + astext(totptsguf100) + " / " + astext(totptsguf75) + " / " + astext(totptsguf50) + " / " + astext(totptsguf25)
+    + ", Avg negative excursion on winning trades: " + AsText(avgexcguf100) + "/" + AsText(avgexcguf75) + "/" + AsText(avgexcguf50) + "/" + AsText(avgexcguf25) 
+    + ", Max Neg Excursion: " + AsText(maxexcguf100)
+             , color = Color.yellow);
+
+AddLabel(yes, "Gap down and probability of 100/75/50/25% retrace on first bar, "
+    + astext(pgdf100) + " / " + astext(pgdf75) + " / " + astext(pgdf50) +  " / " + astext(pgdf25)
+    + "%, Avg pts: " + AsText(avgptsgdf100)  + " / " + AsText(avgptsgdf75) + " / " + AsText(avgptsgdf50) + " / " + AsText(avgptsgdf25)
+    + " Total pts: " + astext(totptsgdf100) + " / " + astext(totptsgdf75) + " / " + astext(totptsgdf50) + " / " + astext(totptsgdf25)
+    + ", Avg negative excursion on winning trades: " + AsText(avgexcgdf100) + "/" + AsText(avgexcgdf75) + "/" + AsText(avgexcgdf50) + "/" + AsText(avgexcgdf25) 
+    + ", Max Neg Excursion: " + AsText(maxexcgdf100)
+             , color = Color.lime);
+
+addlabel(yes,"Probability of 10/25, 25/50, 50/75, 75/100 ladder moves on a gap up (SELL): " 
+    + astext(p10to25up) + "/" + astext(p25to50up) + "/" + astext(p50to75up) + "/" + astext(p75to100up) + "%"
+    + ",AvgWin: " + astext(ldr10to25dn) + " / "+  astext(ldr25to50dn) + " / "+  astext(ldr50to75dn) + " / "+  astext(ldr75to100d)
+,color.light_red);
+
+addlabel(yes,"Probability of 10/25, 25/50, 50/75, 75/100 ladder moves on a gap down (BUY): " 
+    + astext(p10to25dn) + "/" + astext(p25to50dn) + "/" + astext(p50to75dn) + "/" + astext(p75to100dn) + "%"
+    + ",Avg win: " +  astext(ldr10to25up) + " / "+  astext(ldr25to50up) + " / "+  astext(ldr50to75up) + " / "+  astext(ldr75to100u) ,color.green);
+
+
+
+
+18:42 UpTheCreek: guess that's what you call a simple script  ;)
+18:51 cajun: Vimes, thankyou for post... interesting measures in there, like minimum negative excursion on winning trades.  i looked back at the july buffer you referenced, i see only few comments on gaps. 
+18:51 cajun: could you say more about it
+18:55 Vimes: That is the distance the bar went away from the target.  I can't see inside the 30min bar for example to say which occurs first but assumes you would have to sit through potentially that excusion to get the risk off on the target retracement level, it maybe gives some calibration for the amount of risk tolerance you would have to give
+18:59 Vimes: to do something more precise we would have to build a shorter time frame study, say 5min cancles, and analyze the actual intraday bars, i wanted to avoid that so went with something that is more of a guide
+19:04 cajun: yep... a conservative eastimate.. sounds like then a worst case estimate?... since youre using the full length of the excursion .   and that means " avg win"  is a conservative underestimate of the same propirtion? 
+19:06 Vimes: yes that is only the amount of positive expectancy on each ladder doesn't not net out a stop loss or whatever
+19:09 cajun: im awed by the systematized step by step calculations .. will take me alot more code learning to fully understand.   seems like the math should be useful for extracting to other estimates.  nice work
+19:15 Vimes: well thanks, not a coder, but can fake it every now and then
+19:19 cajun: ha!
+19:19 cajun: g.n. folks! all sweet dreams
+19:21 Brad952: gn
+19:22 MTS1: thanks TCuls!
+19:23 Nube: Nice work, Vimes!
+19:23 Vimes: ty
+19:25 Vimes: Some typical observations on gap fills, i usually when you start to retrace to certain levels the probabiliy improves that you will close the full gap, this is similar to background on pivot points as well, this doesn't mean price has to do anything but just to be aware that once gaps start to retrace, there is positive expactancy that they will continue, so combined with other indicators can give some good trades, some also look at market internals at the open, tick, volume etc. to further screen gap fills
+19:25 MTS1: a little long to read on my phone;) will check it out though, thanks for sharing!
+19:26 slashgw: here is another study for gap fills if you have interest to check it out.  I did not write it.  it is from BigWaveDave http://tos.mx/uJmNWN#
+19:27 MTS1: if it does not retrace though Vimes, higher possibility of a trend day for example
+19:29 slashgw: it can be a trend day, till it turns and fills the gap ;)
+19:30 MTS1: trend days oscillators don't work well & you should just get in when it pulls back to ma or trend line
+19:31 slashgw: gap fill level is often a good entry location after it fills
+19:32 slashgw: even if not on the same day
+19:33 Vimes: Yes there are some theories that all gaps eventually fill with some high probability, but i have no data on that
+19:33 slashgw: https://screencast.com/t/JfV5FBouM
+19:34 slashgw: and the next one to look at on ES should be in the 2753 area
+19:35 MTS1: I can see it's a natural SR level cuz people wish they bought at that point, jumping in when it gets back to that level
+19:35 MTS1: *SR area
+19:36 slashgw: https://screencast.com/t/3YqKK7TleIdJ
+19:37 slashgw: well, imo, it's because of not getting left behind.
+19:37 Vimes: that's the study you shared last week?
+19:37 Vimes: or so
+19:38 slashgw: the one in screencast  just showing the horizontal purple lines, yes.
+19:39 slashgw: http://tos.mx/fubvrS#
+19:40 Vimes: thx
+19:42 G3_: nice charting slashgw
+19:43 slashgw: with regard to ES, any gap greater than 10 points in either direction is considered a "pro gap & go", so odds are obviously much less to immediately fill.  then tend to just keep trading away, but when a trading setup does break, then typically the gap level will become the target.  But within that 10 point or less gap, odds of gapfill can be quite good.  as always, anything is possible though.
+19:43 slashgw: thanks G3
+19:46 Vimes: There was a trade setup proposed by noble, that related to overnight trade that exceeded the maintenance margin, the idea if the gap was that large folks woudl immediately cover causing a short burst of trade continuing
+19:46 slashgw: ah, interesting theory.  thanks.
+19:48 Ariana3: I've heard about a maintenance margin strategy before. Sounds interesting, do you guys have a strategy or an indicator for it?
+19:49 G3_: a 10 point + gap?
+19:50 G3_: seems it would have to be +15 to rattle thoses cages.
+19:51 Ariana3: Yes, by Noble in a book The Trader's Edge, that is where I've read it.
+19:51 Vimes: you would have to look at the contract specs, i think its something like 22 points on nq
+19:51 Vimes: ^arana correct
+19:51 G3_: I was referring to /es
+19:51 Nube: 5000 worth of gap seems like it might be enough to spook margins and blow through a ot of stops so I can believe that
+19:52 Nube: Traders are concerned, price continues because of covering and they bail out. Can see it.
+19:52 Nube: arithmetic was never my strong suit
+19:53 Nube: or reading or writing
+19:53 slashgw: yeah, can def see it.  just never thought about it from that perspective.  always looked at it from a FOMO perspective.
+19:53 slashgw: napping is my strong suit
+19:53 slashgw: oh, and recess
+19:54 Nube: Now we gotta make an overnight margin trouble script
+19:54 slashgw: that could become an important one soon :)
+19:55 Ariana3: He calls it "the Initial-Maintenance Opening Rule"
+19:56 Vimes: i can't find my book, so don't recall the full details
+19:56 Vimes: i think its the delta between the initial and maintenacne margin
+19:56 Vimes: which maybe could vary by futures broker
+19:56 Ariana3: I have it, hold on
+19:57 G3_: when and if margin req are raised.  They are sure as hell not going to be lowered anytime soon. fwiw
+19:58 Vimes: i recall the language in teh book being kind of murky, it was a bit dated
+19:58 Ariana3: https://www.screencast.com/t/l7tiQglmX1
+20:00 admin_tculs: gn all
+20:00 Vimes: gn
+20:00 G3_: good eve tculs
+20:00 G3_: and all
+20:00 Ariana3: gn TC
+20:00 slashgw: gn tculs & all
+------- Monday, October 22, 2018 -------
+05:44 Lippy1m: Hello I am looking to do a simple scan with the relative strength of a stock crossing below the SPX and although I can get that to show up on my charts, I am having a hard time configuring a scan for the same.  Can anybody help me out please?
+07:14 chief: Lippy, try this...note that I am not a scripter...
+input length = 63;
+def IWMPctChg = (close( period = "Day") / close( period = "Day")[length]) - 1;
+
+
+def SPYPctChg = (close("SPY", period = "Day") / close("SPY", period = "Day")[length]) - 1;
+
+def rs =  100*(IWMPctChg - SPYPctChg);
+
+def rsSPX = rs;
+#plot crossup = rs>0 and rs[1]<0;
+plot crossdn = rs<0 and rs[1]>0;
+
+07:15 chief: Wait, cannot have sec aggs in scan
+07:16 chief: Try this....
+input length = 63;
+def IWMPctChg = (close / close[length]) - 1;
+
+
+def SPYPctChg = (close("SPY") / close("SPY")[length]) - 1;
+
+def rs =  100*(IWMPctChg - SPYPctChg);
+
+def rsSPX = rs;
+#plot crossup = rs>0 and rs[1]<0;
+plot crossdn = rs<0 and rs[1]>0;
+07:45 chief: One last time hopefully...
+input length = 63;
+def  PctChg = (close / close[length]) - 1;
+
+
+def SPYPctChg = (close("SPY") / close("SPY")[length]) - 1;
+
+def rs =  100*(PctChg - SPYPctChg);
+
+def rsSPX = rs;
+#plot crossup = rs>0 and rs[1]<0;
+plot crossdn = rs<0 and rs[1]>0;
+07:47 JohnnyQuotron: Good morning thinkScript Lounge.
+07:55 chief: GM, I think I scared Lippy away ,lol. I think TDA reports today
+08:02 tarbog: hello, i have a simple script to draw the days mid point that just shows a horizontal line that move as new highs and lows are made.� how would i add a time factor to it to make it more like the vwap or a moving average that would track the mid point of the day to that time and leave that plot there and adjust through out the day so you could see where the mid point of the day was at any time of the day.    
+08:08 Mobius: get the barNumber() at time and hold that value as the plot
+08:12 Mobius: Example:
+
+def time = if SecondsTillTime(0930) == 0
+                  then barNumber()
+                 else double.nan;
+def price = if !isNaN(time)
+                   then hl2
+                  else price[1];
+plot lineAtTime = if barNumber() >= HighestAll(time)
+                              then highestAll(if isNaN(close[-1])
+                                                        then price
+                                                        else double.nan)
+                             else double.nan;
+08:13 Mobius: For more examples go to Mobius on MyTrade
+08:13 chief: There is a built in study HighLowMA that may work for you also
+08:13 chief: Midle high low MA
+08:15 Mobius: +1% Globex range with avg volume. Should be a good trading range today.
+08:16 Mobius: BTW -  Good morning all
+08:16 UpTheCreek: GM
+08:16 DMonkey: morning....
+08:17 Mobius: Feel like Mr Rogers this morning. It's a beautiful day in the neighborhood
+08:17 DMonkey: ###   tarbog chat request   ###
+###   Chat Request Highest High RTH // Lowest Low RTH   ###
+###   DMonkey 11/12/2016   ###
+###   Plots from Market Open to Market Close   ###
+input market_open = 0930;
+def   h = high;
+def l = low;
+input Duration_In_Hours = 6.5;
+def   Market_Duration = Duration_In_Hours * 60 * 60; 
+def   Go_Time = secondsFromTime(market_open);
+def   openhigh = if Go_Time == 0 
+                 then h
+                 else if h > openhigh[1]
+                 then h
+                 else openhigh[1];
+
+plot   data =    
+                 if Go_Time >= 0 
+                 && go_Time <= market_Duration
+                 then highestall(if isnan(close[-1]) then openhigh else double.nan)
+                 else double.nan;
+data.setpaintingStrategy(PaintingStrategy.DASHES);
+data.setdefaultColor(Color.YELLOW);
+data.setlineWeight(3);
+
+def openlow = if Go_Time == 0
+              then l
+              else if  l < openlow[1]
+              then l
+              else openlow[1];
+
+plot data2 =     if Go_Time >= 0 
+                 && go_Time <= market_Duration
+                 then highestall(if isnan(close[-1]) then openlow else double.nan)
+                 else double.nan
+                ;
+data2.setpaintingStrategy(PaintingStrategy.DASHES);
+data2.setdefaultColor(Color.MAGENTA);
+data2.setlineWeight(3);
+
+###   Added Alerts // Chat Room Request ###
+###   7/20/2017   ###
+alert(high > openhigh[1],"New Intraday High", Alert.BAR, Sound.Ring);
+alert(low < openlow[1],"New Intraday Low", Alert.BAR, Sound.Bell);
+###   10.22.2018   ###
+###   Chat Request Tarbog   ###
+###   Added HL2   ###
+plot mid = (openhigh + openlow) * .5;
+mid.setpaintingStrategy(paintingStrategy.POINTS);
+mid.setdefaultColor(color.cyan);
+###   End Code   ##
+08:18 DMonkey: are you changing into your sweater?
