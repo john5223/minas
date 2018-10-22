@@ -771,3 +771,49 @@ Ichimoku()."Kijun" crosses above MAX(Ichimoku()."Span A", Ichimoku()."Span B")
 12:37 Nube: Fair question, Vimes. Sort of wonder the same about FB as well.
 12:38 Vimes: i think the secotr is getting a lift because funds have to then put there money in the other names, maybe?
 12:38 Nube: It's not a new thing so I imagine Funds have been positioning for a long time
+13:24 JohnnyQuotron: Mobius/Vimes.. I just read your FE PFE exchange for the third time.  How do I get my eyes uncrossed ?  Where is the Dramamine?  But if there is something there for investors.. can you dumb it down for me a bit please...
+13:26 Vimes: i think for investors ignore both and buy AAPL?
+13:27 Nube: Not trying to pretend I understand  fractals, polarizing stuffs or efficiency, but doesn't the cross of zero make more sense than using an EMA?
+13:29 Nube: AAPL has had a bit too much volatility up here for my tastes. Not touching it.
+13:30 Nube: But certainly wouldn't short a cash machine that has a heretofore untouchable lead position in brand and product quality
+13:30 Vimes: it maybe is the last mand standing but one of the few holding the quarter, if it goes we might be in trouble
+13:31 Nube: With AAPL being like 6 percent of the index or whatever, if it goes the index doesn't have a choice
+13:44 Nube: I haven't figured out what it is yet, but there is something about stock price behavior around earnings that causes those tickers to come up in my scans more often
+14:12 Nube: See y'all later. Time to get some sunshine.
+14:14 JohnnyQuotron: Nube... thanks a million.  Enjoy your afternoon.
+14:14 ittechman: How do I create a stock scan that finds stocks that are trading in a range? Thank you!
+14:19 MTS1: IT; what range?
+14:21 ittechman: Lets say from 90.00 to 100.00 as an exammple..
+14:21 MTS1: Dollars?
+14:21 Farmin: for how long?
+14:21 MTS1: you can type that directly in the scanner
+14:23 MTS1: Look up the chapber on stock hacker in the tutorials in tlc.thinkorswim.com
+14:24 MTS1: add filter for stock - close - set min and max.
+14:24 Vimes: Mobius had a great scan that id's stocks in a range, let me see if i can find it, there are also several methods to do this, without a specifying a price range
+14:26 MTS1: Depends on what he is looking for.
+14:26 ittechman: VImes, yes that would be much better, to be able to do it without specifyng a range!!!! That is exactly what I am looking for!
+14:27 MTS1: It depends how you define a range; many TA ways of doing this. You can look for BB contractoin, ADX, ECI, Fractal Pivots, and I'm sure there's more;)
+14:27 Vimes: This should id stocks trading in a consolidatino pattern:
+# Consolidation Scan
+# 5.2.2017
+# If you want  relatively short term consolidation leave the 
+# lengths at 10 and use a daily scan. For a bit more consolidation 
+# make lengths 13 and if you want equities that have been in 
+# consolidation for a long time use a monthly scan
+ (Log(Sum(Max(high, close[1]) - Min(low, close[1]), 10) / 
+     (Highest(high, 10) - Lowest(low, 10))) / 
+      Log(10)) > .7
+14:27 ittechman: There are some stocks that trade in a range over and over again, that scan will be a wonderful tool!!!!!!!
+14:27 Farmin: you always have to specify a range, even with that code
+14:28 Vimes: Another one that i used in the past is the aroon oscillator
+def consolidation = (AroonIndicator() < 30 and AroonIndicator().Down < 30) within 6 bars;
+def breakout = sum(AroonIndicator(),3)> 3*90 and aroonIndicator().down < 30;
+plot cond = consolidation and breakout;
+14:28 Farmin: if you don't understand the range part of that code, get out a calculator
+14:32 ittechman: Thank you all VERY MUCH!!!!!!!
+14:41 ittechman: Are there other scans, like for stock that are just breaking out after a consolidation?
+14:43 Vimes: i'm sure there are dozens of options, you can look at some of the linear channel breakouts that are built ino the scanner already as an example
+14:43 Vimes: you can look fro break of prior highs, on an on
+14:49 ittechman: Thank you!!!!!!!
+15:04 AlphaInvestor: AMTD beat E, beat R - must be our fine support in this chat room  ;-)
+15:09 Vimes: yeah free lifetime trades all around!!
