@@ -37,14 +37,11 @@ def NewLow = if low == LL then 1 else Double.NaN;
 # for evaulation of gap fills in the first opening range of the chart period
 
 declare hide_on_daily;
-
 input mingap = 6; #hint mingap: minimum gap to trade in pts (i.e identify gap trades of at least 6 /es pts or 10 /ym points)
 input maxgap = 60;#hint maxgap: maxium gap to evaulate (filter to not analyze larger moves which might indicate  continuation
 input usethreshold = yes;#hint usethreshold: apply threshold? yes will only consider gaps less than threshold; no will evaulate every gap
-
 def o = if GetYYYYMMDD() > GetYYYYMMDD()[1] then open else o[1];
 def c = if GetYYYYMMDD() > GetYYYYMMDD()[1] then close[1] else c[1];
-
 #helper scripts
 script retrace {
     input retrace_per = 0.5;
@@ -53,23 +50,17 @@ script retrace {
     def retracement = if o > c then o - (o - c) * retrace_per else o + (c - o) * retrace_per;
     plot retrace = retracement;
 }
-
 script guf {
     input Gap = 1;
     input tgt = close;
     plot guf = if Gap and low <= tgt then 1 else 0;
     plot percfill = totalsum(guf)/totalsum(gap)*100;
-}
 script gdf {
     input gap = 1;
-    input tgt = close;
     plot gdf = if gap and high >= tgt then 1 else 0;
     plot percfill = totalsum(gdf)/totalsum(gap)*100;
-}
-
 script pts {
     input gf = 1;
-    input tgt = close;
     plot pts = if gf and open > tgt then open - tgt else if gf and open < tgt then tgt - open else 0;
     def cnt = TotalSum(gf);
     plot totpts = totalsum(pts);
@@ -77,21 +68,17 @@ script pts {
     def exc = if gf and open > tgt then high - open else if gf and open < tgt then open - low else 0;
     plot avgexc = TotalSum(exc) / cnt;
     plot maxexc = highestAll(exc);
-
-}
 #retrace levels
 plot retrace100 = retrace(1,o,c);
 plot retrace75 = retrace(0.75,o,c);
 plot retrace50 = retrace(0.5, o, c);
 plot retrace25 = retrace(0.25, o, c);
 def retrace10 = retrace(0.1,o,c);
-
 def newday = GetYYYYMMDD() <> GetYYYYMMDD()[1] ; #only analyzing the first bar of the day based on the chart period
 def GapUP = if o > c and newday and usethreshold and o-c>=mingap and o-c<=maxgap then 1
     else if o > c and newday and !usethreshold then 1 else 0;  
 def GapDN = if o < c and newday and usethreshold and c-o>mingap and c-o<=maxgap then 1
     else if O < c and newday and !usethreshold then 1 else 0;
-
 def cntGapUpDays = TotalSum(GapUP);
 def cntGapDnDays = TotalSum(GapDN);
 #50% retrace
@@ -101,122 +88,97 @@ def guf75 = guf(gapup,retrace75);
 def guf50 = guf(gapup,retrace50);
 def guf25 = guf(gapup,retrace25);
 def guf10 = guf(gapup,retrace10);
-
 def gdf100 = gdf(gapdn,retrace100);
 def gdf75 = gdf(gapdn,retrace75);
 def gdf50 = gdf(gapdn,retrace50);
 def gdf25 = gdf(gapdn,retrace25);
 def gdf10 = gdf(gapdn,retrace10);
-
 def pguf100 = guf(gapup,retrace100).percfill;
 def pguf75 = guf(gapup,retrace75).percfill;
 def pguf50 = guf(gapup,retrace50).percfill;
 def pguf25 = guf(gapup,retrace25).percfill;
-
 def pgdf100 = gdf(gapdn,retrace100).percfill;
 def pgdf75 = gdf(gapdn,retrace75).percfill;
 def pgdf50 = gdf(gapdn,retrace50).percfill;
 def pgdf25 = gdf(gapdn,retrace25).percfill;
-
 def ptsguf100 = pts(guf100, retrace100);
 def totptsguf100 = pts(guf100, retrace100).totpts;
 def avgptsguf100 = pts(guf100, retrace100).avgpts;
 def avgexcguf100 = pts(guf100, retrace100).avgexc;
 def maxexcguf100 = pts(guf100, retrace100).maxexc;
-
 def ptsguf75 = pts(guf75, retrace75);
 def totptsguf75 = pts(guf75, retrace75).totpts;
 def avgptsguf75 = pts(guf75, retrace75).avgpts;
 def avgexcguf75 = pts(guf75, retrace75).avgexc;
 def maxexcguf75 = pts(guf75, retrace75).maxexc;
-
 def ptsguf50 = pts(guf50, retrace50);
 def totptsguf50 = pts(guf50, retrace50).totpts;
 def avgptsguf50 = pts(guf50, retrace50).avgpts;
 def avgexcguf50 = pts(guf50, retrace50).avgexc;
 def maxexcguf50 = pts(guf50, retrace50).maxexc;
-
 def ptsguf25 = pts(guf25, retrace25);
 def totptsguf25 = pts(guf25, retrace25).totpts;
 def avgptsguf25 = pts(guf25, retrace25).avgpts;
 def avgexcguf25 = pts(guf25, retrace25).avgexc;
 def maxexcguf25 = pts(guf25, retrace25).maxexc;
-
 def ptsgdf100 = pts(gdf100, retrace100);
 def totptsgdf100 = pts(gdf100, retrace100).totpts;
 def avgptsgdf100 = pts(gdf100, retrace100).avgpts;
 def avgexcgdf100 = pts(gdf100, retrace100).avgexc;
 def maxexcgdf100 = pts(gdf100, retrace100).maxexc;
-
 def ptsgdf75 = pts(gdf75, retrace75);
 def totptsgdf75 = pts(gdf75, retrace75).totpts;
 def avgptsgdf75 = pts(gdf75, retrace75).avgpts;
 def avgexcgdf75 = pts(gdf75, retrace75).avgexc;
 def maxexcgdf75 = pts(gdf75, retrace75).maxexc;
-
 def ptsgdf50 = pts(gdf50, retrace50);
 def totptsgdf50 = pts(gdf50, retrace50).totpts;
 def avgptsgdf50 = pts(gdf50, retrace50).avgpts;
 def avgexcgdf50 = pts(gdf50, retrace50).avgexc;
 def maxexcgdf50 = pts(gdf50, retrace50).maxexc;
-
-
 def ptsgdf25 = pts(gdf25, retrace25);
 def totptsgdf25 = pts(gdf25, retrace25).totpts;
 def avgptsgdf25 = pts(gdf25, retrace25).avgpts;
 def avgexcgdf25 = pts(gdf25, retrace25).avgexc;
 def maxexcgdf25 = pts(gdf25, retrace25).maxexc;
-
-
 #check ladder to ladder as potential lower risk trade
 def p10to25up = totalsum(guf25)/totalsum(guf10 or guf25)*100;
 def p25to50up = totalsum(guf50)/totalsum(guf25 or guf50)*100;
 def p50to75up = totalsum(guf75)/totalsum(guf50 or guf75)*100;
 def p75to100up = totalsum(guf100)/totalsum(guf75 or guf100)*100;
-
 def p10to25dn = totalsum(gdf25)/totalsum(gdf10 or gdf25)*100;
 def p25to50dn = totalsum(gdf50)/totalsum(gdf25 or gdf50)*100;
 def p50to75dn = totalsum(gdf75)/totalsum(gdf50 or gdf75)*100;
 def p75to100dn = totalsum(gdf100)/totalsum(gdf75 or gdf100)*100;
-
 def prof10to25dn = if gdf10 and gdf25 then retrace25-retrace10 else 0;
 def prof25to50dn = if gdf25 and gdf50 then retrace50-retrace25 else 0;
 def prof50to75dn = if gdf50 and gdf75 then retrace75-retrace50 else 0;
 def prof75to100dn = if gdf75 and gdf100 then retrace100-retrace75 else 0;
-
 def prof10to25up = if guf10 and guf25 then retrace10-retrace25 else 0;
 def prof25to50up = if guf25 and guf50 then retrace25 - retrace50 else 0;
 def prof50to75up = if guf50 and guf75 then retrace50 - retrace75 else 0;
 def prof75to100up = if guf75 and guf100 then retrace75 - retrace100 else 0;
-
 def c25u = totalsum(guf25);
 def c50u = totalsum(guf50);
 def c75u = totalsum(guf75);
 def c100u = totalsum(guf100);
-
 def ldr10to25up = totalsum(prof10to25up)/c25u;
 def ldr25to50up = totalsum(prof25to50up)/c50u;
 def ldr50to75up = totalsum(prof50to75up)/c75u;
 def ldr75to100u = totalsum(prof75to100up)/c100u;
-
 def c25d = totalsum(gdf25);
 def c50d = totalsum(gdf50);
 def c75d = totalsum(gdf75);
 def c100d = totalsum(gdf100);
-
 def ldr10to25dn = totalsum(prof10to25dn)/c25d;
 def ldr25to50dn = totalsum(prof25to50dn)/c50d;
 def ldr50to75dn = totalsum(prof50to75dn)/c75d;
 def ldr75to100d = totalsum(prof75to100dn)/c100d;
-
 addlabel(!usethreshold,"Considering all gaps at the open there are a total of up/down gaps =, "
   + astext(cntGapUpDays) + "/" +  astext(cntgapdndays)
     ,color.cyan);
-
 addlabel(usethreshold,"Considering min/max gaps at the open of: " + astext(mingap) + "/" + astext(maxgap) 
     +", there are a total up/down gaps = " + astext(cntGapUpDays) + "/" +  astext(cntgapdndays)
-    ,color.cyan);
-
 AddLabel(yes, "Gap up and probability of 100/75/50/25% retrace on the first bar, "
     + astext(pguf100) + " / " + astext(pguf75) + " / " + astext(pguf50) +  " / " + astext(pguf25)
     + "%, Avg pts: " + AsText(avgptsguf100)  + " / " + AsText(avgptsguf75) + " / " + AsText(avgptsguf50) + " / " + AsText(avgptsguf25)
@@ -224,7 +186,6 @@ AddLabel(yes, "Gap up and probability of 100/75/50/25% retrace on the first bar,
     + ", Avg negative excursion on winning trades: " + AsText(avgexcguf100) + "/" + AsText(avgexcguf75) + "/" + AsText(avgexcguf50) + "/" + AsText(avgexcguf25) 
     + ", Max Neg Excursion: " + AsText(maxexcguf100)
              , color = Color.yellow);
-
 AddLabel(yes, "Gap down and probability of 100/75/50/25% retrace on first bar, "
     + astext(pgdf100) + " / " + astext(pgdf75) + " / " + astext(pgdf50) +  " / " + astext(pgdf25)
     + "%, Avg pts: " + AsText(avgptsgdf100)  + " / " + AsText(avgptsgdf75) + " / " + AsText(avgptsgdf50) + " / " + AsText(avgptsgdf25)
@@ -232,19 +193,13 @@ AddLabel(yes, "Gap down and probability of 100/75/50/25% retrace on first bar, "
     + ", Avg negative excursion on winning trades: " + AsText(avgexcgdf100) + "/" + AsText(avgexcgdf75) + "/" + AsText(avgexcgdf50) + "/" + AsText(avgexcgdf25) 
     + ", Max Neg Excursion: " + AsText(maxexcgdf100)
              , color = Color.lime);
-
 addlabel(yes,"Probability of 10/25, 25/50, 50/75, 75/100 ladder moves on a gap up (SELL): " 
     + astext(p10to25up) + "/" + astext(p25to50up) + "/" + astext(p50to75up) + "/" + astext(p75to100up) + "%"
     + ",AvgWin: " + astext(ldr10to25dn) + " / "+  astext(ldr25to50dn) + " / "+  astext(ldr50to75dn) + " / "+  astext(ldr75to100d)
 ,color.light_red);
-
 addlabel(yes,"Probability of 10/25, 25/50, 50/75, 75/100 ladder moves on a gap down (BUY): " 
     + astext(p10to25dn) + "/" + astext(p25to50dn) + "/" + astext(p50to75dn) + "/" + astext(p75to100dn) + "%"
     + ",Avg win: " +  astext(ldr10to25up) + " / "+  astext(ldr25to50up) + " / "+  astext(ldr50to75up) + " / "+  astext(ldr75to100u) ,color.green);
-
-
-
-
 18:42 UpTheCreek: guess that's what you call a simple script  ;)
 18:51 cajun: Vimes, thankyou for post... interesting measures in there, like minimum negative excursion on winning trades.  i looked back at the july buffer you referenced, i see only few comments on gaps. 
 18:51 cajun: could you say more about it
@@ -320,47 +275,23 @@ addlabel(yes,"Probability of 10/25, 25/50, 50/75, 75/100 ladder moves on a gap d
 07:14 chief: Lippy, try this...note that I am not a scripter...
 input length = 63;
 def IWMPctChg = (close( period = "Day") / close( period = "Day")[length]) - 1;
-
-
 def SPYPctChg = (close("SPY", period = "Day") / close("SPY", period = "Day")[length]) - 1;
-
 def rs =  100*(IWMPctChg - SPYPctChg);
-
 def rsSPX = rs;
 #plot crossup = rs>0 and rs[1]<0;
 plot crossdn = rs<0 and rs[1]>0;
-
 07:15 chief: Wait, cannot have sec aggs in scan
 07:16 chief: Try this....
-input length = 63;
 def IWMPctChg = (close / close[length]) - 1;
-
-
 def SPYPctChg = (close("SPY") / close("SPY")[length]) - 1;
-
-def rs =  100*(IWMPctChg - SPYPctChg);
-
-def rsSPX = rs;
-#plot crossup = rs>0 and rs[1]<0;
-plot crossdn = rs<0 and rs[1]>0;
 07:45 chief: One last time hopefully...
-input length = 63;
 def  PctChg = (close / close[length]) - 1;
-
-
-def SPYPctChg = (close("SPY") / close("SPY")[length]) - 1;
-
 def rs =  100*(PctChg - SPYPctChg);
-
-def rsSPX = rs;
-#plot crossup = rs>0 and rs[1]<0;
-plot crossdn = rs<0 and rs[1]>0;
 07:47 JohnnyQuotron: Good morning thinkScript Lounge.
 07:55 chief: GM, I think I scared Lippy away ,lol. I think TDA reports today
 08:02 tarbog: hello, i have a simple script to draw the days mid point that just shows a horizontal line that move as new highs and lows are made.� how would i add a time factor to it to make it more like the vwap or a moving average that would track the mid point of the day to that time and leave that plot there and adjust through out the day so you could see where the mid point of the day was at any time of the day.    
 08:08 Mobius: get the barNumber() at time and hold that value as the plot
 08:12 Mobius: Example:
-
 def time = if SecondsTillTime(0930) == 0
                   then barNumber()
                  else double.nan;
@@ -393,33 +324,25 @@ def   Go_Time = secondsFromTime(market_open);
 def   openhigh = if Go_Time == 0 
                  then h
                  else if h > openhigh[1]
-                 then h
                  else openhigh[1];
-
 plot   data =    
                  if Go_Time >= 0 
                  && go_Time <= market_Duration
                  then highestall(if isnan(close[-1]) then openhigh else double.nan)
-                 else double.nan;
 data.setpaintingStrategy(PaintingStrategy.DASHES);
 data.setdefaultColor(Color.YELLOW);
 data.setlineWeight(3);
-
 def openlow = if Go_Time == 0
               then l
               else if  l < openlow[1]
-              then l
               else openlow[1];
-
 plot data2 =     if Go_Time >= 0 
-                 && go_Time <= market_Duration
                  then highestall(if isnan(close[-1]) then openlow else double.nan)
                  else double.nan
                 ;
 data2.setpaintingStrategy(PaintingStrategy.DASHES);
 data2.setdefaultColor(Color.MAGENTA);
 data2.setlineWeight(3);
-
 ###   Added Alerts // Chat Room Request ###
 ###   7/20/2017   ###
 alert(high > openhigh[1],"New Intraday High", Alert.BAR, Sound.Ring);
@@ -478,24 +401,9 @@ if discount < 0 then Color.DownTick else Color.UpTick, discount > 0);
 10:05 Nube: I should have given it one more shot before giving up
 10:07 John1a: When VWAP does not open with the price, is this a bug in TOS? https://www.screencast.com/t/sils0LXI
 10:08 Nube: New and Improved
-# Discount or Premium to Net Asset Value
-#be sure to use .nv
-# Nube 10.21.18
-declare lower;
-    #variables
-def c = close;
 def nav = close(GetSymbol()+".NV");
-def discount = nav - c;
-    #plots
-plot 
-discountToNetAssetValue = discount;
 discountToNetAssetValue.SetDefaultColor(Color.Gray);
-discountToNetAssetValue.AssignValueColor(if   discount < 0
-                                         then Color.DownTick
-                                         else Color.UpTick);
-AddChartBubble(!IsNaN(c) and IsNaN(c[-1]), discount,
 ""+GetSymbol()+" disount to\n"+GetSymbol()+".NV: "+discount, 
-if discount < 0 then Color.DownTick else Color.UpTick, discount > 0);
 10:09 AlphaInvestor: der we go
 10:09 John1a: "Normal" VWAP open: https://www.screencast.com/t/rHD5u6q561bG
 10:10 MTS1: John; is that the built-in VWAP? Does not look like it.
@@ -538,17 +446,14 @@ if discount < 0 then Color.DownTick else Color.UpTick, discount > 0);
 10:37 John1a: #
 # TD Ameritrade IP Company, Inc. (c) 2011-2018
 #
-
 input numDevDn = -2.0;
 input numDevUp = 2.0;
 input timeFrame = {default DAY, WEEK, MONTH};
-
 def cap = getAggregationPeriod();
 def errorInAggregation =
     timeFrame == timeFrame.DAY and cap >= AggregationPeriod.WEEK or
     timeFrame == timeFrame.WEEK and cap >= AggregationPeriod.MONTH;
 assert(!errorInAggregation, "timeFrame should be not less than current chart aggregation period");
-
 def yyyyMmDd = getYyyyMmDd();
 def periodIndx;
 switch (timeFrame) {
@@ -558,13 +463,10 @@ case WEEK:
     periodIndx = Floor((daysFromDate(first(yyyyMmDd)) + getDayOfWeek(first(yyyyMmDd))) / 7);
 case MONTH:
     periodIndx = roundDown(yyyyMmDd / 100, 0);
-}
 def isPeriodRolled = compoundValue(1, periodIndx != periodIndx[1], yes);
-
 def volumeSum;
 def volumeVwapSum;
 def volumeVwap2Sum;
-
 if (isPeriodRolled) {
     volumeSum = volume;
     volumeVwapSum = volume * vwap;
@@ -573,14 +475,11 @@ if (isPeriodRolled) {
     volumeSum = compoundValue(1, volumeSum[1] + volume, volume);
     volumeVwapSum = compoundValue(1, volumeVwapSum[1] + volume * vwap, volume * vwap);
     volumeVwap2Sum = compoundValue(1, volumeVwap2Sum[1] + volume * Sqr(vwap), volume * Sqr(vwap));
-}
 def price = volumeVwapSum / volumeSum;
 def deviation = Sqrt(Max(volumeVwap2Sum / volumeSum - Sqr(price), 0));
-
 plot VWAP = price;
 plot UpperBand = price + numDevUp * deviation;
 plot LowerBand = price + numDevDn * deviation;
-
 VWAP.setDefaultColor(getColor(0));
 UpperBand.setDefaultColor(getColor(2));
 LowerBand.setDefaultColor(getColor(4));
@@ -601,3 +500,274 @@ LowerBand.setDefaultColor(getColor(4));
 10:47 John1a: Vimes: Do you have overnight displayed and Adjust for contract changes checked?
 10:48 JoshuaK: the reason i ask because i have someself defined studies, and im  tryingto display only the values, but the study itself plots things. Im just trying to extract the value itself, and display it in a column
 10:49 JohnnyQuotron: The LoungeArchive is current.
+10:51 MTS1: Josh, reduce your study to one plot & add as custom column. more details in tutorials at tlc.thinkorswim.com
+10:51 Vimes: John, that was without globex and without adjustment  with globex teh vwap study would start at the globex session initial condi, i believe
+10:51 Nube: Joshua, the value itself is what is defined. plot is just the display of the value in a study.
+10:51 John1a: Vimes: Yes, it should, but on those days, it does not
+10:52 John1a: Vimes: Using just RTH, I don't have any issues either
+10:53 JohnnyQuotron: I spent a couple of hours yesterday working in the Options Section of the OneNote.  I am doing my best to segregate true Options scripts from Volatility scripts.  Please be patient, these is a great deal of duplication in the Options Section and I am cleaning it out using the notepad++ compare addon.
+10:54 JoshuaK: Nube, take for example the VWAP
+10:54 JoshuaK: study if you go into the thinkscript, tehre are multiple values defined, price, vwap, pricesum etc.
+10:54 Vimes: John, what is it you want? in your mind should vwap start at US RTH regardless of your settings?
+10:55 JoshuaK: when you add the VWAP to the column, it gives you the actual VWAP value
+10:55 MTS1: I have you the answer already Josh; reduce to one plot
+10:55 JoshuaK: oh ok
+10:55 JoshuaK: so when i reduce to one plot, the study automatically knows what to return?
+10:56 MTS1: also really not realize specifically to VWAp; there's also a vwap fundamental price value that's used in but otherwise not related to the study
+10:56 MTS1: yes try it Josh
+10:56 Vimes: With globex, vwap starts at globex session
+10:57 JoshuaK: will do
+10:57 JoshuaK: thanks MTS1
+10:57 MTS1: yw
+10:58 Mobius: We've turned into support. Does that increase TDA bottom line?
+10:58 John1a: Vimes: Is your "Adjust for contract change events" selected?
+11:00 JohnnyQuotron: Mobius... it was many tractor trailers of JD ago, but in Oct 2013 you composed a script titled "Implied Volatility and RSI Combined Signal".  Was that intended as an example of a CSA script?  Which OneNote section would you recommend that I place it in?
+11:01 Mobius: If you can remind me what I had for dinner last night I might recall that too
+11:02 Vimes: John, no, but you can play with the different settings, and if its important there is an interanl vwap reference where you can roll your own for whatever it is your looking for
+11:02 trader_s: is it possible to increase the font size on AddLabel  script ?? Thx
+11:03 Mobius: no trader it's not
+11:03 JohnnyQuotron: Mobius...thins may jog the little gray cells
+11:03 trader_s: thx Mobius
+11:03 Mobius: post the code Johnny
+11:04 JohnnyQuotron: # Mobius©:Sat Oct-19-2013
+# Implied Volatility and RSI Combined Signal
+# Mobius
+# V01.10.2013
+input length = 21;
+Assert(length > 0, "'length' must be positive: " + length);
+   def IV = if isNaN(imp_volatility(period = AggregationPeriod.DAY))
+            then IV[1]
+            else imp_volatility(period = AggregationPeriod.DAY);
+def price = close * IV;
+def r = (price - price[1]) / ( (price + price[1]) / 2 );# difference divided by the average price
+def SDr = StDev(r, length);
+plot IVSwitch = ( fold i = 0 to length 
+                          with count 
+                          do count + if SDr[i] <= SDr 
+                                     then 1 
+                                     else 0 ) / length;
+plot MidLine = 0.5;
+IVSwitch.DefineColor("Trending", Color.UPTICK);
+IVSwitch.DefineColor("Mean-Reverting", Color.DOWNTICK);
+IVSwitch.AssignValueColor(if IVSwitch >= MidLine 
+                          then IVSwitch.Color("Mean-Reverting") 
+                          else IVSwitch.Color("Trending"));
+MidLine.SetDefaultColor(GetColor(7));
+# RSI Wilder with Divergence Markers
+input nRSI = 14;         #hint nRSI: RSI periods
+input nTrend = 100;      #hint nTrend: RSI Trend Line periods
+input over_Bought = .70; #hint over_Bought: Over Bought Line
+input over_Sold = .30;   #hint over_Sold: Over Sold Line
+input TrendLine = {EMA, SMA, default LRL, WMA};
+input AlertOn = yes;
+   def o = open;
+   def h = high;
+   def l = low;
+   def c = close;
+   def NetChgAvg = WildersAverage(c - c[1], nRSI);
+   def TotChgAvg = WildersAverage(AbsValue(c - c[1]), nRSI);
+   def ChgRatio = if TotChgAvg != 0 
+                  then NetChgAvg / TotChgAvg 
+                  else 0;
+  def RSIdata = 50 * (ChgRatio + 1) ;
+  plot RSI = (RSIdata - LowestALL(RSIdata)) / 
+             (HighestAll(RSIdata) - LowestAll(RSIdata));
+  plot OverSold = over_Sold;
+  plot OverBought = over_Bought;
+  plot RSItrend;
+  switch (TrendLine) {
+  case EMA:
+       RSItrend = ExpAverage(RSI, nTrend);
+  case SMA:
+       RSItrend = Average(RSI, nTrend);
+  case LRL:
+       RSItrend = InertiaAll(RSI, nTrend);
+  case WMA:
+       RSItrend = WMA(RSI, nTrend);
+   def lowestLow = if RSI > over_Sold
+                   then l
+                   else if RSI < over_Sold and 
+                           l < lowestLow[1]
+                   else lowestLow[1];
+   def lowestRSI = if RSI > MidLine
+                   then RSI
+                   else if RSI < MidLine and 
+                           RSI < lowestRSI[1]
+                   else lowestRSI[1];
+   def divergentLow = if RSI < over_Sold and
+                         l <= lowestLow[1] and 
+                         RSI > lowestRSI[1]
+                      then over_Sold
+                      else Double.NaN;
+  plot DLow = divergentLow;
+       DLow.SetPaintingStrategy(PaintingStrategy.POINTS);
+       DLow.SetLineWeight(2);
+       DLow.SetDefaultColor(Color.YELLOW);
+   def highestHigh = if RSI < over_Bought
+                     then h
+                     else if RSI > over_Bought and 
+                             h > highestHigh[1]
+                     else highestHigh[1];
+   def highestRSI = if RSI < MidLine
+                    then RSI
+                    else if RSI > MidLine and 
+                            RSI > highestRSI[1]
+                    else highestRSI[1];
+   def divergentHigh = if RSI > over_Bought and
+                          h >= highestHigh and 
+                          RSI < highestRSI
+                       then over_Bought
+                       else if RSI < over_Bought and 
+                       c < o
+                       then Double.Nan
+                       else divergentHigh[1];
+  plot DHigh = divergentHigh;
+       DHigh.SetPaintingStrategy(PaintingStrategy.POINTS);
+       DHigh.SetLineWeight(2);
+       DHigh.SetDefaultColor(Color.YELLOW);
+       RSI.DefineColor("OverBought", Color.Plum);
+       RSI.DefineColor("Normal", Color.White);
+       RSI.DefineColor("OverSold", Color.Yellow);
+       RSI.AssignValueColor(if RSI > over_Bought 
+                            then RSI.Color("OverBought") 
+                            else if RSI < over_Sold 
+                            then RSI.Color("OverSold") 
+                            else RSI.Color("Normal"));
+       OverSold.SetDefaultColor(Color.BLUE);
+       OverBought.SetDefaultColor(Color.BLUE);
+   def AlertCond1 = RSI crosses RSItrend;
+  plot Bcond1 = if IVSwitch crosses below overBought within 2 bars and 
+                   RSI > RSI[1]
+                then OverSold
+                else Double.NaN;
+       Bcond1.SetPaintingStrategy(PaintingStrategy.Arrow_Up);
+       Bcond1.SetLineWeight(3);
+       Bcond1.SetDefaultColor(Color.Green);
+  plot Bcond2 = if isDescending(IVSwitch) and 
+                   isAscending(RSI) and
+                   RSI crosses above RSItrend
+                then RSItrend 
+                else Double.NaN; 
+       Bcond2.SetPaintingStrategy(PaintingStrategy.Arrow_Up);
+       Bcond2.SetLineWeight(2);
+       Bcond2.SetDefaultColor(Color.Light_Green);
+  plot Scond1 = if IVSwitch > IVSwitch[1] and
+                   RSI crosses below overBought
+                then overBought
+       Scond1.SetPaintingStrategy(PaintingStrategy.Arrow_Down);
+       Scond1.SetLineWeight(3);
+       Scond1.SetDefaultColor(Color.Red);
+  Alert(AlertCond1, "RSI crossed RSI Trend Line", Alert.Bar, Sound.Bell);
+# End Code IV and RSI Combined Signal
+11:04 AlphaInvestor: I would create a separate section for Combined Signal Apporach scripts
+11:05 Mobius: Johnny that study is Not a CSA. Price is altered using IV which would cause it to run faster in higher volatility and slower in lower
+11:06 JohnnyQuotron: Alpha... I would like to do that if only to attract more over time
+11:07 Mobius: A better approach would be to alter the length for RSI using Series IV which we didn't have when that study was written
+11:09 JohnnyQuotron: Sounds like a worthwile project for someone more advanced than I.  
+11:09 JohnnyQuotron: I will plce the script in the RSI section as opposed to volatility unless you reccomend differently.
+11:10 Mobius: That works for me
+11:11 Mobius: To alter length using IV is pretty straight forward. Normalize IV to a useful RSI lenght.
+11:11 JohnnyQuotron: Thank you.  You are the best!  By the way this morning I picked up Lobster Rolls for my wife and for lunch today.  Its Stone Crab season but with the Red Tide ???
+11:12 Mobius: yeah   that whole red tide thing makes seafood a bit risky
+11:13 Mobius: That storm hasn't helped either
+11:13 Vimes: Did alot of random coding over the weekend and wanted to share this based on a TASC article around fractal efficency, the backtesting looked somewhat encouraging so thought i'd share with the group:
+#Polarized fractal energy strat
+#Hans Hannula TASC V12.1
+#"PFE tends to have a maximum efficiency of about 43%, either going up or down. This has been found to be true for all stock indices. Other stocks and commodities tend to have slightly different maximums, but the maximum has always been observed. Also note that the transition from trending up to trending down is usually smooth. However, the efficiency may bounce off the zero line or oscillate around it for a time. This middle region is a balance of supply and demand and, thus, a congestion point." -- Hans Hannula
+#Version 1
+#Study Name Short PFE_Strat 
+#Date: 2018/10/21
+#Coded in TOS by Vimes
+input length = 10;
+input smooth = 5;
+input UpperBand = 50; #hint UpperBand: Efficiency Upperband, experiement with different triggers (43,50,60,etc);
+input LowerBand = -50;
+input BuyOnLowerCross = no; #hint BuyOnLowerCross: If "yes" buys on the cross above the lower band (not reccomended).  If no buys on the cross of the upper band (this is reccomended).  Sells are then opposite w.r.t to the lower band
+input reverse = no; #hint reverse:Reverses the buy sell signal for the contrarian in you
+input osize = 5;
+def A = Sqrt(sqr(close - close[length-1]) + sqr(length));
+def B = Sum(Sqrt(sqr((close - close[1])) + 1), length);
+def FE = If(close - close[length-1] > 0, A/B*100 , -A/B*100);
+def FE_EMA = ExpAverage(FE, smooth);
+def long_ = If(FE_EMA crosses above If(BuyOnLowerCross, LowerBand, UpperBand), 1, 0);
+def short_ = If(FE_EMA crosses below If(BuyOnLowerCross, UpperBand, LowerBand), 1, 0);
+def long = If(short_ and reverse, 1, If(long_, 1, 0));
+def short = If(long_ and reverse, 1, If(short_, 1, 0));
+AddOrder(condition = long, tradeSize = osize, tickcolor = Color.CYAN, arrowcolor = Color.CYAN, name = "PFE:LE");
+AddOrder(tradeSize = osize, tickcolor = Color.LIGHT_RED, arrowcolor = Color.LIGHT_RED, name = "PFE:SE", condition = short, type = OrderType.SELL_AUTO);
+11:14 Mobius: Apalach.. Is looking at a possible loss for the oyster industry for decades to come
+11:19 Ariana3: Mobius: Do you have a script that plots the third moment of volume distribution?
+11:20 Mobius: When you read Mandelbrot's work and look at his set you come away with the idea he'd have much more likley wanted to measure the edges of price and find a predictive value along those edges than the PFE indicator that carries the notion of his work.
+11:21 Mobius: Ariana... Why?
+11:21 Ariana3: Because it is very useful to know the skew.
+11:22 JohnnyQuotron: Naples/Ft.Myers may lose the entire 2018 StoneCrab season. But likely just this one.  
+11:22 Mobius: Why didn't you just ask for skew. I'm not easily impressed
+11:22 Vimes: If i undersood the premis correctly it is in that the author was trying to measure the edges in ratio to the straight line trend as a measure of "ease of movement" if you will
+11:24 Mobius: Vimes  Where in those calculations do you see that??
+11:25 Ariana3: Not trying to impress...because it seems  that the third volume of the volume distribution is a better way of doing it, but it seems that it cannot be done in TOS, because the profile is locked
+11:25 Vimes: The numerator A was supposed to be this approximation - vs the straigt line B
+11:26 Ariana3: VWAP + (SKEW * SD)
+11:28 Ariana3: Something like this: CM3 = sum (PROBI * (Pi - VWAP) ^ 3
+11:30 Mobius: Ariana.. 
+# Volume Skew
+# Chat room request 10.22.2018
+plot Data = Power(volume - average(volume, 60), 3) / 
+           Sqrt(Power(Sqr(volume - Average(volume, 60)), 3));
+11:32 Ariana3: Where “i” is going through all prices in range (i.e., all rows in Volume Distribution Function), CM3..the 3rd Central Moment, PROBI = Vi/V…its price probability (Volume per its price / Total Volume), Pi…the price in the Volume Distribution function…Then the Skew would be Skew = CM3 / SD^3
+11:33 Mobius: Vimes - Have you ever looked at PFE and FE side by side?
+11:36 Vimes: You have me at a disdavantage because i don't know where you are going, and you are likely much smarter than me, but if you are sayign the fractal efficency in reference versus fractal energy i would think they are quite different
+11:37 Mobius: Vimes  Take a look and don't guess.. 
+11:37 Mobius: You've got a good head for math.  What do you see?
+11:41 Vimes: I would say it is almost trying to estimate the slope of the edge, except in that in the fractal energy case it is taking each against a ratio of the true range which i don't quite visualize
+11:48 Mobius: Yep very close.. FE does a better job of showing when price is linear since it converts it to a log value.  If Mandelbrot were to start with those two my feeling is he'd use the FE as a central limit and PFE or some other measure of fractal length to determine how far price is traveling to make a predetermined fixed measure over a predetermined fixed length of time. 
+11:48 Mobius: The half life of price movement through the fractal range if you will
+11:49 Vimes: i guess to take a leap FE seems to be summing the true range over the period (which i'm not sure why it would seen to be an additive property) and taking the current periods high/low range as a ratio to this.  It would almost assume that each rangeis pure momentum versus the actual meausred range
+11:52 Mobius: What we do know is any notion that price can be predicted from any use of a normal distribution is flawed.
+Therefore price is always random. How do you measure random?
+11:52 Vimes: so i guess in that way as you say it saying how much of the current high low range is a perfect linear trend on the A to B distance, i think i can see that
+11:52 Mobius: yes
+11:53 Mobius: Or at the very least  Random With Drift
+11:54 Mobius: Worthless information for traders. Very useful for investors
+11:54 Nube: I guess this means a Mandelbrot isn't a musical instrument...
+11:54 Mobius: ha
+11:55 AlphaInvestor: a musical instrument that hits random notes ... but in a repeating self-similar series
+11:56 Vimes: so geometrically its saying estimate a triangle that woudl assume each true range over the period is positive so what woudl the maxium be so to speak, and the estimating the "real" observed Ya to Yb as a ratio to tis perfect triangle
+11:56 Mobius: lol  that's pretty good Alpha
+11:57 Mobius: Vimes.. I don't know if that would work. I've been trying to find a useful method for quite a while. And so far no joy. But as far as math and the market is concerned, to me that is the grail.
+11:58 FrankB3:   Mr. Mo:: was that your idea putting the FE with the RSI LaGeaure???
+11:58 Mobius: Problems Solved:
+Linear estimating
+True Momentum
+Price Path prediction
+Investment Moment
+11:58 AlphaInvestor: The best way that PFE was described to me was - the ratio of a straight line direction to get from point A to Point B ... to the way that Price ACTUALLY got from Point A to Point B
+11:59 Nube: Alpha, Thanks. I have a new respect for Yoko Ono now.
+11:59 Mobius: Frank - yes
+12:00 _Coleman_: Is it possible to write a script that will alert or scan  when a candle closes above the Kijun on the Ichimoku Cloud. 
+12:00 Vimes: bless you
+12:00 AlphaInvestor: Coleman - yes
+12:00 Ariana3: I saw a t-shirt yesterday, "Still Hate Yoko" :)
+12:01 Vimes: I think JNJ sells a cream if you've got Ichimoku
+12:02 Nube: Judging by how many requests we've had lately, buy JnJ
+12:07 Vimes: Coleman, i don't use the cloud but something like this might work or there maybe is a built in scanner
+plot scan = close crosses above Ichimoku().Kijun;
+12:09 Nube: Getting back to the side tracked discussion, does that mean we may want to account for fractal energy in the fractal efficiency?
+12:10 Vimes: boom
+12:11 Mobius: Coleman
+# Scan - Comment out (#) the one you don't want
+Ichimoku()."Kijun" crosses above MAX(Ichimoku()."Span A", Ichimoku()."Span B")
+# Ichimoku()."Kijun" crosses below Min(Ichimoku()."Span A", Ichimoku()."Span B")
+12:16 _Coleman_: Thanks as always.
+12:16 Vimes: another happy customer
+12:20 Nube: I wish you smart people would hurry up and solve markets for me already. I'm sitting here looking and breadth and volatility and means and monthly charts when you could just supply me with an indicator
+12:23 Nube: All I want to do is type VZ or whatever in the ticker box and have the lower panel display a big Buy, Sell or Hold
+12:25 Vimes: lol
+12:27 Vimes: VZ, holding up well btw, but who the heck nows
+12:27 Nube: Disclosure: Author does have a position in the above ticker by way of ETF and intends to initiate another
+12:28 Nube: That was the first ticker that came to mind because I was just taking another look at it. Max Monthly view that thing is a monster
+12:34 Vimes: addlabel BUY VZ
+12:35 AlphaInvestor: AssignBackgroundColor(col.rgreen);
+12:36 Vimes: i wonder how much impact the reshuffling into the XLC sector is having on rotatino into names like DISCA and VZ over google, nflx, etc
+12:37 Nube: Fair question, Vimes. Sort of wonder the same about FB as well.
+12:38 Vimes: i think the secotr is getting a lift because funds have to then put there money in the other names, maybe?
+12:38 Nube: It's not a new thing so I imagine Funds have been positioning for a long time

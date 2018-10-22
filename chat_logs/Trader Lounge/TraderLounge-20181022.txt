@@ -951,3 +951,333 @@ LowerBand.setDefaultColor(getColor(4));
 10:47 John1a: Vimes: Do you have overnight displayed and Adjust for contract changes checked?
 10:48 JoshuaK: the reason i ask because i have someself defined studies, and im  tryingto display only the values, but the study itself plots things. Im just trying to extract the value itself, and display it in a column
 10:49 JohnnyQuotron: The LoungeArchive is current.
+10:22 VolCrush: they bot dat wee dip
+10:24 blondetrader: was a nice pullback very clean
+10:25 Brad952: would you say tops is an ascending triangle or a bear flagpole because of that massive drop in the pre market?
+10:25 VolCrush: der fruit testing R wit a nice price diverg on der 4hr
+10:25 VolCrush: 225 R
+10:26 blondetrader: yes
+10:26 blondetrader: over that clear to 30
+10:27 blondetrader: indices really need to try to take out res or this could fizzle
+10:27 blondetrader: rty nq def looking better today that es
+10:28 VolCrush: CMG* gud pa needs volume R 440, fur der cover
+10:28 VolCrush: charmin on 30min, CMG*
+10:29 AlphaInvestor: Brad - TOPS is a broken chart - TA is fubar on that chart intil it forms a new base
+10:29 VolCrush: /nq rejected 7200 mulitple times already today
+10:30 Eedie: Gm all vol alpha bt
+10:31 blondetrader: gm EE
+10:31 AlphaInvestor: GM EE
+10:31 VolCrush: oi juju
+10:31 VolCrush: damn them internals gotta whola nuttin
+10:33 Pilot4hire: Silver futures anyone
+10:33 MyOtherBrotherDarryl: When you say "internals" what r u looking at?
+10:34 Eedie: I love playing silver just haven’t charged it out in a while.
+10:34 Eedie: What are your thought on silver Pilot
+10:34 Pilot4hire: It’s what got me into the market. Seems uncertain at the moment
+10:35 Eedie: Charged I meant charted
+10:36 Pilot4hire: I usually trade between 3am est and open.
+10:36 Pilot4hire: Went short today at .66 and had a good profit, then I bailed due to the Monday madness
+10:37 tmoney20g: 4th time's the charm for nq
+10:37 VolCrush: advance/decline line
+UpVol/Down Vol
+TICKS
+/vx
+10:37 Pilot4hire: If it gets below 50 I’m all innlong
+10:37 stephanieray: Any thoughts on CGC.
+10:37 VolCrush: done news is out, wait for next catalyst
+10:38 Eedie: Pilot 6 a.m. est is da best time to trade /es...instead of silver just my opinion
+10:39 Pilot4hire: I’ll look at it eedie
+10:40 MyOtherBrotherDarryl: they like selling rallies.....bear mkt?
+10:41 Eedie: Pilot check out copper and gold
+10:41 Dimka: No, just annoying sellers
+10:41 Eedie: Hello Dimka
+10:42 RandomDan: good morning to all
+10:42 blondetrader: gm 
+10:42 Eedie: Hello Dan
+10:43 invertedhammer: Stop YM moved 300
+10:44 Eedie: Dollar getting to high pitch levels only a dog can hear it
+10:44 radon224: Chippity Choppity
+10:44 Eedie: Hello IH
+10:44 AlphaInvestor: Darryl - these kind of t hings are "Market Internals":
+#1. Market Breadth: $UVOL - $DVOL
+#2. Advance/Decline Line: $ADVN - $DECN
+#3. $TICK: NYSE TICK
+#4. $TRIN: Arms Index
+10:44 Eedie: And radon
+10:44 invertedhammer: EE
+10:45 Eedie: Hammer whatcha tradin?
+10:45 RandomDan: hi eedie, bt
+10:45 TnT: AI, those are the old way to do it, $ADD and $VOLD are simpler
+10:45 invertedhammer: Short YM/rty
+10:45 TnT: TOS added those like 2 or 3 years ago
+10:45 RandomDan: +1 TnT
+10:46 invertedhammer: Looking short crude
+10:46 AlphaInvestor: TnT - I am OLD, so ...
+10:46 Eedie: TnT gm
+10:46 TnT: I am older
+10:46 Eedie: How old is old alpha
+10:46 TnT: gm eeeeeeeeeeeeeedie
+10:46 TnT: a lot youger than me
+10:47 tmoney20g: hi ee
+10:47 Eedie: Hello tmoney
+10:47 Glass: heyy
+10:47 tmoney20g: alright, let's get that 7250 now
+10:47 radon224: I'm so old that almost everything hurts.  And what doesn't hurt doesn't work anymore.
+10:47 tmoney20g: big green bars, tia
+10:47 Eedie: I’d get that fixed radon
+10:48 radon224: Most of my favorite songs are played in elevators
+10:48 Dimka: Hello everyone
+10:48 Eedie: Well IH I’m currently flat..no positions on
+10:50 invertedhammer: Stopped both YM rty
+10:52 mep1976: BLFS small cap been beat up
+10:52 mep1976: like it
+10:52 Eedie: Bbl
+10:53 mep1976: bye ed
+10:53 mep1976: hi dimka
+10:53 ertyu: where to find cnbc live tv in thinkor swim?
+10:53 TnT: add tv gadget, lower left + sign
+10:54 TnT: select brain damage channel
+10:54 tmoney20g: best channel
+10:54 tmoney20g: think we're getting a rug pull ?
+10:55 VolCrush: nope
+10:55 tmoney20g: lower lows since an hour ago
+10:56 RandomDan: hello Dimka
+10:57 VolCrush: well im plyanin individual names and im fine with there pa, Europe closed OK, but not great; lunch hour is usually not the best tell IMO
+10:57 VolCrush: *their
+10:58 MyOtherBrotherDarryl: if we weaken further in such an oversold state, and break the 200 day averages...look out below.
+10:58 mep1976: URI getting serious show me the $$$
+10:58 VolCrush: they got an u/g this a.m.
+10:59 VolCrush: but i take it you are short
+10:59 MyOtherBrotherDarryl: mep, you long or short URI?
+11:00 mep1976: no interviewing with them jajajaja
+11:01 VolCrush: even better, gl @jajajajaaja
+11:01 VolCrush: if it were me, id hire you right now........but as a trader!
+11:02 AlphaInvestor: This rotated from a broad based sellfoff this morning,  to more of a rotation into tech and a few select names
+11:02 VolCrush: dats correct
+11:03 mep1976: i know it's serious now they wanna fly me out for 3rd interview but they gotta show me the $$$
+11:03 gerardom: tech reporting soon hope it blows up as im long in tech lol
+11:04 VolCrush: they will, if you arre on the third interview, they are as serious as u are
+11:05 MyOtherBrotherDarryl: JMHO, but i don't see XLK really much stronger than broad market.  seems in sync.
+11:06 radon224: NYPD Body Cam catches fire and explodes. All units recalled.  Loks like company isn't public though.
+11:06 radon224: /Looks
+11:06 dannyfai22: hi, can anyone help me with option chain
+11:07 VolCrush: /nq is up .87
+/es is down .18
+no difference??????? 
+@Darryl you need to find another hobby
+11:07 AlphaInvestor: Marcos - nice!!
+11:07 dannyfai22: How do thinkorswim calculate the different strategies option premium? where can i find that
+11:08 AlphaInvestor: Darryl - look at a Map of the Market - its pretty darn clear
+11:08 blondetrader: 52-3 res rty up and over =58-60
+11:08 VolCrush: munch crowd wants to buy, must have had a slow saturday night
+11:08 VolCrush: Alpha, there is no helpin dat, mate
+11:09 esmal: Beware of false profits
+11:09 esmal: which come to you in bull's clothing
+11:09 esmal: but inwardly they are ravening bears
+11:10 mep1976: yea AL - let's see what happens , but i love my current gig but i think future isn't bright no more here. gotta make a move stinks cause i work from home this would be a office i would have to go to lol
+11:10 VolCrush: will it is Halloween
+11:10 MyOtherBrotherDarryl: no need to be snippy.   just going by visual.  after checking actual 5m there is a slight outperfomance by tech xlk compared to nasdaq index, but tech is deeply oversold so no surprise.
+11:11 VolCrush: guess wat guys
+for Halloween
+im dressing up as bronx, and bronx is dressin up as W
+11:12 MyOtherBrotherDarryl: tech is more volatile than broad market either up or down.  and has been for last 40 years.
+11:12 invertedhammer: Short crude .96
+11:12 AlphaInvestor: Do  they make red-soled pumps in size 12?
+11:13 VolCrush: no we had to go custom
+11:13 mep1976: SDPI no pullback under 4.50 gez
+11:14 VolCrush: nice call IH
+11:14 TnT: I'm will dress up as a TSA agent
+11:14 mep1976: CRON and NBEV hmmm
+11:14 VolCrush: with TnT strapped around your waist
+11:14 tmoney20g: darn, gonna miss the dip
+11:17 VolCrush: CMG* gunna run like a red head in County Tipperary
+11:17 VolCrush: kiss der baby
+11:17 VolCrush: whos got juice
+11:18 MyOtherBrotherDarryl: right or wrong on wat i said about tech?
+11:18 VolCrush: dead wrong
+11:19 ScottishClaymore1: Any thoughts on Largo Resources & the rocket rise of Vanadium?
+11:19 VolCrush: actually one of the worst observations ive ever read on here.......i would put it in the no clue category
+11:20 radon224: c'mon, don't hold back....say what you really think
+11:20 VolCrush: ok, it was the most idjit comment ive ever read
+11:20 AlphaInvestor: that is pretty tame for Vol
+11:20 MyOtherBrotherDarryl: ok mr expert :)  you have no idea of the history of tech
+11:20 RandomDan: URI Marcos? Really? I just added it to my watchlist on the theory that infrastructure goes back on the table if the D's take the house.
+11:21 VolCrush: we are talking today not history, mate
+and your comment was way way off
+11:21 VolCrush: meanwhile CMG* hod
+11:23 VolCrush: if Ds take the house they support the Donald on infrastructure???  hmmmm, not sure about that....i give it some thought
+why would Ds support der D in his third year??
+11:24 mep1976: SOLD -3 CRON 100 16 NOV 18 8 PUT @.90 BATS
+11:25 mep1976: give me more CRON
+11:25 mep1976: SOLD -1 NBEV 100 16 NOV 18 5 PUT @1.05
+11:25 MyOtherBrotherDarryl: I jus told you earlier i agree that it is slightly outperfoming today, thats bc tech is way oversold.
+11:25 mep1976: and my liquid weed lol 
+11:25 radon224: Infrastructure spending has always been the one thing that almost everyone could agreee on.  The problem is any Bill would have about 1,000 unrelated "riders" attached to it and make it distasteful to everyone.
+11:25 VolCrush: WTF is CRON, going to zero
+11:26 radon224: /es back down to S1 now, strange day
+11:27 RandomDan: Vol, because it is not politically tenable for them to sit on their hands for two years.
+11:29 mep1976: i don't think cron will see that vol 
+11:29 RandomDan: Anyway, it's a posdible play. It doesn't actually need to happen. All that is required is some noise in that direction, because infra has been so punished.
+11:30 MyOtherBrotherDarryl: my biggest wonder is how AAPL is holding up so well to this tech onslaught.   if chip stocks are predicting slower sales ahead, then seems like AAPL sales would slow too.
+11:30 RandomDan: buybacks
+11:30 VolCrush: logic has never paid well
+11:31 RandomDan: also a shift over time to service revenue
+11:32 AlphaInvestor: Logic pays well, but you need to be very patient until Greed and Fear subside and Logic takes over
+11:32 VolCrush: i dont have 30 years
+11:32 Fano: FB pre earnings buy? FAANG bounce back?
+11:34 tmoney20g: chips have huge inventory, correct ?
+11:34 tmoney20g: aapl's products don't have that inventory problem, i guess
+11:34 VolCrush: bronx, u still got MSFT*
+11:34 tmoney20g: plus buybacks
+11:34 blondetrader: yes sir
+11:35 VolCrush: kul so do i , fur now
+11:35 RandomDan: dipped a little toe into URI, to serve as an anchor
+11:35 VolCrush: ty, Dan
+11:35 AlphaInvestor: I gots me some MSFT^ too, pcs
+11:35 VolCrush: the Dems, should save the day on XLI
+11:36 RandomDan: Marcos around?
+11:36 tmoney20g: marcooooooooooooooooooooooooooooooos
+11:36 AlphaInvestor: Dan - I am going to hold off on URI unitl it gets closer to support at 1000
+11:36 AlphaInvestor: sorry 100
+11:37 tmoney20g: 1000 would be good tho
+11:37 VolCrush: Bronx ill call you on my strategy for MSFT* this week, after the close
+11:37 MyOtherBrotherDarryl: today is day 8 of an attempted market bottom, if we can somehow finish strong, it might signal  a bottom bc volume is way outpacing Friday.
+11:38 RandomDan: I understand Al. I just track better when I have a little skin. Probably got 1/6th of my target position, assuming I don't bail.
+11:38 mep1976: im here
+11:39 RandomDan: hey Marcos it took me three days but finally was able to sell the NIO puts @ .70
+11:39 mep1976: lol nice !
+11:39 Chan: Hi,
+Just want to know if my SPY 26 Oct 18 301 CALL +3 with 4 days left, now mark 0.005 - i unable to close order..
+if expire, it is force to exercise to buy share or i will lose P/L Open ($37.50) only?
+11:40 esmal: tmoney whats it looking like today
+11:40 AlphaInvestor: Chan - long calls at 301 strike?
+11:41 Chan: yes
+11:41 Chan: is it will be exercise?
+11:42 AlphaInvestor: They will expire worthless, yoiu lose only what you paid to buy them
+call the Trade Desk to confirm
+11:43 Chan: thanks for advise..
+11:43 VolCrush: dont wanna close comish alone will cost u more than the current value
+11:44 VolCrush: see if we get some 5min charmins
+11:44 AlphaInvestor: Vol +1
+11:45 AlphaInvestor: NEVER close long options unless you can at least cover commish and get a little lunch money
+11:47 VolCrush: i must say i will never go out to lunch wit der munch crowd, they must be so boring
+11:49 VolCrush: /nq reaching for some significant volume 4 hr, albeit spinning top
+11:51 MyOtherBrotherDarryl: AAPL relative strength line is hitting new high today
+11:51 VolCrush: ty, Darryl
+11:52 tmoney20g: esmal, nothing going on really
+11:52 tmoney20g: aside from that bump earlier, she's flat
+11:53 tmoney20g: you do anything ?
+11:54 VolCrush: algo, hit but hits
+11:55 VolCrush: only tot atm, is der 10:20s them suckas been game changers for 4 weeks
+11:56 VolCrush: eeeerrrrr, in tech select namse obviously, wit a catalyst on 10/24, LOL
+11:57 esmal: same made a put play and thats it
+11:59 MyOtherBrotherDarryl: according to IBD, stocks with relative strengths at new highs today are:   DISCA, SMPL, EEFT, MKC, SAVE, LW, CHD, PFE, UAL, FE, MRK, MSGN, CME, DG, TRGP, UGI, DIS, FISV, AXP, and WM.    guess they haven't updated AAPL yet.
+12:03 VolCrush: @darryl, l luv IBD started with them +30 years ago......i owe greater than 7 figures to them; but they have a ways to go on short to intermediate trading......and they are usually late on longs......if u trade options only
+which i do
+but IBD is gud, be sure to know your trading timeframe.....less u be broke
+12:04 tmoney20g: i broke
+12:04 VolCrush: i know
+12:06 mep1976: ntwk small one looks good 
+12:07 VolCrush: gud day for MoTown tunes
+12:07 tmoney20g: doooo wop
+12:08 VolCrush: SHOP bid, no position fur now
+12:09 mep1976: @street CLF
+12:09 VolCrush: interesting pa in NFLX, not gunna hit it
+12:09 coldTRADER: g'afternoon
+12:09 mep1976: you an embrassment to your parents
+12:09 mep1976: where are you goldman sachs 
+12:09 mep1976: i will buy back shares with money
+12:10 mep1976: and you will be finished lol 
+12:10 VolCrush: hit more zonian*
+12:12 VolCrush: who u talkin to, @jajjajaja
+12:12 mep1976: that's the Ceo from CLF
+12:13 mep1976: that conference call is funny 
+12:13 VolCrush: oh, i dont watch der news
+12:13 mep1976: if you ever listen a conference call make sure you listen to that one 
+12:13 mep1976: you gonna laugh
+12:13 VolCrush: lets see if we get some 10;20s
+12:14 VolCrush: ALGN* bid , too late for my sorry ass, but bid nevertheless
+12:15 MyOtherBrotherDarryl: good article in IBD today, "How To Invest In A Stock Market Correction: Focus On Relative Strength"  
+12:15 mep1976: abx resilient
+12:16 AlphaInvestor: Darryl - if all yoiu got is a hammer ...
+12:17 VolCrush: yah, Darryl im acutely aware of the leaders.....at all times
+12:17 radon224: Just as a warning; today is National Knee Day AND it is also National Nut Day.  No foolin!  You have been warned.
+12:17 VolCrush: well Alpha has a bad knee
+and my nuts are intact
+12:17 TnT: does that include a playing of the national anthem?
+12:18 radon224: I had to check google to make sure, it's true.
+12:18 radon224: Somebody goofed up
+12:18 AlphaInvestor: take a knee, to der ...
+12:19 VolCrush: der fruit a lil stuck, not gud
+12:20 VolCrush: anyone else notice China names today?
+12:20 TnT: fxi is up a point
+12:20 mep1976: added more NTWK
+12:20 TnT: china 25 etf
+12:21 MyOtherBrotherDarryl: u joking right?
+12:21 AlphaInvestor: XI said good things this weekend about his support for corps
+12:21 VolCrush: me, no im not
+12:21 VolCrush: corps
+12:22 NUG: AI, W
+12:22 AlphaInvestor: Nug
+12:22 VolCrush: oi Nug, how was your W/E
+12:22 NUG: lol
+12:22 NUG: good W, yours?
+12:22 VolCrush: your girlfriend was here earlier
+12:23 NUG: yea, she gets around
+12:23 MyOtherBrotherDarryl: nat'l knee and nut day.  funny.
+12:23 VolCrush: VRTX* bid E = 10/24
+12:24 VolCrush: 30 min charmin mr softie
+12:28 mthfr_vaxxed: noticed China names yesterday VolCrush with funky movement... i think their playing games with us ...
+12:31 mthfr_vaxxed: yesterday = friday
+12:31 VolCrush: i agree
+12:31 VolCrush: not hittin any of them
+12:32 MyOtherBrotherDarryl: CME looks interesting
+12:34 VolCrush: just bot 200 acres on the east side of Musks tunnel
+12:35 TnT: not my fault
+12:37 AlphaInvestor: TnT is obvioulsy not married,
+12:38 TnT: if a guy stands in a forest by himself, is  he still wrong?
+12:38 AlphaInvestor: Everythin ig my fault
+12:39 MyOtherBrotherDarryl: volume is fading, so something gotta happen soon.
+12:39 AlphaInvestor: TnT - yes, and I am truly sorry for it, it won't happen again
+12:39 mep1976: little pop in NTWK 
+12:40 mep1976: makes sense
+12:44 VolCrush: dont marry have 5 - 6 lady friends
+and have experience
+12:44 MyOtherBrotherDarryl: this feels like the moment of truth, either we are going to follow through up,  or fail.
+12:45 VolCrush: we gud, either way
+12:46 VolCrush: first day in over 6 weeks that TOS has THEIR watchlist correct on indicators, not flying blind
+12:46 AlphaInvestor: There was a new release over the weekend, maybe that fixed things
+12:47 VolCrush: kul, ty
+12:47 VolCrush: SQ bid
+12:47 MyOtherBrotherDarryl: MU is having a nice reversal after it undercut 9/12 low
+12:47 AlphaInvestor: What happened to SYF?
+12:48 Harv: hi ladies and gentlemen. I'm new at this trading thing. so can someone answer this question for me. when a bigger company buys out the smaller one what happens with my stock??. Do they rollover to the bigger company or what?
+12:48 VolCrush: TSLA blue pill
+12:49 VolCrush: call your broker
+12:49 AlphaInvestor: Harv - depends, sometimes it is all Cash, somtimes it is all Stock, sometimes it is a Cash+Stock mix
+12:49 AlphaInvestor: what ticker?
+12:49 TnT: and sometimes they just take your money and run
+12:50 Harv: wow thanks for the feedback
+12:50 Joe: Hi, how can I get /CJL6 (WTI Crude spot price) on my MarketWatch list?
+12:51 Joe: It seems to only allow securities, would like to see commodities
+12:51 AlphaInvestor: type it into the empty box at the bottom
+12:51 chenmann: at this rate tlry will be at 0 end of the week !!!
+12:52 AlphaInvestor: might need to use    /CJL6:XYNM
+12:53 TnT: symbols that begin with / are futures symbols, not cash
+12:53 VolCrush: call the trade desk
+12:54 AlphaInvestor: TnT - tru dat
+12:54 VolCrush: zonian goin fur der doji, daily
+12:54 TnT: interesting, /BZ-/CL over $10 again
+12:55 invertedhammer: Looking for Es 2750
+12:55 AlphaInvestor: TnT - noticed that and thought about yoiu recently
+12:55 AlphaInvestor: you remember how much could have been made with that trade last time it happened
+12:56 TnT: big
+12:56 TnT: more than lunch money
+12:56 chenmann: its hard trade, no easy setups out there.....
+12:57 chenmann: no play
+12:57 tmoney20g: nothing going on today
+12:57 AlphaInvestor: could be done with /futters ... or could be done with USO versus BNO
+12:57 VolCrush: der FANGS ARE set up for the dream killers
+12:58 IanR: Anyone have opinion on TOPS?
+12:58 Vimes: are dream killers the same as nightmares
+12:58 TnT: high/low on that spread is about $3 today, lol
