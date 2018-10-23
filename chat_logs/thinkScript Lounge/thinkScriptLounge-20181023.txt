@@ -575,3 +575,54 @@ Do you have by chance some study/script developed to identify the % of the GAP i
 09:03 MTS1: posted in Feb this year it looks like
 09:07 JohnnyQuotron: http://tos.mx/zU09X3# to save time
 09:09 Mobius: I like to push people to MyTrade because they may find studies they can use without the need to ask in here
+09:10 Mobius: I will post 5 more studies and I'm done.
+09:10 JohnnyQuotron: And because you know none of us has monkeyed with them?
+09:14 Paris: hguru - I'm sure you already have most of the studies that Mobius had posted. Look up your inventory for a study called Gap Box.
+09:16 Joebone87: hey guys.. been a while since I looked at my scripts that reference futures... I have seen some of you talk about a change in how TOS calls on them in scripts..  Im looking at my /VX futures curve and noticing that I am no longer referencing correctly.. what was the change?
+09:17 JohnnyQuotron: if you are new to that stochastic pivot study, as I am, in its default config it requires 78 bars of data to paint the fibs.  No fibbin. :()
+09:18 MTS1: check the name of the /vx symbol in your chart window header, and update the script.
+09:18 MTS1: ^Joe
+09:19 Joebone87: k thanks
+09:20 Mobius: Johnny... You can use whatever lenght you wish. But a fast Stochastic of say 10 bars is going to plot Fibonacci Lines pretty close together.
+09:22 hguru: Paris you are probably correct I have lots of them. Just wasn’t sure about that stoch one
+09:22 Joebone87: MT.. so if i understand.. it looks like they changed futures to include the 10's spot on the year as well?
+09:23 Joebone87: so /VXJ8 went to /VXJ18?
+09:24 Mobius: trend starting to look  like a Missouri Boat Ride.
+09:26 Mobius: contracts getting ready for /ES**20
+09:26 MTS1: I believe so Joe; or /VX:XCBF it looks like to me for the continuous
+09:27 MTS1: There's more info in the release notes for the prior to last release, or put them on a chart and check the window header:  
+09:30 Joebone87: thanks MT
+09:31 MTS1: yw
+09:37 JohnnyQuotron: mobius... understood.  Thank you.  
+09:38 cajun: Mobius, whats a Missouri boatride like?
+09:39 MTS1: You'd thnk a fellow Cajun would know;)
+09:40 Mobius: cajun - Dead men floating down river
+09:43 Loew: looking for a thinkscript to scan ETF's with Treasuries yielding 5% or greater
+09:45 MTS1: no scan based on ETF Holdings in TOS
+09:46 cajun: Mo, lol .... yep we gots lots othem today
+09:59 Loew: that's what I was thinking. Thanks for confirming MTS1.
+10:08 hguru: Paris I do not have that Gap Box study I might have missed it
+10:12 Mobius: hg.. Here is the Gap Box Study
+http://tos.mx/mkEvEs#
+10:14 hguru: Thx
+10:15 Mobius: yw
+10:15 Mobius: Down to 3 posts more and I'm done
+10:16 MTS1: Oh; what's a 100 more between friends?
+10:17 Mobius: Need about 21 more followers. Make it a round 1000 and 100 studies.
+10:18 MTS1: you're not ready to retire yet are you? Concerned what would happen if you stopped trading / coding;)
+10:18 Mobius: /ES Volume today is pushing 2x of the 5day avg.
+10:19 Mobius: MTS1 - Time for a walkabout.
+10:34 JohnnyQuotron: I've only been on a "DuckBoat" once.  It was a horrible ride even on a calm day. 
+10:36 JohnnyQuotron: Tales From the Dark Side...US stocks are getting hit across the board following another morning of downbeat earnings (the SPX was down ~8.5% peak-to-trough from the recent ~2940 high although has bounced off the Tues low in part due to sanguine remarks from the CAT call which began at ~11amET). The only thing that matters for this market is earnings and the CQ3 season continues to disappoint. On an absolute basis numbers are fine and EPS estimates are “beating” the St print consensus but this doesn’t capture 1) how all the various figures compare to expectations and 2) the myriad nuances of each individual report. In the medium and long-term: the 2019 EPS consensus isn’t necessarily imperiled and remains around ~$177-179 and based on that the PE is increasingly attractive at ~15-15.5x. However, if ’20 EPS doesn’t increase from ’19 (i.e. if “peak” concerns grow more pronounced) then the PE may not have material upside potential.
+10:40 cajun: Mobius, your followers are so devoted, each of us is worth about 50 no 100 of anothers follower
+10:45 inbuffalo: Need 1 less folowwer
+10:45 DMonkey: Lol. Mobius will 100 be the nn....?
+10:47 bigworm: does he relase srudies the move followers he has lol
+10:49 Paris: In case anyone else was wondering, the Gap Box that Mobius posted above is a revised version from the version he posted in August 2017. I'm tagging this as V3 in my archives.
+10:51 Paris: Time for some shut eye. Later folks
+10:51 JohnnyQuotron: Nite Paris...
+10:51 dokk408: im trying to use GetMarketMakerMove but it returns NA... anyone know how to get it working?
+10:53 Nube: Missouri boat ride. A fact known to is northerners is that the Mississippi River south because Iowa sucks.
+10:54 Nube: Bah, Missouri sucks. Another blown joke.
+11:09 MTS1: Dokk; MMM may only be around upcoming events; try a ticker that has earnings coming up
+11:11 hguru: Paris thx for the Gap Box update info
