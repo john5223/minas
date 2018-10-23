@@ -824,3 +824,163 @@ I dont see it, I hope someone can help me here with this "simple" code
 13:28 gofast992: ok so for highestall( Here I put the value I want to plot?)
 13:29 Vimes: look in the manual for the syntax
 13:29 Vimes: or just start coding it the editor will tell you the xyntax
+13:30 AlphaInvestor: DEF hi = if thiscandle > thiscandle[1] then high else hi[1];   # assuming thiscandle is already defined
+13:30 AlphaInvestor: note high is a reserved word and may be messing you up too
+13:31 Vimes: that works too
+13:31 Farmin: many ways to scale a fish
+13:31 LAComposerguy: Did someone still need a prev day close script? I've got one I wrote a long time ago.. works a treat
+13:33 gofast992: thank you guys I try to mess around witht the codes you gave
+13:35 AlphaInvestor: Overall, the 56 options positions I have are green for the day. Amost all of todays losses are in the Oily's
+13:35 LAComposerguy: I've gotta run. For whoever was aking for the Prev Day Close script.. her one for you... will only show up on intraday charts:
+13:35 LAComposerguy: input aggregationPeriod = AggregationPeriod.DAY;
+input length = 1;
+input displace = -1;
+input showOnlyLastPeriod = no;
+plot PrevDayClose;
+if getAggregationPeriod()>= AggregationPeriod.DAY or showOnlyLastPeriod and !IsNaN(close(period = aggregationPeriod)[-1]) {
+    PrevDayClose = Double.NaN;
+} else {
+    PrevDayClose =  Highest(close(period = aggregationPeriod)[-displace], length);
+PrevDayClose.SetDefaultColor(GetColor(9));
+PrevDayClose.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+addLabel(yes, "Prev Close: " + highest(close(period = AggregationPeriod.DAY)[1], 1), color.WHITE);
+13:36 Mobius: Fastest way to scale a fish - throw it through a tree chipper.
+13:37 ed_nn: Mobius MMM script from earlier, why adding (subtractiong) MMM/2 and not MMM in either direction? Have any compared MMM with 85% of ATM Straddle or (straddle + first OTM strangle)/2?  
+13:37 Vimes: I tend to want to se the prior highs and lows of the higher time frame candles versus the prior close so here i something i often have on one of my charts to watch:
+#Plot higher aggregation candles High and Low as S/R lines
+#Vimes
+plot moL = low(period = AggregationPeriod.MONTH)[1];
+plot moH = high(period = AggregationPeriod.MONTH)[1];
+plot wkL = low(period = AggregationPeriod.WEEK)[1];
+plot wkH = high(period = AggregationPeriod.WEEK)[1];
+plot dL = low(period = aggregationPeriod.DAY)[1];
+plot dH = high(period= aggregationPeriod.DAY)[1];
+plot dL0 = low(period = aggregationPeriod.DAY);
+plot dH0 = high(period= aggregationPeriod.DAY);
+moL.setdefaultColor(Color.PINK);
+moL.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+moL.setlineweight(1);
+moH.setDefaultColor(Color.PINK);
+moH.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+moH.setlineweight(1);
+wkL.setDefaultColor(color.darK_ORANGE);
+wkL.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+wkL.setlineweight(2);
+wkH.setdefaultColor(color.dark_orange);
+wkH.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+wkH.setlineweight(2);
+dL.setdefaultColor(color.white);
+dL.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+dL.setlineweight(3);
+dH.setdefaultcolor(color.white);
+dH.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+dH.setlineweight(3);
+dL0.setdefaultColor(Color.YELLOW);
+dL0.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+dL0.setlineweight(3);
+dH0.setdefaultcolor(Color.YELLOW);
+dH0.SetPaintingStrategy(paintingStrategy = PaintingStrategy.HORIZONTAL);
+dH0.setlineweight(3);
+13:40 Mobius: ed... Why ask why?  You can change a shared code any way your little heart desires.  Since Market Maker Move is non-directional I decided to add 1/2 both ways. You don't like that change it
+13:42 Mobius: As to your second question - Yes I also coded MMM using options. The one posted is more reliable since TOS drags it's data with regards options push to thinkScript
+13:44 gofast992: Thank you guys, got it to work with Lowestall and highest all, thank you very much!
+13:45 LAComposerguy: THanks Vimes!
+13:48 ed_nn: Thanks Mobius, I thought I was missing some hidden wisdom nugget ... I did try SeriesVolatility. I get wide variances in results for various approaches. I wondered if there is any study out threre (cyberspace) that established some statistics for the various expected/implied moves.  
+13:49 Mobius: Series Vol  is the Implied Volatility for each individual series so each Implied Move is calculated for those Days remaining till that series expiration
+13:53 cajun: the SPX  gap is Closed
+13:56 Vimes: yep what a day
+13:57 AlphaInvestor: /ES touched T2 from the ORB ... then reversed, still above T1
+13:58 ed_nn: Even if SeriesVolatility(1) is one day from expiration, it still not MMM (should subtract Theta?). Presumably it is the OTM  IVs average which is much higher than ATM IV (like ATM straddle). Anyway, thank you, I need to do some homework.  
+14:01 AlphaInvestor: TOS will not tell us all the details on the MMM calculation ... but we can get close
+14:01 Mobius: Series Vol is calculated using a Binomial Tree
+14:03 ed_nn: Tahnk you Alpha, Mobius
+14:06 gofast992: Right now I have a code in scanner:
+NewStudy15() is less than -10
+Now it seems the scanner shows stocks from even3 days, is there a way to let it show only stocks from since today
+14:06 gofast992: im scanning on 5min timeframe
+14:07 Vimes: i can't make sense of that , do youwant to post your code
+14:07 AlphaInvestor: Third time is a charm - hit T2 twice, trying again to break thru
+14:08 Vimes: gofast, i guess one thing that might be a problem is why scan on a 5min time frame if you want daily results?
+14:09 gofast992: because im scanning for 5minute extensions
+14:09 Farmin: goslower  the scanner is simply showing you what is matching the criteria you specified
+14:11 gofast992: yes I understand it shows what I specified, so how can I specify in the code it only gives data from the day I scan?
+14:11 Vimes: i still have no idea what you are scanning for
+14:11 Vimes: so not able to help you
+14:11 gofast992: #variables
+def lod1;
+def hod1;
+def neut;
+def smaout;
+# calculations
+# low
+lod1 = (((low - SimpleMovingAvg("length" = 20)."SMA") / low) * 100);
+#High
+hod1 = (((high - SimpleMovingAvg("length" = 20)."SMA") / high) * 100);
+#neutral
+neut = (((close - SimpleMovingAvg("length" = 20)."SMA") / close) * 100);
+if close > SimpleMovingAvg("length" = 20)."SMA" {
+    smaout = hod1;
+    smaout = lod1;
+def lodperc= LowestAll(smaout);
+plot SMA = lodperc;
+14:11 gofast992: This is the code Vimes
+14:12 gofast992: its a percentage away from moving average
+14:12 gofast992: so I scan for this study with a value -10
+14:13 gofast992: <-10
+14:14 Farmin: go read what a SMA is.  it is not a DMA if you are scanning at a 5m aggregation.
+14:17 Farmin: hint:  take your code and put it on a chart and see what it is really doing.
+14:18 Vimes: I'm not reading your code very well you want to know in the current day if closed below the moving average by a certain %, ther eis already a built in scan for that - see moinvg averge scan
+14:19 Vimes: if you want the vent to only be during the day, you can't use lowest all as it will see past the current day
+14:19 Mobius: gofast - scan results are for the current forming bar of whatever aggregation your scanning in. If you want to include results from previous bars use the command   "within x bars"
+14:21 gofast992: Thank you guys, will try to figure it out
+14:21 Vimes: or you could do as mobius says low crosses below sma*0.9 ....
+14:26 Nube: Going to take guts to fade this candle
+14:26 Vimes: you first
+14:27 AlphaInvestor: /ES fighting to get thru T2
+14:28 Nube: I very well could, Vimes. World is still red.
+14:29 Vimes: pretty darn bullish candle but who the heck knows, we gotta clear alot of junk if the bulls are going to win
+14:30 MTS1: volatile candle; but still lower high and lower low.
+14:31 Farmin: $TIKSP not headed to the moon
+14:37 Nube: Still one heck of a candle, can't imagine anyone would be surprised to see this low hold
+14:46 AlphaInvestor: Well there are some peeps in other chat rooms who think this is but a head fake (not their words)
+14:57 MTS1: sure does feel like a short squeeze; but if that's what the peeps think is that the herd? (I'm too often part of the herd;))
+15:02 poseidon77: Hi all... need some help showing a line for my current position price.... I have the following script:
+15:02 poseidon77: def x = GetAveragePrice();
+plot Data =  if x > 0 then x else close;
+15:03 poseidon77: can someone help me?
+15:07 Nube: first do you have an open position k. that ticker and secondly are you on an aggregation that works with the portfolio functions?
+15:08 poseidon77: @Nube yes, and yes
+15:08 poseidon77: @Nube its actually working but I need two improvements
+15:09 poseidon77: @Nube is there a way for a line plot to plot nothing when I don't have a position; ie instead of plotting 0 and me having to re-zoom again
+15:09 hguru: Reconranger here is a MACD MTF written by Nube awhile ago check it out or modify it MACD_MTF_Nube http://tos.mx/hfU1rX# This will allow you to put a MACD of a different symbol on the current chart example. /CL on a 5 min chart with the MACD of the /DX at 5 min or any other time agg above the 5 min
+15:10 hguru: Or on the same chart of a 5 min and show a 15 min for example
+15:10 dokk408: anyone know how to get the implied volatility of a single option...specifically, im looking for the ATM option that expires on the Friday after earnings.  
+15:12 dokk408: btw, thanks to Mobius for help with GetMarketMakerMove()
+15:15 amalia: yw
+15:19 poseidon77: @amalia can u help me with a simple script plz?
+15:19 amalia: shoot
+15:20 poseidon77: I'm trying to plot a line showing my avergae position price
+15:21 poseidon77: Here' what I've done so far:
+def x = GetAveragePrice();plot Data =  if x 0 then x else close;
+the above plots my average price correctly, and then tracks the close price when I don't have a position (instead of plotting 0). I did that in order to avoid having to re-oom everytime my poisition is zero so plot the current price instead of zero.
+15:21 poseidon77: 1. is there a way to plot "nothing" when I have no position (instead of averageprice of 0)?2. is there a way to plot a horizontal line equal to only my last average price instead of the whole sequence?
+15:21 amalia: exit the room and re-enter please
+15:21 poseidon77: ok
+15:22 poseidon77: done
+15:22 amalia: Use Double.NaN
+15:22 poseidon77: doesnt work :(
+15:22 poseidon77: if I use Double.NaN; doesn't plot anything at all
+15:23 amalia: Try something like "...if GetAveragePrice() <1 then Double.NaN else..."
+15:23 Nube: What is your average price on a stock you don't own?
+15:23 Nube: if IsNaN()
+15:23 JohnnyQuotron: With all of the fun I was having this moring I failed to capture the "banter" from the open of the Lounge until 8:56 am eastern.  And email or PB would be appreciated.
+15:23 JohnnyQuotron: And = an
+15:24 Nube: I haven't tried it but I don't see why it would plot anything if you didn't have a position
+15:24 Nube: Have you tried plot line = GetAveragePrice()
+15:25 poseidon77: nope. lemme try that
+15:25 poseidon77: oh....yes
+15:26 poseidon77: i tried plot data = GetAveragePrice()
+15:26 poseidon77: its the same thing right...just a diff variable name right?
+15:27 poseidon77: @Nube average price is 0 if there is no position
+15:28 amalia: That's why I gave you that example earlier.
+15:29 amalia: plot PurchasePrice = if GetAveragePrice() == 0 then Double.NaN else GetAveragePrice();
