@@ -626,3 +626,201 @@ http://tos.mx/mkEvEs#
 10:54 Nube: Bah, Missouri sucks. Another blown joke.
 11:09 MTS1: Dokk; MMM may only be around upcoming events; try a ticker that has earnings coming up
 11:11 hguru: Paris thx for the Gap Box update info
+11:25 LAComposerguy: Hi everyone…. I took a hiatus from trading and am slowly catching up. Did ThinkorSwim ever integrate the Investools Phase 1 and 2 scores into their Scan tools or similar? Is is still the case that the only place to see any Phase score info in Profit Charts?
+11:25 Mobius: 
+# Market Maker Move 
+def PrevClose = close(period = AggregationPeriod.Day)[1];
+def MMM = if isNaN(GetMarketMakerMove()) 
+          then MMM[1] 
+          else GetMarketMakerMove();
+def Today = if GetDay() == GetLastDay()
+            then 1
+            else 0;;
+plot upper = if Today
+             then PrevClose + (MMM/2)
+             else double.nan;
+            
+plot lower = if Today 
+             then PrevClose + (-MMM/2)
+     upper.SetDefaultColor(Color.Yellow);
+     upper.SetPaintingStrategy(PaintingStrategy.Horizontal);
+     lower.SetDefaultColor(Color.Yellow);
+     lower.SetPaintingStrategy(PaintingStrategy.Horizontal);
+addLabel(1, "MMM " + MMM + "  Upper " + Upper + "  lower " + lower);
+11:31 Mobius: LA... My understanding is that TDA is absorbing InvestTools so whatever they have of interest should still be available.
+11:32 LAComposerguy: @Modius... yeah... but they  said that like a year ago... doing a search now... there may be a gadget they added.
+11:32 AlphaInvestor: LA - you can add Phase Scores as a left side bar Widget
+11:33 Mobius: "of interest" may mean TDA found no interest in those indicators
+11:33 AlphaInvestor: You can add the Widget, but it needs to be configured
+11:33 LAComposerguy:  
+11:34 LAComposerguy: Found it... THanks
+11:34 LAComposerguy: Now... I wonder if there is API access to those numbers
+11:35 Farmin: do you see them in the thinkScript manual?  no wondering allowed.
+11:37 Farmin: they are also accessible on a tab on the right side of the charts
+11:37 LAComposerguy: @Farmin... looking now... a lot of catching up to do. Thanks. Although a quick llok shows that the numbers are not the same as what would seem are the "correct" scores in Profet charts
+11:41 Farmin: 'a man with mulltiple watches......"
+11:44 LAComposerguy: From a cursory look, seems like the Gadget Phase scores don't register.
+11:44 LAComposerguy:  
+11:44 LAComposerguy: VS.... the Profet Chart scores:
+11:45 LAComposerguy:  
+11:46 LAComposerguy: fingers crossed.
+11:47 AlphaInvestor: Like I said, you need to configure it
+11:47 AlphaInvestor: if you figure out the configuration stuff, Please share it here
+11:48 Farmin: I'd suggest contacting Live support or emailing to find out what is going on with Prophet vs other places on the platform or like AI suggests the magical config recipe.
+11:50 LAComposerguy: Yeah... I'll dig deeper. Thanks guys. Was wondering if my TIme Frame might impact the numbers... but tried different settings... no dice. Will explore further... speak to tech support. Will post back if there is good news.
+12:04 LAComposerguy: Ok… so you can set up your own criteria for create an up or down arrow… and it will display the score accordingly. So… now I have to figure out what the settings were for all the criteria. They really should have an Investools press :/
+12:04 LAComposerguy: preset
+12:04 AlphaInvestor: /ES outside the ORB again
+12:05 AlphaInvestor: find out what the IT preset was, and report back
+12:08 IT_Tech: Does anyone have a script for a plot that shows previous day close?  
+12:10 LAComposerguy: @Aloha Investor:   
+12:11 AlphaInvestor: Thank you!
+12:12 LAComposerguy: That's an old article... so I would test it can compare to current Prophet Charts results before blindly following it
+12:17 Farmin: still seems support should have up to date criteria for each of the phase scores
+12:24 AlphaInvestor: TOS should fill it in with the default InvestTools settings, then let us tweak if we want to
+12:24 AlphaInvestor: LA - do you have Phase 2 score criteria?
+12:28 LAComposerguy: No... speaking with tech support... they will see if the can get me a preset
+12:28 LAComposerguy: :)
+12:28 LAComposerguy: Alos... this is intersteing... scroll down: https://tlc.thinkorswim.com/center/release/rel-05-18-2018.html#section_2
+12:35 LAComposerguy: Ok.... not great news... this is waht tech support told me: "I was just checking with one of our tech liasons, it doesn't look like we can model the investools setup from the prophet charts directly to the new phase score gadget.
+10:34 Admin_Eric_T: Unfortunately some of the phase scores were calculated utilizing investools formulas that were hardcoded into the platform, and the phase score gadget pulls data differently than the prophet charts tool does."
+12:36 LAComposerguy: That said, I think we can get very close based on that article I posted above
+12:38 Nube: "Hardcoded into the platform" We couldn't possible duplicate it with outside of the that platform. No way, no how.
+12:40 Mobius: Translation - Smart guys that coded it for investtools left the company.
+12:42 AlphaInvestor: Weren't Prophet Charts (and maybe Phase 1/2 Scores) coded up by somebody outside TOS in the first place and bot by TOS?
+12:43 Vimes: i thought autochartist
+12:45 Mobius: One thing to buy a company, another to think that purchase includes the brain in the back room sitting over a keyboard. The folks taking the credit and the ones doing the work are rarely they same people in my experience.
+12:47 Mobius: And in this business I have seen that and do still see it first hand.
+12:47 Mobius: Just wait a few weeks and you will see it again  :)
+12:47 LAComposerguy: I think I still have my notes for YEARS ago about the formuls usefd for Phase 2... which is the issue here. Phase 1 is not the issue
+12:48 LAComposerguy: If I find them and can cobble together something, I'll let you all know
+12:50 Nube: That reads a lot like hint.
+12:51 LAComposerguy: I also asked about Big Chart integration... Nope... not gonnas happen. I asked about  EOD money flow ranking... no answer
+12:52 LAComposerguy: Anyway... this Phase 1 & 2 business is better than nothing I guess.
+13:01 alx: Hello, Does custom study alerts slow down the TOS app?
+13:02 Vimes: not thati i've seen
+13:06 Mobius: Custom studies as a whole slow down the platform. Very large studies or a lot of them make a real difference.
+13:07 Vimes: i assumed the alerts are kept server side, else how do i get them on my phone?
+13:07 Mobius: custom study alerts was asked about - not marketwatch alerts
+13:07 Vimes: gotcha
+13:10 reconranger: Hi anyone have the code for MACD_Mmultiple time frames_msb (12,26,9) ten-min-fifteen. Thanks
+13:11 Vimes: er, what?
+13:11 amalia: Wants 3 MACDs in a single study
+13:12 amalia: 1m/10m/15m perhaps?
+13:16 reconranger: Yes 1m/10/15m
+13:19 Vimes: Here is one that has been shared in the past, i can't vouch for it as i've never used it:
+#FibKing Creations
+#FibKingTrading.com
+#www.fibkingtrading.com
+input midTermPeriod = {"1 min", "3 min", "5 min", "10 min", "15 min", "30 min", "60 min", "120 min", "Daily", default "Weekly", "Monthly"};
+input longTermPeriod = {"3 min", "5 min", "10 min", "15 min", "30 min", "60 min", "120 min", "Daily", "Weekly", default "Monthly"};
+input fastLength = 12;
+input slowLength = 26;
+input MACDLength = 9;
+input midTermFastLength = 12;
+input midTermSlowLength = 26;
+input midTermMACDLength = 9;
+input longTermFastLength = 12;
+input longTermSlowLength = 26;
+input longTermMACDLength = 9;
+def middleAggregation;
+switch (midTermPeriod) {
+    case "1 min":
+        middleAggregation = AggregationPeriod.MIN;
+    case "3 min":
+        middleAggregation = AggregationPeriod.THREE_MIN;
+    case "5 min":
+        middleAggregation = AggregationPeriod.FIVE_MIN;
+    case "10 min":
+        middleAggregation = AggregationPeriod.TEN_MIN;
+    case "15 min":
+        middleAggregation = AggregationPeriod.FIFTEEN_MIN;
+    case "30 min":
+        middleAggregation = AggregationPeriod.THIRTY_MIN;
+    case "60 min":
+        middleAggregation = AggregationPeriod.HOUR;
+    case "120 min":
+        middleAggregation = AggregationPeriod.TWO_HOURS;
+    case "Daily":
+        middleAggregation = AggregationPeriod.DAY;
+    case "Weekly":
+        middleAggregation = AggregationPeriod.WEEK;
+    case "Monthly":
+        middleAggregation = AggregationPeriod.MONTH;
+def highestAggregation;
+switch (longTermPeriod) {
+        highestAggregation = AggregationPeriod.THREE_MIN;
+        highestAggregation = AggregationPeriod.FIVE_MIN;
+        highestAggregation = AggregationPeriod.TEN_MIN;
+        highestAggregation = AggregationPeriod.FIFTEEN_MIN;
+        highestAggregation = AggregationPeriod.THIRTY_MIN;
+        highestAggregation = AggregationPeriod.HOUR;
+        highestAggregation = AggregationPeriod.TWO_HOURS;
+        highestAggregation = AggregationPeriod.DAY;
+        highestAggregation = AggregationPeriod.WEEK;
+        highestAggregation = AggregationPeriod.MONTH;
+DefineGlobalColor("UpTrend", color.GREEN);
+DefineGlobalColor("DownTrend", color.RED);
+DefineGlobalColor("NoTrend", color.LIGHT_GRAY);
+def timeFrame = getAggregationPeriod();
+def testTimeFrames = if timeFrame < middleAggregation and middleAggregation < highestAggregation then yes else no;
+AddLabel(yes, if testTimeFrames  then "Allgood" else "Check Settings", if testTimeFrames  then color.GREEN else color.RED);
+# This section is for the chart level MACD
+def fastAvg = ExpAverage(close, fastLength);
+def slowAvg = ExpAverage(close, slowLength);
+plot Value = fastAvg - slowAvg;
+Value.SetDefaultColor(color.CYAN);
+plot Avg = ExpAverage(Value, MACDLength);
+Avg.SetDefaultColor(color.YELLOW);
+plot Diff = (value - avg)*3;
+# This section is for the medium term MACD
+def midTermFastAvg = ExpAverage(close(period = middleAggregation) , midTermFastLength);
+def midTermSlowAvg = ExpAverage(close(period = middleAggregation) , midTermSlowLength);
+def midTermValue = midTermFastAvg - midTermSlowAvg;
+def midTermAvg = ExpAverage(midTermValue, midTermMACDLength);
+plot midTermDiff = (midTermValue - midTermAvg)*3;
+midTermDiff.Hide();
+midTermDiff.HideBubble();
+# This section is for the long term MACD
+def longTermFastAvg = ExpAverage(close(period = highestAggregation) , longTermFastLength);
+def longTermSlowAvg = ExpAverage(close(period = highestAggregation) , longTermSlowLength);
+def longTermValue = longTermFastAvg - longTermSlowAvg;
+def longTermAvg = ExpAverage(longTermValue, longTermMACDLength);
+plot longTermDiff = (longTermValue - longTermAvg)*3;
+longTermDiff.Hide();
+longTermDiff.HideBubble();
+def midTermLower = midTermDiff < midTermDiff[1];
+def midTermHigher = midTermDiff > midTermDiff[1];
+rec midTermSignal = if midTermLower then  yes  else if midTermSignal[1] == yes and midTermHigher == no then yes else no;
+#plot test = midTermSignal;
+def longTermLower = longTermDiff < longTermDiff[1];
+def longTermHigher = longTermDiff > longTermDiff[1];
+rec longTermSignal = if longTermLower then  yes  else if longTermSignal[1] == yes and longTermHigher == no then yes else no;
+midTermDiff.AssignValueColor(if midTermSignal then color.RED else color.BLUE);
+longTermDiff.AssignValueColor(if longTermSignal then color.RED else color.BLUE);
+Diff.AssignValueColor(if Diff > Diff[1] and midTermSignal == no and longTermSignal == no then GlobalColor("UpTrend") else if Diff < Diff[1] and midTermSignal == yes and longTermSignal == yes then GlobalColor("DownTrend") else GlobalColor("NoTrend") );
+Diff.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
+Diff.SetLineWeight(3);
+plot zeroLine = if close[-1] > 0 then 0 else Double.Nan;
+zeroLine.AssignValueColor(if Diff > Diff[1] and midTermSignal == no and longTermSignal == no then GlobalColor("UpTrend") else if Diff < Diff[1] and midTermSignal == yes and longTermSignal == yes then GlobalColor("DownTrend") else GlobalColor("NoTrend") );
+zeroLine.SetPaintingStrategy(PaintingStrategy.POINTS);
+zeroLine.SetLineWeight(3);
+13:19 AlphaInvestor: be late at 3 aggregations ...
+13:21 reconranger: Thanks, will test it out
+13:24 gofast992: Hello, I am working on a code which can plot the highest value of a moving average.
+Where I was thinking about myself was:
+IF Thiscandle > Thiscandle[1] {
+	high = Thiscandle   }
+ELSE {
+	high = Thiscandle[1]   }
+but this wont plot the highest value of all candles, only out of two candlebars. So I think it has to do something with n=n+1.
+I dont see it, I hope someone can help me here with this "simple" code
+ Thank you!
+13:25 Vimes: highest(high,n);?
+13:26 gofast992: Vimes does that work for getting the highest value for a SMA?
+13:27 Farmin: or highestall().     the manual is your friend
+13:27 Vimes: highest(sma,n); or highestall(sma.....)
+13:28 AlphaInvestor: Gofast - go slower ... one of the rules in thinkScript is .... You Cannot Make Up Your Own Syntax
+13:28 gofast992: ok so for highestall( Here I put the value I want to plot?)
+13:29 Vimes: look in the manual for the syntax
+13:29 Vimes: or just start coding it the editor will tell you the xyntax
