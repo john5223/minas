@@ -906,3 +906,92 @@ plot line = Sum(ivValue == priceValue, n);
 17:13 Nube: So the notes are from the script I took the snippets out of. That uses IV, not vixfix
 17:14 Nube: Note on that is wrong.
 17:14 slashgw: it's an interesting idea.  
+17:20 Nube: Next I think an enterprising scripter should find a method to weight the vol of each bar.
+17:21 slashgw: it's all you Nube!
+17:21 JohnnyQuotron: alpha... i7-5930K  on an asrock Taichi x99 board for example
+17:22 Nube: After that the should write a version that also plots the same for the index so you can compare against the benchmark
+17:28 JohnnyQuotron: nube.. did you have the opportunity to poke around the profit/loss script ?
+17:30 Nube: Not yet. Want to get into that when I can set some time aside for it. Don't want to try to fly through that one.
+17:30 AlphaInvestor: JQ - no go for me, unless I replace my motherboard
+17:31 JohnnyQuotron: Thank you.  I appreciate it.
+17:32 AlphaInvestor: There is nothing BAD about volatiltiy going up when price falls ... it is what is expected
+17:33 AlphaInvestor: more puts get bot, puts get more expensive ... no magic happens
+17:34 JohnnyQuotron: Alpha..  understood.  But if you ever over overclock that MB/Processor let me know.  I will keep my extra hardware until my wife makes me clean out my office closet again.  She's a real slave driver like that .
+17:36 AlphaInvestor: I just checked - IV of SPX and VIX are not identical, but very close
+17:36 slashgw: maybe put them in a box labeled "Christmas fruitcake to be re-gifted"
+17:38 AlphaInvestor: To answer a different query - XHB often correlates well with /LBS. The 10 day correlation is currently 85%, the 60 day correlation is 68%
+17:38 Nube: Then instead of calling that line good volatility it can be bad volatility or abnormal volatility etc
+17:39 AlphaInvestor: in the past 252 days VIX and SPX moved opposite 30% of the time ...
+17:39 AlphaInvestor: I believe that is unusually large
+17:41 AlphaInvestor: I keep a constant alert in MarketWatch Alerts for when SPX goes UP more than the ATR, and VIX also rises.
+17:43 AlphaInvestor: And the reverse of that  .... I have only seen it trigger one time while I was logged into TOS
+17:43 amalia: Don’t think it’s unusual
+17:45 AlphaInvestor: that 30% probably isn't unusual, because SPX could have gone up a penny, and VIX gone up 0.01. The test needs to be more than just slight moves
+17:46 slashgw: so maybe use % ?
+17:46 AlphaInvestor: I used ATR in the MW Alert
+17:47 AlphaInvestor: Well, I need to get home - dinner awaits - Later Traders
+17:47 slashgw: or I mean, base it on a % increase across both, after determining what previous normals/extremes were.
+17:47 JohnnyQuotron: later Alpha...fly safe
+17:47 slashgw: just throwing stuff out there, I do not consider myself a propeller head with regard to that stuff
+18:17 trader1023: Anyone have any ideas how to script up a calculation of a implied open? I can't even find starting blocks like fair value.
+18:22 Nube: How do you calculate fair value?
+18:24 slashgw: a comparison against whatever the futures index is currently at?
+18:26 slashgw: would probably need more of an example how trader plans on using it.  and with what instruments?
+18:26 Mobius: Fair Value = CashIndx(1+interstRate(DTE/360))-DivToEXP
+18:28 Mobius: If your looking for an arbitrage opportunity forget it. MM's cover that in about 5/100 seconds of the open.
+18:29 trader1023: I was just hopeing to calculate the implied open of the corresponding, so for example use /ES and work out the implied open for SPY
+18:30 trader1023: But it is a lot to go and get all the dividends for all the components of the SPY etc. and was hoping that ThinkScript had some bits that might help
+18:30 Nube: I dunno fellas, but I think the abnormal vol thing might be worth exploring. If we get price with 1 SD we get an event that happens 38% of the time
+18:31 Nube:   
+18:31 Nube: /es and /nq 5 years daily
+18:39 Mobius: trader - maybe this will help you
+1 E-mini SP 500 index contract = 500 SPY shares.
+1 E-mini SP500 Point = .10 SPY cents.
+1 E-mini SP500 Point is $50.00 = .10 SPY cents (times 500 shares) is $50.00 .
+18:41 trader1023: Hmm OK. But there is a difference right cause it is a future so needs to include dividend and interest etc. right?
+18:42 trader1023: Might be nice to start with a study that just does what you did and plots that on top of SPY for open based on the /ES
+18:45 JohnnyQuotron: Mobius.. time for a twenty second teach-in regarding the RSI Laguerre Gaussian version?
+18:47 JohnnyQuotron: inputs of 5, 13, 8 versus 8, 13, 4 what are we looking for or hoping to learn when we make that adjustment?
+18:49 Nube: How is the implied open for /es determined?
+18:50 trader1023: Prior Day Closing + (Futures Value - Fair Value)�
+18:51 slashgw: is there an = somewhere?
+18:52 slashgw: ah, nevermind.  see Nube's question now
+18:52 Nube: I'm confused, what's the future for /ES?
+18:53 DMonkey: It’s only fair if it goes my way.
+18:54 Nube: Let's assume you mean SPY. SPY closed at 275 so it's 275 + (/ES - FairValue)
+18:55 Nube: Next step is do you use teh RTH close value for /ES or whatever the current price is?
+18:56 trader1023: Nuve, Yeh so just need to calculate FairValue which is the difficult bit I think
+18:56 trader1023: I think the current price
+18:56 trader1023: As the implied open will keep changing until the SPX opens at the, in theory, implied open (if I understand it all correctly)
+18:56 slashgw: SPY implied open = Prev SPY close +/-  /ES gap  ?
+18:56 trader1023: Yeh think so
+18:56 Mobius: /ES Fair Value is what it closed for last
+18:57 trader1023: Really? I thought it didn't include all the extra interest dividend stuff
+18:57 Mobius: Your looking for the Fair Value as compared to SPX
+18:57 Paris: According to my notes Mobius posted a Fair Value  study way back in 2015, comparing SPX/ES 
+18:57 slashgw: but nailing down the closer  ratio  between SPY and ES
+18:58 Mobius: Pairs don't confuse the poor soul
+18:58 trader1023: Oh right yeh sorry, the fair value of the underlying
+18:58 Paris: Mohius - Gotcha, just checking in and watching the commentary. Going for my morning meetings now. Later folks
+18:59 Mobius: LOL best to yah Paris
+18:59 trader1023: The interest rates and dividends to expire etc. are all accessible in ToS right? Just need to interate through it all and add it all up?
+19:00 Paris: And to you Mobius. Have a restful evening.
+19:01 Mobius: Interest Rate is also an available variable in TOS
+19:02 trader1023: ah ok
+19:08 Nube: Mobius, am I reading that fair value correctly? Is that cash index multiplied by 1 + rate?
+19:14 Mobius: Nube your leaving off some pretty good stuff there
+19:19 DMonkey: Values
+Sept S&P 500 Futures Price	1157.00 pts
+ S&P 500 Cash Index	1146.00 pts
+Interest Rate	5.7%
+Dividends to Expiration of Futures (Converted to S&P points)	3.47 pts
+Days to Expiration of the Futures Contract	 78 days
+S&P 500 Dividend Yield	                       1.40%
+Fair Value Calculation
+Cash [1+r (x/360)] - Dividends	1146 [1+.057 (78/360)] - 3.47
+= Fair Value of Futures (Final)	= 1156.68
+19:21 trader1023: cool
+19:24 Nube: What operation is brackets? 1146 [1+.057 (78/360)]
+19:25 Nube: Thanks, Mobius. Maybe eventually I'lll even figure out what to do with that volatility stat
+19:25 Nube: "start paying attention now" seems obvious
+19:29 DMonkey: multiplication in this case
