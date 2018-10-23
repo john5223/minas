@@ -1981,3 +1981,100 @@ we too smart fur dat
 15:39 RandomDan: lower housing starts
 15:39 streetglide: yes lower
 15:39 TnT: yes Dan, was tragic decision
+15:40 AlphaInvestor: TnT - not entirely incorrect - mine sites are rehabilitated back into trees where possible
+15:41 TnT: have noticed heat pump manufactures made a major switch to aluminum to lower costs, and it reduces theft
+15:41 RandomDan: I have a 31.20 bid on USCR, EXT, nobody biting.
+15:41 amalia: No soliciting allowed.
+15:41 AlphaInvestor: no way AC units will last as long using aluminum
+15:41 TnT: both indoor and outdoor coils these days are  aluminum
+15:42 AlphaInvestor: not mine - I'm old school
+15:42 RandomDan: I agree Al.
+15:42 TnT: I had an indoor coil develop a  leak before warrenty expired
+15:42 AlphaInvestor: lucky
+15:43 RandomDan: plus it's unrepairable
+15:43 featherweight: Phew
+15:43 TnT: indoor coil has bi-metallic junctions with aluminum tubing and copper fins, galvanic corrosion can kill it
+15:43 featherweight: Time to go loooong energy complex
+15:43 AlphaInvestor: I have a slow leak in one of mine, has been tested and they cannot find it, so they just put an extra pound of refridgerant in every year
+15:43 TnT: cost me $1500 to replace under warrenty
+15:44 AlphaInvestor: dats nuts, shoulda been free
+15:44 RandomDan: yep
+15:44 RandomDan: rip off
+15:44 TnT: the new coil was free, labor and refrigerant not free
+15:45 TnT: was a shock
+15:45 amalia: Please keep commentary market related
+15:45 RandomDan: amalia I wasn't soliciting
+15:45 amalia: I know
+15:45 TnT: you missed the market amalia, you were late
+15:46 RandomDan: just pointing out that nobody is desperate to sell
+15:46 TnT: AI, did you get the air bag fixed yet on Fusion?
+15:46 amalia: Ok, RD.
+15:46 AlphaInvestor: TnT - no, they haven't contacted us yet
+15:47 AlphaInvestor: Amalia - we are discussing the relative values of Copper and Aluminum - totally market related
+15:47 RandomDan: TSLA might be making a bit of a move right now
+15:48 TnT: TSLA reports Wed after close
+15:48 RandomDan: yeah and they moved itup
+15:48 RandomDan: it up
+15:49 TnT: hmmm, oil no big reaction, they had mysteriously priced in the inventory
+15:49 streetglide: yeah mysteriously...lol
+15:49 TnT: 16:47 News Bot: Canadian Foreign Minister Freeland says stay tuned regarding Canada's arms exports to Saudi Arabia
+15:50 TnT: wait a sec, Canada exports arms?
+15:50 streetglide: I know, what?
+15:50 streetglide: battle axes
+15:50 TnT: military chain saws?
+15:50 RandomDan: why wouldn't they?
+15:51 amalia: lol
+15:51 ameriman: javelins and spears
+15:51 streetglide: red flannel shirts
+15:52 RandomDan: weaponized canabis
+15:52 AlphaInvestor: TnT - rowboats, and sticks & stones
+15:53 AlphaInvestor: Street - nice - red flannel shirts
+15:53 RandomDan: I like red flannel shirts
+15:53 Bid_Ask: doom
+15:54 RandomDan: where?
+15:54 amalia: just a general comment. 
+15:54 amalia: lol
+15:54 streetglide: Ford and GE leading the markets
+15:55 RandomDan: I sold off my remaining GE today. probably a mistake
+15:56 streetglide: depending on your time horizon maybe
+16:00 DrHouse: Positions improved since my last rant
+16:01 amalia: Hope so
+16:02 TnT: all have a good evening
+16:05 DrHouse: Cya
+16:05 amalia: Laters, TnT.
+16:06 GraceGu: Hi , may I ask  your comments if TOS has the indice for Smart money flow chart? Thanks, 
+16:06 amalia: Grace, do you have a link to the prospectus?
+16:07 GraceGu: no
+16:07 amalia: It would help.
+16:08 amalia:  827 was BuySignal, fwiw.
+16:08 ameriman: Grace what is the index for smart money flow?
+16:09 GraceGu: yeah, I think the chart as you showed
+16:09 GraceGu: it is what I want
+16:09 GraceGu: would you mind to let me know how can I get the chart? I have no idea
+16:09 amalia: lol 
+16:10 amalia: GraceGu, i would contact support@thinkorswim.com and ask for a platform tour. Before the tour, I would write down at least 10 questions/inquiries and just have them show you everything, from top to bottom, inside and out.
+16:11 GraceGu: that will be great, i appreciate !
+16:11 ameriman: Grace you can call them also 866-839-1100
+16:11 amalia: You're welcome. You can also call them at 866-839-1100
+16:12 amalia: ameriman is the guru here. Ask him anything
+16:12 GraceGu: yes, i can talk to them , thank you guys so much
+16:12 amalia: =) 
+16:15 tmoney20g: i'm back
+16:21 amalia: THANK GAWDDDD
+16:23 tmoney20g: srsly
+16:23 tmoney20g: what would you do w/o me
+16:24 amalia: lol
+16:46 GraceGu: @amalia  Hi Amalia, I just talked to the support team, and was told  " there would not be any studies or pictures like that found on the prospectus"
+16:47 GraceGu: i show them the picture for easy understanding
+16:51 M-C-M: hi guys, i wonder if you encountered ever this issue. On ToS active trader, i cant drag the sell order up or down once i got a partial filling, the system says that can not safely calculate the amount of the remained shares... i chated ToS rebooted the app but still nothing, it does same thing. TY
+16:54 amalia: GraceGu, I think our signals crossed earlier. That picture was not in any way a reference to your inquiry.
+16:55 M-C-M: SO EVERYTIME I GOT PARTIAL FILLING I HAVE TO CANCEL THE ORDER, RECALCULATE REMAINed shares and put another one, not only frustrating but i lose pretious timemost of times losing money with this when i need speed selling by draging the sell order down
+16:55 amalia: M-C-M, the complaint department can be reached at support@thinkorswim.com or by dialing 866-839-1100
+16:56 M-C-M: i did, they rebooted my app but nothing, tired of starting disscussions again, i thought any of you had same issu, eventually i ll call again
+16:57 amalia: Nope. Nothing on my end.
+17:00 GraceGu: Is that a special access requirement to prospectus? I am trying to find it from website, but failed as well. so not sure if you can give me the link so I can have a study . thanks
+17:25 mthfr_vaxxed: anyone short supermicro at the beginning of this month?
+17:39 G60: hello ?
+17:39 G60: https://discord.gg/vqFkbUS
+17:40 amalia: G60, outside links are NOT allowed.
+17:40 amalia: Especially of another chat room.

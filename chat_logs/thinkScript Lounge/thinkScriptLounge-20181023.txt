@@ -984,3 +984,268 @@ the above plots my average price correctly, and then tracks the close price when
 15:27 poseidon77: @Nube average price is 0 if there is no position
 15:28 amalia: That's why I gave you that example earlier.
 15:29 amalia: plot PurchasePrice = if GetAveragePrice() == 0 then Double.NaN else GetAveragePrice();
+15:30 poseidon77: @amalia @nube Double.NaN is working now.... (I could've sworn it didn't work a few minutes ago !!!)
+15:30 reconranger: Thanks HGURU
+15:30 poseidon77: @amalia @ nube one more thing puhleez
+15:31 poseidon77: is there a way to plot a horizontal line showing just the current average price (instead of a all my average price; ie lock only to the last nonzero price?)
+15:32 MTS1: yep; use close[-1]
+15:32 MTS1: and IsNan() Nube gave you earlier
+15:34 poseidon77: @MTS 1 close[-1] ?? I'm trying to plot GetAveragePrice()
+15:35 Nube: highestAll and the use an if then the specify the current bar
+15:35 MTS1: plot PurchasePrice = if IsNan(close[-1] and GetAveragePrice() > 0 then  GetAveragePrice() else Double.NaN;
+15:36 amalia: JQ, you around?
+15:36 MoMo: Is Mr. Script doing a webinar ?
+15:38 Farmin: look it up, Education tab/webcasts
+15:39 MTS1: Pose; you use IsNan and Close[-1] to determine you're on the right side of the chart as you requested. More specifically !isNaN(close) and IsNaN(close[-1]) is the last / current bar.
+15:42 poseidon77: @MTS1 sorry....imma bit slow here :) .... I copied/pasted the lines you sent and it doesn't work. all red.
+15:42 poseidon77: could u try it?
+15:43 amalia: Missing )
+15:44 amalia: IsNaN(Close[-1])
+15:47 MTS1: just typed in chat; just explaining the logic. Did you follow the logic?
+15:50 poseidon77: @amalia I tried that....not plotting
+15:51 poseidon77: @MTS1 its not plotting anything
+15:51 amalia: What's the error reason
+15:52 MTS1: you can fix the syntax if you understand the logic; these are just examples: Do you follow the logic or do you have a question about any portoin what it means?
+15:53 poseidon77: @amalia @MTS1 oooooh....got the problem....cuz now there is no current position so nothing to plot.... should work one I have a position
+15:53 poseidon77: ok....so couple more things pleeez :)
+15:54 amalia: If we stop replying, you can stop requesting.
+15:54 poseidon77: is there a way to plot a horizontal line (ir extended right and left, as if it is a price level marker versus starting from the position opening ?)
+15:55 poseidon77: @amalia thanks sooo much :)
+15:55 fibfibfib: Hi guys, how do i add a label/bubble to a pivot line to show its S1,S2,S3,R1,R2,R3,pp on the SVE indicator. I got confuse which line is which when there are so many lines.
+15:56 poseidon77: also....can i give the line a green color when the position is long and red when position is short (ie -ve quantity)
+15:56 poseidon77: ?
+15:57 amalia: fib, I would take all lines off your chart until you can tell me how each line is making you money.
+15:58 amalia: pos, last item there can be solved by looking at the AssignValueColor() function.
+15:58 Farmin: and while you're at it, explain the difference between a label and bubble
+15:58 amalia: ha
+16:00 fibfibfib: when there are confluences with multiple pivot lines, it adds as a stronger signal. But because there are mutliple lines, i can't tell if its S2 or S3 so if i add a label that read S2 or S3 then I know we might be bottoming
+16:01 amalia: Have you looked at the AddLabeL() function?
+16:01 fibfibfib: no
+16:02 amalia: Might want to start there.
+16:03 Farmin: and compare/contrast with AddChartBubble()
+16:03 fibfibfib: # Regions of support and resistance
+input timeFrame = {default DAY, WEEK, MONTH};
+input showOnlyToday = yes;
+input DynamicHide = yes;
+input zone=1.5;
+input showMidpoints = no;
+def h = dynamichide;
+def m=showMidpoints;
+def na=double.nan;
+# Define lclose = last completed bar close:
+#rec lclose = if IsNaN(close[-1]) then close else lclose[1];
+def lclose=close;
+plot R3;
+plot R2;
+plot R1;
+plot PP;
+plot S1;
+plot S2;
+plot S3;
+# midpoints
+plot r3r2;
+plot r2r1;
+plot r1pp;
+plot pps1;
+plot s1s2;
+plot s2s3;
+if showOnlyToday and !IsNaN(close(period = timeFrame)[-1])
+then {
+    R1 = Double.NaN;
+    R2 = Double.NaN;
+    R3 = Double.NaN;
+    PP = Double.NaN;
+    S1 = Double.NaN;
+    S2 = Double.NaN;
+    S3 = Double.NaN;
+    r3r2=na;
+    r2r1=na;
+    r1pp=na;
+    pps1=na;
+    s1s2=na;
+    s2s3=na;
+    PP = (high(period = timeFrame)[1] + low(period = timeFrame)[1] + close(period=timeframe)[1]) / 3;
+    R1 = 2 * PP - low(period = timeFrame)[1];
+    R2 = PP + high(period = timeFrame)[1] - low(period = timeFrame)[1];
+    R3 = R2 + high(period = timeFrame)[1] - low(period = timeFrame)[1];
+    S1 = 2 * PP - high(period = timeFrame)[1];
+    S2 = PP - high(period = timeFrame)[1] + low(period = timeFrame)[1];
+    S3 = S2 - high(period = timeFrame)[1] + low(period = timeFrame)[1];
+    r3r2=(r3+r2)/2;
+    r2r1=(r2+r1)/2;
+    r1pp=(r1+PP)/2;
+    pps1=(PP+S1)/2;
+    s1s2=(s1+s2)/2;
+    s2s3=(S2+s3)/2;
+# Formatting:
+# Set color, line weight, style and hiding parameters
+# for each pivot level
+PP.SetDefaultColor(color.gray);
+pp.SetLineWeight(4);
+pp.SetStyle(curve.long_DASH);
+pp.setHiding(h and (lclose > r2 or lclose < s2));
+r1.SetDefaultColor(color.red);
+r1.SetLineWeight(4);
+r1.SetStyle(curve.long_DASH);
+r1.setHiding(h and lclose < s1);
+r2.SetDefaultColor(color.red);
+r2.SetLineWeight(1);
+r2.SetStyle(curve.long_DASH);
+r2.setHiding(h and lclose < r1);
+r3.SetDefaultColor(color.red);
+r3.SetLineWeight(1);
+r3.SetStyle(curve.short_DASH);
+r3.setHiding(h and lclose < r2);
+s1.SetDefaultColor(color.GREEN);
+s1.SetLineWeight(4);
+s1.SetStyle(curve.long_DASH);
+s1.setHiding(h and lclose > r1);
+s2.SetDefaultColor(color.GREEN);
+s2.SetLineWeight(1);
+s2.SetStyle(curve.long_DASH);
+s2.setHiding(h and lclose > s1);
+s3.SetDefaultColor(color.GREEN);
+s3.SetLineWeight(1);
+s3.SetStyle(curve.short_DASH);
+s3.setHiding(h and lclose > s2);
+r3r2.setdefaultcolor(color.cyan);
+r3r2.setlineweight(1);
+r3r2.setstyle(curve.short_DASH);
+r3r2.sethiding(h and lclose<r2 OR !m);
+r2r1.setdefaultcolor(color.cyan);
+r2r1.setlineweight(1);
+r2r1.setstyle(curve.short_DASH);
+r2r1.sethiding(h and lclose<r1 OR !m);
+r1pp.setdefaultcolor(color.cyan);
+r1pp.setlineweight(1);
+r1pp.setstyle(curve.short_DASH);
+r1pp.sethiding(h and lclose<PP OR !m);
+pps1.setdefaultcolor(color.cyan);
+pps1.setlineweight(1);
+pps1.setstyle(curve.short_DASH);
+pps1.sethiding(h and lclose>PP OR !m);
+s1s2.setdefaultcolor(color.cyan);
+s1s2.setlineweight(1);
+s1s2.setstyle(curve.short_DASH);
+s1s2.sethiding(h and lclose>s1 OR !m);
+s2s3.setdefaultcolor(color.cyan);
+s2s3.setlineweight(1);
+s2s3.setstyle(curve.short_DASH);
+s2s3.sethiding(h and lclose>s2 OR !m);
+plot ppp=if isnan(close[0]) then na else pp+zone;
+plot ppm=if isnan(close[0]) then na else pp-zone;
+plot ppp0=ppm;
+plot ppm0=ppp;
+addcloud(ppp,ppm);
+addcloud(ppp0,ppm0);
+ppp0.sethiding(if lclose[1]>ppp then 1 else 0);
+ppp.sethiding(if lclose[1]<ppm then 1 else 0);
+plot r1p=if isnan(close[0]) then na else r1+zone;
+plot r1m=if isnan(close[0]) then na else r1-zone;
+plot r1p0=r1m;
+plot r1m0=r1p;
+addcloud(r1p,r1m);
+addcloud(r1p0,r1m0);
+r1p0.sethiding(if lclose[1]>r1p OR lclose[1]<s1 then 1 else 0);
+r1p.sethiding(if lclose[1]<r1m OR lclose[1]<s1 then 1 else 0);
+r1m0.sethiding(if lclose[1]>r1p OR lclose[1]<s1 then 1 else 0);
+r1m.sethiding(if lclose[1]<r1m OR lclose[1]<s1 then 1 else 0);
+plot s1p=if isnan(close[0]) then na else s1+zone;
+plot s1m=if isnan(close[0]) then na else s1-zone;
+plot s1p0=s1m;
+plot s1m0=s1p;
+addcloud(s1p,s1m);
+addcloud(s1p0,s1m0);
+s1p0.sethiding(if lclose[1]>s1p OR lclose[1]>r1 then 1 else 0);
+s1p.sethiding(if lclose[1]<s1m  OR Lclose[1]>r1 then 1 else 0);
+s1m0.sethiding(if lclose[1]>s1p OR lclose[1]>r1 then 1 else 0);
+s1m.sethiding(if lclose[1]<s1m  OR Lclose[1]>r1 then 1 else 0);
+ppp.setDefaultColor(color.black);
+ppm.setDefaultColor(color.black);
+r1p.setDefaultColor(color.black);
+r1m.setDefaultColor(color.black);
+s1p.setDefaultColor(color.black);
+s1m.setDefaultColor(color.black);
+ppp0.setDefaultColor(color.black);
+ppm0.setDefaultColor(color.black);
+r1p0.setDefaultColor(color.black);
+r1m0.setDefaultColor(color.black);
+s1p0.setDefaultColor(color.black);
+s1m0.setDefaultColor(color.black);
+ppp.hidebubble();
+ppm.hidebubble();
+r1p.hidebubble();
+r1m.hidebubble();
+s1p.hidebubble();
+s1m.hidebubble();
+ppp0.hidebubble();
+ppm0.hidebubble();
+r1p0.hidebubble();
+r1m0.hidebubble();
+s1p0.hidebubble();
+s1m0.hidebubble();
+16:03 MTS1: actually'; probably want chartbubble to add a bubble to each line
+16:04 fibfibfib: here's what i mean working on to see how i can add it along with line
+16:05 amalia: poseidon,
+#Horizontal AllChart Line
+def p = GetAveragePrice();
+plot priceLine = Highestall(if IsNaN(close[-1]) then p else Double.NaN);
+16:05 fibfibfib: TD Ameritrade IP Company, Inc. (c) 2014-2018
+input aggregationPeriod = AggregationPeriod.DAY;
+def PH = high(period = aggregationPeriod)[1];
+def PL = low(period = aggregationPeriod)[1];
+def PC = close(period = aggregationPeriod)[1];
+PP = (PH + PL + PC) / 3;
+R1 = 2 * PP - PL;
+R2 = PP + (PH - PL);
+R3 = 2 * PP + (PH - 2 * PL);
+S1 = 2 * PP - PH;
+S2 = PP - (PH - PL);
+S3 = 2 * PP - (2 * PH - PL);
+R3.SetDefaultColor(GetColor(5));
+R2.SetDefaultColor(GetColor(5));
+R1.SetDefaultColor(GetColor(5));
+PP.SetDefaultColor(GetColor(0));
+S1.SetDefaultColor(GetColor(6));
+S2.SetDefaultColor(GetColor(6));
+S3.SetDefaultColor(GetColor(6));
+R3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+R2.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+R1.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+PP.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+S1.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+S2.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+S3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
+16:05 MTS1: Fib; as suggested look at AddChartBubble(); check it out in the reference for the syntax.
+16:05 amalia: fib, no, we know the code.
+16:05 MTS1: and don't copy built-in indicators in here; we can look up the code in TOS;)
+16:10 Vimes: which built in is that?
+16:11 amalia: Post @ hh:05
+16:14 Vimes: reading helps
+16:37 poseidon77: @amalia.... thanks....color works now
+16:54 twoshoes: Set it up as Short, Med, Long, and then "Input" values to change in study Properties.
+16:55 twoshoes: You'd have to change the variable descriptions down through the study.
+16:56 amalia: JQ, when you get on, I need some help.
+17:16 daybuck: I was wondering if someone out the could convert a script into thinkscript for me? I don't have a clue how to even start. Thanks
+17:21 amalia: The manual is a great start.
+17:24 daybuck: Im sure it probably would be for someone that knows how to code but I cant even translate the code I want converted
+17:31 amalia: If it's making you money, it's a worthy endeavor to start learning.
+17:31 amalia: Else contact someone outside of the chatroom by other means than soliticing in here and pay them to do it for you.
+17:32 daybuck: TDA told me this was the place to ask for help
+17:36 amalia: You may have better luck coming back tomorrow during regular trading hours and see if anyone wants to help you. Converting is above my paygrade. What's the study? It's probably already in thinkScript.
+17:38 daybuck: This is the script...It is pivot points on different timeframes
+17:38 amalia: Don't paste it!
+17:39 amalia: Stop!
+17:39 amalia: Confirm please
+17:39 amalia: daybuck!!!
+17:39 daybuck: yes
+17:39 amalia: Before we get to anything about code or sharing anything...
+17:39 amalia: What's it called?
+17:39 amalia: What's it do?
+17:41 daybuck: As I said before, it is pivot points on different time frames. I dont know what else to tell you
+17:43 MTS1: how are the pivots detemined?  I assme you looked at the built-in ones? 
+17:44 amalia: daybuck?
+17:45 daybuck: yes
+17:46 amalia: Can you answer some of the questions we've provided?
+17:46 amalia: daybuck, keep up or else we're moving on.
+17:49 daybuck: amalia, I have answered the best I know to answer. I don't code so maybe your questions are over my head. I came here for help and nobody has even asked to see the code. Maybe if you look at it you can answer your own questions, unfortunately, I can't
