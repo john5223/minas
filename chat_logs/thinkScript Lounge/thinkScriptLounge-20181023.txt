@@ -518,3 +518,60 @@ or check out the Learning Center, full of demos on how to use thinkorswim tradin
 06:32 JohnnyQuotron: Flash morning update: ugly everywhere; no "new" news but prior negatives weighing on
 sentiment; despite awful price action today, ~2700 should be support in SPX (cycle is
 peaking, but not collapsing); CAT/MMM/UTX earnings BMO and TXN AMC.
+07:25 G81moyano: Hey folks.
+Do you have by chance some study/script developed to identify the % of the GAP in PM/AM? if so could you share it ???
+07:26 slashgw: gap is popular recently
+07:26 G81moyano: in fact yes...
+07:27 MTS1: How do you calculate that G8; what bars are you looking at? Is this a scan or indicator of % on a chart?
+07:29 Mobius: GM all - Big picture note: If this area of support fails the next lower area is 2600 / 2620 the lower end of the trading range that started in Feb and ended in the breakout in July
+07:29 MTS1: Thanks Mobius!
+07:31 Mobius: There's a study on MyTrade that plots the Gap Box.
+07:32 Mobius: you could plot a line at Midnight to see if the gap was larger in the morning trade or evening
+07:42 Nube: That would be even better prices than I had hoped for. *greedily rubs hands together*
+07:54 colorado-cliff: Does anyone know if I can read an external file (e.g. an XML file) from within a Script?
+07:55 AlphaInvestor: No you cannot
+07:55 MTS1: Colorado nope; you'd have to hard-code data in the script
+07:55 Bossladyevy: GM new here any advice?
+07:56 colorado-cliff: @MTS1 - thx. that's what I was afraid of. I have some price levels that I want to draw lines on every day. You've confirmed that I'm out of luck...and just need to do it manually instead of using a simple study file
+07:59 MTS1: Boss; yes review tlc.thinkorscript.com to get started; there's TS tutorials there, and a referene to find indicators or propper syntax. Also tutorials for TOS if you're new to TOS.
+------- Monday, October 22, 2018 -------
+08:00 MTS1: Colorado; it can be done in a script. You just have to put the levels in per ticker accordingly. I've seen long term support/restance / fib line scripts that are hard-coded to the levels. Once you have the syntax probably easiest to build the script in XCel.
+08:02 slashgw: colorado, where is your data originating?  the lines you are talking abot?
+08:02 MTS1: Boss; the 'help with thinkscript' button in the editor also brings you straight to the reference, and usually any help button in TOS brings you to the appropriate tutorial page for that window.
+08:04 MTS1: you scared him away slash;)
+08:04 slashgw: oops.  sorry
+08:04 Billions: Hi everyone does anyone have an auto fib retracement study they can share
+08:05 slashgw: does it have to work?
+08:05 Billions: lol of course
+08:06 slashgw: hmm, okay.   that is a tough one then.
+08:06 Billions: ok antbody help
+08:06 slashgw: probably you can find something for use on larger timeframe.  Mobius probably has one.
+08:06 Billions: tired of keep srawing them in tos
+08:07 slashgw: but problem is, imo nobody has written one that works in the same methodology as how they actually trade
+08:07 MTS1: Billions; Fib lines are easy to draw / calculate; the key is identifying the 0 / 100 levels; how do you logically define them?
+08:08 Billions: i dont see him in the room today
+08:08 MTS1: I'd look at the fractal pivots script on Mobius' MyTrade or find something that works for you for that; then add in the fib plots.
+08:08 slashgw: he was here about 30 min or so ago
+08:09 Billions: ok thank you ill look
+08:09 slashgw: here is one that he did http://tos.mx/ZpZ9LU#
+08:10 Grasul: You could use highest high (or close) and lowest low (or close) over whatever you consider to be a "long" time period.  Or keep track of particularly prominent high or low pivot points.  "Give me the last high pivot that was at least a 9 period high and the comperable low, or something like that.
+08:10 slashgw: I would be interest to work with one of the better scripters here to put together one that works in the same way they are traded, if the process is able to be replicated.
+08:10 Billions: ok thank you guys
+08:12 slashgw: and when I say "better", I mean better than I.  I could provide the flowchart portion, but not the coding part.
+08:12 Billions: @slashgw thats cool
+08:13 Wally: Auto_Fib_linus, # Auto Plotted Fibonacci Study
+# Mobius   http://tos.mx/gRudhk#        http://tos.mx/4jY9T7#
+08:14 Mobius: The best fib study I've seen is tied to a stochastic index. That was designed by one of the better teachers from Shadow Trader. He uses it in Forex trading. The study is posted on MyTrade
+08:15 slashgw: is it different than the one that I posted of yours?
+08:15 AlphaInvestor: Your Mytrade?
+08:15 Mobius: yes Alpha.. I wrote the code
+08:15 slashgw: DH's morning screen:  https://screencast.com/t/ddzT2YooJ9
+08:16 Billions: hi mobius thanks where do u get mytrade
+08:17 Mobius: Bill... Right click my Name in the list of names on this chat then View Users Profile
+08:20 Billions: ok gotcha thanks
+08:58 hguru: Mobius what is the name of that study thx
+09:02 Mobius: hg.. it's one of the studies that you have to cick on the link to see the description of. Maybe 2 or 3 down from where those start.
+09:03 MTS1: "Stochstic Pivots with Fibocacci Lines"
+09:03 MTS1: posted in Feb this year it looks like
+09:07 JohnnyQuotron: http://tos.mx/zU09X3# to save time
+09:09 Mobius: I like to push people to MyTrade because they may find studies they can use without the need to ask in here
