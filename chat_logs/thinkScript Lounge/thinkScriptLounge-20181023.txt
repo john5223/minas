@@ -1249,3 +1249,266 @@ S3.SetPaintingStrategy(PaintingStrategy.HORIZONTAL);
 17:46 amalia: Can you answer some of the questions we've provided?
 17:46 amalia: daybuck, keep up or else we're moving on.
 17:49 daybuck: amalia, I have answered the best I know to answer. I don't code so maybe your questions are over my head. I came here for help and nobody has even asked to see the code. Maybe if you look at it you can answer your own questions, unfortunately, I can't
+17:50 daybuck: MTS1, the built in ones move on a daily basis. This code doesn't move on a daily timeframe
+17:50 MTS1: So what timeframe does it move on?
+17:50 amalia: See? There's one answer.
+17:51 daybuck: Monthly and weekly
+17:51 amalia: Don't limit yourself. You must be able to describe what you trade. We can start by the name...
+17:52 MTS1: Most of the built-in ones have settings for that.
+17:53 MTS1: Do you know how your script calculates the pivots? Is it using a standard method like the built-in ones or something special?
+17:53 daybuck: amalia, explain your question...what do I trade. Not sure what difference it makes
+17:54 MTS1: Amalia must have had a bad day; we'd like people to stick around and answer clarification questions and be as specific as they can be.
+17:54 amalia: I'm here inquiring and asking questions. I must not care. lol
+17:54 daybuck: Guys, don't ask me questions about the script. I cant explain it. Seems it would be much simpler to look at it.
+17:54 amalia: daybuck, coders are anal. My bad if you're reading tension through text. Far from the truth.
+17:54 amalia: Go ahead then.
+17:55 MTS1: OK DayBreak; take a step back then: If you're trading using pivots that you don't understand you may want to revisit your trading plan?
+17:55 amalia: There's the disconnect for me. "...don't ask me questions about the script. I can't explain it"
+All I hear is, "I don't know how to use this study I want converted."
+17:56 amalia: I'm just telling you my thought process. Don't take it personal.
+17:56 daybuck: I know how to trade it on another platform but would rather have it on TOS. It just that simple
+17:57 amalia: Share the script, daybuck.
+17:57 MTS1: you should understand the logic behind the pivots or where they are derived / calculated from; I assume they are not random lines to you. My guess is the built-in ones do what you want already or can be a start, unless you can explain / show how your pivots are calculated differently.
+17:58 mcdon0301: hi.  i put a moonphase script together( I know hocus pocus), but having issues. would anyone care to take a look? http://tos.mx/rQvJJd#
+17:59 amalia: mcdon0301, here you go
+http://tos.mx/J2Xh4V#
+17:59 MTS1: There are at least 4 built-in pivot scripts that have slight variations how they are calculated, that all have inputs for day, week, month, or more.
+18:00 daybuck: I cant even get it to paste up
+18:01 amalia: daybuck, please exit and re-enter the room.
+18:01 amalia: daybuck, go to pastebin.com and after you've loaded the code there, share the link here.
+18:01 daybuck: ok
+18:03 mcdon0301: that was fast.
+18:03 MTS1: Suspect it is not the same script if you created one from scratch;)
+18:04 MTS1: you can expect moonphase scripts to have issues before a full moon though; may not be your script;)
+18:04 amalia: Did you even look at it? lol
+18:04 amalia: nvm
+18:05 amalia: -_-
+18:05 mcdon0301: yes, trying to take a look
+18:06 MTS1: I know Alpha has one too; ask him next time he's arround. He's proud off that one!
+18:09 JohnnyQuotron: The LoungeArchive is current but for the gap from the open until 8:56am.  Dinner bell''s ringing.  Later gators...
+18:14 amalia: Room, I need help as well...
+18:15 amalia: I've made a MinRange for Intraday, Weekly and Monthly. Now trying to come up with a Yearly one. This one's mainly for coding practice but seem to be stuck
+18:20 FunPilot: Afternoon all.  Crazy day in the market.
+18:20 FunPilot: But a decent ending.
+18:21 MTS1: What's the problem Amalia?
+18:22 MTS1: Fun; that was NOT a fun ending for me. .
+18:23 daybuck: amalia, hope this works :https://pastebin.com/RNx5vcWG
+18:24 FunPilot: Sorry man.  I lost too, just not as much.  Just trying to look at the positive.
+18:26 amalia: MTS1, looking through daybuck's link, looks like a HL3 on MTF?
+18:26 amalia: Ok, going back to where I'm stuck...
+18:27 amalia: daybuck, the code you shared, is there an author?
+18:28 daybuck: I hope that wasn't a trick question....!
+18:29 amalia: Someone wrote the script. Characters and syntax didn't just appead. Do you know who did?
+18:29 daybuck: Im sure there is but its thru a 3rd party and Im not sure who wrote it. Sorry
+18:29 amalia: Ah.
+18:29 amalia: It's bad juju to share a script with no author.
+18:29 amalia: Most here wouldn't touch it without it. Could be copyrighted, etc.
+18:29 MTS1: DayBuck; so looks like standard pivot levels, no extensions? Is the 'special' thing the coloring based on SMA crossover?
+18:30 FunPilot: If I may ask a dumb question, is there an easy stock screener on Thinkorswim to find asset classes and sub classes like Market Cap, Domestic, International, Fixed Income, Equity.
+18:30 daybuck: All I know is JJ. Sorry
+18:33 daybuck: From what I know, the only thing special is the pivot levels remain the same whereas the boxed ones on TOS move daily depending on the market. Reminds me somewhat of Darvas Boxes but......
+18:34 MTS1: They do not; I already told you multiple times that you can change the input to not change daily
+18:35 daybuck: They do not what MTS1?
+18:35 MTS1: change every day if you don't want them to; they have inputs for the periods you wanted.
+18:36 MTS1: (just like the script you shared)
+18:37 daybuck: ok. Great. Now were getting somewhere. Back to my original proclamation. I dont code. So how do I mirror this script with the boxed one on TOS?
+18:37 MTS1: have not seen one for periods less than day though; but does not sound like you were looking for the 8 hour pivot option.
+18:40 daybuck: The idea is to trade off of an hourly chart at or near the monthly pivit (assuming some other criteria is met)
+18:40 daybuck: Pivot
+18:42 MTS1: Seriously Day; been saying that starting with my first responses. This has nothing to do with coding. Check out the built-in ones, read the tutorials at tlc.thinkorswim.com to get familiar with TOS, and ask support for a platform tour. Make sure you have 10 questions ready for them so they can show you the platform inside out.
+18:47 daybuck: i had a platform tour 5 years ago when I started using TOS. I just never coded anything so I cant tell where the boxed one is different from what I wanted coded. All I know is that the two are different. The pivots are not the same as they are on the other platform
+18:48 MTS1: When you set them to weekly or monthly they are not the same?
+18:49 MTS1: Which ones did you try?
+18:50 amalia: daybuck, if I can explain the whole situation here today is like going to McDonald's and giving the cashier a wet paper where the order was written in and not being able to give some sort of idea of what was originally there and expecting the cashier to be a sort of mind-reader. There's going to be a disconnect here until you can provide us with the author, link to the study/strategy with parameters/data, etc.
+18:51 daybuck: Honestly, I havent tried personally. The fellow I got the code from told me when I asked that it didn't match the other platform because of the movement. He uses it on another platform. I would rather use TOS so I'm trying to convert it
+18:52 daybuck: He used to use TOS
+18:53 MTS1: Right when we started this whole (long) conversation you said you tried the built-in ones and that they changed daily, and I told you the built-in ones have settings for weekly and monthly when you said that's what you needed. We're full back now; why don't you try the built-in ones and see what you find.
+18:54 sebastian2363: Hey, sorta new to the system here - I was wondering if any of you guys got EarningsPerShareTTM() to work. I can't even get it to plot.
+18:54 amalia: 1h:35m of talking with daybuck. I tap out. GL daybuck.
+18:54 amalia: Welcome sebastian2363.
+18:54 daybuck: No problem. What do I change in the built in code to keep them from moving daily?
+18:55 amalia: I was about to reply. lol No!
+18:55 amalia: sebastian, did you try different tickers?
+18:55 sebastian2363: I tried the default and "v".
+18:55 MTS1: they'll give you a platform tour for free every 6 months
+18:57 daybuck: This would have been much simpler if you could just not respond or admit you dont know how to answer the question
+18:58 MTS1: I don't see EarningsPerShareTTM()?
+18:59 sebastian2363: Its under the new "stock fundamentals" tab
+18:59 MTS1: Oh; not a script?
+19:00 sebastian2363: It is a script function
+19:01 MTS1: daybuck; really/??? I know the answer, and so should you, we discussed them right in the beginning. It would have been much easier if you just were listening and honest / trying from the start.
+19:03 MTS1: It does not seem like you've actually used TOS in the past 5 years and don't know how to add a built-in indicator? Do you know how to add a MA and change the settings? This is not a coding issue, this is PEBKAC.
+19:04 amalia: I indulged you for more than a hour. MTS1 also concluded that we've gone full circle but you keep thinking otherwise. Here I am still replying back giving you the benefit of the doubt that you can somehow recover.
+19:04 amalia: +1 MTS1
+19:06 amalia: btw here are some of your pivots
+def MonPivot = HL3(period = AggregationPeriod.MONTH);
+def WeekPivot = HL3(period = AggregationPeriod.WEEK);
+19:07 MTS1: Sebastian; have not played with those yet, but I'd try some different tickers.
+19:07 amalia: daybuck has left the room. lol
+19:08 amalia: "No one else can be right" attitude even when asking for help. smh -_-
+19:09 sebastian2363: ok. thank you let me try
+19:10 amalia: Room, what's a good way to collect Yearly OHLC values?
+19:10 MTS1: But my indicator is special; I want it coded from scratch even if it already exists and I don't know what it does;)
+19:11 MTS1: Amalia; O/C should be easy based on year change; would you want to use secondary aggregation for H/L or are you trying to keep it scanner friendly?
+19:12 MTS1: H/L could be done that way also I guess based on year change; how many years back do you need though?
+19:12 MTS1: Amalia; still there??? ;)
+19:13 amalia: Yeah, going back and forth from Editor, chart then back here.
+19:13 amalia: Funny link but this is what I have so far:
+http://tos.mx/SedWed#
+19:13 amalia: SedWed. lmao
+19:17 MTS1: Not sure why yo have the extra if-then loop in there instead of 
+def YearL = if YearChange==1 then L else if L<=YearL[1] then L else  YearL[1] ;
+19:18 MTS1: but that's one way. Was thinking you wanted prior year OHLC which you could then carry forward. Or was thinking using monthly aggregation and getting highest, but this is easier.
+19:19 amalia: I'm open to ideas really.
+19:19 MTS1: (And the close obviously is the prior year's close).
+19:19 MTS1: How are you using the values; how far back do you need OHLC, just prior year or current year?
+19:20 amalia: This is what I'm trying to calculate:
+def yearMinRange = Average(if YearC>=YearO then Min(YearH-YearC,YearO-YearL) else Min(YearH-YearO,YearC-YearL),10);
+19:20 amalia: So I can't use Highest/Lowest cause that uses a rolling period
+19:24 MTS1: are those current year values?
+19:24 amalia: The ones in the label, yes.
+19:24 MTS1: no hte yearMinRange def
+19:24 MTS1: *the
+19:25 amalia: Yes.
+19:26 amalia: It's gonna be current until it's BNd I think
+19:26 MTS1: Then you've got it already, except use the current close instead of tye Y one as that's last year's close.
+19:27 amalia: But I'm trying to get last year's H/L. I can't use current values for calculation
+19:27 fibfibfib: hey amalia, I just open your work on the yearly and it looks cool. Just a though, is it possible to include the open and closing price for yearly, monthly, quartley, weekly and daily?
+19:27 MTS1: That's what I was asking;)
+19:28 amalia: fibfibfib, it looks cool but it's not done yet. Will share when it's done.
+19:28 fibfibfib: and on each line, add a bubble to say year open, year close...etc
+19:29 MTS1: Then carry forward def PYH = if YearChange==1 then  YearO[1] else PYH[1]; ? 
+19:29 MTS1: Sorry PYO in this case - PriorYearOpen; same for H/L
+19:29 fibfibfib: thanks Amalia, MTS1.. im just beginning to learn so not as expert as you guys
+19:30 fibfibfib: but so far, that's a very good idea to start on.
+19:30 MTS1: WE NEED MORE BUBBLE (in SNL CowBell Voice)
+19:32 amalia: lol
+19:32 MTS1: Is that what you need Amalia, or am I missing something still?
+19:33 amalia: Getting off desktop. that useless chat earlier fried my brain. gonna go get my green remedy on to get some cells back to attack this iead head on with more patience. =) MTS1, thanks for indulging
+19:34 MTS1: lol, gn
+19:34 amalia: =)
+19:38 fibfibfib: don't go too long now, we need your brainpower. hahahaha
+19:39 fibfibfib: just kidding
+19:42 Mobius: 
+# Yearly Floor Trader Pivots
+# V01.9.2011 
+#hint:Yearly Floor Trader Pivots: Use chart aggregations for at least 2 years Daily
+# PIVOT = (High + Close + Low)/3 
+# R4 = High + 3 x (Pivot - Low)
+# R3 = High + 2(Pivot – Low)
+# R2 = Pivot + (R1 – S1)
+# R1 = (2*Pivot) – Low
+# S1 = (2*Pivot) – High
+# S2 = Pivot – (R1 – S1)
+# S3 = Low – 2(Hi – Pivot)
+# S4 = Low - 3 x (High - Pivot)
+input YearsBack = 1;
+def bar = BarNumber();
+def ThisYear = GetYear() == GetLastYear();
+def y1fstBar = if GetYear() == GetLastYear() - (YearsBack + 1)
+               then bar
+               else y1fstBar[1];
+def y1LstBar = if GetYear() == GetLastYear() - YearsBack
+               else y1LstBar[1];
+def y1H = if bar == y1fstBar
+          then high
+          else if bar >= y1fstBar and bar <= y1LstBar and high > y1H[1]
+               then high
+               else y1H[1];
+def y1Hbar = if high == y1H
+             then bar
+             else y1Hbar[1];
+def y1L = if bar == y1fstBar
+          then low
+          else if bar >= y1fstBar and bar <= y1LstBar and low < y1L[1]
+               then low
+               else y1L[1];
+def y1Lbar = if low == y1L
+             else y1Lbar[1];
+def y1c = if GetYear() == GetLastYear() - 1
+          then close
+          else y1c[1];
+def yearHigh = if bar >= HighestAll(y1Hbar) then y1H else Double.NaN;
+def yearLow = if bar >= HighestAll(y1Lbar) then y1L else Double.NaN;
+def yearClose = if ThisYear then y1c else Double.NaN;
+def BubbleLocation = isNaN(close[1]) and !isNaN(close[2]);
+plot pivot = Round(((yearClose + yearHigh + yearLow) / 3) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(pivot), "Pivot", Color.DARK_GRAY, yes);
+plot R1 = Round(((2 * pivot) - yearLow) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(R1), "R1", Color.DARK_GRAY, no);
+plot S1 = Round(((2 * pivot) - yearHigh) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(S1), "S1", Color.DARK_GRAY, yes);
+plot R2 = Round((pivot + (R1 - S1)) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(R2), "R2", Color.DARK_GRAY, no);
+plot S2 = Round((pivot - (R1 - S1)) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(S2), "S2", Color.DARK_GRAY, yes);
+plot R3 = Round((yearHigh + (2 * (pivot - yearLow))) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(R3), "R3", Color.DARK_GRAY, no);
+plot S3 = Round((yearLow - (2 * (yearHigh - pivot))) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(S3), "S3", Color.DARK_GRAY, yes);
+plot R4 = Round((yearHigh + (3 * (pivot - yearLow))) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(R4), "R4", Color.DARK_GRAY, no);
+plot S4 = Round((yearLow - (3 * (yearHigh - pivot))) / TickSize(), 0) * TickSize();
+AddChartBubble(BubbleLocation, HighestAll(S4), "S4", Color.DARK_GRAY, yes);
+pivot.SetPaintingStrategy(PaintingStrategy.DASHES);
+pivot.SetDefaultColor(Color.DARK_ORANGE);
+pivot.SetLineWeight(1);
+R1.SetPaintingStrategy(PaintingStrategy.DASHES);
+R1.SetDefaultColor(Color.GREEN);
+R1.SetLineWeight(1);
+R2.SetPaintingStrategy(PaintingStrategy.DASHES);
+R2.SetDefaultColor(Color.GREEN);
+R2.SetLineWeight(1);
+R3.SetPaintingStrategy(PaintingStrategy.DASHES);
+R3.SetDefaultColor(Color.GREEN);
+R3.SetLineWeight(1);
+R4.SetPaintingStrategy(PaintingStrategy.DASHES);
+R4.SetDefaultColor(Color.GREEN);
+R4.SetLineWeight(1);
+S1.SetPaintingStrategy(PaintingStrategy.DASHES);
+S1.SetDefaultColor(Color.RED);
+S1.SetLineWeight(1);
+S2.SetPaintingStrategy(PaintingStrategy.DASHES);
+S2.SetDefaultColor(Color.RED);
+S2.SetLineWeight(1);
+S3.SetPaintingStrategy(PaintingStrategy.DASHES);
+S3.SetDefaultColor(Color.RED);
+S3.SetLineWeight(1);
+S4.SetPaintingStrategy(PaintingStrategy.DASHES);
+S4.SetDefaultColor(Color.RED);
+S4.SetLineWeight(1);
+# End Code Yearly Floor Trader Pivots
+19:43 amalia: Thanks Mob. What’s this?
+19:45 admin_bkTOS: 
+This is a reminder that the thinkorswim chat rooms will be closing in 15 min.  Forum hours are from 5am-8pm CT Monday-Thursday, and 5am-5pm CT on Friday. Please finish your conversations before 8pm CT.
+19:46 Mobius: yearly floor trader pivots. Someone asked for by email. So I posted them here for their group
+19:46 DMonkey: late to the party but here since I was typing it out while that was being posted, you can have it any way....hahaha...was some logic to get you started.....
+def Data = if GetYear() == GetLastYear() && getyear()[1] != getlastyear()
+           then open 
+           else data[1];
+plot o = data;
+o.setpaintingStrategy(paintingStrategy.POINTS);
+def data2 = if getyear()[1] == GetLastYear() - 1 && getyear()[2] != GetLastYear() - 1
+            then open
+            else data2[1];
+plot oo = data2;
+oo.setpaintingStrategy(paintingStrategy.POINTS);
+19:48 DMonkey: gn errbody....
+19:49 Vimes: don't think buck is coming back but here's a crack at what he wanted
+plot pivot_m = hlc3(period=aggregationPeriod.MONTH)[1];
+plot pivot_w = hlc3(period=AggregationPeriod.WEEK)[1];
+plot pivot_d = hlc3(period=AggregationPeriod.DAY)[1];
+input short_len = 200;
+input long_len = 800;
+input src = close;
+def smma_short_ =
+   compoundvalue(1,(smma_short_[1]*(short_len-1)+src)/short_len,average(src,short_len));
+def smma_long_ =
+  compoundvalue(1,(smma_long_[1]*(long_len-1)+src)/long_len,average(src,long_len));
+plot smma_short = smma_short_;
+plot smma_long = smma_long_;
+def lb = smma_long - smma_long[1];
+def sb = smma_short - smma_short[1];
+input colorbars = yes; #hint colorbars: color pricebars
+assignpricecolor(if colorbars then
+                    if (lb > 0 and sb > 0 and src > pivot_m and pivot_m > smma_short and smma_short > smma_long) then color.lime else if (lb < 0 and sb < 0 and src < pivot_m and pivot_m < smma_short and smma_short < smma_long and src<pivot_m) then color.red else color.white else color.current);
