@@ -606,3 +606,51 @@ You cannot make up your own syntax.
 06:39 LAZY: any hard copy of thinscript manual out there??
 06:50 AlphaInvestor: I will print one and mail it to you '-)
 06:50 Vimes: name seems right
+07:05 LAZY: wow, AlphaInvestor, great.  Can you find my address:
+07:11 LAZY: hello AlphaInvestor, I copied thinkscript to word and I will print it myself.  I really appreciate your offer.  keep in touch
+07:14 slashgw: lol
+07:18 Farmin: Hmmm, if Lazy got together with gofast, would normal result?
+07:19 Wally: Copy it to Word and make it useless, funny.
+07:20 brutarie: .   Some people understand irony;   others understand ironing.  Hmmm...
+07:27 Mobius: lol  Now that's a good start to the day
+07:37 eayjee: is anyone able to show me how to make a cloud between 3 moving averages?
+07:40 Mobius: addCloud(firstMovingAvg, SecondMovingAvg, FirstColor, SecondColor)
+07:41 Mobius: addCloud(SecondMovingAvg, ThirdMovingAvg, FirstColor, SecondColor)
+07:41 Mobius: addCloud(firstMovingAvg, ThirdMovingAvg, FirstColor, SecondColor)
+07:42 Mobius: two different ways
+07:42 eayjee: Mobius, that's awesome, what if I want to base the MA on the high or low or close?
+07:43 Mobius: addCloud doesn't care
+07:45 eayjee: 26 EMA, 9 period EMA off high, moved 3 periods forward, and the 9 EMA off the low, moved 3 periods forward...
+07:46 eayjee: thanks for helping Mobius...red pill
+07:46 Mobius: http://tlc.thinkorswim.com/center/reference/thinkScript/Functions/Look---Feel/AddCloud.html
+07:46 JohnnyQuotron: Good morning thinkScript Lounge.  I notice that no one has lost their sense of humor.  Excellent!
+07:48 Mobius: Got over a 1% globex range on high volume with price near previous close again. Whats NOT to be excited about?
+07:53 LAZY: I just copied and printed out thinkscript.  Why Wally siad it is useless in word??
+07:54 LAZY: I like to meet gofast :)
+07:55 eayjee: mobius, is it hard to put those parameters in a script?  the instruction page wasn't too clear
+07:56 eayjee: don't mean to bother and I appreciate any help
+07:58 Vimes: not sure you tried very hard: see if this works
+def ema26 = expaverage(close,26);
+def ema9h = expaverage(high,9)[3];
+def ema9l = expaverage(low,9)[3];
+addcloud(ema9h,ema26,color.green,color.yellow);
+addcloud(ema26,ema9l,color.red,color.yellow);
+07:59 eayjee: really appreciate that Vimes, thank you both
+08:01 eayjee: that worked perfectly....thanks a lot
+08:19 dokk408: anyone know if there's a way to get the implied volatility of an ATM call on the Friday following earnings?
+------- Tuesday, October 23, 2018 -------
+08:20 Mobius: there's no history for series IV
+08:21 dokk408: ok, thnx
+08:21 Vimes: do you mean the next series?
+08:21 Sorkin: Oct 29 GE $12 puts
+08:22 dokk408: im trying to track the expansion of IV as earnings approaches
+08:22 Vimes: Well mobius read your mind then, no history
+08:24 Vimes: You could maybe estimate it from teh ImpVolatility() plot but i'm out of my element there
+08:25 tarbog: hey dmonkey.  thanks for the script on day mid.  i got it on my charts yesterday and it worked well for the day session.  thanks.  really appreciate your help.
+08:26 dokk408: the ImpVolatility appears to give an aggregation of several expirations
+08:44 Mobius: dokk.. There's no need to guess. All the data and method for calculating IV is listed on the CBOE in a white paper.
+08:45 BenP: Good Morning.  I have squeezed an intraday chart down so small that I lost the 'Time' displayed in the X axis.  Is there any code available to deliniate the change of each day with a vertical line?
+08:46 Mobius: yes
+08:47 dokk408: thnx Mobius.  now i just have to learn enough so i can create a script for it so display on my charts!
+08:48 Mobius: dokk.. You don't need to learn to calculate it TOS has functions to display annualized IV and all the various series IV already
+ADXCrossover()
