@@ -654,3 +654,676 @@ addcloud(ema26,ema9l,color.red,color.yellow);
 08:47 dokk408: thnx Mobius.  now i just have to learn enough so i can create a script for it so display on my charts!
 08:48 Mobius: dokk.. You don't need to learn to calculate it TOS has functions to display annualized IV and all the various series IV already
 ADXCrossover()
+or is the fed raising rates self fulfilling
+06:31 blondetrader: I have 67.4 so we r spot on
+06:32 blondetrader: based on yest close which was a confluence of weekly and monthly....if the low was any good price should test 68.6ish at some point in next day or 3
+06:32 invertedhammer: Missed long fill at 66.4 earlier so not chasing
+06:33 invertedhammer: Ha my tgt 68.53
+06:33 blondetrader: rty res 31ish rn
+06:33 blondetrader: :)
+06:33 featherweight: Got my fill of CL yest 66 after API. Not sure why HOs aren’t doing as well
+06:35 blondetrader: I dont know either
+06:35 blondetrader: I am trying to be swing long cl bc I think we head back to mid 70s
+06:35 blondetrader: but price doesnt agree lol
+06:35 blondetrader: it needs to get with my program
+06:38 invertedhammer: Nq back to test onh. 7175
+06:59 invertedhammer: Es 5 consecutive days lower lows time to bounce
+07:06 radon224: BA pushin us up up up
+07:07 featherweight: Woof got out of GCs in time
+07:10 efu: es  no look good
+07:13 Jonchew38: Dow futures pointing to a positive open - probably on back of BA earnings beat. But will the broader market be lifted up?
+07:14 efu: senior, senior, your britches are tore, you better go home and get you some more , senior
+07:14 blondetrader: based on dly momo we should have another day-2 sideways to down
+07:14 blondetrader: but that is not to say momo HAS to complete the cycle so for es :52 is key
+07:15 radon224: I predict 2 days of staring at the screen saying "WTF??"
+07:15 blondetrader: any close over 58 suggests that for now bottom in
+07:15 blondetrader: 35 key NQ
+07:15 blondetrader: 41 rty
+07:15 blondetrader: lol radon
+07:15 Jonchew38: thanks for thoughts.
+07:16 blondetrader: on way doen es
+07:16 blondetrader: should not exceed 24
+07:16 blondetrader: big ranges lol
+07:16 blondetrader: rty 18
+07:16 Jonchew38: volatile times
+07:16 blondetrader: nq 7060
+07:17 The100yearBULL: wow that selling pressure is consistent, huh
+07:17 blondetrader: cl needs to hold 66.30 on pb to get t1
+07:17 Jonchew38: many view this quarter as peak earnings and it would be downwards subsequent quarters from here
+07:17 blondetrader: 22-20 gc
+07:17 blondetrader: or splat
+07:17 Jonchew38: the narrative from companies when they do the reporting would be impt
+07:18 Jonchew38: in guiding expectations going forward
+07:18 blondetrader: yep
+07:18 blondetrader: gc as mentioned yesterday has a compelling sell up around 50-55
+07:18 blondetrader: if the support holds that would be the next get
+07:19 Jonchew38: i am bearish - think fed may be behind the curve - if tariff results in higher costs down the road... fed may be forced to hike more
+07:21 efu: :))  done for the day 
+07:24 blondetrader: the way it looks now mkts may have some selling @ open
+07:24 blondetrader: to find support
+07:27 featherweight: Agreed. Sold NQs with the intent to buy post open.
+07:28 featherweight: Rates need to wake up
+07:29 blondetrader: brb
+07:50 tmoney20g: mornings
+07:53 featherweight: morning
+07:53 blondetrader: gm
+07:53 tmoney20g: hi bt
+07:53 tmoney20g: fw
+07:53 blondetrader: tmoney
+07:54 tmoney20g: 35 key nq you said
+07:54 tmoney20g: is that 7135 i guess
+07:54 tmoney20g: low test is 7060
+07:55 blondetrader: yep
+07:55 tmoney20g: kk
+07:55 tmoney20g: how bout if its uptrend ?
+07:55 blondetrader: 6980 if it break
+07:55 tmoney20g: have a ceiling test ?
+07:56 blondetrader: well 35 is key for trend and currently 7150-60 is res
+07:56 blondetrader: then 7081
+07:57 blondetrader: anything over that tgt 7245
+07:57 CMatc: New to this, suggestions for swing trading chat
+07:57 blondetrader: your here
+07:57 CMatc: Great, lots to learn starting out very small
+07:58 blondetrader: welcome
+07:58 tmoney20g: selling begets more selling
+07:58 blondetrader: 25400 res ym
+07:58 CMatc: Anything catch your eye for low price buys premarket?
+07:58 blondetrader: we should be ready to get some rally by fri
+07:58 tmoney20g: with amzn earnings thursday night, i hope so
+07:59 tmoney20g: i think beats top and bottom
+07:59 blondetrader: CM I do not trade many stocks.....those guys will be along shortly
+07:59 CMatc: Rog thanks
+07:59 tmoney20g: CM, plan your goal
+07:59 blondetrader: are you going to do options or stocks
+07:59 Ru1972: GM all
+07:59 CMatc: Stocks first then options once I learn more
+08:00 tmoney20g: i understand that, but are you looking for long term, short term, etc
+08:00 CMatc: Short term
+08:00 blondetrader: he is a swinger
+08:00 tmoney20g: we've sure had some swings
+08:01 blondetrader: lol
+08:01 CMatc: Trying to learn to swing trade, just not having much luck finding good intel on what may be good buys
+08:02 tmoney20g: not banks
+08:02 tmoney20g: some of the peeps in here know how to use that "scanner" tool
+08:02 tmoney20g: i haven't delved into that yet
+08:03 tmoney20g: it finds things for you
+08:03 CMatc: I am still trying to learn trend lines and such
+08:03 tmoney20g: you on mobile or pc
+08:03 CMatc: Mobile
+08:04 tmoney20g: ah, increases complexity about 200%
+08:04 CMatc: So setting up a PC for this would be smart?
+08:04 tmoney20g: for the most efficient trading, yes
+08:04 tmoney20g: multiple windows, larger charts, etc
+08:05 tmoney20g: especially for quick in/outs
+08:05 tmoney20g: if you're gonna trade long, mobile is fine
+08:05 CMatc: Thanks, I bought SIRI today in hopes it gains after earnings
+08:06 tmoney20g: trading at 6.1 right now
+08:06 tmoney20g: closed at 5.95 ish
+08:07 tmoney20g: i'd sell at the open, seems to be profit taking already
+08:07 tmoney20g: but i'm usually wrong, so
+08:13 tmoney20g: guess i don't get my amzn 1750 open
+08:13 tmoney20g: could drop to that then pick back up tho
+08:13 CMatc: Lol I don’t roll that deep yet
+08:13 tmoney20g: well, not that far down
+08:14 Dimka: Good morning
+08:14 tmoney20g: hi dimdhim
+08:14 tmoney20g: -h
+08:16 blondetrader: gm dim
+08:17 stockhawk: good morning you all
+08:18 stockhawk: turn around tuesday, but is it real?
+08:20 blondetrader: got to go lower b4 higher 
+08:20 blondetrader: imo
+08:20 TnT: no, it is Wednesday, your clock is slow
+08:20 TnT: gm bt
+08:20 blondetrader: gm tnt
+08:21 radon224: Perhaps today will be WTF Wedensday
+08:21 blondetrader: lol
+08:21 blondetrader: thats pretty much everyday
+08:22 TnT: gm radon
+08:26 tmoney20g: any megabillions winner ?
+08:26 tmoney20g: i didn't look
+08:26 TnT: yes, winner in SC
+08:26 tmoney20g: wow, 1 winner
+08:26 stocktrapper: Yeah someone won it last night. 1 winning ticket
+08:28 invertedhammer: Cl almost to 200 sma
+08:29 blondetrader: it has a lot of work to do
+08:32 radon224: BA driving the DOW right now
+08:34 RandomDan: good mornimg
+08:34 RandomDan: ng
+08:34 Tanya: GM, Bt, tnt, Dimka, tmoney, randon
+08:34 tmoney20g: hi hi
+08:35 TnT: gm tanya
+08:35 Tanya: Bt, how high you see tsla goes?
+08:36 blondetrader: lml
+08:36 RandomDan: gm Tanya
+08:36 blondetrader: failing to hold right here
+08:37 blondetrader: 302 key for cont
+08:37 Tanya: Yeah, I see
+08:37 blondetrader: to 309-16
+08:37 blondetrader: 278 support need to hold
+08:37 blondetrader: 82 intraday
+08:40 invertedhammer: Trying short rty 31 if fills
+08:41 radon224: I need to keep track of BMY earnings tomorrow.  The longer term chart looks like maybe a good swing long.
+08:42 tanker: time to buy AT&T   you cant beat 6.4 % div
+08:42 RandomDan: tsla just acted as if 294 was a support; bounced right off
+08:44 fred__w: wake up  lil suzie  wake up
+08:45 RandomDan: oh well, that theory didn't last long
+08:45 MyOtherBrotherDarryl: morning all.....so one stock, boeing is holding this whole thing up this morning?
+08:46 tmoney20g: seems like it
+08:46 MyOtherBrotherDarryl: lol
+08:46 tmoney20g: waiting for lows around 1030-11
+08:46 MyOtherBrotherDarryl: that was an interesting V bottom reversal  yesterday!
+08:47 tmoney20g: problem is, there's no reason to bounce off a bottom right now
+08:47 MyOtherBrotherDarryl: straight up off a low, with no daily retest!
+08:47 tmoney20g: what dreams are made of
+08:47 MyOtherBrotherDarryl: lol
+08:48 stockhawk: CWST IN @ 31.08
+08:49 stockhawk: tsla bearish 3 rd lower high from seemed like a fake triple bottom
+08:49 tmoney20g: 7080 test coming
+08:49 tmoney20g: think it'll break right thru
+08:50 MyOtherBrotherDarryl: time to buy?  200 day on NQ
+08:51 Anonymous so far: Why is LMT breaking down what gives ?
+08:51 tmoney20g: bt has a 7050 mark after 7080
+08:51 blondetrader: 7060
+08:51 MyOtherBrotherDarryl: verizon did well with earnings.  no reason to think ATT wouldn't ....they are getting my money!
+08:52 RandomDan: URI and USCR both up, despite market.
+08:53 radon224: T reported this morning, not good.  It's down hard.
+08:53 stockhawk: my MCFT short from yesterday looking good
+08:53 MyOtherBrotherDarryl: algo footprints?  they are trying.
+08:54 tajtx: I believe the Direct  TV performance may be impacting T
+08:54 tmoney20g: CTL is like half the cost of T, and 9% div
+08:54 tmoney20g: i have 1/3 my IRA in CTL
+08:55 mep1976: gm all
+08:55 tmoney20g: marcoooooooooooooooooooooooooooooooooooooooos
+08:55 TnT: gm marcos
+08:55 mep1976: hope u have a great day and make lots of mula
+08:55 mep1976: tmoney !
+08:55 mep1976: tnt
+08:55 tmoney20g: hope you do too
+08:56 mep1976: im a investor
+08:56 mep1976: chuckles
+08:56 TnT: lol
+08:56 mep1976: jajajajja
+08:56 Tanya: Marco, hello
+08:56 mep1976: hi tanya hows that princess
+08:57 Tanya: Who threw a bomb on my portfolio again?
+08:57 mep1976: lol
+08:57 Tanya: Princes is 20 months old and little easier to manage
+08:57 Tanya: Thanks, marco
+08:58 radon224: You Dropped a Bomb on Me, baby.  Love the Gap Band.
+08:58 mep1976: added little more SDPI thank you
+08:58 fred__w: tanya  as you built the portfolio, then ...
+08:58 MyOtherBrotherDarryl: Blonde, are you in charge of the algo computers or something?  :)
+08:59 tmoney20g: 7080 rt coming
+09:00 tmoney20g: dow gonna turn negative
+09:00 tmoney20g: right on cue
+09:00 Tanya: Blonde is great with probabilities
+09:00 Tanya: My statistical analyst
+09:00 blondetrader: lol
+09:01 OpInfantry: Hello, Hello.
+09:01 tmoney20g: wow new home sales
+09:01 TnT: doom
+09:02 OpInfantry: Just curious, which scan will show me when the avg MACD line crosses over xero. I see the one that shows me when the Histogram crosses over.
+09:03 MyOtherBrotherDarryl: ppt computer must be froze up.
+09:03 MyOtherBrotherDarryl: :)
+09:03 OpInfantry: Those new home sales should be rather bad for LOW and HD, right?
+09:03 mep1976: 
+10:00 News Bot: US New Home Sales Chg MM Sep -5.5% vs. Exp. -1.4% (Prev. 3.5%, Rev. -3.0%)
+09:03 mep1976: ewwwwwwwwwwww
+09:05 Tanya: May be better buying a house and rent out just in case the market gets bombed
+09:05 tmoney20g: its a good asset
+09:05 tmoney20g: i have another house and a duplex
+09:05 21sa: Opl. It should be good people go there to remodel since there not buying
+09:05 tmoney20g: also hope your renters have the ability to pay
+09:07 MyOtherBrotherDarryl: i am single handedly responsible for HD's stock going up.  they get my money.
+09:07 invertedhammer: Cl hard reject of 200 sma
+09:07 TnT: Loonie big pop
+09:07 longshanks: zacks just put out a report expecting 14.95% on LB.
+09:07 TnT: 10:00 News Bot: Canadian BoC Rate Decision N/A 1.75% vs. Exp. 1.75% (Prev. 1.5%)
+09:07 tmoney20g: nq doesn't like 7070, but i'm gonna give it another 10 mins
+09:08 yoz: MSFT ahead of earnings? Thoughts?
+09:08 tmoney20g: crap, guess that was the low
+09:09 MyOtherBrotherDarryl: sounds like good candy line,  "Loonie Big Pop".    looks like dollar bill.
+09:09 blondetrader: on?
+09:09 tmoney20g: nq
+09:09 longshanks: do a hedged spread if ur feeling lucky, i never buy into earnings
+09:09 MyOtherBrotherDarryl: there's those algos
+09:10 longshanks: good news is bad news now and bad news is a tactical nuke
+09:11 mep1976: NTWK nice one 
+09:11 mep1976: wow ZIXI
+09:12 mep1976: bitcoin good safety place lol 
+09:13 tmoney20g: selling begets more selling
+09:13 mep1976: BLFS bio gift at these levels 
+09:16 MyOtherBrotherDarryl: what happens if apple does finally decide to break?  and i don't mean just a little.
+09:16 tmoney20g: then they buy their own shares
+09:16 tmoney20g: and uncle warren buys as much as he can
+09:16 MyOtherBrotherDarryl: :)  
+09:17 mep1976: im done with apple 
+09:17 longshanks: wish he was my uncle
+09:17 mep1976: new phone every 2 weeks
+09:17 MyOtherBrotherDarryl: well, they aren't getting a bargain right now i don't think
+09:18 MyOtherBrotherDarryl: buying your stock at all time highs isn't too smart imho
+09:18 mep1976: nice BDSI and FNJN 
+09:21 longshanks: AMD is getting its face smashed in worse than McGregor did in his last fight
+09:21 MyOtherBrotherDarryl: I watched CYBR just go up over last year  :(
+09:22 longshanks: kiking myself for not buying that put.
+09:22 tmoney20g: next time buddy
+09:23 MyOtherBrotherDarryl: MU is undercutting Feb low at 37.50.   Might reverse.  Why i didn't short it recently i don't know.
+09:23 longshanks: always next time haha
+09:26 MyOtherBrotherDarryl: one stock was holding the trap door open.
+09:26 Ken: I want to sell my JD this morning, but I type the quantity 170, in my account it have only 160, now I want to confirm did I already sell my JD or it is no action for my trade
+09:28 blondetrader: well on the bright side
+09:28 blondetrader: if we get down around lows from yeaterday we may see the capit we didnt see yeaterday
+09:28 blondetrader: yest
+09:29 blondetrader: and that might be good for at leaST a short term low and some rally time
+09:29 MyOtherBrotherDarryl: longshank, if we're going into a bear market, trust me, there will be penty of opportunities to short.
+09:29 radon224: Confucius Say: Wise Man Never Play Leapfrog with Unicorn
+09:30 blondetrader: lol
+09:30 radon224: EIA Oil report out
+09:30 tmoney20g: bt, gotta nother nq low point ?
+09:31 blondetrader: 7020-10
+09:31 tmoney20g: oh, 6980
+09:31 tmoney20g: i drew a line, was off the chart
+09:31 tmoney20g: lol
+09:31 blondetrader: well if that low breaks u can extepct a break of yest lows
+09:32 blondetrader: fwiw only nq did not make a new one
+09:32 blondetrader: so might need to get that out of way
+09:32 blondetrader: bt i promise we have some rally coming lol
+09:32 MyOtherBrotherDarryl: find charts of stocks in downtrends, then when earnings come out and they miss during eco downturn, the stock plunges.   Made a lot of cash doing that in bear markets.
+09:33 blondetrader: well we have a lot to break if this is really gonna b a bear
+09:33 blondetrader: and the next rally will determine that
+09:33 blondetrader: mkt doesnt just wake up and say we are done the change will be evident
+09:34 MyOtherBrotherDarryl: yes early in a eco downturn some companies will always beat on earnings, so the market gets propped up, backing and filling.
+09:34 blondetrader: in all likelyhood that decision will be in mid 2800s es
+09:35 efu: America is now oficially Great:  congrats
+09:35 blondetrader: well cant go on forever
+09:35 blondetrader: but from here I dont think we r done.....
+09:36 blondetrader: 7100 R nq
+09:36 blondetrader: 37 es
+09:36 TnT: beans fresh low
+09:36 blondetrader: 26 rty
+09:37 efu: bt thanksfor your work
+09:37 tmoney20g: bt is amazing
+09:37 MyOtherBrotherDarryl: It's  a conspiracy.  Since when does the fed announce ahead of time they are going to raise rates 3 times in the coming year?  I've never seen nor heard of it!
+09:37 efu: nice to  have a check  of things
+09:37 tmoney20g: started that lately, they want to be more "transparent"
+09:37 fred__w: one hr in  and one boundary cross down  time for coffee
+09:38 TnT: they have been doing that a few years now,  where have you been?
+09:38 tmoney20g: under a large boulder
+09:38 esmal: morning
+09:38 MyOtherBrotherDarryl: gotta say blonde, you are good at picking support levels even if only temporary!
+09:38 tmoney20g: hi esmal
+09:38 blondetrader: :)
+09:40 Br: you think igc will go back up in the long run
+09:40 blondetrader: rty if 15 breaks 1504 is the overlap
+09:41 MyOtherBrotherDarryl: never heard of them announcing they will raise 3 times in the future.  For one thing it is idiotic policy bc the fed cannot forecast that far ahead.  
+09:42 TnT: forecast is what they consider likely, it is always subject to changes in data
+09:42 esmal: hey tmoney
+09:43 TnT: you must not have ever read their released statements or watched their press conferences
+09:44 TnT: so, no, they do not  have an idiotic  policy
+09:44 streetglide: Id rather try to figure out bt's charts than read that boring chit
+09:44 TnT: policy may not be great, but they do think about it
+09:45 TnT: /es 770k
+09:45 blondetrader: hmmm
+09:46 blondetrader: es 16 gets taken out should confirm yest was not the low
+09:46 TnT: DOOM
+09:46 MyOtherBrotherDarryl: they did do a good job of duping savers out of interest income for 10 years by keeping rates at ZERO.  
+09:46 blondetrader: 2688-4 would be next 65 ultimate
+09:46 blondetrader: anything under that =45
+09:46 blondetrader: but I dont think thats in cards at this point
+09:47 TnT: NLT
+09:47 TnT: -804
+09:47 MyOtherBrotherDarryl: my bank still pays 0.01% interest in checking but 20% on credit card interest.   needless to say i took most of my money out.
+09:47 blondetrader: es at the 60s Id do something long
+09:48 tmoney20g: .01% is solid, lol
+09:48 fred__w: 2nd boundary breach down
+09:48 JabbaTheCabin: 60's? you mean 2660 on es?
+09:49 TnT: Ai is missing, did  he buy the 1.6 b ticket?
+09:49 blondetrader: yes
+09:49 blondetrader: 2665ish
+09:49 blondetrader: and 2645 are HTF big #s
+09:49 JabbaTheCabin: with the moves we have been getting, that could hapopen today
+09:49 invertedhammer: 2720 may hold it up
+09:49 blondetrader: on the first if it test and holds that should be the rally point
+09:49 blondetrader: 4 hr momo suggests nsl
+09:49 blondetrader: if it ran the whole rotation
+09:50 blondetrader: so we have a bigger pic theory and need to use the smaller tf # to see it thru
+09:50 RandomDan: very, very choppy
+09:50 tmoney20g: yes
+09:50 tmoney20g: only 4 1725 puts traded today on amzn
+09:50 tmoney20g: guess no one's betting down
+09:51 blondetrader: honestly dan even with the wide swings if u look at it in chunks its been very orderly
+09:51 tmoney20g: lots of calls sold tho
+09:51 blondetrader: for us it would be better to just rip the bandaid off
+09:51 YClan: Boring market, if you ask me... (you didn't).
+09:52 RandomDan: patience bt
+09:52 blondetrader: es 2665s we could get to 2775-90 likcity split
+09:52 blondetrader: haha dan I am on a time schedule
+09:52 RandomDan: you are on a hurry
+09:52 tmoney20g: Yclan likes mayhem days
+09:52 RandomDan: in
+09:52 blondetrader: I have a plan for next week ......wonder if mkt even give one small F about that 
+09:53 tmoney20g: any plan for amzn earnings ? ;)
+09:53 streetglide: no bt
+09:53 blondetrader: I am in a short Back ratio AMZN
+09:53 blondetrader: haha street.....I know but a girl can dream
+09:53 streetglide: yes
+09:53 tmoney20g: morgan's so cute
+09:54 streetglide: mid morning cat for chen
+09:54 RandomDan: bt, we live in a world where a dead wapo journo means people will be buying cheaper gas. Events are connected in strange ways.
+09:54 invertedhammer: Es on 5 min u could short every pop to 21 ema
+09:54 YClan: AMZN earnings... they need to blow it big.  just slightly beating will end up in a downward move.
+09:54 tmoney20g: they missed rev's last quarter and it was up
+09:55 RandomDan: YClan, guidance is more important
+09:55 YClan: tmo,  that was a different market/expectation
+09:55 tmoney20g: stock is currently 100 less than pre-er last quarter
+09:55 RandomDan: AMZN is close to being a cult stock
+09:55 tmoney20g: which is a good bit off its high now
+09:56 RandomDan: not quite TSLA, but the Bezos faithful are many
+09:56 tmoney20g: i mean, i'm not shooting for the moon with way otm options
+09:56 tmoney20g: i'll just play like 1x c1800
+09:56 tmoney20g: same as today
+09:56 RandomDan: vol will be your problem
+09:57 tmoney20g: vol is the problem all week
+09:57 YClan: NFLX had big earnings beat, but they are down quite a bit.
+09:57 tmoney20g: well you're talking a week after er now
+09:57 tmoney20g: i'll be selling whatever i have at 931am the next morning
+09:58 RandomDan: also the $2B junk bond placement
+09:58 tmoney20g: they did have their biggest prime day ever
+09:58 tmoney20g: even with the glitch
+09:58 blondetrader: if cmg can drop another 10 might look nice for some up into E
+09:59 YClan: speaking of Prime day...   we have Singles day in China and BABA usually hypes it up for a big sales day...    Nov 11.  (11/11, all singles/ones).
+09:59 RandomDan: if I was playing AMZN I would sell put spreads
+08:56 willie_sutton: gm all
+08:56 BenP: Hi Mobius.  Was that 'yes' for me?
+08:59 MTS1: Yes
+08:59 MTS1: Look at AddVerticalLine() function
+08:59 MTS1: or just put vertical in the left-top filter box in the reference
+08:59 MTS1: (to find available functions)
+09:02 MTS1: next you'll probably look in the date/time section to find the function to determine if the day changed to use in the vertical line function.
+09:04 BenP: gotcha.  thanks !!
+09:04 MTS1: yw
+09:10 Paris: BenP - Here's an example on plotting a vertical line
+# Vertical Line on New Day
+# 9.17.2018
+def today = getDay() == getLastDay();
+addVerticalLine(today and !Today[1], "New Day", color.cyan, curve.short_dash);
+09:11 Vimes: i wonder how many total mobius snippets are out there, 1000, 2000?  :) :)
+09:12 Paris: I must have at least 500+ snort snippets
+09:12 fibfibfib: Hi Mobius, if there a way to automatically fib measure the prior week and month?
+09:12 Mobius: fibfib.. yes
+09:12 fibfibfib: or does anyone know how?
+09:15 Mobius: you already have the Auto Fib Study. Just change the iData to whatever higher aggregation you want
+09:17 Paris: whoops, typo: snort = short. LOL!
+09:17 willie_sutton: anyone found a way to plot option delta for mulpiple strikes on a lower?
+09:18 Vimes: lol, didn't notice
+09:18 Mobius: I prefer snort Paris... Fits me better  :)
+09:18 Paris: Heh!
+09:18 Vimes: a snort of jd
+09:20 Mobius: willie.. that could be done as long as you don't try to  get much more than 1 or 2 strikes away from ATM
+09:20 willie_sutton: Hi Mobius - that woud be fine with me
+09:21 willie_sutton: I hope you're well
+09:21 Mobius: then use the Options Dashboard or any of the other studies I've written for a template to get the OPRA symbols. From there you can calculate delta or get it from TOS data
+09:22 Mobius: /ES is giving me that sinking feeling
+09:23 Vimes: buyers just can't get it done
+09:24 Mobius: looks like pros selling into any rally. Volume goes down on a rise and way up on a fall. Energy is on the down side.
+09:26 Mobius: Now a days that could change in a minute. Used to be, at the first sign of energy higher going down it was a clear sign to go to a higher cash weighting or to hedge tight. Now it's just not so clearcut.
+09:27 Vimes: interesting
+09:27 willie_sutton: Mobius - I have been toying with some of your studies.  Here's one you might find interesting....
+09:27 willie_sutton: 
+declare lower;
+input n = 1;  #hint n: momentum, 1 is default.
+input symbol1 = ".SPy181022c275";
+input priceType1 = {"bid", "mark", default "ask"};
+input priceType2 = {"BID", "ASK", default "MARK"};
+input priceType3 = {"mark", "ASK", default "bid"};
+input priceType4 = {"mark", "ASK", default "last"};
+def _Sym1 = close(symbol1, priceType = priceType1);
+def _Sym2 = close(symbol1, priceType = priceType3);
+def _SymM = close(symbol1, priceType = priceType2);
+def _SymL = close(symbol1, priceType = priceType4);
+def cond = (_Sym1[1] - _Sym1) < (_Sym2[1] - _Sym2);
+def cond22 = (_Sym1[1] - _Sym1) > (_Sym2[1] - _Sym2);
+def vsym1 = volume(symbol1);
+def show = !IsNaN(close);
+# Bid / Ask Dynamic Line
+# Chatroom 09.20.2013
+# You must use aggregations less than daily for that to display.
+input LineLimit = 200;
+input SizeLabels = yes;
+def bid = _sym2;
+def ask = _sym1;
+def barNumber = BarNumber();
+def Mark = _symm;
+def Last = _symL;
+#Dynamic_Line
+script dynamic {
+    input LineLimit = 200;
+    input c = close;
+    def bar = if IsNaN(c) 
+             then bar[1] 
+             else BarNumber();
+    def ThisBar = HighestAll(bar);
+    def cLine   = if bar == ThisBar 
+                 then c
+                 else Double.NaN;
+    plot P = if ThisBar - LineLimit <= bar
+           then HighestAll(cLine)
+           else Double.NaN;
+plot B = dynamic(linelimit = LineLimit, c = bid);
+B.SetDefaultColor(Color.GREEN);
+B.SetStyle(Curve.FIRM);
+B.SetLineWeight(1);
+plot A = dynamic(linelimit = LineLimit, c = ask);
+A.SetDefaultColor(Color.MAGENTA);
+A.SetStyle(Curve.FIRM);
+A.SetLineWeight(1);
+def Dir = if Last == bid then 1 else 0;
+def test = if last == ask then 1 else 0;
+def NotDir = if (Last != bid) or (Last != ask) then 1 else 0;
+AddCloud(if test then A else Double.NaN, if test then B else Double.NaN, Color.GREEN, Color.CURRENT);
+AddCloud(if dir then A else Double.NaN, if Dir then B else Double.NaN, Color.RED, Color.CURRENT);
+AddCloud(if NotDir then A else Double.NaN, B, Color.GRAY, Color.CURRENT);
+AddLabel(yes, Concat("BID: ", AsDollars(_sym2)), if _sym2>_sym2[1] then color.green else if _sym2<_sym2[1] then color.red else color.dark_green);
+AddLabel(yes, Concat("ASK: ", AsDollars(_sym1)), if _sym1 <_sym1[1] then Color.RED else if _sym1 > _sym1[1] then Color.GREEN else Color.DARK_RED);
+AddLabel(yes, Concat("volume: ", vsym1), if test then color.green else if dir then color.red else color.gray);
+# End Code Bid Ask Lines
+09:28 Vimes: i think the chemical market has become so savy on passing on formula pricing based on raws perhaps in the old days they weren't as clver
+09:28 Vimes: clever
+09:28 mthfr_vaxxed: Any reasons you know of why October is so gloomy usually? Black Thursday from 1929 still scaring everyone? or something else?
+09:30 Mobius: mth.. There's 100 opinions about that if there's 1. Best source in my opnion is Traders Almanac
+09:30 willie_sutton: I should say that I've been looking at your option dashboard as well, but I'm not sure how it works.  I'm slow as you know.  I understand that you calculated an approximate delta, but i'm unsure how that would be applied across multiple strikes.  I'll keep at it.
+09:31 Vimes: externals might not stick - but a site that allows a quick view of seasonal trends
+http://marketqview.com/seasonalchart.php?ID=75
+09:33 Vimes: would suggest october is actually historically strong into eoy
+09:41 MTS1: Willie; it would be cool if you left headers / attribution / comments in the code.
+09:42 MTS1: and give it a name
+09:44 willie_sutton: agreed
+09:45 willie_sutton: Call it:
+#it plots the bid and ask of a manually entered option.
+09:47 cajun: willie, building on MTS, how bout specifying what you changed/added to mobius work
+09:48 willie_sutton: apologies to all
+09:50 Paris: MTS - I've annotated Willie's suggested nomenclature on my end. All good on my end
+09:50 MTS1: Appreciate the sharing! Just feedback as I didn' see headers or what it does or attribution to original code / enhancements. I see you left comments in further down, but a header would be nice.
+09:52 willie_sutton: all the attributions were mobius'
+09:53 kjg: Hello - can anyone tell me how to add a chart to show a study only.  don't need price..
+09:54 Vimes: somewhere in settings hide price
+09:55 MTS1: There's a function also to do it in a script; just searched for hide in the reference; hidePricePlot()
+09:57 Paris: Willie, since your posted study plots the bid/ask of a manually entered option, I have tagged your study with the following header in my archives as a placeholder.
+# Bid and Ask OPRA Code
+# willie_sutton
+# 10.24.2018
+09:57 willie_sutton: i love that
+09:57 Paris: Thanks for your contribution Willie!
+09:58 kjg: Vimes, MTS1 - thank you - I'll check it out
+10:00 willie_sutton: I must admit that i didn't fuly understand Mobius' cloud shading; so you can add this if you like:
+# for addCloud, green denotes when someone hits the ask price, red denotes hitting the bid
+10:01 Paris: Noted
+10:06 JohnnyQuotron: Willie... like Paris I will be adding a header to the mobius script you altered.  Please, where ever possible add an authorship header to your scripts and if you are adjusting someone else's code comments regarding the changes are particularly helpful.  Mobius code is considered the "Gold Standard" and relied upon without hesitation..  if you are adjusting his code, particularly his logic or math, it is critical that those looking at your script next week or next year know where it deviated from the "Gold Standard".  Thank you.
+10:17 DMonkey: gm.....
+http://tos.mx/VJo1e1#
+10:17 JohnnyQuotron: Morning D
+10:18 willie_sutton: Sorry johnny, I'm new here
+10:20 Nube: Traders Almanac is a great book to the get the hamster wheel spinning.
+10:30 JohnnyQuotron: willie... no need to be sorry.  I apologize if I came of as being gruff.  I'm glad you're here and contributing.  I'm just thinking about a Community OneNote reader looking at your script six months from now.  If you haven't visited the Community OneNote here is the public link    https://1drv.ms/u/s!AnkeHrrRM_cvgxQTl1xckINYlKhZ
+10:32 JohnnyQuotron: The LoungeArchive is current.  BBL
+10:32 Mobius: DMonkey - Love your naming convention in that study. So creative  :)
+10:36 JohnnyQuotron: Mobius... imagine Limbo Bars using that naming convention xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+10:00 TnT: /vx fresh high, doom
+10:00 RandomDan: or something where vol worked in your favor
+10:01 lilFish: gm peeps
+10:01 blondetrader: lil
+10:01 tmoney20g: one analyst was gonna do a pcs, delta neutral
+10:01 TnT: gm fish
+10:01 tmoney20g: i thought of that too
+10:01 YClan: fish...   bubbles bubbles
+10:01 lilFish: :)
+10:02 blondetrader: MU bet 25-32 good buy imo
+10:02 blondetrader: 35-32
+10:02 tmoney20g: whoa
+10:02 blondetrader: ya
+10:03 tmoney20g: what's this
+10:03 TnT: NQ down 100
+10:03 Tanya: GM lfish
+10:03 RandomDan: hi Tanya
+10:03 RandomDan: there you go blonde
+10:03 blondetrader: :)
+10:03 Tanya: Hi Dan
+10:03 TnT: 2 way markets!
+10:04 RandomDan: hi fish
+10:04 RandomDan: hi TnT
+10:04 TnT: gm dan
+10:04 streetglide: lol Tnt
+10:04 TnT: /vx at 20
+10:04 Tanya: Hi Street
+10:04 blondetrader: 18-19 now rty
+10:04 blondetrader: 09 and 04
+10:04 streetglide: hey Tanya
+10:04 blondetrader: 04 is big
+10:05 TnT: $vold dooming
+10:05 YClan: :31 News Bot: US EIA Wkly Crude Cushing w/e 1.371M (Prev. 1.776M) 
+10:05 lilFish: hi dan tnt tanya bt clan tmoney
+10:05 streetglide: its bs they didnt just get it over with yesterday on the doom
+10:05 YClan: :31 News Bot: US EIA Weekly Crude Production (19 Oct) 10.9M (Prev. 10.900M)
+10:05 fred__w: 3rd boundary breach
+10:06 blondetrader: no kidding street
+10:06 TnT: old news yclan
+10:06 blondetrader: but punishing the BTFD buyers
+10:06 blondetrader: lets get rid of them
+10:06 tmoney20g: hi fishy
+10:06 Lee: Evidently sending bombs to ex POTUS makes the market go down
+10:07 TnT: broiled long froggy legs
+10:07 streetglide: cause the crooks are dropping things even lower than yesterday and we are not to those levels yet on the indicies
+10:07 blondetrader: getting there
+10:08 TnT: are ya skeered yet?
+10:08 TnT: bank on low
+10:09 tmoney20g: still looking at 6980 for nq ?
+10:09 TnT: bonds fresh high
+10:09 YClan: Lee,  well, just be glad they were not delivered by drones.
+10:09 Markus55: whats got /nq all hot and bothered?
+10:09 DrHouse: Well, today is kinda quiet in my portfolio.
+10:09 YClan: House,   same for me... library quiet.
+10:10 invertedhammer: Come on 1501 rty
+10:10 blondetrader: hammer time
+10:10 fred__w: three more boundary breaches to a new low
+10:10 blondetrader: exellent
+10:10 fred__w: half way there
+10:10 invertedhammer: Ty
+10:10 TnT: if I had a hammer.....
+10:11 invertedhammer: Hi tnt
+10:11 YClan: ...  I'd use it like a screwdriver 
+10:11 TnT: gm hammer
+10:11 YClan: hey introvertedhammer, you should let loose
+10:13 invertedhammer: YES How&aposs that :)
+10:14 YClan: did anyone win the Mega Billions??
+10:14 tmoney20g: Al won
+10:14 streetglide: I did, but still want to work
+10:14 tmoney20g: that's why he's not here today
+10:15 TnT: ^^^
+10:15 tmoney20g: he did pop in earlier, send he's sending us all $100.00
+10:15 streetglide: how generous
+10:15 blondetrader: lol
+10:19 YClan: He's probably out binge buying some new tires for his Yugo.
+10:20 blondetrader: ha
+10:21 YClan: South Carolina was the 1 winning Mega Mill/Bill ticket.
+10:21 Lee: Rty close
+10:22 streetglide: did they say the city yet, Clan?
+10:22 tmoney20g: my buddy said the winner came forward 10 minutes after the drawing
+10:24 VolCrush: gm admin_tculs
+10:24 VolCrush: gm groovers
+10:25 blondetrader: cl back on the move should break .40 this try
+10:25 VolCrush: round nums in play on all major indexes
+10:25 blondetrader: W
+10:25 VolCrush: oi bronx
+10:26 VolCrush: @tmoney did u hit your 10:30 pivot on AMZN?
+10:26 invertedhammer: If cl does like 68.53
+10:26 VolCrush: /VX & $$$$$$$$ wit the con
+10:27 VolCrush: all round nums on indexes with single digits, best to put on your ABC pants
+10:28 VolCrush: *within
+10:28 tmoney20g: oi vol
+10:29 VolCrush: did u hit it?
+10:29 tmoney20g: not yet
+10:29 invertedhammer: In 67.12
+10:29 fred__w: started my liquidation program again
+10:29 YClan: Street,   they said the winning ticket was bought at a store on Easy Street, in MiddleFingerVille, SC.
+10:29 VolCrush: middlefingerville????
+u jest 
+10:29 tmoney20g: she breaking
+10:30 blondetrader: weee
+10:30 blondetrader: 6960 nq
+10:30 TnT: 6944 is PL
+10:30 YClan: Happytown, SC
+10:30 blondetrader: we got to take that out
+10:31 VolCrush: /nq first to crack
+10:31 TnT: /vx fresh high
+10:31 tmoney20g: hold me, i'm scared
+10:31 TnT: I'll hold bt
+10:31 blondetrader: lol
+10:31 VolCrush: i got Alpha
+10:32 VolCrush: haha
+10:32 blondetrader: 6800 would be greatttt
+10:33 TnT: nq breadth -84
+10:33 Lee: I think the big banks almost straight down after decent earnings hurt this market alot
+10:35 VolCrush: yup, FINS were a tell..........all year actually
+10:37 TnT: daily chart of BANK is a spectacle to behold,, huge break since 9/27, impressive
+10:38 fred__w: ive got that bon jovi song in my head  
+10:38 VolCrush: much crowd is gunna have a feast
+10:39 Lee: Didnt BAC report like a 32% income increase? I guess fundamentals dont matter any more
+10:40 YClan: fred is it,  she's a little runaway ?
+10:41 TnT: price is not about now, it's about 12 months or so from now, fundamentals look at the past
+10:41 fred__w: the one with  whoa  we're half way there  whoa  livin on a prayer
+10:42 tmoney20g: nailed it
+10:42 fred__w: ..great tune
+10:42 composite9: markets r insane
+10:42 YClan: fred,  I thought that is sang by Ben Johvanni,  the jewish italian guy
+10:42 composite9: trump admin doin a number on the economy...
+10:43 fred__w: ..not positive
+10:43 Delta86: BA still our bell weather for today...
+10:43 YClan: :32 News Bot: Mox reports a reiteration of positive comments on Revlon (REV) 
+10:44 TnT: how is that?  rates are going up because econ is strong and must control inflation
+10:44 TnT: rates up, means stocks have competition for investment
+10:44 Lee: What inflation?
+10:44 TnT: so, they sell off
+10:45 IMDora: Wait but APPL has 1.5% dividend and goes up everyday
+10:45 TnT: without the rate hikes that we have had, inflation might be out of control already
+10:45 YClan: Lee,  I see it as price/cost inflation, but we're not having wage inflation, so people are falling behind.
+10:45 composite9: Safkhet Capital  vs Citron on tesla...earnings will quite quite interesting...could be a turning point, we'll see how the markets react..one short turned long, the other, seems to have turned mum?...
+10:46 TnT: anywho, the Fed is independent and is triggering the stock price adjustments
+10:46 RandomDan: safkhet was short 25 points ago, big hurt
+10:46 composite9: the fed is no island..
+10:47 streetglide: green shoots.......or weeds?
+10:47 TnT: NHT 688
+10:48 TnT: buyers
+10:48 TnT: tick 922
+10:48 YClan: :47 News Bot: SNAP (SNAP) has hired a new business chief officer Gorman from Amazon (AMZN)
+10:48 chenmann: was that the retest of yesterday ? and up we go ...?
+10:48 tmoney20g: yesterday was 6944
+10:49 streetglide: Dimka just called and said Dow +200 eod
+10:49 tmoney20g: bt doesn't think nq tested lows yetr
+10:49 fred__w: chen  whatever it is  trade your plan
+10:49 composite9: trump has catalyst, reactionary effects on the fed, u can try and forcefield shield the trumpian one...still his ridiculous foriegn policy on trade, instead of classical diplomacy= wanting, and very irresponsible...newsflash= globalist economy has always existed since the dawn of time..how columbus found america..looking for thar indian route...
+10:49 Lee: SNAP. Widow maker
+10:49 composite9: someone please help trump get this...
+10:50 streetglide: where is meps and his snap
+10:50 lilFish: hmm nq fun over till 1:30?
+http://tos.mx/0xCrHb
