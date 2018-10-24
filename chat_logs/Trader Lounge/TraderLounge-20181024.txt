@@ -1,0 +1,222 @@
+------- Tuesday, October 23, 2018 -------
+15:54 RandomDan: where?
+15:54 amalia: just a general comment. 
+15:54 amalia: lol
+15:54 streetglide: Ford and GE leading the markets
+15:55 RandomDan: I sold off my remaining GE today. probably a mistake
+15:56 streetglide: depending on your time horizon maybe
+16:00 DrHouse: Positions improved since my last rant
+16:01 amalia: Hope so
+16:02 TnT: all have a good evening
+16:05 DrHouse: Cya
+16:05 amalia: Laters, TnT.
+16:06 GraceGu: Hi , may I ask  your comments if TOS has the indice for Smart money flow chart? Thanks, 
+16:06 amalia: Grace, do you have a link to the prospectus?
+16:07 GraceGu: no
+16:07 amalia: It would help.
+16:08 amalia:  827 was BuySignal, fwiw.
+16:08 ameriman: Grace what is the index for smart money flow?
+16:09 GraceGu: yeah, I think the chart as you showed
+16:09 GraceGu: it is what I want
+16:09 GraceGu: would you mind to let me know how can I get the chart? I have no idea
+16:09 amalia: lol 
+16:10 amalia: GraceGu, i would contact support@thinkorswim.com and ask for a platform tour. Before the tour, I would write down at least 10 questions/inquiries and just have them show you everything, from top to bottom, inside and out.
+16:11 GraceGu: that will be great, i appreciate !
+16:11 ameriman: Grace you can call them also 866-839-1100
+16:11 amalia: You're welcome. You can also call them at 866-839-1100
+16:12 amalia: ameriman is the guru here. Ask him anything
+16:12 GraceGu: yes, i can talk to them , thank you guys so much
+16:12 amalia: =) 
+16:15 tmoney20g: i'm back
+16:21 amalia: THANK GAWDDDD
+16:23 tmoney20g: srsly
+16:23 tmoney20g: what would you do w/o me
+16:24 amalia: lol
+16:46 GraceGu: @amalia  Hi Amalia, I just talked to the support team, and was told  " there would not be any studies or pictures like that found on the prospectus"
+16:47 GraceGu: i show them the picture for easy understanding
+16:51 M-C-M: hi guys, i wonder if you encountered ever this issue. On ToS active trader, i cant drag the sell order up or down once i got a partial filling, the system says that can not safely calculate the amount of the remained shares... i chated ToS rebooted the app but still nothing, it does same thing. TY
+16:54 amalia: GraceGu, I think our signals crossed earlier. That picture was not in any way a reference to your inquiry.
+16:55 M-C-M: SO EVERYTIME I GOT PARTIAL FILLING I HAVE TO CANCEL THE ORDER, RECALCULATE REMAINed shares and put another one, not only frustrating but i lose pretious timemost of times losing money with this when i need speed selling by draging the sell order down
+16:55 amalia: M-C-M, the complaint department can be reached at support@thinkorswim.com or by dialing 866-839-1100
+16:56 M-C-M: i did, they rebooted my app but nothing, tired of starting disscussions again, i thought any of you had same issu, eventually i ll call again
+16:57 amalia: Nope. Nothing on my end.
+17:00 GraceGu: Is that a special access requirement to prospectus? I am trying to find it from website, but failed as well. so not sure if you can give me the link so I can have a study . thanks
+17:25 mthfr_vaxxed: anyone short supermicro at the beginning of this month?
+17:40 amalia: G60, outside links are NOT allowed.
+17:40 amalia: Especially of another chat room.
+17:58 RandomDan: anybody around?
+17:58 TheOnceAndFuture: Eyoo
+18:00 chenmannmobile: hey dan
+18:01 RandomDan: hey chen
+18:01 chenmannmobile: wild day ...haha
+18:01 RandomDan: hey theonce
+18:01 chenmannmobile: soh me
+18:01 RandomDan: very wild
+18:02 chenmannmobile: came way back but still ended down, and futures r down now
+18:02 RandomDan: I complained I was bored yesterday, so I guess this is what I wanted!
+18:02 chenmannmobile: ha
+18:03 RandomDan: not a lot of conviction in the AH drop tho
+18:04 chenmannmobile: u think this was a retest or still going lower?
+18:04 chenmannmobile: no idea me
+18:04 RandomDan: I think there won't be a major down move tomorrow. Too dangerous while goog earnings are pending
+18:05 chenmannmobile: ya true lot of er coming up
+18:05 RandomDan: at least for fang and fang followers
+18:05 chenmannmobile: they sold off nflx, so fwiw
+18:05 RandomDan: being short fang right now is a lottery ticket
+18:06 RandomDan: they did, but it took a couple of days
+18:06 RandomDan: if you shorted ahead of it, you got killed
+18:07 RandomDan: the IV on goog options is unbelievable
+18:08 RandomDan: it's going to evaporate, one way orthe other
+18:11 chenmannmobile: i would ve feel a lot better if we came back all the way with green close, but still down so kinda lean towards the bear side still
+18:12 ameriman: yea test of lows was on heavy volume
+18:12 ameriman: expect a retest some time in future
+18:13 chenmannmobile: i saw a big sell program when es broke 2698, looking back think that was just algos clearing stops, i guess there were a lots of stops below 2700
+18:14 ameriman: yea 2700 has now become a very strong level
+18:14 ameriman: PPT comes in every time at 2700
+18:15 chenmannmobile: just crazy big range , 50 on es today, wow
+18:16 chenmannmobile: and pot and tsla lead the come back, lol ,
+18:16 chenmannmobile: beaver leading
+18:16 chenmannmobile: lol
+18:17 chenmannmobile: but again, didnt finish the job, gave it up at the close
+18:17 ameriman: TLRY almost touched 100
+18:18 chenmannmobile: i know, i saw but hesitated
+18:18 chenmannmobile: it was fast anyway, right at the open so not sure could ve gotten filled
+18:18 RandomDan: I was tempted but my no pot play policy still stands
+18:18 Edwinsnts: What do you guys think about nvcn
+18:19 Edwinsnts: With consolidation today
+18:19 ameriman: This room has a no penny policy
+18:19 RandomDan: no idea
+18:20 Edwinsnts: With consolidation today
+18:20 RandomDan: oh it's a penny? yep, no pennies in the lounge
+18:20 ameriman: all the penny players here blew their accounts already and left
+18:24 chenmannmobile: tos should have an overnight trading room
+18:26 amalia: mhm
+18:26 chenmannmobile: nqfomo came back today
+18:26 chenmannmobile: lol
+18:26 amalia: They used to leave the rooms open when we used to control the chats properly by ourselves.
+18:27 amalia: Ah, that's nice.
+18:27 chenmannmobile: every time market s about to crash he makes an appearence
+18:27 amalia: haha
+18:27 chenmannmobile: lol
+18:27 chenmannmobile: no idea on market
+18:28 chenmannmobile: nqfomo
+18:28 chenmannmobile: just checking
+18:28 chenmannmobile: ha
+18:34 KyleTrader: Can I get someone’s opinion? I bought ivitf stock at an average of 1.39 as a long term holding. At least until January as these stocks are very seasonal. I may hold for years. Am I completely screwed on this stock?
+18:36 amalia: No, KyleTrader.
+18:37 KyleTrader: I was looking historically it has always bounced but I was a little nervous. @amalia
+18:40 Trade_Options: KyleTrader-  It's a bit below LT support but based on the candles, MM might be taking out stops.   Just know when you're exiting.  
+18:41 RandomDan: 
+18:42 KyleTrader: Ok. Thank you so much it won’t be the end of the world if I lose the money but I just wanted a second opinion. I think it will bounce but sometimes it gets in your head when your down every day. I appreciate your analysis. @trade_options.
+18:43 amalia: You're welcome.
+18:43 RandomDan: BTW I just had a UI thought. Colors should not be just green or red, should gradually shift from deep red, to red, to orange, light orange, gray, pale green, green, deep green
+18:43 Trade_Options: Kyle-  No worries, that's what we're here for. . .
+18:44 KyleTrader: Thank you so much everyone. I appreciate it. The mm could be trying to scare everyone out for sure. I’ve held strong and averaged down through the beating. I have a 1.39 average with a hold time of 6 months to many years.
+18:45 RandomDan: One thing tgat irks me is that the colors kind of change your mood, but not in an accurate way. If everything is down just a little, your screen goes all red. That's not right.
+18:45 Trade_Options: Kyle-  It's always good to have a spec play. . . best of luck.
+18:46 Trade_Options: Random-  Maybe you need to get a different shade of glasses.
+18:46 amalia: Laters
+18:46 ameriman: Kyle my sincere advice to you will be to avoid trading penny stocks
+18:46 KyleTrader: Thanks a lot. Kinda like owning regn in the day. I knew over time there would probably be 50 percent drops and rises. Marijuana plays are always volatile.
+18:47 Trade_Options: gn amalia
+18:47 KyleTrader: I’ve always bought a variety of different things. This is my spec play. It may win it may lose but I’ll fight to trade another day. @ameriman.
+18:49 FunPilot: Evening all.
+18:49 ameriman: Kyle why even trade something that has huge edge against you? Thousands of better opportunities out there
+18:50 tmoney20g: HMNY ?
+18:50 FunPilot: Anyone know the best way to to search asset classes and sub classes like, Domestic, Internation, Fixed Income, Equity and such?
+18:51 Trade_Options: ameriman-  You are 100% correct, but everyone has their own agenda.  
+18:52 Trade_Options: Trading is as individual as the person.   That's what I like about it.
+18:53 FunPilot: That is SO true
+18:53 KyleTrader: Right. I figured that taking a risk on something like this early on would be no riskier than investing in alcohol during prohibition. If I’m wrong I lose the money life goes on, if I’m right the amount to be made could be huge.
+18:56 tmoney20g: half my family was bootleggers, the other half were federal agents
+18:56 tmoney20g: go figure
+18:56 Trade_Options: Kyle-  When I trade options (long), I enter the trade fully expecting to lose all my $$.  That's the spec, so you need to have that thought nailed down.  It's just when you stay with that one play, then you'll get into trouble.
+18:57 KyleTrader: Trouble? @trade_options
+18:57 Trade_Options: Or style, ie penny plays.  You'll need to grow & learn from your trades.
+18:58 Trade_Options: Trouble, as in defining winning only with penny stocks.   I have at least one in every account as a reminder of my bad decisions.  Thats all.
+18:59 KyleTrader: Understood.
+19:00 Trade_Options: brb.  Cats hungry.
+19:00 KyleTrader: Thank you so much!
+19:02 Trade_Options: NP Kyle.  I've been tradng a long time.  Made a lot of money and lost a lot of money.  Best thing is I'm better off than when I started because of higher net worth and learning along the way.   
+19:02 Trade_Options: brb
+19:02 tmoney20g: i'm winning megabillions tonight, so tomorrow should be fun
+19:08 cajun: tmoney, i am too tonite.  
+19:08 Trade_Options: yeah me too.  Got my 12 sets of number, gotta be a winner in there somewhere = ]
+19:09 FunPilot: Shoot I wish I was.  It is ladies night out so the wife gets all the fun tonight.
+19:09 cajun: ;-))
+19:14 Trade_Options: When's the drawing?  After the evening news?
+19:14 tmoney20g: 11pm est
+19:15 Trade_Options: Ok so at the end of the late news.
+19:15 tmoney20g: depending where you are, sure
+19:16 Trade_Options: I'm CST but same difference.
+19:16 Trade_Options: I normally don
+19:16 tmoney20g: i personally give no chits, i'll check mine in like a month
+19:16 Trade_Options: 't buy tickets but the odds are favorable for a winner
+19:16 tmoney20g: unless they say "there's a missing ticket for the winner from Ventnor Wawa"
+19:16 tmoney20g: then it *could* be me
+19:17 tmoney20g: i can't believe how flat NQ is
+19:18 Trade_Options: Ah the "WaWa."    
+19:18 tmoney20g: well, until 15 minutes ago anyway
+19:18 tmoney20g: too bad they're not publicly traded
+19:18 tmoney20g: i'd def buy in
+19:20 Trade_Options: My gal is from NJ, she intoduced me on our last trip to the coast.  Very suprised at the "cult" mindset regarding wawa.
+19:20 Trade_Options: I'd agree with you on the buy in.   
+19:28 tmoney20g: very cult
+19:28 tmoney20g: like the highest daily loyalty of any sort of store on the plane
+19:28 tmoney20g: planet
+19:29 tmoney20g: like you might go to mcd's for bfast on saturday
+19:29 tmoney20g: or you might order pizza every friday night
+19:29 tmoney20g: but EVERY MORNING you go to wawa
+19:31 tmoney20g: where in nj she from ?
+19:33 Trade_Options: Cherry Hill area
+19:37 tmoney20g: i'm near there
+19:37 tmoney20g: halfway between philly and ac
+19:37 tmoney20g: i work in ac
+19:39 Trade_Options: Camdon, forgot CH was where we stayed.  Home of Subaru USA (big fan)
+19:40 Trade_Options: Watched Board Walk so had to see AC. . . 
+19:43 tmoney20g: boardwalk empire ?
+19:43 tmoney20g: so earlier when i said half my family was bootleggers, and the other half was federal agents
+19:43 tmoney20g: my grandmother's brother was the us marshall that arrested nucky
+19:45 admin_bkTOS: 
+This is a reminder that the thinkorswim chat rooms will be closing in 15 min.  Forum hours are from 5am-8pm CT Monday-Thursday, and 5am-5pm CT on Friday. Please finish your conversations before 8pm CT.
+
+19:46 tmoney20g: nooooooooo
+19:46 FunPilot: Damn 2000 CT
+19:46 FunPilot: OOF
+19:51 Trading Senpai: Hi everyone: does the app not update for after hours quotes?
+19:52 tmoney20g: it does if there's trades
+20:00 admin_bkTOS: 
+Thank you for using thinkorswim.  Chat Rooms are available daily from 5am-8pm CT Monday-Thursday, and 5am-5pm CT on Friday for open discussion on the markets and trade related content 
+TOS platform questions?  email: support@thinkorswim.com
+or check out the Learning Center, full of demos on how to use thinkorswim trading and charting tools:  http://tlc.thinkorswim.com 
+------- Wednesday, October 24, 2018 -------
+05:36 invertedhammer: Gm
+05:48 EasyE: yawn. gm
+05:52 EasyE: hammer, I doubled my IRA in the last 20 days intraday trading options on spy. where do I start to get better at technical analysis as it relates to day trading? not sure if getting lucky, or figured out a strategy that works.
+05:56 invertedhammer: Try swim lessons on tos very good
+05:56 invertedhammer: And nice job!
+06:02 EasyE: thanks Ill check it out. I have 9 months in Kuwait (army) to become dangerous. market opens when my office closes due to the time difference.
+06:09 invertedhammer: Thank you for your service!¡
+06:13 EasyE: best job I ever had!
+06:20 invertedhammer: Personally use fib levels with support/resist.
+06:24 efu: ne re
+06:24 blondetrader: gm
+06:25 efu: yes gm , its beautiful day here
+06:25 blondetrader: :)
+06:27 featherweight: Gm
+06:29 invertedhammer: Cl looking to back test 200 at 67.36
+06:29 blondetrader: haha was just going to post a chart on it
+06:30 invertedhammer: :)
+06:31 blondetrader: I have 67.4 so we r spot on
+06:32 blondetrader: based on yest close which was a confluence of weekly and monthly....if the low was any good price should test 68.6ish at some point in next day or 3
+06:32 invertedhammer: Missed long fill at 66.4 earlier so not chasing
+06:33 invertedhammer: Ha my tgt 68.53
+06:33 blondetrader: rty res 31ish rn
+06:33 blondetrader: :)
+06:33 featherweight: Got my fill of CL yest 66 after API. Not sure why HOs aren’t doing as well
+06:35 blondetrader: I dont know either
+06:35 blondetrader: I am trying to be swing long cl bc I think we head back to mid 70s
+06:35 blondetrader: but price doesnt agree lol
+06:35 blondetrader: it needs to get with my program
+06:38 invertedhammer: Nq back to test onh. 7175
+06:59 invertedhammer: Es 5 consecutive days lower lows time to bounce

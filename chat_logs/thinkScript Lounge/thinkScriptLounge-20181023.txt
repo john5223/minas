@@ -1512,3 +1512,5 @@ def sb = smma_short - smma_short[1];
 input colorbars = yes; #hint colorbars: color pricebars
 assignpricecolor(if colorbars then
                     if (lb > 0 and sb > 0 and src > pivot_m and pivot_m > smma_short and smma_short > smma_long) then color.lime else if (lb < 0 and sb < 0 and src < pivot_m and pivot_m < smma_short and smma_short < smma_long and src<pivot_m) then color.red else color.white else color.current);
+19:52 fibfibfib: Thanks Mobius!!!!!
+19:57 amalia: I’ll continue tonight and if I’m still stuck, I’ll ask again here with hopefully an update tomorrow.
